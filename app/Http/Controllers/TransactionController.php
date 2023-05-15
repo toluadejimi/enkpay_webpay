@@ -269,6 +269,53 @@ class TransactionController extends Controller
 
 
 
+    public function get_banks()
+    {
+
+        try {
+
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://api.errandpay.com/epagentservice/api/v1/ApiGetBanks',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => array(
+                ),
+            ));
+
+            $var = curl_exec($curl);
+
+            curl_close($curl);
+            $var = json_decode($var);
+
+
+            $status = $var->code ?? null;
+
+            if ($status == 200) {
+
+                return response()->json([
+
+                    'banks' => $var->data,
+
+                ], 200);
+
+            }
+
+        } catch (\Exception $th) {
+            return $th->getMessage();
+        }
+
+    }
+
+
+
 
 
 }

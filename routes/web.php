@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('webpay', [TransactionController::class, 'webpay_view']);
+Route::get('pay', [TransactionController::class, 'webpay_view']);
 Route::get('invalid', [TransactionController::class, 'invalid']);
 
 

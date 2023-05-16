@@ -363,13 +363,9 @@ class TransactionController extends Controller
             $status = $var->code ?? null;
 
             if ($status == 200) {
-
                 return response()->json([
-                    'status' => 'success',
                     'customer_name' => $customer_name,
-
                 ], 200);
-
             }
 
             return response()->json([

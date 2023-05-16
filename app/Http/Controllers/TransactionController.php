@@ -302,7 +302,7 @@ class TransactionController extends Controller
 
                 return response()->json([
 
-                    'banks' => $var->data,
+                    'data' => $var->data,
 
                 ], 200);
 

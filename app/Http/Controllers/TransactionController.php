@@ -316,6 +316,75 @@ class TransactionController extends Controller
 
 
 
+    public function resolve_bank(request $request)
+    {
+
+
+        try {
+
+            $bank_code = $request->bank_code;
+            $account_number = $request->account_number;
+            //$bvn = $request->bvn;
+
+            $databody = array(
+
+                'accountNumber' => $account_number,
+                'institutionCode' => $bank_code,
+                'channel' => "Bank",
+
+            );
+
+            $body = json_encode($databody);
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://api.errandpay.com/epagentservice/api/v1/AccountNameVerification',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $body,
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json',
+                ),
+            ));
+
+            $var = curl_exec($curl);
+            curl_close($curl);
+            $var = json_decode($var);
+
+            $customer_name = $var->data->name ?? null;
+            $error = $var->error->message ?? null;
+
+            $status = $var->code ?? null;
+
+            if ($status == 200) {
+
+                return response()->json([
+                    'status' => 'success',
+                    'customer_name' => $customer_name,
+
+                ], 200);
+
+            }
+
+            return response()->json([
+                'status' => 'failed',
+                'message' => $error,
+
+            ], 500);
+
+        } catch (\Exception $th) {
+            return $th->getMessage();
+        }
+
+    }
+
+
+
 
 
 }

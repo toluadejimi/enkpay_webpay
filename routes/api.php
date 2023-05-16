@@ -21,4 +21,9 @@ use App\Http\Controllers\TransactionController;
 Route::post('get-account',[TransactionController::class, 'get_account_details']);
 Route::get('get-banks',[TransactionController::class, 'get_banks']);
 
+Route::post('resolve-bank',[TransactionController::class, 'resolve_bank']);
+
+
+
+
 

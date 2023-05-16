@@ -319,7 +319,6 @@ class TransactionController extends Controller
     public function resolve_bank(request $request)
     {
 
-        dd($request->all());
 
 
         try {

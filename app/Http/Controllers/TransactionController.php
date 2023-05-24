@@ -8,6 +8,8 @@ use App\Models\VirtualAccount;
 use App\Models\Webkey;
 use App\Models\Webtransfer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+
 
 class TransactionController extends Controller
 {
@@ -173,7 +175,9 @@ class TransactionController extends Controller
                 $trans->save();
             }
 
-            $data = "user_id=$user_id"."amount=$payable_amount"."trans_id=$trans_id";
+            $qrdata = "user_id=$user_id"."amount=$payable_amount"."trans_id=$trans_id";
+
+            $data = Crypt::encryptString($qrdata);
 
 
             return view('webpay', compact('payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'v_account_no', 'trans_id', 'web_charges', 'v_account_name', 'bank_name', 'total_received'));

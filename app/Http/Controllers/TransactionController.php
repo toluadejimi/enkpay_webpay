@@ -107,6 +107,8 @@ class TransactionController extends Controller
 
             $key =  $request->key;
             $amount = $request->amount;
+            $email = $request->email;
+
 
             $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
 
@@ -171,8 +173,10 @@ class TransactionController extends Controller
                 $trans->save();
             }
 
+            $data = "user_id=$user_id"."amount=$payable_amount"."trans_id=$trans_id";
 
-            return view('webpay', compact('payable_amount', 'webhook', 'key', 'amount', 'v_account_no', 'trans_id', 'web_charges', 'v_account_name', 'bank_name', 'total_received'));
+
+            return view('webpay', compact('payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'v_account_no', 'trans_id', 'web_charges', 'v_account_name', 'bank_name', 'total_received'));
         } catch (\Exception $th) {
             return $th->getMessage();
         }

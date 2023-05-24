@@ -241,46 +241,59 @@
 
 <body className='snippet-body'>
     <div class="container-fluid px-0" id="bg-div">
+
         <div class="row justify-content-center">
             <div class="col-lg-9 col-12">
+
+
                 <div class="card card0">
                     <div class="d-flex" id="wrapper">
 
 
+
                         <!-- Sidebar -->
                         <div class="bg-light border-right" id="sidebar-wrapper">
+
+                            <div class="sidebar-heading pt-5 pb-4"><img src="https://enkpay.com/asset/images/logo_1684856125.png" class="rounded float-left" alt="...">
+                            </div>
+                            <hr>
                             <div class="sidebar-heading pt-5 pb-4"><strong>PAY WITH</strong></div>
+                      
+
+
                             <div class="list-group list-group-flush">
+
+
 
                                 <a data-toggle="tab" href="#menu1" id="tab1"
                                     class="tabs list-group-item bg-light active1">
                                     <div class="list-div my-2">
-                                        <div class="fa fa-home"></div> &nbsp;&nbsp; VFD MFB
+                                        <div class="fa fa-home"></div> &nbsp;&nbsp; Bank Transfer
                                     </div>
                                 </a>
 
 
 
 
-                                <a data-toggle="tab" href="#menu4" id="tab1" class="tabs list-group-item bg-light">
+                                {{-- <a data-toggle="tab" href="#menu4" id="tab1" class="tabs list-group-item bg-light">
                                     <div class="list-div my-2">
                                         <div class="fa fa-home"></div> &nbsp;&nbsp; Providus
                                     </div>
-                                </a>
+                                </a> --}}
 
 
 
 
-                                <a data-toggle="tab" href="#menu2" id="tab2" class="tabs list-group-item">
+                                {{-- <a data-toggle="tab" href="#menu2" id="tab2" class="tabs list-group-item">
                                     <div class="list-div my-2">
                                         <div class="fa fa-credit-card"></div> &nbsp;&nbsp; Card
                                     </div>
-                                </a>
+                                </a> --}}
 
 
                                 <a data-toggle="tab" href="#menu3" id="tab3" class="tabs list-group-item bg-light">
                                     <div class="list-div my-2">
-                                        <div class="fa fa-qrcode"></div> &nbsp;&nbsp;&nbsp; Visa QR <span
+                                        <div class="fa fa-qrcode"></div> &nbsp;&nbsp;&nbsp; ENKPAY QR <span
                                             id="new-label">NEW</span>
                                     </div>
                                 </a>
@@ -293,7 +306,7 @@
 
                         <div id="page-content-wrapper">
                             <div class="row pt-3" id="border-btm">
-                                <div class="col-4"> <button class="btn btn-success mt-4 ml-3 mb-3" id="menu-toggle">
+                                <div class="col-4"> <button class="btn btn-primary mt-4 ml-3 mb-3" id="menu-toggle">
                                         <div class="bar4"></div>
                                         <div class="bar4"></div>
                                         <div class="bar4"></div>
@@ -301,7 +314,7 @@
                                 <div class="col-8">
                                     <div class="row justify-content-right">
                                         <div class="col-12">
-                                            <p class="mb-0 mr-4 mt-4 text-right">{{ $customer_email ?? "enkpay@mail.com"
+                                            <p class="mb-0 mr-4 mt-4 text-right">{{ $email ?? "enkpay@mail.com"
                                                 }}</p>
                                         </div>
                                     </div>
@@ -393,18 +406,18 @@
                                                     <hr>
 
 
-                                                    <div class="row mt-5">
+                                                    <div class="row mt-5 center">
 
-                                                        <div class="col-lg-6"> <input type="submit"
-                                                                id="requestButton" onclick="makeRequest()"
-                                                                value="I ve sent NGN 250"
-                                                                class="btn btn-success placeicon">
+                                                        <div class="col-12">
+
+                                                            <input type="submit" id="requestButton"
+                                                                onclick="makeRequest()"
+                                                                value="I ve sent NGN {{ number_format($payable_amount)}}"
+                                                                class="btn btn-success">
+
                                                         </div>
 
-                                                        <div class="col-lg-6">
-                                                            <a href="decline?trans_id={{ $trans_id }}"
-                                                                class="btn btn-danger placeicon">Cancle Transaction</a>
-                                                        </div>
+
 
 
                                                     </div>
@@ -413,11 +426,19 @@
                                                     <div class="text-center"> <span id="statusText"></span> </div>
 
 
+                                                    <div class="row">
+                                                        <div class="col-md-12 mt-4">
+                                                            <p class="text-center mb-5" id="cancle"><a
+                                                                    href="decline?trans_id={{ $trans_id }}"> Cancle
+                                                                    Transaction </a></p>
+                                                        </div>
+                                                    </div>
+
+
 
                                                     <div class="row">
                                                         <div class="col-md-12 mt-4">
-                                                            <p class="text-center mb-5" id="below-btn"><a href="#"> Make
-                                                                    a complain</a></p>
+                                                            <p class="text-center mb-5" id="below-btn"><a href="https://wa.me/message/2YLDDISL57EXM1" target="_blank"> Chat with us</a></p>
                                                         </div>
                                                     </div>
 
@@ -533,14 +554,57 @@
 
 
 
+
                                 <div id="menu3" class="tab-pane">
                                     <div class="row justify-content-center">
                                         <div class="col-11">
                                             <h3 class="mt-0 mb-4 text-center">Scan the QR code to pay</h3>
-                                            <div class="row justify-content-center">
-                                                <div id="qr"> <img src="https://i.imgur.com/DD4Npfw.jpg" width="200px"
-                                                        height="200px"> </div>
+                                            <div class="text-center mb-5">
+                                                <p>Open your ENKPAY mobile app to scan QR Code</p>
                                             </div>
+
+                                            <div class="row justify-content-center mt-5">
+                                                {!! QrCode::size(200)->generate($data) !!}
+
+
+                                            </div>
+
+
+
+                                            <div class="row justify-content-center mt-5">
+
+                                                <input type="submit" id="mybutton" onclick="myRequest()"
+                                                    value="I ve sent NGN {{ number_format($payable_amount) }}" class="btn btn-success">
+
+                                            </div>
+
+
+
+
+                                            <div class="text-center mt-4"> <span id="sText"></span> </div>
+
+
+                                            <div class="row">
+                                                <div class="col-md-12 mt-4">
+                                                    <p class="text-center mb-5" id="cancle"><a
+                                                            href="decline?trans_id={{ $trans_id }}"> Cancle Transaction
+                                                        </a></p>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="row">
+                                                <div class="col-md-12 mt-4">
+                                                    <p class="text-center mb-5" id="below-btn"><a href="https://wa.me/message/2YLDDISL57EXM1" target="_blank"> Chat with us</a></p>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -555,8 +619,10 @@
 
     <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'>
     </script>
-
-    <script>
+    <script type='text/javascript' src='#'></script>
+    <script type='text/javascript' src='#'></script>
+    <script type='text/javascript' src='#'></script>
+    <script type='text/javascript'>
         $(document).ready(function(){
     //Menu Toggle Script
     $("#menu-toggle").click(function(e) {
@@ -567,7 +633,7 @@
     // For highlighting activated tabs
     $("#tab1").click(function () {
         $(".tabs").removeClass("active1");
-        $(".tabs").addClass("bg-light");
+        $(".tabs").addClass("bg-light"); 
         $("#tab1").addClass("active1");
         $("#tab1").removeClass("bg-light");
     });
@@ -583,17 +649,7 @@
         $("#tab3").addClass("active1");
         $("#tab3").removeClass("bg-light");
     });
-    </script>
-
-
-
-
-
-    <script>
-        var myLink = document.querySelector('a[href="#"]');
-        myLink.addEventListener('click', function(e) {
-         e.preventDefault();
-    });
+})
     </script>
 
 
@@ -608,6 +664,10 @@
         const button = document.getElementById('requestButton');
         button.disabled = true; // Disable the button during the request
         statusText.textContent = 'Please wait while we verify your transaction...'; // Display the status text
+
+
+        document.getElementById("cancle").style.visibility = "none";
+
 
 
         const trx_id = document.getElementById('trx_id').value;
@@ -648,6 +708,61 @@
 
     </script>
 
+
+    <script>
+        let rRequest = true;
+
+        function myRequest() {
+        if (!rRequest) {
+            return; // Stop the repetition
+        }
+
+        const button = document.getElementById('mybutton');
+        button.disabled = true; // Disable the button during the request
+        sText.textContent = 'Please wait while we verify your transaction...'; // Display the status text
+
+
+        document.getElementById("cancle").style.visibility = "none";
+
+
+
+        const trx_id = document.getElementById('trx_id').value;
+
+        const url = "https://web.enkpay.com/verify?trans_id=" + trx_id;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+            // Process the response data
+            console.log(data);
+
+            if (data.status === 'pending') {
+                // Repeat the request after 5 seconds
+                setTimeout(myRequest, 5000);
+
+
+
+            } else if (data.status === 'success') {
+
+              const webhook = document.getElementById('webHook').value;
+              const amount = document.getElementById('Amount').value;
+
+               window.location.href = "https://web.enkpay.com/success?trans_id=" + trx_id;
+
+                rRequest = false; // Stop the repetition
+            }
+            })
+            .catch(error => {
+            // Handle any errors that occurred during the request
+            console.error(error);
+            });
+        }
+
+
+
+
+
+    </script>
 
 
 </body>

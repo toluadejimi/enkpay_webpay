@@ -605,7 +605,7 @@
 
         const trx_id = document.getElementById('trx_id').value;
 
-        const url = "http://127.0.0.1:8000/verify?trans_id=" + trx_id;
+        const url = "http://web.enkpay.com/verify?trans_id=" + trx_id;
 
         fetch(url)
             .then(response => response.json())
@@ -624,7 +624,7 @@
               const webhook = document.getElementById('webHook').value;
               const amount = document.getElementById('Amount').value;
 
-               window.location.href = "http://127.0.0.1:8000/success?trans_id=" + trx_id;
+               window.location.href = "https://web.enkpay.com/success?trans_id=" + trx_id;
 
                 repeatRequest = false; // Stop the repetition
             }

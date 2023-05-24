@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\VirtualAccount;
 use App\Models\Webkey;
 use App\Models\Webtransfer;
+use BaconQrCode\Encoder\QrCode;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller

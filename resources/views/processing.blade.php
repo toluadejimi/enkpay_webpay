@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <title>ENKPAY | WEBPAY</title>
+    <title>Snippet - BBBootstrap</title>
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet'>
     <link href='https://use.fontawesome.com/releases/v5.8.1/css/all.css' rel='stylesheet'>
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
@@ -301,14 +301,13 @@
                                 <div class="col-8">
                                     <div class="row justify-content-right">
                                         <div class="col-12">
-                                            <p class="mb-0 mr-4 mt-4 text-right">{{ $customer_email ?? "enkpay@mail.com"
-                                                }}</p>
+                                            <p class="mb-0 mr-4 mt-4 text-right">customer@email.com</p>
                                         </div>
                                     </div>
                                     <div class="row justify-content-right">
                                         <div class="col-12">
-                                            <p class="mb-0 mr-4 text-right">Pay <span class="top-highlight">NGN {{
-                                                    number_format($payable_amount ?? "0.00") }}</span>
+                                            <p class="mb-0 mr-4 text-right">Amount to Pay <span
+                                                    class="top-highlight">NGN 250</span>
                                             </p>
                                         </div>
                                     </div>
@@ -322,33 +321,21 @@
                                     <div class="row justify-content-center">
                                         <div class="col-11">
                                             <div class="form-card">
-                                                <h3 class="mt-0 mb-4 text-center">
-
-                                                    Pay to this bank details below</h3>
-
-                                                <div class="mt-0 mb-4 text-center">
-                                                    <span>BANK NAME</span>
-                                                    <div>
-                                                        <h5>VFD MFB</h5>
-                                                    </div>
-                                                </div>
-
-                                                <hr>
-
+                                                <h3 class="mt-0 mb-4 text-center">Pay to this bank details below</h3>
                                                 <form onsubmit="event.preventDefault()">
 
                                                     <div class="row">
-                                                        <div class="col-6 mt-3 text-center">
+                                                        <div class="col-6 mt-5 text-center">
                                                             <span>Account Number</span>
                                                             <div>
-                                                                <h5>{{ $v_account_no ?? "Not Available" }}</h5>
+                                                                <h5>001719120</h5>
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-6 mt-3 text-center">
+                                                        <div class="col-6 mt-5 text-center">
                                                             <span>Account Name</span>
                                                             <div>
-                                                                <h5>{{$v_account_name ?? "Not Available"}}</h5>
+                                                                <h5>ENKWAVE PAY</h5>
                                                             </div>
                                                         </div>
 
@@ -361,28 +348,14 @@
                                                         <div class="col-6 mt-3 text-center">
                                                             <span>Trx Ref</span>
                                                             <div>
-                                                                <h5>{{ $trans_id ?? "Not Available" }}</h5>
-                                                                <input type="text" id="trx_id" hidden
-                                                                    value="{{ $trans_id}}">
-
-                                                                    <input type="text" id="webHook" hidden
-                                                                    value="{{ $webhook}}">
-
-
-                                                                    <input type="text" id="Amount" hidden
-                                                                    value="{{ $amount}}">
-
-
-
-
-
+                                                                <h5>PAY-2233456</h5>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-6 mt-3 text-center">
                                                             <span>Charges</span>
                                                             <div>
-                                                                <h5>NGN {{$web_charges ?? "0.00"}}</h5>
+                                                                <h5>NGN 150</h5>
                                                             </div>
                                                         </div>
 
@@ -394,19 +367,27 @@
 
 
                                                     <div class="row">
-                                                        <div class="col-md-12 mt-5"> <input type="submit" id="requestButton"
-                                                                onclick="makeRequest()" value="I ve sent NGN 250"
-                                                                class="btn btn-success placeicon">
-                                                        </div>
+                                                        <div class="col-md-12 mt-5"> <input type="submit" id="upside"
+                                                                onclick="up(true)" value="I ve sent NGN 250"
+                                                                class="btn btn-success placeicon"> </div>
                                                     </div>
 
 
-                                                    <div class="text-center"> <span id="statusText"></span> </div>
+                                                    <button type="submit" class="btn btn-success">Up</button>
+
+
+
+
+
+
+
+
+
 
 
 
                                                     <div class="row">
-                                                        <div class="col-md-12 mt-4">
+                                                        <div class="col-md-12">
                                                             <p class="text-center mb-5" id="below-btn"><a href="#"> Make
                                                                     a complain</a></p>
                                                         </div>
@@ -454,7 +435,7 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <p class="text-center mb-5" id="below-btn"><a href="#">Try
+                                                            <p class="text-center mb-5" id="below-btn"><a href="#">Use a
                                                                     test card</a></p>
                                                         </div>
                                                     </div>
@@ -499,7 +480,7 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <p class="text-center mb-5" id="below-btn"><a href="#">try
+                                                            <p class="text-center mb-5" id="below-btn"><a href="#">Use a
                                                                     test card</a></p>
                                                         </div>
                                                     </div>
@@ -542,11 +523,12 @@
             </div>
         </div>
     </div>
-
-
-    <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'> </script>
-
-    <script>
+    <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'>
+    </script>
+    <script type='text/javascript' src='#'></script>
+    <script type='text/javascript' src='#'></script>
+    <script type='text/javascript' src='#'></script>
+    <script type='text/javascript'>
         $(document).ready(function(){
     //Menu Toggle Script
     $("#menu-toggle").click(function(e) {
@@ -573,72 +555,102 @@
         $("#tab3").addClass("active1");
         $("#tab3").removeClass("bg-light");
     });
+})
     </script>
-
-
-
-
-
-    <script>
+    <script type='text/javascript'>
         var myLink = document.querySelector('a[href="#"]');
-        myLink.addEventListener('click', function(e) {
-         e.preventDefault();
-    });
+                                myLink.addEventListener('click', function(e) {
+                                  e.preventDefault();
+                                });
     </script>
 
 
     <script>
-
-
-
-        let repeatRequest = true;
-
-        function makeRequest() {
-        if (!repeatRequest) {
-            return; // Stop the repetition
+        function getRemainingTimer(isNew) {
+          var now = new Date();
+          var timer = 3000;
+          var remainingTimer = 0;
+          var startTime = localStorage.getItem("startTime");
+          if (startTime === null) {
+            if (!isNew) return 0;
+            localStorage.setItem("startTime", now.getTime());
+            remainingTimer = timer;
+          } else {
+            remainingTimer = timer + parseInt(startTime) - now.getTime();
+          }
+          return remainingTimer;
         }
 
-        const button = document.getElementById('requestButton');
-        button.disabled = true; // Disable the button during the request
-        statusText.textContent = 'Please wait while we verify your transaction...'; // Display the status text
+        function up(isNew) {
+
+          var remainingTimer = getRemainingTimer(isNew);
+
+          console.log(remainingTimer);
 
 
-        const trx_id = document.getElementById('trx_id').value;
-
-        const url = "http://127.0.0.1:8000/verify?trans_id=" + trx_id;
-
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-            // Process the response data
-            console.log(data);
-
-            if (data.status === 'pending') {
-                // Repeat the request after 5 seconds
-                setTimeout(makeRequest, 5000);
+          if (remainingTimer > 0) {
+            $("#upside").attr("disabled", true);
+            $("#downside").attr("disabled", true);
+            var timeout = setTimeout(function() {
+              $("#upside").removeAttr("disabled");
+              $("#downside").removeAttr("disabled");
 
 
+               const url = 'https://api.example.com/data' + '?param1=value1' +  '&param2=value2' +  '&param3=value3';
 
-            } else if (data.status === 'success') {
+            // Perform the GET request using AJAX, Fetch API, or any other method
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                // Process the response data
+                console.log(data);
+                })
+                .catch(error => {
+                // Handle any errors that occurred during the request
+                console.error(error);
+                });
 
-              const webhook = document.getElementById('webHook').value;
-              const amount = document.getElementById('Amount').value;
+            // Interval in milliseconds (e.g., 5 seconds)
+            const interval = 5000;
 
-               window.location.href = "http://127.0.0.1:8000/success?trans_id=" + trx_id;
+            // Start checking the GET request at the specified interval
+            const intervalId = setInterval(makeGetRequest, interval);
 
-                repeatRequest = false; // Stop the repetition
-            }
-            })
-            .catch(error => {
-            // Handle any errors that occurred during the request
-            console.error(error);
-            });
+            // Stop checking after a specific number of iterations (optional)
+            const iterations = 10;
+            let iterationCount = 0;
+
+            // Uncomment the following lines if you want to stop after a specific number of iterations
+            //const maxIterations = 10;
+            //let iterationCount = 0;
+
+            // function checkIterationCount() {
+            //   iterationCount++;
+            //   if (iterationCount >= maxIterations) {
+            //     clearInterval(intervalId);
+            //   }
+            // }
+
+            // setInterval(checkIterationCount, interval);
+
+
+
+
+              window.location = '/Balnce_add';
+
+
+
+
+
+
+
+              localStorage.removeItem("startTime");
+            }, remainingTimer);
+          } else {
+            localStorage.removeItem("startTime");
+          }
         }
-
-
-
-
-
+        up(false);
     </script>
 
 

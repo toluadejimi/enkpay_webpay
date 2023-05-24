@@ -1172,7 +1172,7 @@
 
                                 <iframe src="https://embed.lottiefiles.com/animation/120105"></iframe>
 
-                                <p class="">Amount and Key can not be empty</p>
+                                <p class="">Your Public key is invalid</p>
                             </div>
                         </div>
                         <div class="elementor-element elementor-element-23310964 elementor-align-center elementor-widget elementor-widget-button"

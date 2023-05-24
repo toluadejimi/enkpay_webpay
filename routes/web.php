@@ -23,5 +23,18 @@ Route::get('pay', [TransactionController::class, 'webpay_view']);
 Route::get('invalid', [TransactionController::class, 'invalid']);
 
 
-Route::get('check-status', [TransactionController::class, 'check_status']);
+Route::get('success', [TransactionController::class, 'success']);
+
+
+
+Route::get('verify', [TransactionController::class, 'check_status']);
 Route::get('decline', [TransactionController::class, 'decline']);
+
+
+Route::get('processing', [TransactionController::class, 'processing']);
+
+
+
+
+
+

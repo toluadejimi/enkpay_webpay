@@ -179,27 +179,7 @@ class TransactionController extends Controller
 
             $data = Crypt::encryptString($qrdata);
 
-
-            $d1 = $data;
-
-            $decrypt= Crypt::decryptString($d1);
-
-
-
-
-            $string = $decrypt; // a string
-
-            $arrays = explode(" ", $string );
-            dd($arrays, $decrypt);
-
-
-
-
-
-
-
-
-
+            dd($data);
 
 
 

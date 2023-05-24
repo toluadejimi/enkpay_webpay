@@ -27,8 +27,6 @@ class TransactionController extends Controller
             $key = str_replace($substring, "", $main_key);
 
 
-            dd($key);
-
             $user_id = Webkey::where('key', $key)
                 ->first()->user_id ?? null;
 

@@ -189,8 +189,12 @@ class TransactionController extends Controller
 
             $string = $decrypt; // a string
 
-            $arrays = str_split($string);
+            $arrays = explode(" ", $string );
             dd($arrays, $decrypt);
+
+
+
+
 
 
 

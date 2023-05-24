@@ -564,7 +564,7 @@
                                             </div>
 
                                             <div class="row justify-content-center mt-5">
-                                                {!! QrCode::size(200)->generate($data) !!}
+                                                {!! SimpleSoftwareIO\QrCode\Facade::size(200)->generate($data) !!}
 
 
                                             </div>
@@ -601,7 +601,7 @@
                                             </div>
 
 
-                                            
+
 
 
 

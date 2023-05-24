@@ -180,6 +180,11 @@ class TransactionController extends Controller
             $data = Crypt::encryptString($qrdata);
 
 
+            $d1 = "eyJpdiI6IkkrUlJjMmFsaFdiR0djdXRFakpiU3c9PSIsInZhbHVlIjoiZG1TRjZaV1k0aHJPYjdxUVpwWFpLdm9iZ2lSSmlaMW9sMFRKZWlLb0trMEhwT1R4b0hzd0IxVitKRGE0RXhNYyIsIm1hYyI6IjI2YTg0ZTcwZjI4ZTgwMThkMzc2N2U5OTJiYzNlNzQ0N2RhMDdmNmNlOTk2MzA2OTJlMzE5N2IzMjQzZDAzYmYiLCJ0YWciOiIifQ==";
+
+            $decrypt= Crypt::decryptString($d1);
+            dd($decrypt);
+
             return view('webpay', compact('payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'v_account_no', 'trans_id', 'web_charges', 'v_account_name', 'bank_name', 'total_received'));
         } catch (\Exception $th) {
             return $th->getMessage();

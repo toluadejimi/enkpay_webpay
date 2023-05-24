@@ -365,11 +365,11 @@
                                                                 <input type="text" id="trx_id" hidden
                                                                     value="{{ $trans_id}}">
 
-                                                                    <input type="text" id="webHook" hidden
+                                                                <input type="text" id="webHook" hidden
                                                                     value="{{ $webhook}}">
 
 
-                                                                    <input type="text" id="Amount" hidden
+                                                                <input type="text" id="Amount" hidden
                                                                     value="{{ $amount}}">
 
 
@@ -394,10 +394,18 @@
 
 
                                                     <div class="row">
-                                                        <div class="col-md-12 mt-5"> <input type="submit" id="requestButton"
-                                                                onclick="makeRequest()" value="I ve sent NGN 250"
+                                                        <div class="col-md-6 mt-5"> <input type="submit"
+                                                                id="requestButton" onclick="makeRequest()"
+                                                                value="I ve sent NGN 250"
                                                                 class="btn btn-success placeicon">
                                                         </div>
+
+                                                        <div class="col-md-6 mt-5">
+                                                            <a href="decline?trans_id={{ $trans_id }}"
+                                                                class="btn btn-danger placeicon">
+                                                        </div>
+
+
                                                     </div>
 
 
@@ -544,7 +552,8 @@
     </div>
 
 
-    <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'> </script>
+    <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'>
+    </script>
 
     <script>
         $(document).ready(function(){
@@ -588,9 +597,6 @@
 
 
     <script>
-
-
-
         let repeatRequest = true;
 
         function makeRequest() {

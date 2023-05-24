@@ -17,7 +17,11 @@ class TransactionController extends Controller
     public function get_account_details(Request $request)
     {
         try {
-            $get_key = $header = $request->header('Authorization');
+
+            dd($request->all());
+
+
+            $get_key  = $request->header('Authorization');
 
             $main_key = $get_key;
             $substring = "Bearer ";

@@ -393,14 +393,15 @@
                                                     <hr>
 
 
-                                                    <div class="row">
-                                                        <div class="col-md-6 mt-5"> <input type="submit"
+                                                    <div class="row mt-5">
+
+                                                        <div class="col-lg-6"> <input type="submit"
                                                                 id="requestButton" onclick="makeRequest()"
                                                                 value="I ve sent NGN 250"
                                                                 class="btn btn-success placeicon">
                                                         </div>
 
-                                                        <div class="col-md-6 mt-5">
+                                                        <div class="col-lg-6">
                                                             <a href="decline?trans_id={{ $trans_id }}"
                                                                 class="btn btn-danger placeicon">Cancle Transaction</a>
                                                         </div>

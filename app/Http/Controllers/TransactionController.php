@@ -43,6 +43,17 @@ class TransactionController extends Controller
             }
 
 
+            if ($status == null) {
+                return response()->json([
+
+                    'status' => false,
+                    'message' => "Key not present",
+
+                ], 200);
+            }
+
+
+
 
             if ($user_id == null) {
                 return response()->json([

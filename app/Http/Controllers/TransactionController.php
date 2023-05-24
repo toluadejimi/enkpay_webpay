@@ -18,7 +18,6 @@ class TransactionController extends Controller
     {
         try {
 
-            dd($request->all());
 
 
             $get_key  = $request->header('Authorization');
@@ -28,6 +27,7 @@ class TransactionController extends Controller
             $key = str_replace($substring, "", $main_key);
 
 
+            dd($key);
 
             $user_id = Webkey::where('key', $key)
                 ->first()->user_id ?? null;

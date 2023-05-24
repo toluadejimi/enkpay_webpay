@@ -402,7 +402,7 @@
 
                                                         <div class="col-md-6 mt-5">
                                                             <a href="decline?trans_id={{ $trans_id }}"
-                                                                class="btn btn-danger placeicon"></a>
+                                                                class="btn btn-danger placeicon">Cancle Transaction</a>
                                                         </div>
 
 

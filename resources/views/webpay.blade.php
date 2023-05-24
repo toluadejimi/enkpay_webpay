@@ -605,7 +605,7 @@
 
         const trx_id = document.getElementById('trx_id').value;
 
-        const url = "http://web.enkpay.com/verify?trans_id=" + trx_id;
+        const url = "https://web.enkpay.com/verify?trans_id=" + trx_id;
 
         fetch(url)
             .then(response => response.json())

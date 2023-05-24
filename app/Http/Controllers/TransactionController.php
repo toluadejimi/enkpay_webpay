@@ -180,7 +180,7 @@ class TransactionController extends Controller
             $data = Crypt::encryptString($qrdata);
 
 
-            $d1 = "eyJpdiI6IkkrUlJjMmFsaFdiR0djdXRFakpiU3c9PSIsInZhbHVlIjoiZG1TRjZaV1k0aHJPYjdxUVpwWFpLdm9iZ2lSSmlaMW9sMFRKZWlLb0trMEhwT1R4b0hzd0IxVitKRGE0RXhNYyIsIm1hYyI6IjI2YTg0ZTcwZjI4ZTgwMThkMzc2N2U5OTJiYzNlNzQ0N2RhMDdmNmNlOTk2MzA2OTJlMzE5N2IzMjQzZDAzYmYiLCJ0YWciOiIifQ==";
+            $d1 = $data;
 
             $decrypt= Crypt::decryptString($d1);
 

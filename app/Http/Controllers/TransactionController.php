@@ -146,7 +146,7 @@ class TransactionController extends Controller
             $web_charges = Charge::where('title', 'webcharge')
                 ->first()->amount;
 
-            $trans_id = "WEB-" . random_int(100000, 999999);
+            $trans_id = random_int(100000, 999999);
 
             $payable_amount = $amount + $web_charges;
 
@@ -178,10 +178,6 @@ class TransactionController extends Controller
             $qrdata = $user_id. " " .$payable_amount. " " .$trans_id;
 
             $data = Crypt::encryptString($qrdata);
-
-            dd($data);
-
-
 
 
             return view('webpay', compact('payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'v_account_no', 'trans_id', 'web_charges', 'v_account_name', 'bank_name', 'total_received'));

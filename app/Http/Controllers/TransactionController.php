@@ -105,7 +105,7 @@ class TransactionController extends Controller
     public function webpay_view(Request $request)
     {
 
-        try {
+        // try {
 
             $key =  $request->key;
             $amount = $request->amount;
@@ -131,24 +131,54 @@ class TransactionController extends Controller
             }
 
 
+            $account_details = VirtualAccount::where('user_id', $user_id)->get();
+
+
+
             $status = Webkey::where('key', $key)
                 ->first()->status ?? null;
 
             $v_account_no = VirtualAccount::where('user_id', $user_id)
-                ->first()->v_account_no ?? null;
+            ->where('v_bank_name', 'VFD MFB')
+            ->first()->v_account_no ?? null;
 
             $v_account_name = VirtualAccount::where('user_id', $user_id)
-                ->first()->v_account_name ?? null;
+            ->where('v_bank_name', 'VFD MFB')
+            ->first()->v_account_name ?? null;
 
             $bank_name = VirtualAccount::where('user_id', $user_id)
-                ->first()->v_bank_name ?? null;
+            ->where('v_bank_name', 'VFD MFB')
+            ->first()->v_bank_name ?? null;
 
-            $web_charges = Charge::where('title', 'webcharge')
-                ->first()->amount;
+
+            $p_account_no = VirtualAccount::where('user_id', $user_id)
+            ->where('v_bank_name', 'PROVIDUS BANK')
+            ->first()->v_account_no ?? null;
+
+            $p_account_name = VirtualAccount::where('user_id', $user_id)
+            ->where('v_bank_name', 'PROVIDUS BANK')
+            ->first()->v_account_name ?? null;
+
+            $p_bank_name = VirtualAccount::where('user_id', $user_id)
+            ->where('v_bank_name', 'PROVIDUS BANK')
+            ->first()->v_bank_name ?? null;
+
+            // $web_charges = Charge::where('title', 'webcharge')
+            //     ->first()->amount;
+
+            $web_commission = Charge::where('title', 'bwebpay')->first()->amount;
+            //Both Commission
+            $amount1 = $web_commission / 100;
+            $amount2 = $amount1 * $amount;
+            $both_commmission = number_format($amount2, 3);
+
+
+
+
 
             $trans_id = random_int(100000, 999999);
 
-            $payable_amount = $amount + $web_charges;
+            $payable_amount = $amount + $both_commmission;
 
             $total_received = 0.00;
 
@@ -158,7 +188,7 @@ class TransactionController extends Controller
 
 
             $get_trans_id = Webtransfer::where('trans_id', $trans_id)
-                ->first()->trans_id ?? null;
+            ->first()->trans_id ?? null;
 
 
             if ($get_trans_id == null) {
@@ -168,7 +198,19 @@ class TransactionController extends Controller
                 $trans->v_account_no = $v_account_no;
                 $trans->v_account_name = $v_account_name;
                 $trans->bank_name = $bank_name;
-                $trans->web_charges = $web_charges;
+                $trans->web_charges = $both_commmission;
+                $trans->trans_id = $trans_id;
+                $trans->payable_amount = $payable_amount;
+                $trans->total_received = $total_received;
+                $trans->save();
+
+                $trans = new Webtransfer();
+                $trans->amount = $amount;
+                $trans->user_id = $user_id;
+                $trans->v_account_no = $p_account_no;
+                $trans->v_account_name = $p_account_name;
+                $trans->bank_name = $p_bank_name;
+                $trans->web_charges = $both_commmission;
                 $trans->trans_id = $trans_id;
                 $trans->payable_amount = $payable_amount;
                 $trans->total_received = $total_received;
@@ -180,10 +222,10 @@ class TransactionController extends Controller
             $data = Crypt::encryptString($qrdata);
 
 
-            return view('webpay', compact('payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'v_account_no', 'trans_id', 'web_charges', 'v_account_name', 'bank_name', 'total_received'));
-        } catch (\Exception $th) {
-            return $th->getMessage();
-        }
+            return view('webpay', compact('payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name','total_received'));
+        // } catch (\Exception $th) {
+        //     return $th->getMessage();
+        // }
     }
 
 
@@ -217,18 +259,22 @@ class TransactionController extends Controller
     {
 
 
+
         $trans_id = $request->trans_id;
+        $account_no = $request->account_no;
+
 
 
         $user_id = Webtransfer::where('trans_id', $trans_id)
-            ->first()->user_id ?? null;
+        ->first()->user_id ?? null;
 
         $key = Webkey::where('user_id', $user_id)
-            ->first()->key;
+        ->first()->key;
 
 
         $status = Webtransfer::where('trans_id', $trans_id)
-            ->first()->status ?? null;
+        ->where('v_account_no', $account_no)
+        ->first()->status ?? null;
 
 
         $amount = Webtransfer::where('trans_id', $trans_id)
@@ -315,13 +361,11 @@ class TransactionController extends Controller
 
 
         $trans_id = $request->trans_id;
-
-
         $user_id = Webtransfer::where('trans_id', $trans_id)
-            ->first()->user_id ?? null;
+        ->first()->user_id ?? null;
 
         $key = Webkey::where('user_id', $user_id)
-            ->first()->key;
+        ->first()->key;
 
 
         $status = Webtransfer::where('trans_id', $trans_id)
@@ -500,4 +544,10 @@ class TransactionController extends Controller
 
         return view('processing');
     }
+
+
+
+
+
+
 }

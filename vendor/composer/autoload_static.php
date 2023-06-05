@@ -34,6 +34,7 @@ class ComposerStaticInit585e143c0a40cfad23d8ef220e050b33
         'a1cfe24d14977df6878b9bf804af2d1c' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Phpunit/Autoload.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
         '320163ac6b93aebe3dc25b60a0533d56' => __DIR__ . '/..' . '/spatie/laravel-ignition/src/helpers.php',
+        '1aff2f8abd60e952b4bdd52d4f05a132' => __DIR__ . '/../..' . '/app/helper.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -530,6 +531,7 @@ class ComposerStaticInit585e143c0a40cfad23d8ef220e050b33
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\TransactionController' => __DIR__ . '/../..' . '/app/Http/Controllers/TransactionController.php',
         'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
+        'App\\Http\\Controllers\\VirtualAccount\\VirtualController' => __DIR__ . '/../..' . '/app/Http/Controllers/VirtualAccount/VirtualController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',

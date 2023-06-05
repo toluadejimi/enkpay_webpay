@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\VirtualAccount\VirtualController;
+
 
 
 /*
@@ -22,6 +24,15 @@ Route::post('get-account',[TransactionController::class, 'get_account_details'])
 Route::get('get-banks',[TransactionController::class, 'get_banks']);
 
 Route::post('resolve-bank',[TransactionController::class, 'resolve_bank']);
+
+
+Route::post('create-dynamic-account',[VirtualController::class, 'create_dynamic_account']);
+
+
+
+
+
+
 
 
 

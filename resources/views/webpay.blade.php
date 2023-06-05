@@ -258,28 +258,29 @@
                             </div>
                             <hr>
                             <div class="sidebar-heading pt-5 pb-4"><strong>PAY WITH</strong></div>
-                      
+
 
 
                             <div class="list-group list-group-flush">
 
 
+                                <a data-toggle="tab" href="#menu4" id="tab1" class="tabs list-group-item bg-light active1">
+                                    <div class="list-div my-2">
+                                        <div class="fa fa-home"></div> &nbsp;&nbsp; Pay with Providus
+                                    </div>
+                                </a>
+
 
                                 <a data-toggle="tab" href="#menu1" id="tab1"
-                                    class="tabs list-group-item bg-light active1">
+                                    class="tabs list-group-item bg-light">
                                     <div class="list-div my-2">
-                                        <div class="fa fa-home"></div> &nbsp;&nbsp; Bank Transfer
+                                        <div class="fa fa-home"></div> &nbsp;&nbsp; Pay with VFD
                                     </div>
                                 </a>
 
 
 
 
-                                {{-- <a data-toggle="tab" href="#menu4" id="tab1" class="tabs list-group-item bg-light">
-                                    <div class="list-div my-2">
-                                        <div class="fa fa-home"></div> &nbsp;&nbsp; Providus
-                                    </div>
-                                </a> --}}
 
 
 
@@ -331,7 +332,7 @@
                                 <div class="text-center" id="test">Pay</div>
                             </div>
                             <div class="tab-content">
-                                <div id="menu1" class="tab-pane in active">
+                                <div id="menu1" class="tab-pane ">
                                     <div class="row justify-content-center">
                                         <div class="col-11">
                                             <div class="form-card">
@@ -393,9 +394,9 @@
                                                         </div>
 
                                                         <div class="col-6 mt-3 text-center">
-                                                            <span>Charges</span>
+                                                            <span>Trx Time</span>
                                                             <div>
-                                                                <h5>NGN {{$web_charges ?? "0.00"}}</h5>
+                                                                <h5>5 min</h5>
                                                             </div>
                                                         </div>
 
@@ -410,7 +411,7 @@
 
                                                         <div class="col-12">
 
-                                                            <input type="submit" id="requestButton"
+                                                            <input type="submit" id="requestButtonp"
                                                                 onclick="makeRequest()"
                                                                 value="I ve sent NGN {{ number_format($payable_amount)}}"
                                                                 class="btn btn-success">
@@ -451,7 +452,128 @@
                                 </div>
 
 
-                                <div id="menu4" class="tab-pane">
+                                <div id="menu4" class="tab-pane in active">
+                                    <div class="row justify-content-center">
+                                        <div class="col-11">
+                                            <div class="form-card">
+                                                <h3 class="mt-0 mb-4 text-center">
+
+                                                    Pay to this bank details below</h3>
+
+                                                <div class="mt-0 mb-4 text-center">
+                                                    <span>BANK NAME</span>
+                                                    <div>
+                                                        <h5>PROVIDUS BANK</h5>
+                                                    </div>
+                                                </div>
+
+                                                <hr>
+
+                                                <form onsubmit="event.preventDefault()">
+
+                                                    <div class="row">
+                                                        <div class="col-6 mt-3 text-center">
+                                                            <span>Account Number</span>
+                                                            <div>
+                                                                <h5>{{ $p_account_no ?? "Not Available" }}</h5>
+                                                                <input type="number" id="p_account_no" hidden
+                                                                value="{{ $p_account_no}}">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-6 mt-3 text-center">
+                                                            <span>Account Name</span>
+                                                            <div>
+                                                                <h5>{{$p_account_name ?? "Not Available"}}</h5>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+
+                                                    <hr>
+
+                                                    <div class="row">
+                                                        <div class="col-6 mt-3 text-center">
+                                                            <span>Trx Ref</span>
+                                                            <div>
+                                                                <h5>{{ $trans_id ?? "Not Available" }}</h5>
+                                                                <input type="text" id="trx_id" hidden
+                                                                    value="{{ $trans_id}}">
+
+                                                                <input type="text" id="webHook" hidden
+                                                                    value="{{ $webhook}}">
+
+
+                                                                <input type="text" id="Amount" hidden
+                                                                    value="{{ $amount}}">
+
+
+
+
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-6 mt-3 text-center">
+                                                            <span>Trx Time</span>
+                                                            <div>
+                                                                <h5>1 min</h5>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+
+
+                                                    <hr>
+
+
+                                                    <div class="row mt-5 center">
+
+                                                        <div class="col-12">
+
+                                                            <input type="submit" id="requestButton"
+                                                                onclick="makeRequest()"
+                                                                value="I ve sent NGN {{ number_format($payable_amount)}}"
+                                                                class="btn btn-success">
+
+                                                        </div>
+
+
+
+
+                                                    </div>
+
+
+                                                    <div class="text-center"> <span id="statuspText"></span> </div>
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12 mt-4">
+                                                            <p class="text-center mb-5" id="cancle"><a
+                                                                    href="decline?trans_id={{ $trans_id }}"> Cancle
+                                                                    Transaction </a></p>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="row">
+                                                        <div class="col-md-12 mt-4">
+                                                            <p class="text-center mb-5" id="below-btn"><a href="https://wa.me/message/2YLDDISL57EXM1" target="_blank"> Chat with us</a></p>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- <div id="menu4" class="tab-panel">
                                     <div class="row justify-content-center">
                                         <div class="col-11">
                                             <div class="form-card">
@@ -492,7 +614,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
 
 
@@ -581,7 +703,7 @@
 
 
 
-                                            <div class="text-center mt-4"> <span id="sText"></span> </div>
+                                            <div class="text-center mt-4"> <span id="spText"></span> </div>
 
 
                                             <div class="row">
@@ -622,38 +744,35 @@
 
     <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'>
     </script>
-    <script type='text/javascript' src='#'></script>
-    <script type='text/javascript' src='#'></script>
-    <script type='text/javascript' src='#'></script>
-    <script type='text/javascript'>
-        $(document).ready(function(){
-    //Menu Toggle Script
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
 
-    // For highlighting activated tabs
-    $("#tab1").click(function () {
-        $(".tabs").removeClass("active1");
-        $(".tabs").addClass("bg-light"); 
-        $("#tab1").addClass("active1");
-        $("#tab1").removeClass("bg-light");
+    <script type='text/javascript'>
+    $(document).ready(function(){
+        //Menu Toggle Script
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+        // For highlighting activated tabs
+        $("#tab1").click(function () {
+            $(".tabs").removeClass("active1");
+            $(".tabs").addClass("bg-light");
+            $("#tab1").addClass("active1");
+            $("#tab1").removeClass("bg-light");
+        });
+        $("#tab2").click(function () {
+            $(".tabs").removeClass("active1");
+            $(".tabs").addClass("bg-light");
+            $("#tab2").addClass("active1");
+            $("#tab2").removeClass("bg-light");
+        });
+        $("#tab3").click(function () {
+            $(".tabs").removeClass("active1");
+            $(".tabs").addClass("bg-light");
+            $("#tab3").addClass("active1");
+            $("#tab3").removeClass("bg-light");
+        });
     });
-    $("#tab2").click(function () {
-        $(".tabs").removeClass("active1");
-        $(".tabs").addClass("bg-light");
-        $("#tab2").addClass("active1");
-        $("#tab2").removeClass("bg-light");
-    });
-    $("#tab3").click(function () {
-        $(".tabs").removeClass("active1");
-        $(".tabs").addClass("bg-light");
-        $("#tab3").addClass("active1");
-        $("#tab3").removeClass("bg-light");
-    });
-})
-    </script>
+</script>
 
 
     <script>
@@ -674,8 +793,71 @@
 
 
         const trx_id = document.getElementById('trx_id').value;
+        const p_account_no = document.getElementById('p_account_no').value;
 
-        const url = "https://web.enkpay.com/verify?trans_id=" + trx_id;
+
+        const url = "{{ url('') }}/verify?trans_id=" + trx_id+"&account_no="+p_account_no;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+            // Process the response data
+            console.log(data);
+
+            if (data.status === 'pending') {
+                // Repeat the request after 5 seconds
+                setTimeout(makeRequest, 5000);
+
+
+
+            } else if (data.status === 'success') {
+
+              const webhook = document.getElementById('webHook').value;
+              const amount = document.getElementById('Amount').value;
+
+               window.location.href = "{{ url('') }}/success?trans_id=" + trx_id;
+
+                repeatRequest = false; // Stop the repetition
+            }
+            })
+            .catch(error => {
+            // Handle any errors that occurred during the request
+            console.error(error);
+            });
+        }
+
+
+
+
+
+    </script>
+
+    <script>
+        let repeatRequest = true;
+
+        function makeRequest() {
+        if (!repeatRequest) {
+            return; // Stop the repetition
+        }
+
+        const button = document.getElementById('requestButtonp');
+        button.disabled = true; // Disable the button during the request
+        statuspText.textContent = 'Please wait while we verify your transaction...'; // Display the status text
+
+        document.getElementById("cancle").style.visibility = "none";
+
+
+
+        const trx_id = document.getElementById('trx_id').value;
+        const p_account_no = document.getElementById('p_account_no').value;
+
+                        console.log(url);
+
+
+        const url = "{{ url('') }}/verify?trans_id=" + trx_id+"&account_no="+p_account_no;
+
+
+
 
         fetch(url)
             .then(response => response.json())
@@ -710,7 +892,6 @@
 
 
     </script>
-
 
     <script>
         let rRequest = true;

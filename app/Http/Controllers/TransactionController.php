@@ -110,11 +110,18 @@ class TransactionController extends Controller
             $key =  $request->key;
             $amount = $request->amount;
             $email = $request->email;
+            $ref = $request->ref;
+
 
 
             $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
 
             if ($amount == null) {
+                return view('invalid');
+            }
+
+
+            if ($ref == null) {
                 return view('invalid');
             }
 
@@ -176,7 +183,7 @@ class TransactionController extends Controller
 
 
 
-            $trans_id = random_int(100000, 999999);
+            $trans_id = $ref ?? random_int(100000, 999999);
 
             $payable_amount = $amount + $both_commmission;
 
@@ -220,6 +227,7 @@ class TransactionController extends Controller
             $qrdata = $user_id. " " .$payable_amount. " " .$trans_id;
 
             $data = Crypt::encryptString($qrdata);
+
 
 
             return view('webpay', compact('payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name','total_received'));

@@ -430,7 +430,7 @@
                                                     <div class="row">
                                                         <div class="col-md-12 mt-4">
                                                             <p class="text-center mb-5" id="cancle"><a
-                                                                    href="decline?trans_id={{ $trans_id }}"> Cancle
+                                                                    href="decline?trans_id={{ $trans_id }}&key={{ $key }}"> Cancle
                                                                     Transaction </a></p>
                                                         </div>
                                                     </div>
@@ -552,8 +552,8 @@
                                                     <div class="row">
                                                         <div class="col-md-12 mt-4">
                                                             <p class="text-center mb-5" id="cancle"><a
-                                                                    href="decline?trans_id={{ $trans_id }}"> Cancle
-                                                                    Transaction </a></p>
+                                                                href="decline?trans_id={{ $trans_id }}&key={{ $key }}"> Cancle
+                                                                Transaction </a></p>
                                                         </div>
                                                     </div>
 
@@ -709,8 +709,8 @@
                                             <div class="row">
                                                 <div class="col-md-12 mt-4">
                                                     <p class="text-center mb-5" id="cancle"><a
-                                                            href="decline?trans_id={{ $trans_id }}"> Cancle Transaction
-                                                        </a></p>
+                                                        href="decline?trans_id={{ $trans_id }}&key={{ $key }}"> Cancle
+                                                    </a></p>
                                                 </div>
                                             </div>
 

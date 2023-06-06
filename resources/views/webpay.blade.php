@@ -18,6 +18,10 @@
             width: 8px;
         }
 
+        .hidden {
+            display: none;
+        }
+
         /* Track */
         ::-webkit-scrollbar-track {
             background: #f1f1f1;
@@ -233,8 +237,17 @@
         }
 
         #timer {
-            height: 100vh;
-            font-size: 10vmin;
+            height: 3vh;
+            font-size: 4vmin;
+            text-align: center;
+            text-decoration-color: darkred;
+        }
+
+        #timerv {
+            height: 3vh;
+            font-size: 4vmin;
+            text-align: center;
+            text-decoration-color: darkred;
         }
     </style>
 </head>
@@ -254,7 +267,9 @@
                         <!-- Sidebar -->
                         <div class="bg-light border-right" id="sidebar-wrapper">
 
-                            <div class="sidebar-heading pt-5 pb-4"><img src="https://enkpay.com/asset/images/logo_1684856125.png" class="rounded float-left" alt="...">
+                            <div class="sidebar-heading pt-5 pb-4"><img
+                                    src="https://enkpay.com/asset/images/logo_1684856125.png" class="rounded float-left"
+                                    alt="...">
                             </div>
                             <hr>
                             <div class="sidebar-heading pt-5 pb-4"><strong>PAY WITH</strong></div>
@@ -264,19 +279,19 @@
                             <div class="list-group list-group-flush">
 
 
-                                <a data-toggle="tab" href="#menu4" id="tab1" class="tabs list-group-item bg-light active1">
+                                <a data-toggle="tab" href="#menu4" id="tab1"
+                                    class="tabs list-group-item bg-light active1">
                                     <div class="list-div my-2">
-                                        <div class="fa fa-home"></div> &nbsp;&nbsp; Pay with Providus
+                                        <div class="fa fa-home"></div> &nbsp;&nbsp; Providus Bank
                                     </div>
                                 </a>
 
 
-                                <a data-toggle="tab" href="#menu1" id="tab1"
-                                    class="tabs list-group-item bg-light">
+                                {{-- <a data-toggle="tab" href="#menu1" id="tab1" class="tabs list-group-item bg-light">
                                     <div class="list-div my-2">
                                         <div class="fa fa-home"></div> &nbsp;&nbsp; Pay with VFD
                                     </div>
-                                </a>
+                                </a> --}}
 
 
 
@@ -407,12 +422,17 @@
                                                     <hr>
 
 
+
+
+
                                                     <div class="row mt-5 center">
 
                                                         <div class="col-12">
 
-                                                            <input type="submit" id="requestButtonp"
-                                                                onclick="makeRequest()"
+                                                            <h4 style="color:red;" id="timerv"> <span
+                                                                    id="countdownv"></span></h4>
+
+                                                            <input type="submit" id="requestButtonv"
                                                                 value="I ve sent NGN {{ number_format($payable_amount)}}"
                                                                 class="btn btn-success">
 
@@ -424,13 +444,13 @@
                                                     </div>
 
 
-                                                    <div class="text-center"> <span id="statusText"></span> </div>
 
 
                                                     <div class="row">
                                                         <div class="col-md-12 mt-4">
                                                             <p class="text-center mb-5" id="cancle"><a
-                                                                    href="decline?trans_id={{ $trans_id }}&key={{ $key }}"> Cancle
+                                                                    href="decline?trans_id={{ $trans_id }}&key={{ $key }}">
+                                                                    Cancle
                                                                     Transaction </a></p>
                                                         </div>
                                                     </div>
@@ -439,7 +459,9 @@
 
                                                     <div class="row">
                                                         <div class="col-md-12 mt-4">
-                                                            <p class="text-center mb-5" id="below-btn"><a href="https://wa.me/message/2YLDDISL57EXM1" target="_blank"> Chat with us</a></p>
+                                                            <p class="text-center mb-5" id="below-btn"><a
+                                                                    href="https://wa.me/message/2YLDDISL57EXM1"
+                                                                    target="_blank"> Chat with us</a></p>
                                                         </div>
                                                     </div>
 
@@ -477,7 +499,7 @@
                                                             <div>
                                                                 <h5>{{ $p_account_no ?? "Not Available" }}</h5>
                                                                 <input type="number" id="p_account_no" hidden
-                                                                value="{{ $p_account_no}}">
+                                                                    value="{{ $p_account_no}}">
                                                             </div>
                                                         </div>
 
@@ -533,8 +555,10 @@
 
                                                         <div class="col-12">
 
-                                                            <input type="submit" id="requestButton"
-                                                                onclick="makeRequest()"
+
+                                                            <h4 style="color:red;" id="timer"> <span
+                                                                    id="countdown"></span></h4>
+                                                            <input type="submit" id="requestButtonp"
                                                                 value="I ve sent NGN {{ number_format($payable_amount)}}"
                                                                 class="btn btn-success">
 
@@ -552,8 +576,9 @@
                                                     <div class="row">
                                                         <div class="col-md-12 mt-4">
                                                             <p class="text-center mb-5" id="cancle"><a
-                                                                href="decline?trans_id={{ $trans_id }}&key={{ $key }}"> Cancle
-                                                                Transaction </a></p>
+                                                                    href="decline?trans_id={{ $trans_id }}&key={{ $key }}">
+                                                                    Cancle
+                                                                    Transaction </a></p>
                                                         </div>
                                                     </div>
 
@@ -561,7 +586,9 @@
 
                                                     <div class="row">
                                                         <div class="col-md-12 mt-4">
-                                                            <p class="text-center mb-5" id="below-btn"><a href="https://wa.me/message/2YLDDISL57EXM1" target="_blank"> Chat with us</a></p>
+                                                            <p class="text-center mb-5" id="below-btn"><a
+                                                                    href="https://wa.me/message/2YLDDISL57EXM1"
+                                                                    target="_blank"> Chat with us</a></p>
                                                         </div>
                                                     </div>
 
@@ -618,7 +645,7 @@
 
 
 
-                                <div id="menu2" class="tab-pane">
+                                {{-- <div id="menu2" class="tab-pane">
                                     <div class="row justify-content-center">
                                         <div class="col-11">
                                             <div class="form-card">
@@ -659,12 +686,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-
-
-
-
+                                </div> --}}
 
 
 
@@ -686,7 +708,8 @@
                                             </div>
 
                                             <div class="row justify-content-center mt-5">
-                                                {!! SimpleSoftwareIO\QrCode\Facades\QrCode::size(200)->generate($data) !!}
+                                                {!! SimpleSoftwareIO\QrCode\Facades\QrCode::size(200)->generate($data)
+                                                !!}
 
 
                                             </div>
@@ -696,7 +719,8 @@
                                             <div class="row justify-content-center mt-5">
 
                                                 <input type="submit" id="mybutton" onclick="myRequest()"
-                                                    value="I ve sent NGN {{ number_format($payable_amount) }}" class="btn btn-success">
+                                                    value="I ve sent NGN {{ number_format($payable_amount) }}"
+                                                    class="btn btn-success">
 
                                             </div>
 
@@ -709,8 +733,9 @@
                                             <div class="row">
                                                 <div class="col-md-12 mt-4">
                                                     <p class="text-center mb-5" id="cancle"><a
-                                                        href="decline?trans_id={{ $trans_id }}&key={{ $key }}"> Cancle
-                                                    </a></p>
+                                                            href="decline?trans_id={{ $trans_id }}&key={{ $key }}">
+                                                            Cancle
+                                                        </a></p>
                                                 </div>
                                             </div>
 
@@ -718,7 +743,9 @@
 
                                             <div class="row">
                                                 <div class="col-md-12 mt-4">
-                                                    <p class="text-center mb-5" id="below-btn"><a href="https://wa.me/message/2YLDDISL57EXM1" target="_blank"> Chat with us</a></p>
+                                                    <p class="text-center mb-5" id="below-btn"><a
+                                                            href="https://wa.me/message/2YLDDISL57EXM1" target="_blank">
+                                                            Chat with us</a></p>
                                                 </div>
                                             </div>
 
@@ -746,7 +773,7 @@
     </script>
 
     <script type='text/javascript'>
-    $(document).ready(function(){
+        $(document).ready(function(){
         //Menu Toggle Script
         $("#menu-toggle").click(function(e) {
             e.preventDefault();
@@ -772,24 +799,20 @@
             $("#tab3").removeClass("bg-light");
         });
     });
-</script>
+    </script>
 
-
+    //Providus
     <script>
         let repeatRequest = true;
+
 
         function makeRequest() {
         if (!repeatRequest) {
             return; // Stop the repetition
         }
 
-        const button = document.getElementById('requestButton');
-        button.disabled = true; // Disable the button during the request
-        statusText.textContent = 'Please wait while we verify your transaction...'; // Display the status text
-
 
         document.getElementById("cancle").style.visibility = "none";
-
 
 
         const trx_id = document.getElementById('trx_id').value;
@@ -828,70 +851,134 @@
 
 
 
+        function startTimer(duration, display) {
+            let timer = duration;
+            const countdownElement = document.getElementById(display);
+
+            const intervalId = setInterval(function() {
+                const minutes = Math.floor(timer / 60);
+                const seconds = timer % 60;
+
+                countdownElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+
+
+
+
+              if (timer === 0) {
+                clearInterval(intervalId);
+                countdownElement.textContent = "Click chat with us to report the transaction";
+
+              }
+
+              timer--;
+            }, 1000);
+          }
+
+
+      const btn =    document.getElementById('requestButtonp');
+      btn.addEventListener("click", function(){
+        document.getElementById('requestButtonp').classList.add('hidden');
+
+        startTimer(300, 'countdown');
+        makeRequest()
+      })
 
 
     </script>
 
+    //VFD
     <script>
         let repeatRequest = true;
 
-        function makeRequest() {
-        if (!repeatRequest) {
-            return; // Stop the repetition
+
+    function makeRequest() {
+    if (!repeatRequest) {
+        return; // Stop the repetition
+    }
+
+
+    document.getElementById("cancle").style.visibility = "none";
+
+
+    const trx_id = document.getElementById('trx_id').value;
+    const p_account_no = document.getElementById('p_account_no').value;
+
+
+    const url = "{{ url('') }}/verify?trans_id=" + trx_id+"&account_no="+p_account_no;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+        // Process the response data
+        console.log(data);
+
+        if (data.status === 'pending') {
+            // Repeat the request after 5 seconds
+            setTimeout(makeRequest, 5000);
+
+
+
+        } else if (data.status === 'success') {
+
+          const webhook = document.getElementById('webHook').value;
+          const amount = document.getElementById('Amount').value;
+
+           window.location.href = "{{ url('') }}/success?trans_id=" + trx_id;
+
+            repeatRequest = false; // Stop the repetition
         }
-
-        const button = document.getElementById('requestButtonp');
-        button.disabled = true; // Disable the button during the request
-        statuspText.textContent = 'Please wait while we verify your transaction...'; // Display the status text
-
-        document.getElementById("cancle").style.visibility = "none";
-
-
-
-        const trx_id = document.getElementById('trx_id').value;
-        const p_account_no = document.getElementById('p_account_no').value;
-
-                        console.log(url);
-
-
-        const url = "{{ url('') }}/verify?trans_id=" + trx_id+"&account_no="+p_account_no;
+        })
+        .catch(error => {
+        // Handle any errors that occurred during the request
+        console.error(error);
+        });
+    }
 
 
 
+    function startTimer(duration, display) {
+        let timerv = duration;
+        const countdownvElement = document.getElementById(display);
 
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-            // Process the response data
-            console.log(data);
+        const intervalId = setInterval(function() {
+            const minutes = Math.floor(timer / 60);
+            const seconds = timer % 60;
 
-            if (data.status === 'pending') {
-                // Repeat the request after 5 seconds
-                setTimeout(makeRequest, 5000);
-
-
-
-            } else if (data.status === 'success') {
-
-              const webhook = document.getElementById('webHook').value;
-              const amount = document.getElementById('Amount').value;
-
-               window.location.href = "https://web.enkpay.com/success?trans_id=" + trx_id;
-
-                repeatRequest = false; // Stop the repetition
-            }
-            })
-            .catch(error => {
-            // Handle any errors that occurred during the request
-            console.error(error);
-            });
-        }
+            countdownvElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
 
 
 
 
-    </script>
+          if (timerv === 0) {
+            clearInterval(intervalId);
+            countdownvElement.textContent = "Click chat with us to report the transaction";
+
+          }
+
+          timerv--;
+        }, 1000);
+      }
+
+
+  const btn =    document.getElementById('requestButtonv');
+  btn.addEventListener("click", function(){
+    document.getElementById('requestButtonv').classList.add('hidden');
+
+    startTimer(300, 'countdownv');
+    makeRequest()
+  })
+
+
+</script>
+
+
+
+
+
+
+
 
     <script>
         let rRequest = true;

@@ -105,6 +105,7 @@ class TransactionController extends Controller
     public function webpay_view(Request $request)
     {
 
+
         // try {
 
             $key =  $request->key;

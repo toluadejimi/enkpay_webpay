@@ -481,8 +481,8 @@
                                             <div class="form-card">
                                                 <h3 class="mt-0 mb-4 text-center">Pay to this bank details below</h3>
 
-                                                    <p  class="mt-0 my-5 text-center text-danger"> Pay exactly NGN {{number_format($payable_amount ?? "0.00") }} to
-                                                    the account details<br> below to avoid delay or failed transaction.</p>
+                                                    <p  class="mt-0 my-5 text-center text-danger"> Pay exactly NGN {{number_format($payable_amount ?? "0.00") }}
+                                                    <br>to avoid delay or failed transaction.</p>
 
 
                                                 <div class="mt-0 mb-4 text-center">

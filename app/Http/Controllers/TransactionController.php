@@ -186,7 +186,9 @@ class TransactionController extends Controller
 
             $trans_id = $ref ?? random_int(100000, 999999);
 
-            $payable_amount = $amount + $both_commmission;
+            $payable_amount1 = $amount + $both_commmission;
+
+            $payable_amount = round($payable_amount1);
 
             $total_received = 0.00;
 

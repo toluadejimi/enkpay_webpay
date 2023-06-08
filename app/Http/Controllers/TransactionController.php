@@ -142,6 +142,7 @@ class TransactionController extends Controller
             $account_details = VirtualAccount::where('user_id', $user_id)->get();
 
 
+            $charge_status = Webkey::where('key', $key)->first()->charge_status ?? null;
 
             $status = Webkey::where('key', $key)
                 ->first()->status ?? null;
@@ -174,6 +175,8 @@ class TransactionController extends Controller
             // $web_charges = Charge::where('title', 'webcharge')
             //     ->first()->amount;
 
+
+
             $web_commission = Charge::where('title', 'bwebpay')->first()->amount;
             //Both Commission
             $amount1 = $web_commission / 100;
@@ -186,9 +189,20 @@ class TransactionController extends Controller
 
             $trans_id = $ref ?? random_int(100000, 999999);
 
-            $payable_amount1 = $amount + $both_commmission;
+            if($charge_status == 0){
 
-            $payable_amount = round($payable_amount1);
+                $payable_amount = $amount;
+
+            }else{
+
+                $payable_amount1 = $amount + $both_commmission;
+                $payable_amount = round($payable_amount1);
+
+            }
+
+
+
+
 
             $total_received = 0.00;
 

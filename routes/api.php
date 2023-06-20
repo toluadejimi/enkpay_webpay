@@ -26,6 +26,10 @@ Route::get('get-banks',[TransactionController::class, 'get_banks']);
 Route::post('resolve-bank',[TransactionController::class, 'resolve_bank']);
 
 
+Route::post('verify-woo',[TransactionController::class, 'vefify_woo']);
+
+
+
 Route::post('create-dynamic-account',[VirtualController::class, 'create_dynamic_account']);
 
 

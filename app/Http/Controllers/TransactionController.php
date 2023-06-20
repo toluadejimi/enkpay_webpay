@@ -497,7 +497,10 @@ class TransactionController extends Controller
 
 
 
-    public function resolve_bank(request $request)
+
+
+
+    public function resolve_providus_bank(request $request)
     {
 
 
@@ -511,8 +514,9 @@ class TransactionController extends Controller
             $databody = array(
 
                 'accountNumber' => $account_number,
-                'institutionCode' => $bank_code,
-                'channel' => "Bank",
+                'beneficiaryBank' => $bank_code,
+                'userName' => env('PUSERNAME'),
+                'password' => env('PPASS'),
 
             );
 
@@ -573,6 +577,47 @@ class TransactionController extends Controller
 
 
 
+    public function verify_woo(request $request)
+    {
+
+
+        $ref = $request->trans_id;
+
+        if($ref != null){
+
+
+            $trx = WebTransfer::where('trans_id', $ref)->first() ?? null;
+
+            if($trx != null){
+
+
+                return response()->json([
+                    'status' => true,
+                    'detail' => 'success',
+                    'price' =>  $trx->payable_amount,
+                ], 200);
+
+            }else{
+
+                return response()->json([
+                    'status' => false,
+                    'detail' => 'Transaction not found'
+                ], 500);
+
+            }
+
+        }else{
+
+            return response()->json([
+                'status' => false,
+                'detail' => 'Ref ID can not be null'
+            ], 500);
+
+
+
+        }
+
+    }
 
 
 }

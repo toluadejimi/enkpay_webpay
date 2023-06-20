@@ -590,10 +590,20 @@ class TransactionController extends Controller
 
             if($trx != null){
 
+                if($trx->status == 1){
+
+                    return response()->json([
+                        'status' => true,
+                        'detail' => 'success',
+                        'price' =>  $trx->payable_amount,
+                    ], 200);
+
+                }
+                
 
                 return response()->json([
                     'status' => true,
-                    'detail' => 'success',
+                    'detail' => 'pending',
                     'price' =>  $trx->payable_amount,
                 ], 200);
 

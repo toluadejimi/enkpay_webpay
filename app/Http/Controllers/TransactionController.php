@@ -183,7 +183,7 @@ class TransactionController extends Controller
             //Both Commission
             $amount1 = $web_commission / 100;
             $amount2 = $amount1 * $amount;
-            $both_commmission = number_format($amount2, 3);
+            $both_commmission = number_format($amount2, 2);
 
 
 
@@ -766,29 +766,7 @@ class TransactionController extends Controller
 
             if ($get_trans_id == null) {
                 // $trans = new Webtransfer();
-                // $trans->amount = $amount;
-                // $trans->user_id = $user_id;
-                // $trans->v_account_no = $v_account_no;
-                // $trans->v_account_name = $v_account_name;
-                // $trans->bank_name = $bank_name;
-                // $trans->web_charges = $both_commmission;
-                // $trans->trans_id = $trans_id;
-                // $trans->payable_amount = $payable_amount;
-                // $trans->total_received = $total_received;
-                // $trans->save();
-
-                $trans = new Webtransfer();
-                $trans->amount = $amount;
-                $trans->user_id = $user_id;
-                $trans->v_account_no = $p_account_no;
-                $trans->v_account_name = $p_account_name;
-                $trans->bank_name = $p_bank_name;
-                $trans->web_charges = $both_commmission;
-                $trans->trans_id = $trans_id;
-                $trans->payable_amount = $payable_amount;
-                $trans->total_received = $total_received;
-                $trans->wc_order = $wc_order;
-                $trans->save();
+               
             }
 
             $qrdata = $user_id. " " .$payable_amount. " " .$trans_id;
@@ -796,7 +774,7 @@ class TransactionController extends Controller
             $data = Crypt::encryptString($qrdata);
 
 
-            $url = "https://web.enkpay.com/pay?amount=$payable_amount&key=$key&ref=$trans_id";
+            $url = "https://web.enkpay.com/pay?amount=$amount&key=$key&ref=$trans_id";
 
 
             return response()->json([

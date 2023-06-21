@@ -243,7 +243,7 @@ class TransactionController extends Controller
                 $trans->v_account_no = $p_account_no;
                 $trans->v_account_name = $p_account_name;
                 $trans->bank_name = $p_bank_name;
-                $trans->web_charges = $both_commmission;
+                $trans->web_charges = $commmission;
                 $trans->trans_id = $trans_id;
                 $trans->payable_amount = $payable_amount;
                 $trans->total_received = $total_received;

@@ -187,6 +187,13 @@ class TransactionController extends Controller
 
 
 
+            if($both_commmission >= 300){
+                $commmission = 300;
+            }else{
+                $commmission = $both_commmission;
+            }
+
+
 
 
             $trans_id = $ref ?? random_int(100000, 999999);
@@ -197,7 +204,7 @@ class TransactionController extends Controller
 
             }else{
 
-                $payable_amount1 = $amount + $both_commmission;
+                $payable_amount1 = $amount + $commmission;
                 $payable_amount = round($payable_amount1);
 
             }
@@ -644,7 +651,7 @@ class TransactionController extends Controller
     {
 
 
-        try {
+        // try {
 
             $key =  $request->key;
             $amount = $request->amount;
@@ -782,9 +789,9 @@ class TransactionController extends Controller
                 'data' => $url,
             ], 200);
 
-        } catch (\Exception $th) {
-            return $th->getMessage();
-        }
+        // } catch (\Exception $th) {
+        //     return $th->getMessage();
+        // }
     }
 
 

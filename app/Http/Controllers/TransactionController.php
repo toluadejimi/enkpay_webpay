@@ -421,7 +421,7 @@ class TransactionController extends Controller
         $client_id = Webtransfer::where('trans_id', $trans_id)
         ->first()->client_id ?? null;
 
-        
+
 
 
         $amount_received = Webtransfer::where('trans_id', $trans_id)
@@ -682,7 +682,7 @@ class TransactionController extends Controller
 
 
             if ($ref == null) {
-                $ref = "ENK-".random_int(000000, 999999); 
+                $ref = "ENK-".random_int(000000, 999999);
             }
 
 
@@ -760,7 +760,7 @@ class TransactionController extends Controller
 
             }else{
 
-                $payable_amount1 = $amount + $both_commmission;
+                $payable_amount1 = (int)$amount + (int)$both_commmission;
                 $payable_amount = round($payable_amount1);
 
             }
@@ -782,7 +782,7 @@ class TransactionController extends Controller
 
             if ($get_trans_id == null) {
                 // $trans = new Webtransfer();
-               
+
             }
 
             $qrdata = $user_id. " " .$payable_amount. " " .$trans_id;

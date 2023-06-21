@@ -418,12 +418,18 @@ class TransactionController extends Controller
         ->first()->wc_order ?? null;
 
 
+        $redirectURL = Webtransfer::where('trans_id', $trans_id)
+        ->first()->redirectURL ?? null;
+
+        
+
+
         $amount_received = Webtransfer::where('trans_id', $trans_id)
             ->first()->total_received ?? null;
 
         $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
 
-        $webhook = $marchant_url . "?amount=$amount&trans_id=$trans_id&status=success&wc_order=$wc_order";
+        $webhook = $marchant_url . "?amount=$amount&trans_id=$trans_id&status=success&wc_order=$wc_order&redirectURL=$redirectURL";
 
 
 

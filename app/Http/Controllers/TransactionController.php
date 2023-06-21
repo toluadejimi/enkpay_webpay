@@ -113,7 +113,7 @@ class TransactionController extends Controller
             $email = $request->email;
             $ref = $request->ref;
             $wc_order = $request->wc_order;
-            $redirectURL = $request->redirectURL;
+            $client_id = $request->client_id;
 
 
 
@@ -250,7 +250,7 @@ class TransactionController extends Controller
                 $trans->payable_amount = $payable_amount;
                 $trans->total_received = $total_received;
                 $trans->wc_order = $wc_order;
-                $trans->redirectURL = $redirectURL;
+                $trans->client_id = $client_id;
                 $trans->save();
             }
 
@@ -418,8 +418,8 @@ class TransactionController extends Controller
         ->first()->wc_order ?? null;
 
 
-        $redirectURL = Webtransfer::where('trans_id', $trans_id)
-        ->first()->redirectURL ?? null;
+        $client_id = Webtransfer::where('trans_id', $trans_id)
+        ->first()->client_id ?? null;
 
         
 
@@ -429,7 +429,7 @@ class TransactionController extends Controller
 
         $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
 
-        $webhook = $marchant_url . "?amount=$amount&trans_id=$trans_id&status=success&wc_order=$wc_order&redirectURL=$redirectURL";
+        $webhook = $marchant_url . "?amount=$amount&trans_id=$trans_id&status=success&wc_order=$wc_order&client_id=$client_id";
 
 
 

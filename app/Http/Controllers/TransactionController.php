@@ -611,7 +611,7 @@ class TransactionController extends Controller
                 return response()->json([
                     'status' => true,
                     'detail' => 'pending',
-                    'price' =>  $trx->payable_amount,
+                    'payable_amount' =>  $trx->payable_amount,
                 ], 200);
 
             }else{
@@ -634,6 +634,179 @@ class TransactionController extends Controller
 
         }
 
+
+
+
+    }
+
+
+    public function initialize_payment(Request $request)
+    {
+
+
+        try {
+
+            $key =  $request->key;
+            $amount = $request->amount;
+            $email = $request->email;
+            $ref = $request->ref;
+            $wc_order = $request->wc_order;
+
+
+
+
+            $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
+
+            if ($amount == null) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Amount can not be null'
+                ], 500);
+            }
+
+
+            if ($ref == null) {
+                $ref = "ENK-".random_int(000000, 999999); 
+            }
+
+
+            if ($key == null) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Key can not be null'
+                ], 500);
+            }
+
+            $user_id = Webkey::where('key', $key)
+                ->first()->user_id ?? null;
+
+            if ($user_id == null) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Webkey is invalid'
+                ], 500);
+            }
+
+
+            $account_details = VirtualAccount::where('user_id', $user_id)->get();
+
+
+            $charge_status = Webkey::where('key', $key)->first()->charge_status ?? null;
+
+            $status = Webkey::where('key', $key)
+                ->first()->status ?? null;
+
+            $v_account_no = VirtualAccount::where('user_id', $user_id)
+            ->where('v_bank_name', 'VFD MFB')
+            ->first()->v_account_no ?? null;
+
+            $v_account_name = VirtualAccount::where('user_id', $user_id)
+            ->where('v_bank_name', 'VFD MFB')
+            ->first()->v_account_name ?? null;
+
+            $bank_name = VirtualAccount::where('user_id', $user_id)
+            ->where('v_bank_name', 'VFD MFB')
+            ->first()->v_bank_name ?? null;
+
+
+            $p_account_no = VirtualAccount::where('user_id', $user_id)
+            ->where('v_bank_name', 'PROVIDUS BANK')
+            ->first()->v_account_no ?? null;
+
+            $p_account_name = VirtualAccount::where('user_id', $user_id)
+            ->where('v_bank_name', 'PROVIDUS BANK')
+            ->first()->v_account_name ?? null;
+
+            $p_bank_name = VirtualAccount::where('user_id', $user_id)
+            ->where('v_bank_name', 'PROVIDUS BANK')
+            ->first()->v_bank_name ?? null;
+
+            // $web_charges = Charge::where('title', 'webcharge')
+            //     ->first()->amount;
+
+
+
+            $web_commission = Charge::where('title', 'bwebpay')->first()->amount;
+            //Both Commission
+            $amount1 = $web_commission / 100;
+            $amount2 = $amount1 * $amount;
+            $both_commmission = number_format($amount2, 3);
+
+
+
+
+
+            $trans_id = $ref;
+
+            if($charge_status == 0){
+
+                $payable_amount = $amount;
+
+            }else{
+
+                $payable_amount1 = $amount + $both_commmission;
+                $payable_amount = round($payable_amount1);
+
+            }
+
+
+
+
+
+            $total_received = 0.00;
+
+            $webhook = $marchant_url;
+
+
+
+
+            $get_trans_id = Webtransfer::where('trans_id', $trans_id)
+            ->first()->trans_id ?? null;
+
+
+            if ($get_trans_id == null) {
+                // $trans = new Webtransfer();
+                // $trans->amount = $amount;
+                // $trans->user_id = $user_id;
+                // $trans->v_account_no = $v_account_no;
+                // $trans->v_account_name = $v_account_name;
+                // $trans->bank_name = $bank_name;
+                // $trans->web_charges = $both_commmission;
+                // $trans->trans_id = $trans_id;
+                // $trans->payable_amount = $payable_amount;
+                // $trans->total_received = $total_received;
+                // $trans->save();
+
+                $trans = new Webtransfer();
+                $trans->amount = $amount;
+                $trans->user_id = $user_id;
+                $trans->v_account_no = $p_account_no;
+                $trans->v_account_name = $p_account_name;
+                $trans->bank_name = $p_bank_name;
+                $trans->web_charges = $both_commmission;
+                $trans->trans_id = $trans_id;
+                $trans->payable_amount = $payable_amount;
+                $trans->total_received = $total_received;
+                $trans->wc_order = $wc_order;
+                $trans->save();
+            }
+
+            $qrdata = $user_id. " " .$payable_amount. " " .$trans_id;
+
+            $data = Crypt::encryptString($qrdata);
+
+
+            $url = "https://web.enkpay.com/pay?amount=$payable_amount&key=$key&ref=$trans_id";
+
+
+            return response()->json([
+                'status' => true,
+                'data' => $url,
+            ], 200);
+
+        } catch (\Exception $th) {
+            return $th->getMessage();
+        }
     }
 
 

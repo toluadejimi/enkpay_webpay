@@ -113,6 +113,8 @@ class TransactionController extends Controller
             $email = $request->email;
             $ref = $request->ref;
             $wc_order = $request->wc_order;
+            $redirectURL = $request->redirectURL;
+
 
 
 
@@ -248,6 +250,7 @@ class TransactionController extends Controller
                 $trans->payable_amount = $payable_amount;
                 $trans->total_received = $total_received;
                 $trans->wc_order = $wc_order;
+                $trans->redirectURL = $redirectURL;
                 $trans->save();
             }
 

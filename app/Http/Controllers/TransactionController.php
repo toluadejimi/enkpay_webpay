@@ -603,6 +603,7 @@ class TransactionController extends Controller
     public function verify_woo(request $request)
     {
 
+        dd($request->all());
 
         $ref = $request->trans_id;
 

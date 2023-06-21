@@ -411,7 +411,7 @@ class TransactionController extends Controller
 
 
         $amount = Webtransfer::where('trans_id', $trans_id)
-            ->first()->amount;
+        ->first()->amount;
 
 
         $wc_order = Webtransfer::where('trans_id', $trans_id)
@@ -618,7 +618,7 @@ class TransactionController extends Controller
                     return response()->json([
                         'status' => true,
                         'detail' => 'success',
-                        'price' =>  $trx->payable_amount,
+                        'price' =>  $trx->amount,
                     ], 200);
 
                 }
@@ -627,7 +627,7 @@ class TransactionController extends Controller
                 return response()->json([
                     'status' => true,
                     'detail' => 'pending',
-                    'payable_amount' =>  $trx->payable_amount,
+                    'price' =>  $trx->amount,
                 ], 200);
 
             }else{

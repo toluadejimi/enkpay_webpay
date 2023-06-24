@@ -436,7 +436,7 @@ class TransactionController extends Controller
         $webhook = $marchant_url . "?amount=$amount&trans_id=$trans_id&status=success&wc_order=$wc_order&client_id=$client_id" ?? null;
 
 
-        $recepit = "https://web.enkpay.com/receipt-view?trans_id=$trans_id&amount=$amount";
+        $recepit = "https://web.enkpay.com/receipt?trans_id=$trans_id&amount=$amount";
 
         return view('success', compact('webhook', 'wc', 'recepit'));
     }

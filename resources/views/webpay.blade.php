@@ -2,6 +2,8 @@
 <html>
 
 <head>
+
+
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <title>ENKPAY | WEBPAY</title>
@@ -249,10 +251,60 @@
             text-align: center;
             text-decoration-color: darkred;
         }
+
+        /* Spinner animation */
+.spinner {
+    position: relative;
+    top: 35%;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 100%;
+    -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+    animation: sk-scaleout 1.0s infinite ease-in-out;
+  }
+  
+  @-webkit-keyframes sk-scaleout {
+    0% { -webkit-transform: scale(0) }
+    100% {
+      -webkit-transform: scale(1.0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes sk-scaleout {
+    0% {
+      -webkit-transform: scale(0);
+      transform: scale(0);
+    } 100% {
+      -webkit-transform: scale(1.0);
+      transform: scale(1.0);
+      opacity: 0;
+    }
+  }
+
+
     </style>
 </head>
 
+<script>
+    function hideLoader(){
+      $('.page-loader').fadeOut('slow');
+    }
+</script>
+
+
+<div class="page-loader">
+    <div class="spinner"></div>
+    <div class="txt">ENKPAY</div>
+</div>
+
+
+
 <body className='snippet-body'>
+
+
     <div class="container-fluid px-0" id="bg-div">
 
         <div class="row justify-content-center">
@@ -972,6 +1024,15 @@
     startTimer(300, 'countdownv');
     makeRequest()
   })
+
+
+
+
+
+
+
+
+
 
 
 </script>

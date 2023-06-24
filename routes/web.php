@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\BotManController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +19,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+
+
+Route::match(['get', 'post'], '/botman', 'BotManController@handle');
+
+Route::get('custom-pay', [TransactionController::class, 'custom_pay']);
+Route::post('custom-pay-now', [TransactionController::class, 'custom_pay_now']);
 
 
 Route::get('pay', [TransactionController::class, 'webpay_view']);

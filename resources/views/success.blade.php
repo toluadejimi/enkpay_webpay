@@ -1191,6 +1191,21 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="elementor-element elementor-element-dbcaaf8 elementor-align-center elementor-widget elementor-widget-button"
+                        data-id="dbcaaf8" data-element_type="widget" data-widget_type="button.default">
+                        <div class="elementor-widget-container">
+                            <div class="elementor-button-wrapper">
+                                <a href="{{ $recepit }}" class="elementor-button-link elementor-button elementor-size-sm"
+                                    role="button">
+                                    <span class="elementor-button-content-wrapper">
+                                        <span class="elementor-button-text">View / Print Recepit</span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                         </div>
+
                         @else
                         <div class="elementor-element elementor-element-dbcaaf8 elementor-align-center elementor-widget elementor-widget-button"
                             data-id="dbcaaf8" data-element_type="widget" data-widget_type="button.default">
@@ -1200,6 +1215,20 @@
                                         role="button">
                                         <span class="elementor-button-content-wrapper">
                                             <span class="elementor-button-text">Return Back</span>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="elementor-element elementor-element-dbcaaf8 elementor-align-center elementor-widget elementor-widget-button"
+                            data-id="dbcaaf8" data-element_type="widget" data-widget_type="button.default">
+                            <div class="elementor-widget-container">
+                                <div class="elementor-button-wrapper">
+                                    <a href="{{ $recepit }}" class="elementor-button-link elementor-button elementor-size-sm"
+                                        role="button">
+                                        <span class="elementor-button-content-wrapper">
+                                            <span class="elementor-button-text">View / Print Recepit</span>
                                         </span>
                                     </a>
                                 </div>

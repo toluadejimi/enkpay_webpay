@@ -392,6 +392,7 @@ class TransactionController extends Controller
 
 
 
+
     public function success(Request $request)
     {
 
@@ -406,7 +407,7 @@ class TransactionController extends Controller
         $key = Webkey::where('user_id', $user_id)
             ->first()->key ?? null;
 
-      
+
 
         $status = Webtransfer::where('trans_id', $trans_id)
             ->first()->status ?? null;
@@ -426,6 +427,7 @@ class TransactionController extends Controller
 
 
 
+
         $amount_received = Webtransfer::where('trans_id', $trans_id)
             ->first()->total_received ?? null;
 
@@ -434,8 +436,9 @@ class TransactionController extends Controller
         $webhook = $marchant_url . "?amount=$amount&trans_id=$trans_id&status=success&wc_order=$wc_order&client_id=$client_id" ?? null;
 
 
+        $recepit = "https://web.enkpay.com/receipt-view?trans_id=$trans_id&amount=$amount";
 
-        return view('success', compact('webhook', 'wc'));
+        return view('success', compact('webhook', 'wc', 'recepit'));
     }
 
 
@@ -985,5 +988,18 @@ class TransactionController extends Controller
         // } catch (\Exception $th) {
         //     return $th->getMessage();
         // }
+    }
+
+
+
+    public function receipt(Request $request)
+    {
+
+        $data['trans_id'] = $request->trans_id ?? "ENKPAY";
+        $data['amount'] = $request->amount ?? 0;
+
+
+        return view('receipt-view', $data);
+
     }
 }

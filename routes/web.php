@@ -23,7 +23,10 @@ Route::get('/', function () {
 
 
 
-Route::match(['get', 'post'], '/botman', 'BotManController@handle');
+
+Route::get('receipt', [TransactionController::class, 'receipt']);
+
+//Route::match(['get', 'post'], '/botman', 'BotManController@handle');
 
 Route::get('custom-pay', [TransactionController::class, 'custom_pay']);
 Route::post('custom-pay-now', [TransactionController::class, 'custom_pay_now']);
@@ -42,6 +45,9 @@ Route::get('decline', [TransactionController::class, 'decline']);
 
 
 Route::get('processing', [TransactionController::class, 'processing']);
+
+
+
 
 
 

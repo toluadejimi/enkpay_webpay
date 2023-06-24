@@ -264,7 +264,7 @@
     -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
     animation: sk-scaleout 1.0s infinite ease-in-out;
   }
-  
+
   @-webkit-keyframes sk-scaleout {
     0% { -webkit-transform: scale(0) }
     100% {
@@ -272,7 +272,7 @@
       opacity: 0;
     }
   }
-  
+
   @keyframes sk-scaleout {
     0% {
       -webkit-transform: scale(0);
@@ -295,14 +295,19 @@
 </script>
 
 
-<div class="page-loader">
-    <div class="spinner"></div>
-    <div class="txt">ENKPAY</div>
-</div>
 
 
 
 <body className='snippet-body'>
+
+
+    <div class="page-loader">
+        <div class="spinner"></div>
+        <div class="txt">ENKPAY</div>
+    </div>
+
+
+    <body onload="hideLoader()">
 
 
     <div class="container-fluid px-0" id="bg-div">

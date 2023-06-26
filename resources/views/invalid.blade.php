@@ -1262,22 +1262,22 @@
 		}());
     </script>
     <span class="ssp-id" style="display:none">213</span>
-    <script src="{{url('')}}/public/public/wp-includes/js/jquery/jquery.min.js?ver=3.6.3" id="jquery-core-js"></script>
-    <script src="{{url('')}}/public/public/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.0" id="jquery-migrate-js"></script>
-    <script src="{{url('')}}/public/public/wp-content/plugins/elementor-pro/assets/lib/lottie/lottie.min.js?ver=5.6.6" id="lottie-js">
+    <script src="{{url('')}}/public/wp-includes/js/jquery/jquery.min.js?ver=3.6.3" id="jquery-core-js"></script>
+    <script src="{{url('')}}/public/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.0" id="jquery-migrate-js"></script>
+    <script src="{{url('')}}/public/wp-content/plugins/elementor-pro/assets/lib/lottie/lottie.min.js?ver=5.6.6" id="lottie-js">
     </script>
-    <script src="{{url('')}}/public/public/wp-content/plugins/elementor-pro/assets/js/webpack-pro.runtime.min.js?ver=3.12.3"
+    <script src="{{url('')}}/public/wp-content/plugins/elementor-pro/assets/js/webpack-pro.runtime.min.js?ver=3.12.3"
         id="elementor-pro-webpack-runtime-js"></script>
-    <script src="{{url('')}}/public/public/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=3.12.2"
+    <script src="{{url('')}}/public/wp-content/plugins/elementor/assets/js/webpack.runtime.min.js?ver=3.12.2"
         id="elementor-webpack-runtime-js"></script>
-    <script src="{{url('')}}/public/public/wp-content/plugins/elementor/assets/js/frontend-modules.min.js?ver=3.12.2"
+    <script src="{{url('')}}/public/wp-content/plugins/elementor/assets/js/frontend-modules.min.js?ver=3.12.2"
         id="elementor-frontend-modules-js"></script>
-    <script src="{{url('')}}/public/public/wp-includes/js/dist/vendor/wp-polyfill-inert.min.js?ver=3.1.2" id="wp-polyfill-inert-js"></script>
-    <script src="{{url('')}}/public/public/wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.13.11" id="regenerator-runtime-js">
+    <script src="{{url('')}}/public/wp-includes/js/dist/vendor/wp-polyfill-inert.min.js?ver=3.1.2" id="wp-polyfill-inert-js"></script>
+    <script src="{{url('')}}/public/wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.13.11" id="regenerator-runtime-js">
     </script>
-    <script src="{{url('')}}/public/public/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0" id="wp-polyfill-js"></script>
-    <script src="{{url('')}}/public/public/wp-includes/js/dist/hooks.min.js?ver=4169d3cf8e8d95a3d6d5" id="wp-hooks-js"></script>
-    <script src="{{url('')}}/public/public/wp-includes/js/dist/i18n.min.js?ver=9e794f35a71bb98672ae" id="wp-i18n-js"></script>
+    <script src="{{url('')}}/public/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0" id="wp-polyfill-js"></script>
+    <script src="{{url('')}}/public/wp-includes/js/dist/hooks.min.js?ver=4169d3cf8e8d95a3d6d5" id="wp-hooks-js"></script>
+    <script src="{{url('')}}/public/wp-includes/js/dist/i18n.min.js?ver=9e794f35a71bb98672ae" id="wp-i18n-js"></script>
     <script id="wp-i18n-js-after">
         wp.i18n.setLocaleData({ 'text directionltr': ['ltr'] });
     </script>

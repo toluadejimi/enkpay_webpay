@@ -853,7 +853,7 @@
             font-style: normal;
             font-weight: 400;
             font-display: fallback;
-            src: url('{{url('')}}/wp-content/themes/twentytwentythree/assets/fonts/dm-sans/DMSans-Regular.woff2') format('woff2');
+            src: url('{{url('')}}/public/wp-content/themes/twentytwentythree/assets/fonts/dm-sans/DMSans-Regular.woff2') format('woff2');
             font-stretch: normal;
         }
 
@@ -862,7 +862,7 @@
             font-style: italic;
             font-weight: 400;
             font-display: fallback;
-            src: url('{{url('')}}/wp-content/themes/twentytwentythree/assets/fonts/dm-sans/DMSans-Regular-Italic.woff2') format('woff2');
+            src: url('{{url('')}}/public/wp-content/themes/twentytwentythree/assets/fonts/dm-sans/DMSans-Regular-Italic.woff2') format('woff2');
             font-stretch: normal;
         }
 
@@ -871,7 +871,7 @@
             font-style: normal;
             font-weight: 700;
             font-display: fallback;
-            src: url('{{url('')}}/wp-content/themes/twentytwentythree/assets/fonts/dm-sans/DMSans-Bold.woff2') format('woff2');
+            src: url('{{url('')}}/public/wp-content/themes/twentytwentythree/assets/fonts/dm-sans/DMSans-Bold.woff2') format('woff2');
             font-stretch: normal;
         }
 
@@ -880,7 +880,7 @@
             font-style: italic;
             font-weight: 700;
             font-display: fallback;
-            src: url('{{url('')}}/wp-content/themes/twentytwentythree/assets/fonts/dm-sans/DMSans-Bold-Italic.woff2') format('woff2');
+            src: url('{{url('')}}/public/wp-content/themes/twentytwentythree/assets/fonts/dm-sans/DMSans-Bold-Italic.woff2') format('woff2');
             font-stretch: normal;
         }
 
@@ -889,7 +889,7 @@
             font-style: normal;
             font-weight: 300;
             font-display: block;
-            src: url('{{url('')}}/wp-content/themes/twentytwentythree/assets/fonts/ibm-plex-mono/IBMPlexMono-Light.woff2') format('woff2');
+            src: url('{{url('')}}/public/wp-content/themes/twentytwentythree/assets/fonts/ibm-plex-mono/IBMPlexMono-Light.woff2') format('woff2');
             font-stretch: normal;
         }
 
@@ -898,7 +898,7 @@
             font-style: normal;
             font-weight: 400;
             font-display: block;
-            src: url('{{url('')}}/wp-content/themes/twentytwentythree/assets/fonts/ibm-plex-mono/IBMPlexMono-Regular.woff2') format('woff2');
+            src: url('{{url('')}}/public/wp-content/themes/twentytwentythree/assets/fonts/ibm-plex-mono/IBMPlexMono-Regular.woff2') format('woff2');
             font-stretch: normal;
         }
 
@@ -907,7 +907,7 @@
             font-style: italic;
             font-weight: 400;
             font-display: block;
-            src: url('{{url('')}}/wp-content/themes/twentytwentythree/assets/fonts/ibm-plex-mono/IBMPlexMono-Italic.woff2') format('woff2');
+            src: url('{{url('')}}/public/wp-content/themes/twentytwentythree/assets/fonts/ibm-plex-mono/IBMPlexMono-Italic.woff2') format('woff2');
             font-stretch: normal;
         }
 
@@ -916,7 +916,7 @@
             font-style: normal;
             font-weight: 700;
             font-display: block;
-            src: url('{{url('')}}/wp-content/themes/twentytwentythree/assets/fonts/ibm-plex-mono/IBMPlexMono-Bold.woff2') format('woff2');
+            src: url('{{url('')}}/public/wp-content/themes/twentytwentythree/assets/fonts/ibm-plex-mono/IBMPlexMono-Bold.woff2') format('woff2');
             font-stretch: normal;
         }
 
@@ -925,7 +925,7 @@
             font-style: normal;
             font-weight: 200 900;
             font-display: fallback;
-            src: url('{{url('')}}/wp-content/themes/twentytwentythree/assets/fonts/inter/Inter-VariableFont_slnt,wght.ttf') format('truetype');
+            src: url('{{url('')}}/public/wp-content/themes/twentytwentythree/assets/fonts/inter/Inter-VariableFont_slnt,wght.ttf') format('truetype');
             font-stretch: normal;
         }
 
@@ -934,7 +934,7 @@
             font-style: normal;
             font-weight: 200 900;
             font-display: fallback;
-            src: url('{{url('')}}/wp-content/themes/twentytwentythree/assets/fonts/source-serif-pro/SourceSerif4Variable-Roman.ttf.woff2') format('woff2');
+            src: url('{{url('')}}/public/wp-content/themes/twentytwentythree/assets/fonts/source-serif-pro/SourceSerif4Variable-Roman.ttf.woff2') format('woff2');
             font-stretch: normal;
         }
 
@@ -943,24 +943,24 @@
             font-style: italic;
             font-weight: 200 900;
             font-display: fallback;
-            src: url('{{url('')}}/wp-content/themes/twentytwentythree/assets/fonts/source-serif-pro/SourceSerif4Variable-Italic.ttf.woff2') format('woff2');
+            src: url('{{url('')}}/public/wp-content/themes/twentytwentythree/assets/fonts/source-serif-pro/SourceSerif4Variable-Italic.ttf.woff2') format('woff2');
             font-stretch: normal;
         }
     </style>
     <link rel="stylesheet" id="elementor-icons-css"
-        href="{{url('')}}/wp-content/plugins/elementor/assets/lib/eicons/css/elementor-icons.min.css?ver=5.18.0" media="all">
+        href="{{url('')}}/public/wp-content/plugins/elementor/assets/lib/eicons/css/elementor-icons.min.css?ver=5.18.0" media="all">
     <link rel="stylesheet" id="elementor-frontend-css"
-        href="{{url('')}}/wp-content/plugins/elementor/assets/css/frontend-lite.min.css?ver=3.12.2" media="all">
+        href="{{url('')}}/public/wp-content/plugins/elementor/assets/css/frontend-lite.min.css?ver=3.12.2" media="all">
     <link rel="stylesheet" id="swiper-css"
-        href="{{url('')}}/wp-content/plugins/elementor/assets/lib/swiper/v8/css/swiper.min.css?ver=8.4.5" media="all">
+        href="{{url('')}}/public/wp-content/plugins/elementor/assets/lib/swiper/v8/css/swiper.min.css?ver=8.4.5" media="all">
     <link rel="stylesheet" id="elementor-post-5-css"
-        href="{{url('')}}/wp-content/uploads/elementor/css/post-5.css?ver=1684053359" media="all">
+        href="{{url('')}}/public/wp-content/uploads/elementor/css/post-5.css?ver=1684053359" media="all">
     <link rel="stylesheet" id="elementor-pro-css"
-        href="{{url('')}}/wp-content/plugins/elementor-pro/assets/css/frontend-lite.min.css?ver=3.12.3" media="all">
+        href="{{url('')}}/public/wp-content/plugins/elementor-pro/assets/css/frontend-lite.min.css?ver=3.12.3" media="all">
     <link rel="stylesheet" id="elementor-global-css"
-        href="{{url('')}}/wp-content/uploads/elementor/css/global.css?ver=1684053360" media="all">
+        href="{{url('')}}/public/wp-content/uploads/elementor/css/global.css?ver=1684053360" media="all">
     <link rel="stylesheet" id="elementor-post-213-css"
-        href="{{url('')}}/wp-content/uploads/elementor/css/post-213.css?ver=1684064886" media="all">
+        href="{{url('')}}/public/wp-content/uploads/elementor/css/post-213.css?ver=1684064886" media="all">
     <link rel="stylesheet" id="google-fonts-1-css"
         href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto+Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;display=swap&#038;ver=6.2"
         media="all">

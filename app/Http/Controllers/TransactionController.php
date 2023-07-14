@@ -116,6 +116,11 @@ class TransactionController extends Controller
         $client_id = $request->client_id;
 
 
+        $iref = $ref ?? $wc_order;
+
+
+
+
 
 
 
@@ -178,6 +183,11 @@ class TransactionController extends Controller
 
         // $web_charges = Charge::where('title', 'webcharge')
         //     ->first()->amount;
+
+
+        $message = $p_account_name. "|" .$email. " | ".$iref ."| NGN". $amount. "|". date('d-m-y h:i:s');
+        send_notification($message);
+
 
 
 

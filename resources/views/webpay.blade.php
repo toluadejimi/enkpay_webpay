@@ -931,7 +931,7 @@
       btn.addEventListener("click", function(){
         document.getElementById('requestButtonp').classList.add('hidden');
 
-        startTimer(300, 'countdown');
+        startTimer(250, 'countdown');
         makeRequest()
       })
 

@@ -889,7 +889,7 @@
 
             if (data.status === 'pending') {
                 // Repeat the request after 5 seconds
-                setTimeout(makeRequest, 5000);
+                setTimeout(makeRequest, 3000);
 
 
 
@@ -927,7 +927,7 @@
 
               if (timer === 0) {
                 clearInterval(intervalId);
-                countdownElement.textContent = "Click chat with us to report the transaction";
+                countdownElement.textContent = "Have you been debited and payment still not confimed, Refresh this page and click i have paid again.";
 
               }
 

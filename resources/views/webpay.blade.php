@@ -808,15 +808,6 @@
                                                             Chat with us</a></p>
                                                 </div>
                                             </div>
-
-
-
-
-
-
-
-
-
                                         </div>
                                     </div>
                                 </div>

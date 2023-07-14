@@ -287,6 +287,7 @@ class TransactionController extends Controller
         $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
 
 
+
         $webhook = $marchant_url . "?amount=$amount&trans_id=$trans_id&status=failed";
 
 
@@ -630,7 +631,7 @@ class TransactionController extends Controller
 
             if ($trx != null) {
 
-                if ($trx->status == 1) {
+                if ($trx->status == 101) {
 
                     return response()->json([
                         'status' => true,

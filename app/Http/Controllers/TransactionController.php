@@ -106,6 +106,10 @@ class TransactionController extends Controller
     {
 
 
+     
+
+
+
         // try {
 
         $key =  $request->key;
@@ -114,9 +118,299 @@ class TransactionController extends Controller
         $ref = $request->ref;
         $wc_order = $request->wc_order;
         $client_id = $request->client_id;
-
-
         $iref = $ref ?? $wc_order;
+
+
+
+
+
+
+        $yeekkey = env('YEKEENKEY');
+
+
+        if($key == $yeekkey){
+
+
+
+        $user_id = Webkey::where('key', $yeekkey)->first()->user_id ?? null;
+        $account_details = VirtualAccount::where('user_id', $user_id)->get();
+
+        $account1 = 9604967850;
+        $account2 = 9608026564;
+        $account3 = 9607002699;
+        $account4 = 9606665806;
+        $account5 = 9603448473;
+        $account6 = 9602742208;
+        $account7 = 9601136541;
+        $account8 = 9608769052;
+
+            $acct1 = Webtransfer::where('v_account_no', $account1)->first()->status ?? null;
+            $acct2 = Webtransfer::where('v_account_no', $account2)->first()->status ?? null;
+            $acct3 = Webtransfer::where('v_account_no', $account3)->first()->status ?? null;
+            $acct4 = Webtransfer::where('v_account_no', $account4)->first()->status ?? null;
+            $acct5 = Webtransfer::where('v_account_no', $account5)->first()->status ?? null;
+            $acct6 = Webtransfer::where('v_account_no', $account6)->first()->status ?? null;
+            $acct7 = Webtransfer::where('v_account_no', $account7)->first()->status ?? null;
+            $acct8 = Webtransfer::where('v_account_no', $account8)->first()->status ?? null;
+       
+            if($acct1 != 0){
+
+                $p_account_no = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 2
+                ])->first()->v_account_no ?? null;
+
+                $p_account_name = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 2
+                ])->first()->v_account_name ?? null;
+
+                $p_bank_name = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 2
+                ])->first()->v_bank_name ?? null;
+
+            }
+
+
+            if($acct2 != 0){
+
+                $p_account_no = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 3
+                ])->first()->v_account_no ?? null;
+
+                $p_account_name = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 3
+                ])->first()->v_account_name ?? null;
+
+                $p_bank_name = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 3
+                ])->first()->v_bank_name ?? null;
+
+            }
+
+
+
+            if($acct3 != 0){
+
+                $p_account_no = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 4
+                ])->first()->v_account_no ?? null;
+
+                $p_account_name = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 4
+                ])->first()->v_account_name ?? null;
+
+                $p_bank_name = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 4
+                ])->first()->v_bank_name ?? null;
+
+            }
+
+
+
+            if($acct4 != 0){
+
+                $p_account_no = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 5
+                ])->first()->v_account_no ?? null;
+
+                $p_account_name = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 5
+                ])->first()->v_account_name ?? null;
+
+                $p_bank_name = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 5
+                ])->first()->v_bank_name ?? null;
+
+            }
+
+
+
+            if($acct6 != 0){
+
+                $p_account_no = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 7
+                ])->first()->v_account_no ?? null;
+
+                $p_account_name = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 7
+                ])->first()->v_account_name ?? null;
+
+                $p_bank_name = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 7
+                ])->first()->v_bank_name ?? null;
+
+            }
+
+
+
+            if($acct7 != 0){
+
+                $p_account_no = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' =>8
+                ])->first()->v_account_no ?? null;
+
+                $p_account_name = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 8
+                ])->first()->v_account_name ?? null;
+
+                $p_bank_name = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 8
+                ])->first()->v_bank_name ?? null;
+
+            }
+
+
+
+            if($acct8 != 0){
+
+                $p_account_no = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 1
+                ])->first()->v_account_no ?? null;
+
+                $p_account_name = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 1
+                ])->first()->v_account_name ?? null;
+
+                $p_bank_name = VirtualAccount::where([
+                    'user_id' => $user_id,
+                    'v_bank_name' => 'PROVIDUS BANK',
+                    'status' => 1
+                ])->first()->v_bank_name ?? null;
+
+            }
+
+
+
+            $message = $p_account_name. "|" .$email. " | ".$iref ."| NGN". $amount. "|". date('d-m-y h:i:s');
+            send_notification($message);
+    
+    
+            $charge_status = Webkey::where('key', $yeekkey)->first()->charge_status ?? null;
+
+    
+            $marchant_url = Webkey::where('key', $yeekkey)->first()->url ?? null;
+
+    
+            $web_commission = Charge::where('title', 'bwebpay')->first()->amount;
+            //Both Commission
+            $amount1 = $web_commission / 100;
+            $amount2 = $amount1 * $amount;
+            $both_commmission = number_format($amount2, 2);
+    
+    
+    
+            if ($both_commmission >= 300) {
+                $commmission = 300;
+            } else {
+                $commmission = $both_commmission;
+            }
+    
+    
+    
+    
+            $trans_id = $ref ?? random_int(100000, 999999);
+    
+            if ($charge_status == 0) {
+    
+                $payable_amount = $amount;
+            } else {
+    
+                $payable_amount1 = $amount + $commmission;
+                $payable_amount = round($payable_amount1);
+            }
+    
+    
+    
+    
+    
+            $total_received = 0.00;
+    
+            $webhook = $marchant_url;
+    
+    
+    
+    
+            $get_trans_id = Webtransfer::where('trans_id', $trans_id)
+                ->first()->trans_id ?? null;
+    
+    
+            if ($get_trans_id == null) {
+                // $trans = new Webtransfer();
+                // $trans->amount = $amount;
+                // $trans->user_id = $user_id;
+                // $trans->v_account_no = $v_account_no;
+                // $trans->v_account_name = $v_account_name;
+                // $trans->bank_name = $bank_name;
+                // $trans->web_charges = $both_commmission;
+                // $trans->trans_id = $trans_id;
+                // $trans->payable_amount = $payable_amount;
+                // $trans->total_received = $total_received;
+                // $trans->save();
+    
+                $trans = new Webtransfer();
+                $trans->amount = $amount;
+                $trans->user_id = $user_id;
+                $trans->v_account_no = $p_account_no;
+                $trans->v_account_name = $p_account_name;
+                $trans->bank_name = $p_bank_name;
+                $trans->web_charges = $commmission;
+                $trans->trans_id = $trans_id;
+                $trans->payable_amount = $payable_amount;
+                $trans->total_received = $total_received;
+                $trans->wc_order = $wc_order;
+                $trans->client_id = $client_id;
+                $trans->save();
+            }
+    
+            $qrdata = $user_id . " " . $payable_amount . " " . $trans_id;
+    
+            $data = Crypt::encryptString($qrdata);
+    
+    
+    
+            return view('webpay', compact('payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name', 'total_received'));
+       
+
+        }
 
 
 
@@ -185,8 +479,11 @@ class TransactionController extends Controller
         //     ->first()->amount;
 
 
+
+
         $message = $p_account_name. "|" .$email. " | ".$iref ."| NGN". $amount. "|". date('d-m-y h:i:s');
         send_notification($message);
+
 
 
 

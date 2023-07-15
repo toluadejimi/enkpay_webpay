@@ -1,38 +1,43 @@
 <?php
 
-namespace App\Console;
+namespace App\Console\Commands;
 
+use App\Models\Charge;
+use App\Models\PendingTransaction;
+use App\Models\Transaction;
+use App\Models\Transfer;
+use App\Models\User;
 use App\Models\Webtransfer;
-use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
+use Log;
 
-class Kernel extends ConsoleKernel
+class SendCron extends Command
 {
     /**
-     * Define the application's command schedule.
+     * The name and signature of the console command.
+     *
+     * @var string
      */
-    protected function schedule(Schedule $schedule): void
-    {
-       
-            $schedule->call(function () {
-                Webtransfer::where('created_at', '<', Carbon::now()->subMinutes(1))->delete();
-                Webtransfer::where('status', 1)->delete();
-
-            })->daily();
-
-            $message = "Web Transfer Records Deleted";
-            send_notification($message);
-     
-    }
+    protected $signature = 'send:cron';
 
     /**
-     * Register the commands for the application.
+     * The console command description.
+     *
+     * @var string
      */
-    protected function commands(): void
-    {
-        $this->load(__DIR__.'/Commands');
+    protected $description = 'Command description';
 
-        require base_path('routes/console.php');
+    /**
+     * Execute the console command.
+     */
+    public function handle()
+    {
+
+        Webtransfer::where('created_at', '<', Carbon::now()->subMinutes(1))->delete();
+        Webtransfer::where('status', 1)->delete();
+
+        $message = "Web Transfer Records Deleted";
+        send_notification($message);
     }
 }

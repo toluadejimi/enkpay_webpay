@@ -145,42 +145,14 @@ class TransactionController extends Controller
         $account8 = 9608769052;
         $account8 = 9608550087;
 
-            $acct1 = Webtransfer::where('v_account_no', $account1)->first()->status ?? null;
-            $acct2 = Webtransfer::where('v_account_no', $account2)->first()->status ?? null;
-            $acct3 = Webtransfer::where('v_account_no', $account3)->first()->status ?? null;
-            $acct4 = Webtransfer::where('v_account_no', $account4)->first()->status ?? null;
-            $acct5 = Webtransfer::where('v_account_no', $account5)->first()->status ?? null;
-            $acct6 = Webtransfer::where('v_account_no', $account6)->first()->status ?? null;
-            $acct7 = Webtransfer::where('v_account_no', $account7)->first()->status ?? null;
-            $acct8 = Webtransfer::where('v_account_no', $account8)->first()->status ?? null;
+        $acct1 = Webtransfer::where('v_account_no', $account1)->first()->status ?? null;
+        $acct2 = Webtransfer::where('v_account_no', $account2)->first()->status ?? null;
 
-            if($acct1 != 0){
+        
+            if($acct1 == 0){
                 $p_account_no = $account2;
-            }
-
-            elseif($acct2 != 0){
+            }if($acct2 == 0){
                 $p_account_no = $account3;
-            }
-            elseif($acct3 != 0){
-
-                $p_account_no = $account4;
-            }
-            elseif($acct4 != 0){
-                $p_account_no = $account5;
-
-            }elseif($acct6 != 0){
-
-                $p_account_no = $account7;
-
-            }
-            elseif($acct7 != 0){
-
-                $p_account_no = $account8;
-
-            }
-            else{
-
-                $p_account_no = $account1;
             }
 
             $p_account_name = "ENKWAVE(WEBBLISS TECH)";

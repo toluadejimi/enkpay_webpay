@@ -608,8 +608,8 @@
                                                             <div class="col-6 mt-3 text-center">
                                                                 <span>Trx Time</span>
                                                                 <div>
-                                                                    <h5 style="color:red;"><span id="timer">4:00
-                                                                            secs</span></h5>
+                                                                    <h5 style="color:red;"><span id="timer">
+                                                                            </span></h5>
                                                                 </div>
                                                             </div>
 

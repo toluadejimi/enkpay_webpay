@@ -608,8 +608,7 @@
                                                             <div class="col-6 mt-3 text-center">
                                                                 <span>Trx Time</span>
                                                                 <div>
-                                                                    <h5 style="color:red;"><span id="timer">
-                                                                            </span></h5>
+                                                                    <h5 style="color:red;"><span id="secs"></span></h5>
                                                                 </div>
                                                             </div>
 
@@ -637,7 +636,7 @@
                                                                 var seconds = Math.floor((targetTime % 60000) / 1000);
 
                                                                 // Display the countdown on the page
-                                                                document.getElementById('timer').innerHTML = minutes + 'm ' + seconds + 's';
+                                                                document.getElementById('secs').innerHTML = minutes + 'm ' + seconds + 's';
                                                                 }
 
                                                                 var timerInterval = setInterval(countdown, 1000);

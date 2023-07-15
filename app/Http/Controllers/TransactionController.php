@@ -224,6 +224,8 @@ class TransactionController extends Controller
             $p_bank_name = "PROVIDUS BANK";
 
 
+            dd($$p_account_no);
+
 
             $message = $p_account_name. "|" .$email. " | ".$iref ."| NGN". $amount. "|". date('d-m-y h:i:s');
             send_notification($message);

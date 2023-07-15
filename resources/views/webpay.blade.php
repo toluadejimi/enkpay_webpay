@@ -614,7 +614,7 @@
 
 
                                                             <script>
-                                                                var targetMinutes = 10;
+                                                                var targetMinutes = 240;
 
                                                                 var targetTime = targetMinutes * 60 * 1000;
                                                                 var trans = "{{ $trans_id }}";
@@ -639,7 +639,7 @@
                                                                 var seconds = Math.floor((targetTime % 60000) / 1000);
 
                                                                 // Display the countdown on the page
-                                                                document.getElementById('timers').innerHTML = minutes + 'm ' + seconds + 's';
+                                                                document.getElementById('timers').innerHTML = minutes + 'secs ' + seconds + '';
                                                                 }
 
                                                                 var timerInterval = setInterval(countdown, 1000);

@@ -229,6 +229,18 @@ class TransactionController extends Controller
 
 
 
+            $v_account_no = VirtualAccount::where('user_id', $user_id)
+            ->where('v_bank_name', 'VFD MFB')
+            ->first()->v_account_no ?? null;
+
+            $v_account_name = VirtualAccount::where('user_id', $user_id)
+                ->where('v_bank_name', 'VFD MFB')
+                ->first()->v_account_name ?? null;
+
+            $bank_name = VirtualAccount::where('user_id', $user_id)
+                ->where('v_bank_name', 'VFD MFB')
+                ->first()->v_bank_name ?? null;
+
 
 
             $total_received = 0.00;

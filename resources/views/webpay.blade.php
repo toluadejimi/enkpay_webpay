@@ -295,7 +295,7 @@
 <script>
     var targetMinutes = 4;
     var targetTime = targetMinutes * 60 * 1000;
-    var trans = {{ $trans_id }};
+    var trans = "{{ $trans_id }}";
     var key = {{ $key }};
 
     function redirect() {

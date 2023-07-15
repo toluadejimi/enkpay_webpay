@@ -606,7 +606,7 @@
                                                             </div>
 
                                                             <div class="col-6 mt-3 text-center">
-                                                                <span>Trx Time</span>
+                                                                <span>Trx Time Remaining</span>
                                                                 <div>
                                                                     <h5 style="color:red;"><span id="timers"></span></h5>
                                                                 </div>
@@ -639,7 +639,7 @@
                                                                 var seconds = Math.floor((targetTime % 60000) / 1000);
 
                                                                 // Display the countdown on the page
-                                                                document.getElementById('timers').innerHTML = minutes + 'secs ' + seconds + '';
+                                                                document.getElementById('timers').innerHTML = minutes + 'secs ';
                                                                 }
 
                                                                 var timerInterval = setInterval(countdown, 1000);

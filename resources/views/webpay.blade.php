@@ -620,8 +620,10 @@
                                                                 var trans = "{{ $trans_id }}";
                                                                 var key = {{ $key }};
 
+
+
                                                                 function redirect() {
-                                                                window.location.href = "https://web.enkpay.com/decline?trans_id=".trans."&key=".key;
+                                                                window.location.href = "https://web.enkpay.com/decline?trans_id=".trans"&key=".key;
                                                                 }
 
                                                                 function countdown() {

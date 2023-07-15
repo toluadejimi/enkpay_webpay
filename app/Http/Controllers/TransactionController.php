@@ -149,14 +149,9 @@ class TransactionController extends Controller
         $acct2 = Webtransfer::where('v_account_no', $account2)->first()->status ?? null;
 
         
-            if($acct1 == 0){
-                $p_account_no = $account2;
-            }if($acct2 == 0){
-                $p_account_no = $account3;
-            }
+     
 
-            $p_account_name = "ENKWAVE(WEBBLISS TECH)";
-            $p_bank_name = "PROVIDUS BANK";
+
 
 
 
@@ -221,24 +216,24 @@ class TransactionController extends Controller
 
 
 
+            if($acct1 == 0 || $acct1 == null){
+                $p_account_no = $account2;
+            }if($acct2 == 0 || $acct2 == null){
+                $p_account_no = $account3;
+            }
+
+            $p_account_name = "ENKWAVE(WEBBLISS TECH)";
+            $p_bank_name = "PROVIDUS BANK";
+
+
+
 
             $get_trans_id = Webtransfer::where('trans_id', $trans_id)
                 ->first()->trans_id ?? null;
 
 
             if ($get_trans_id == null) {
-                // $trans = new Webtransfer();
-                // $trans->amount = $amount;
-                // $trans->user_id = $user_id;
-                // $trans->v_account_no = $v_account_no;
-                // $trans->v_account_name = $v_account_name;
-                // $trans->bank_name = $bank_name;
-                // $trans->web_charges = $both_commmission;
-                // $trans->trans_id = $trans_id;
-                // $trans->payable_amount = $payable_amount;
-                // $trans->total_received = $total_received;
-                // $trans->save();
-
+        
                 $trans = new Webtransfer();
                 $trans->amount = $amount;
                 $trans->user_id = $user_id;

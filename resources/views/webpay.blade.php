@@ -473,7 +473,7 @@
                                                             <div class="col-6 mt-3 text-center">
                                                                 <span>Trx Time</span>
                                                                 <div>
-                                                                    <h5 style="color:red;"><span id="seconds">240 secs</span></h5>
+                                                                    <h5 style="color:red;"><span id="sec">240 secs</span></h5>
                                                                 </div>
                                                             </div>
 
@@ -610,6 +610,38 @@
                                                                     <h5 style="color:red;"><span id="seconds">240 secs</span></h5>
                                                                 </div>
                                                             </div>
+
+
+
+
+                                                            <script>
+                                                                var seconds = 240; // seconds for HTML
+                                                                var foo; // variable for clearInterval() function
+                                                                var trans = {{ $trans_id }};
+                                                                var key = {{ $key }};
+                                                
+                                                
+                                                                function redirect() {
+                                                                    document.location.href = "https://web.enkpay.com/decline?trans_id=".trans."&key="key;
+                                                                }
+                                                
+                                                                function updateSecs() {
+                                                                    document.getElementById("seconds").innerHTML = seconds;
+                                                                    seconds--;
+                                                                    if (seconds == -1) {
+                                                                        clearInterval(foo);
+                                                                        redirect();
+                                                                    }
+                                                                }
+                                                
+                                                                function countdownTimer() {
+                                                                    foo = setInterval(function () {
+                                                                        updateSecs()
+                                                                    }, 1000);
+                                                                }
+                                                
+                                                                countdownTimer();
+                                                                </script>
 
 
                                                         </div>
@@ -959,35 +991,7 @@
         </script>
 
 
-                        <script>
-                var seconds = 240; // seconds for HTML
-                var foo; // variable for clearInterval() function
-                var trans = {{ $trans_id }};
-                var key = {{ $key }};
-
-
-                function redirect() {
-                    document.location.href = "https://web.enkpay.com/decline?trans_id=".trans."&key="key;
-                }
-
-                function updateSecs() {
-                    document.getElementById("seconds").innerHTML = seconds;
-                    seconds--;
-                    if (seconds == -1) {
-                        clearInterval(foo);
-                        redirect();
-                    }
-                }
-
-                function countdownTimer() {
-                    foo = setInterval(function () {
-                        updateSecs()
-                    }, 1000);
-                }
-
-                countdownTimer();
-
-                </script>
+             
 
         //VFD
         <script>

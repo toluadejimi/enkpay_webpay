@@ -771,7 +771,7 @@ class TransactionController extends Controller
         if ($ref != null) {
 
 
-            $trx = Validtransfer::where('trans_id', $ref)->first() ?? null;
+            $trx = Webtransfer::where('trans_id', $ref)->first() ?? null;
 
             if ($trx != null) {
 

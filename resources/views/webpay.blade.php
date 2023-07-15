@@ -639,7 +639,7 @@
                                                                 document.getElementById('secs').innerHTML = minutes + 'm ' + seconds + 's';
                                                                 }
 
-                                                                console.log(timerInterval);
+                                                                console.log(targetMinutes);
 
 
                                                                 var timerInterval = setInterval(countdown, 1000);

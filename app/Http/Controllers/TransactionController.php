@@ -237,7 +237,7 @@ class TransactionController extends Controller
             if ($get_trans_id == null) {
 
 
-                dd($p_account_no, $$p_bank_name);
+                dd($p_account_no, $p_bank_name);
 
         
                 $trans = new Webtransfer();

@@ -233,17 +233,14 @@ class TransactionController extends Controller
             $get_trans_id = Webtransfer::where('trans_id', $trans_id)
                 ->first()->trans_id ?? null;
 
+                $acct =  $p_account_no;
 
             if ($get_trans_id == null) {
-
-
-                dd($p_account_no, $p_bank_name);
-
         
                 $trans = new Webtransfer();
                 $trans->amount = $amount;
                 $trans->user_id = $user_id;
-                $trans->v_account_no = $p_account_no;
+                $trans->v_account_no = $acct;
                 $trans->v_account_name = $p_account_name;
                 $trans->bank_name = $p_bank_name;
                 $trans->web_charges = $commmission;

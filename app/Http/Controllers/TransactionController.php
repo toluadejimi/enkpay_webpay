@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Charge;
 use App\Models\User;
+use App\Models\Validtransfer;
 use App\Models\VirtualAccount;
 use App\Models\Webkey;
 use App\Models\Webtransfer;
@@ -770,7 +771,7 @@ class TransactionController extends Controller
         if ($ref != null) {
 
 
-            $trx = WebTransfer::where('trans_id', $ref)->first() ?? null;
+            $trx = Validtransfer::where('trans_id', $ref)->first() ?? null;
 
             if ($trx != null) {
 

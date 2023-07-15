@@ -366,6 +366,16 @@ class TransactionController extends Controller
         $get_trans_id = Webtransfer::where('trans_id', $trans_id)
             ->first()->trans_id ?? null;
 
+        $account1 = 9604967850;
+        $account2 = 9608026564;
+
+        $cks = Webtransfer::where('v_account_no', $account1)->first()->status ?? null;
+        if($cks == 0){
+            $account2 = $v_account_no;
+        }
+
+
+
 
         if ($get_trans_id == null) {
             // $trans = new Webtransfer();

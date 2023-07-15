@@ -128,26 +128,11 @@ class TransactionController extends Controller
         $yeekkey = env('YEKEENKEY');
 
 
-        if($key == $yeekkey){
+        // if($key == $yeekkey){
 
 
 
-        $user_id = Webkey::where('key', $yeekkey)->first()->user_id ?? null;
-        $account_details = VirtualAccount::where('user_id', $user_id)->get();
-
-        $account1 = 9604967850;
-        $account2 = 9608026564;
-        $account3 = 9607002699;
-        $account4 = 9606665806;
-        $account5 = 9603448473;
-        $account6 = 9602742208;
-        $account7 = 9601136541;
-        $account8 = 9608769052;
-        $account8 = 9608550087;
-
-        $acct1 = Webtransfer::where('v_account_no', $account1)->first()->status ?? null;
-        $acct2 = Webtransfer::where('v_account_no', $account2)->first()->status ?? null;
-
+      
         
      
 
@@ -158,110 +143,110 @@ class TransactionController extends Controller
 
            
 
-            $charge_status = Webkey::where('key', $yeekkey)->first()->charge_status ?? null;
+        //     $charge_status = Webkey::where('key', $yeekkey)->first()->charge_status ?? null;
 
 
-            $marchant_url = Webkey::where('key', $yeekkey)->first()->url ?? null;
+        //     $marchant_url = Webkey::where('key', $yeekkey)->first()->url ?? null;
 
 
-            $web_commission = Charge::where('title', 'bwebpay')->first()->amount;
-            //Both Commission
-            $amount1 = $web_commission / 100;
-            $amount2 = $amount1 * $amount;
-            $both_commmission = number_format($amount2, 2);
-
-
-
-            if ($both_commmission >= 300) {
-                $commmission = 300;
-            } else {
-                $commmission = $both_commmission;
-            }
+        //     $web_commission = Charge::where('title', 'bwebpay')->first()->amount;
+        //     //Both Commission
+        //     $amount1 = $web_commission / 100;
+        //     $amount2 = $amount1 * $amount;
+        //     $both_commmission = number_format($amount2, 2);
 
 
 
-
-            $trans_id = $ref ?? random_int(100000, 999999);
-
-            if ($charge_status == 0) {
-
-                $payable_amount = $amount;
-            } else {
-
-                $payable_amount1 = $amount + $commmission;
-                $payable_amount = round($payable_amount1);
-            }
-
-
-
-            $v_account_no = VirtualAccount::where('user_id', $user_id)
-            ->where('v_bank_name', 'VFD MFB')
-            ->first()->v_account_no ?? null;
-
-            $v_account_name = VirtualAccount::where('user_id', $user_id)
-                ->where('v_bank_name', 'VFD MFB')
-                ->first()->v_account_name ?? null;
-
-            $bank_name = VirtualAccount::where('user_id', $user_id)
-                ->where('v_bank_name', 'VFD MFB')
-                ->first()->v_bank_name ?? null;
-
-
-
-            $total_received = 0.00;
-
-            $webhook = $marchant_url;
-
-
-
-            if($acct1 == 0 || $acct1 == null){
-                $p_account_no = $account2;
-            }if($acct2 == 0 || $acct2 == null){
-                $p_account_no = $account3;
-            }
-
-            $p_account_name = "ENKWAVE(WEBBLISS TECH)";
-            $p_bank_name = "PROVIDUS BANK";
+        //     if ($both_commmission >= 300) {
+        //         $commmission = 300;
+        //     } else {
+        //         $commmission = $both_commmission;
+        //     }
 
 
 
 
-            $message = $p_account_name. "|" .$email. " | ".$iref ."| NGN". $amount. "|". date('d-m-y h:i:s');
-            send_notification($message);
+        //     $trans_id = $ref ?? random_int(100000, 999999);
+
+        //     if ($charge_status == 0) {
+
+        //         $payable_amount = $amount;
+        //     } else {
+
+        //         $payable_amount1 = $amount + $commmission;
+        //         $payable_amount = round($payable_amount1);
+        //     }
 
 
-            $get_trans_id = Webtransfer::where('trans_id', $trans_id)
-                ->first()->trans_id ?? null;
 
-                $acct =  $p_account_no;
+        //     $v_account_no = VirtualAccount::where('user_id', $user_id)
+        //     ->where('v_bank_name', 'VFD MFB')
+        //     ->first()->v_account_no ?? null;
 
-            if ($get_trans_id == null) {
+        //     $v_account_name = VirtualAccount::where('user_id', $user_id)
+        //         ->where('v_bank_name', 'VFD MFB')
+        //         ->first()->v_account_name ?? null;
+
+        //     $bank_name = VirtualAccount::where('user_id', $user_id)
+        //         ->where('v_bank_name', 'VFD MFB')
+        //         ->first()->v_bank_name ?? null;
+
+
+
+        //     $total_received = 0.00;
+
+        //     $webhook = $marchant_url;
+
+
+
+        //     if($acct1 == 0 || $acct1 == null){
+        //         $p_account_no = $account2;
+        //     }if($acct2 == 0 || $acct2 == null){
+        //         $p_account_no = $account3;
+        //     }
+
+        //     $p_account_name = "ENKWAVE(WEBBLISS TECH)";
+        //     $p_bank_name = "PROVIDUS BANK";
+
+
+
+
+        //     $message = $p_account_name. "|" .$email. " | ".$iref ."| NGN". $amount. "|". date('d-m-y h:i:s');
+        //     send_notification($message);
+
+
+        //     $get_trans_id = Webtransfer::where('trans_id', $trans_id)
+        //         ->first()->trans_id ?? null;
+
+        //         $acct =  $p_account_no;
+
+        //     if ($get_trans_id == null) {
         
-                $trans = new Webtransfer();
-                $trans->amount = $amount;
-                $trans->user_id = $user_id;
-                $trans->v_account_no = $acct;
-                $trans->v_account_name = $p_account_name;
-                $trans->bank_name = $p_bank_name;
-                $trans->web_charges = $commmission;
-                $trans->trans_id = $trans_id;
-                $trans->payable_amount = $payable_amount;
-                $trans->total_received = $total_received;
-                $trans->wc_order = $wc_order;
-                $trans->client_id = $client_id;
-                $trans->save();
-            }
+        //         $trans = new Webtransfer();
+        //         $trans->amount = $amount;
+        //         $trans->user_id = $user_id;
+        //         $trans->v_account_no = $acct;
+        //         $trans->v_account_name = $p_account_name;
+        //         $trans->bank_name = $p_bank_name;
+        //         $trans->web_charges = $commmission;
+        //         $trans->trans_id = $trans_id;
+        //         $trans->payable_amount = $payable_amount;
+        //         $trans->total_received = $total_received;
+        //         $trans->wc_order = $wc_order;
+        //         $trans->client_id = $client_id;
+        //         $trans->save();
+        //     }
 
-            $qrdata = $user_id . " " . $payable_amount . " " . $trans_id;
+        //     $qrdata = $user_id . " " . $payable_amount . " " . $trans_id;
 
-            $data = Crypt::encryptString($qrdata);
-
-
-
-            return view('webpay', compact('payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name', 'total_received'));
+        //     $data = Crypt::encryptString($qrdata);
 
 
-        }
+
+        //     return view('webpay', compact('payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name', 'total_received'));
+
+
+        // }
 
 
 

@@ -473,7 +473,8 @@
                                                             <div class="col-6 mt-3 text-center">
                                                                 <span>Trx Time</span>
                                                                 <div>
-                                                                    <h5 style="color:red;"><span id="sec">240 secs</span></h5>
+                                                                    <h5 style="color:red;"><span id="sec">240
+                                                                            secs</span></h5>
                                                                 </div>
                                                             </div>
 
@@ -607,41 +608,42 @@
                                                             <div class="col-6 mt-3 text-center">
                                                                 <span>Trx Time</span>
                                                                 <div>
-                                                                    <h5 style="color:red;"><span id="seconds">240 secs</span></h5>
+                                                                    <h5 style="color:red;"><span id="timer">4:00
+                                                                            secs</span></h5>
                                                                 </div>
                                                             </div>
 
 
-
-
                                                             <script>
-                                                                var seconds = 240; // seconds for HTML
-                                                                var foo; // variable for clearInterval() function
+                                                                var targetMinutes = 4;
+
+                                                                var targetTime = targetMinutes * 60 * 1000;
                                                                 var trans = {{ $trans_id }};
                                                                 var key = {{ $key }};
-                                                
-                                                
+
                                                                 function redirect() {
-                                                                    document.location.href = "https://web.enkpay.com/decline?trans_id=".trans."&key="key;
+                                                                window.location.href = "https://web.enkpay.com/decline?trans_id=".trans."&key=".key;
                                                                 }
-                                                
-                                                                function updateSecs() {
-                                                                    document.getElementById("seconds").innerHTML = seconds;
-                                                                    seconds--;
-                                                                    if (seconds == -1) {
-                                                                        clearInterval(foo);
-                                                                        redirect();
-                                                                    }
+
+                                                                function countdown() {
+                                                                targetTime -= 60000;
+
+                                                                if (targetTime <= 0) {
+                                                                    clearInterval(timerInterval); // Stop the countdown
+                                                                    redirect(); // Redirect to the specified link
                                                                 }
-                                                
-                                                                function countdownTimer() {
-                                                                    foo = setInterval(function () {
-                                                                        updateSecs()
-                                                                    }, 1000);
+
+                                                                // Calculate remaining minutes and seconds
+                                                                var minutes = Math.floor(targetTime / 60000);
+                                                                var seconds = Math.floor((targetTime % 60000) / 1000);
+
+                                                                // Display the countdown on the page
+                                                                document.getElementById('timer').innerHTML = minutes + 'm ' + seconds + 's';
                                                                 }
-                                                
-                                                                countdownTimer();
-                                                                </script>
+
+                                                                var timerInterval = setInterval(countdown, 1000);
+                                                            </script>
+
 
 
                                                         </div>
@@ -991,7 +993,7 @@
         </script>
 
 
-             
+
 
         //VFD
         <script>

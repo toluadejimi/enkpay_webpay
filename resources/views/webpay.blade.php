@@ -639,6 +639,9 @@
                                                                 document.getElementById('secs').innerHTML = minutes + 'm ' + seconds + 's';
                                                                 }
 
+                                                                console.log(timerInterval);
+
+
                                                                 var timerInterval = setInterval(countdown, 1000);
                                                             </script>
 

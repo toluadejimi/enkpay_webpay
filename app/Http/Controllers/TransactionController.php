@@ -156,9 +156,7 @@ class TransactionController extends Controller
 
 
 
-            $message = $p_account_name. "|" .$email. " | ".$iref ."| NGN". $amount. "|". date('d-m-y h:i:s');
-            send_notification($message);
-
+           
 
             $charge_status = Webkey::where('key', $yeekkey)->first()->charge_status ?? null;
 
@@ -226,6 +224,9 @@ class TransactionController extends Controller
             $p_bank_name = "PROVIDUS BANK";
 
 
+
+            $message = $p_account_name. "|" .$email. " | ".$iref ."| NGN". $amount. "|". date('d-m-y h:i:s');
+            send_notification($message);
 
 
             $get_trans_id = Webtransfer::where('trans_id', $trans_id)

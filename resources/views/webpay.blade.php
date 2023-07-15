@@ -253,38 +253,41 @@
         }
 
         /* Spinner animation */
-.spinner {
-    position: relative;
-    top: 35%;
-    width: 80px;
-    height: 80px;
-    margin: 0 auto;
-    background-color: #fff;
-    border-radius: 100%;
-    -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
-    animation: sk-scaleout 1.0s infinite ease-in-out;
-  }
+        .spinner {
+            position: relative;
+            top: 35%;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 100%;
+            -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+            animation: sk-scaleout 1.0s infinite ease-in-out;
+        }
 
-  @-webkit-keyframes sk-scaleout {
-    0% { -webkit-transform: scale(0) }
-    100% {
-      -webkit-transform: scale(1.0);
-      opacity: 0;
-    }
-  }
+        @-webkit-keyframes sk-scaleout {
+            0% {
+                -webkit-transform: scale(0)
+            }
 
-  @keyframes sk-scaleout {
-    0% {
-      -webkit-transform: scale(0);
-      transform: scale(0);
-    } 100% {
-      -webkit-transform: scale(1.0);
-      transform: scale(1.0);
-      opacity: 0;
-    }
-  }
+            100% {
+                -webkit-transform: scale(1.0);
+                opacity: 0;
+            }
+        }
 
+        @keyframes sk-scaleout {
+            0% {
+                -webkit-transform: scale(0);
+                transform: scale(0);
+            }
 
+            100% {
+                -webkit-transform: scale(1.0);
+                transform: scale(1.0);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 
@@ -310,502 +313,519 @@
     <body onload="hideLoader()">
 
 
-    <div class="container-fluid px-0" id="bg-div">
+        <div class="container-fluid px-0" id="bg-div">
 
-        <div class="row justify-content-center">
-            <div class="col-lg-9 col-12">
-
-
-                <div class="card card0">
-                    <div class="d-flex" id="wrapper">
+            <div class="row justify-content-center">
+                <div class="col-lg-9 col-12">
 
 
-
-                        <!-- Sidebar -->
-                        <div class="bg-light border-right" id="sidebar-wrapper">
-
-                            <div class="sidebar-heading pt-5 pb-4"><img
-                                    src="https://enkpay.com/asset/images/logo_1684856125.png" class="rounded float-left"
-                                    alt="...">
-                            </div>
-                            <hr>
-                            <div class="sidebar-heading pt-5 pb-4"><strong>PAY WITH</strong></div>
+                    <div class="card card0">
+                        <div class="d-flex" id="wrapper">
 
 
 
-                            <div class="list-group list-group-flush">
+                            <!-- Sidebar -->
+                            <div class="bg-light border-right" id="sidebar-wrapper">
 
-
-                                <a data-toggle="tab" href="#menu4" id="tab1"
-                                    class="tabs list-group-item bg-light active1">
-                                    <div class="list-div my-2">
-                                        <div class="fa fa-home"></div> &nbsp;&nbsp; Providus Bank
-                                    </div>
-                                </a>
-
-
-                                {{-- <a data-toggle="tab" href="#menu1" id="tab1" class="tabs list-group-item bg-light">
-                                    <div class="list-div my-2">
-                                        <div class="fa fa-home"></div> &nbsp;&nbsp; Pay with VFD
-                                    </div>
-                                </a> --}}
+                                <div class="sidebar-heading pt-5 pb-4"><img
+                                        src="https://enkpay.com/asset/images/logo_1684856125.png"
+                                        class="rounded float-left" alt="...">
+                                </div>
+                                <hr>
+                                <div class="sidebar-heading pt-5 pb-4"><strong>PAY WITH</strong></div>
 
 
 
+                                <div class="list-group list-group-flush">
 
 
-
-
-
-                                {{-- <a data-toggle="tab" href="#menu2" id="tab2" class="tabs list-group-item">
-                                    <div class="list-div my-2">
-                                        <div class="fa fa-credit-card"></div> &nbsp;&nbsp; Card
-                                    </div>
-                                </a> --}}
-
-
-                                <a data-toggle="tab" href="#menu3" id="tab3" class="tabs list-group-item bg-light">
-                                    <div class="list-div my-2">
-                                        <div class="fa fa-qrcode"></div> &nbsp;&nbsp;&nbsp; ENKPAY QR <span
-                                            id="new-label">NEW</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Page Content -->
-
-
-
-                        <div id="page-content-wrapper">
-                            <div class="row pt-3" id="border-btm">
-                                <div class="col-4"> <button class="btn btn-primary mt-4 ml-3 mb-3" id="menu-toggle">
-                                        <div class="bar4"></div>
-                                        <div class="bar4"></div>
-                                        <div class="bar4"></div>
-                                    </button> </div>
-                                <div class="col-8">
-                                    <div class="row justify-content-right">
-                                        <div class="col-12">
-                                            <p class="mb-0 mr-4 mt-4 text-right">{{ $email ?? "enkpay@mail.com"
-                                                }}</p>
+                                    <a data-toggle="tab" href="#menu4" id="tab1"
+                                        class="tabs list-group-item bg-light active1">
+                                        <div class="list-div my-2">
+                                            <div class="fa fa-home"></div> &nbsp;&nbsp; Providus Bank
                                         </div>
-                                    </div>
-                                    <div class="row justify-content-right">
-                                        <div class="col-12">
-                                            <p class="mb-0 mr-4 text-right">Pay <span class="top-highlight">NGN {{
-                                                    number_format($payable_amount ?? "0.00") }}</span>
-                                            </p>
+                                    </a>
+
+
+                                    {{-- <a data-toggle="tab" href="#menu1" id="tab1"
+                                        class="tabs list-group-item bg-light">
+                                        <div class="list-div my-2">
+                                            <div class="fa fa-home"></div> &nbsp;&nbsp; Pay with VFD
                                         </div>
-                                    </div>
+                                    </a> --}}
+
+
+
+
+
+
+
+
+                                    {{-- <a data-toggle="tab" href="#menu2" id="tab2" class="tabs list-group-item">
+                                        <div class="list-div my-2">
+                                            <div class="fa fa-credit-card"></div> &nbsp;&nbsp; Card
+                                        </div>
+                                    </a> --}}
+
+
+                                    <a data-toggle="tab" href="#menu3" id="tab3" class="tabs list-group-item bg-light">
+                                        <div class="list-div my-2">
+                                            <div class="fa fa-qrcode"></div> &nbsp;&nbsp;&nbsp; ENKPAY QR <span
+                                                id="new-label">NEW</span>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
-                            <div class="row justify-content-center">
-                                <div class="text-center" id="test">Pay</div>
-                            </div>
-                            <div class="tab-content">
-                                <div id="menu1" class="tab-pane ">
-                                    <div class="row justify-content-center">
-                                        <div class="col-11">
-                                            <div class="form-card">
-                                                <h3 class="mt-0 mb-4 text-center">
 
-                                                    Pay to this bank details below</h3>
-
-
-                                                <div class="mt-0 mb-4 text-center">
-                                                    <span>BANK NAME</span>
-                                                    <div>
-                                                        <h5>VFD MFB</h5>
-                                                    </div>
-                                                </div>
-
-                                                <hr>
-
-                                                <form onsubmit="event.preventDefault()">
-
-                                                    <div class="row">
-                                                        <div class="col-6 mt-3 text-center">
-                                                            <span>Account Number</span>
-                                                            <div>
-                                                                <h5>{{ $v_account_no ?? "Not Available" }}</h5>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-6 mt-3 text-center">
-                                                            <span>Account Name</span>
-                                                            <div>
-                                                                <h5>{{$v_account_name ?? "Not Available"}}</h5>
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-
-                                                    <hr>
-
-                                                    <div class="row">
-                                                        <div class="col-6 mt-3 text-center">
-                                                            <span>Trx Ref</span>
-                                                            <div>
-                                                                <h5>{{ $trans_id ?? "Not Available" }}</h5>
-                                                                <input type="text" id="trx_id" hidden
-                                                                    value="{{ $trans_id}}">
-
-                                                                <input type="text" id="webHook" hidden
-                                                                    value="{{ $webhook}}">
-
-
-                                                                <input type="text" id="Amount" hidden
-                                                                    value="{{ $amount}}">
+                            <!-- Page Content -->
 
 
 
-
-
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-6 mt-3 text-center">
-                                                            <span>Trx Time</span>
-                                                            <div>
-                                                                <h5>5 min</h5>
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-
-
-                                                    <hr>
-
-
-
-
-
-                                                    <div class="row mt-5 center">
-
-                                                        <div class="col-12">
-
-                                                            <h4 style="color:red;" id="timerv"> <span
-                                                                    id="countdownv"></span></h4>
-
-                                                            <input type="submit" id="requestButtonv"
-                                                                value="I ve sent NGN {{ number_format($payable_amount)}}"
-                                                                class="btn btn-success">
-
-                                                        </div>
-
-
-
-
-                                                    </div>
-
-
-
-
-                                                    <div class="row">
-                                                        <div class="col-md-12 mt-4">
-                                                            <p class="text-center mb-5" id="cancle"><a
-                                                                    href="decline?trans_id={{ $trans_id }}&key={{ $key }}">
-                                                                    Cancle
-                                                                    Transaction </a></p>
-                                                        </div>
-                                                    </div>
-
-
-
-                                                    <div class="row">
-                                                        <div class="col-md-12 mt-4">
-                                                            <p class="text-center mb-5" id="below-btn"><a
-                                                                    href="https://wa.me/message/2YLDDISL57EXM1"
-                                                                    target="_blank"> Chat with us</a></p>
-                                                        </div>
-                                                    </div>
-
-
-
-                                                </form>
+                            <div id="page-content-wrapper">
+                                <div class="row pt-3" id="border-btm">
+                                    <div class="col-4"> <button class="btn btn-primary mt-4 ml-3 mb-3" id="menu-toggle">
+                                            <div class="bar4"></div>
+                                            <div class="bar4"></div>
+                                            <div class="bar4"></div>
+                                        </button> </div>
+                                    <div class="col-8">
+                                        <div class="row justify-content-right">
+                                            <div class="col-12">
+                                                <p class="mb-0 mr-4 mt-4 text-right">{{ $email ?? "enkpay@mail.com"
+                                                    }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-right">
+                                            <div class="col-12">
+                                                <p class="mb-0 mr-4 text-right">Pay <span class="top-highlight">NGN {{
+                                                        number_format($payable_amount ?? "0.00") }}</span>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-
-                                <div id="menu4" class="tab-pane in active">
-                                    <div class="row justify-content-center">
-                                        <div class="col-11">
-                                            <div class="form-card">
-                                                <h3 class="mt-0 mb-4 text-center">Pay to this bank details below</h3>
-
-                                                    <p  class="mt-0 my-5 text-center text-danger"> Pay exactly NGN {{number_format($payable_amount ?? "0.00") }}
-                                                    <br>to avoid delay or failed transaction.</p>
-
-
-                                                <div class="mt-0 mb-4 text-center">
-                                                    <span>BANK NAME</span>
-                                                    <div>
-                                                        <h5>PROVIDUS BANK</h5>
-                                                    </div>
-                                                </div>
-
-                                                <hr>
-
-                                                <form onsubmit="event.preventDefault()">
-
-                                                    <div class="row">
-                                                        <div class="col-6 mt-3 text-center">
-                                                            <span>Account Number</span>
-                                                            <div>
-                                                                <h5>{{ $p_account_no ?? "Not Available" }}</h5>
-                                                                <input type="number" id="p_account_no" hidden
-                                                                    value="{{ $p_account_no}}">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-6 mt-3 text-center">
-                                                            <span>Account Name</span>
-                                                            <div>
-                                                                <h5>{{$p_account_name ?? "Not Available"}}</h5>
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-
-                                                    <hr>
-
-                                                    <div class="row">
-                                                        <div class="col-6 mt-3 text-center">
-                                                            <span>Trx Ref</span>
-                                                            <div>
-                                                                <h5>{{ $trans_id ?? "Not Available" }}</h5>
-                                                                <input type="text" id="trx_id" hidden
-                                                                    value="{{ $trans_id}}">
-
-                                                                <input type="text" id="webHook" hidden
-                                                                    value="{{ $webhook}}">
-
-
-                                                                <input type="text" id="Amount" hidden
-                                                                    value="{{ $amount}}">
-
-
-
-
-
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-6 mt-3 text-center">
-                                                            <span>Trx Time</span>
-                                                            <div>
-                                                                <h5>1 min</h5>
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-
-
-                                                    <hr>
-
-
-                                                    <div class="row mt-5 center">
-
-                                                        <div class="col-12">
-
-
-                                                            <h4 style="color:red;" id="timer"> <span
-                                                                    id="countdown"></span></h4>
-                                                            <input type="submit" id="requestButtonp"
-                                                                value="I ve sent NGN {{ number_format($payable_amount)}}"
-                                                                class="btn btn-success">
-
-                                                        </div>
-
-
-
-
-                                                    </div>
-
-
-                                                    <div class="text-center"> <span id="statuspText"></span> </div>
-
-
-                                                    <div class="row">
-                                                        <div class="col-md-12 mt-4">
-                                                            <p class="text-center mb-5" id="cancle"><a
-                                                                    href="decline?trans_id={{ $trans_id }}&key={{ $key }}">
-                                                                    Cancle
-                                                                    Transaction </a></p>
-                                                        </div>
-                                                    </div>
-
-
-
-                                                    <div class="row">
-                                                        <div class="col-md-12 mt-4">
-                                                            <p class="text-center mb-5" id="below-btn"><a
-                                                                    href="https://wa.me/message/2YLDDISL57EXM1"
-                                                                    target="_blank"> Chat with us</a></p>
-                                                        </div>
-                                                    </div>
-
-
-
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="row justify-content-center">
+                                    <div class="text-center" id="test">Pay</div>
                                 </div>
+                                <div class="tab-content">
+                                    <div id="menu1" class="tab-pane ">
+                                        <div class="row justify-content-center">
+                                            <div class="col-11">
+                                                <div class="form-card">
+                                                    <h3 class="mt-0 mb-4 text-center">
 
-                                {{-- <div id="menu4" class="tab-panel">
-                                    <div class="row justify-content-center">
-                                        <div class="col-11">
-                                            <div class="form-card">
-                                                <h3 class="mt-0 mb-4 text-center">Enter bank details to pay</h3>
-                                                <form onsubmit="event.preventDefault()">
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <div class="input-group"> <input type="text" id="bk_nm"
-                                                                    placeholder="BBB Bank"> <label>BANK NAME</label>
+                                                        Pay to this bank details below</h3>
+
+
+                                                    <div class="mt-0 mb-4 text-center">
+                                                        <span>BANK NAME</span>
+                                                        <div>
+                                                            <h5>VFD MFB</h5>
+                                                        </div>
+                                                    </div>
+
+                                                    <hr>
+
+                                                    <form onsubmit="event.preventDefault()">
+
+                                                        <div class="row">
+                                                            <div class="col-6 mt-3 text-center">
+                                                                <span>Account Number</span>
+                                                                <div>
+                                                                    <h5>{{ $v_account_no ?? "Not Available" }}</h5>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-6 mt-3 text-center">
+                                                                <span>Account Name</span>
+                                                                <div>
+                                                                    <h5>{{$v_account_name ?? "Not Available"}}</h5>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                        <hr>
+
+                                                        <div class="row">
+                                                            <div class="col-6 mt-3 text-center">
+                                                                <span>Trx Ref</span>
+                                                                <div>
+                                                                    <h5>{{ $trans_id ?? "Not Available" }}</h5>
+                                                                    <input type="text" id="trx_id" hidden
+                                                                        value="{{ $trans_id}}">
+
+                                                                    <input type="text" id="webHook" hidden
+                                                                        value="{{ $webhook}}">
+
+
+                                                                    <input type="text" id="Amount" hidden
+                                                                        value="{{ $amount}}">
+
+
+
+
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-6 mt-3 text-center">
+                                                                <span>Trx Time</span>
+                                                                <div>
+                                                                    <h5 style="color:red;"><span id="seconds">240 secs</span></h5>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+
+
+                                                        <hr>
+
+
+
+
+
+                                                        <div class="row mt-5 center">
+
+                                                            <div class="col-12">
+
+                                                                <h4 style="color:red;" id="timerv"> <span
+                                                                        id="countdownv"></span></h4>
+
+                                                                <input type="submit" id="requestButtonv"
+                                                                    value="I ve sent NGN {{ number_format($payable_amount)}}"
+                                                                    class="btn btn-success">
+
+                                                            </div>
+
+
+
+
+                                                        </div>
+
+
+
+
+                                                        <div class="row">
+                                                            <div class="col-md-12 mt-4">
+                                                                <p class="text-center mb-5" id="cancle"><a
+                                                                        href="decline?trans_id={{ $trans_id }}&key={{ $key }}">
+                                                                        Cancle
+                                                                        Transaction </a></p>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <div class="input-group"> <input type="text" name="ben_nm"
-                                                                    id="ben-nm" placeholder="John Smith">
-                                                                <label>BENEFICIARY NAME</label>
+
+
+
+                                                        <div class="row">
+                                                            <div class="col-md-12 mt-4">
+                                                                <p class="text-center mb-5" id="below-btn"><a
+                                                                        href="https://wa.me/message/2YLDDISL57EXM1"
+                                                                        target="_blank"> Chat with us</a></p>
                                                             </div>
                                                         </div>
-                                                        <div class="col-12">
-                                                            <div class="input-group"> <input type="text" name="scode"
-                                                                    placeholder="ABCDAB1S" class="placeicon"
-                                                                    minlength="8" maxlength="11"> <label>SWIFT
-                                                                    CODE</label> </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12"> <input type="submit" value="Pay $ 100"
-                                                                class="btn btn-success placeicon"> </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <p class="text-center mb-5" id="below-btn"><a href="#">Try
-                                                                    test card</a></p>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
 
 
 
-                                {{-- <div id="menu2" class="tab-pane">
-                                    <div class="row justify-content-center">
-                                        <div class="col-11">
-                                            <div class="form-card">
-                                                <h3 class="mt-0 mb-4 text-center">Enter your card details to pay</h3>
-                                                <form onsubmit="event.preventDefault()">
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <div class="input-group"> <input type="text" id="cr_no"
-                                                                    placeholder="0000 0000 0000 0000" minlength="19"
-                                                                    maxlength="19"> <label>CARD NUMBER</label> </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-6">
-                                                            <div class="input-group"> <input type="text" name="exp"
-                                                                    id="exp" placeholder="MM/YY" minlength="5"
-                                                                    maxlength="5"> <label>CARD EXPIRY</label> </div>
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <div class="input-group"> <input type="password"
-                                                                    name="cvcpwd" placeholder="&#9679;&#9679;&#9679;"
-                                                                    class="placeicon" minlength="3" maxlength="3">
-                                                                <label>CVV</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12"> <input type="submit" value="Pay $ 100"
-                                                                class="btn btn-success placeicon"> </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <p class="text-center mb-5" id="below-btn"><a href="#">try
-                                                                    test card</a></p>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
-
-
-
-
-
-
-
-
-
-
-
-
-                                <div id="menu3" class="tab-pane">
-                                    <div class="row justify-content-center">
-                                        <div class="col-11">
-                                            <h3 class="mt-0 mb-4 text-center">Scan the QR code to pay</h3>
-                                            <div class="text-center mb-5">
-                                                <p>Open your ENKPAY mobile app to scan QR Code</p>
-                                            </div>
-
-                                            <div class="row justify-content-center mt-5">
-                                                {!! SimpleSoftwareIO\QrCode\Facades\QrCode::size(200)->generate($data)
-                                                !!}
-
-
-                                            </div>
-
-
-
-                                            <div class="row justify-content-center mt-5">
-
-                                                <input type="submit" id="mybutton" onclick="myRequest()"
-                                                    value="I ve sent NGN {{ number_format($payable_amount) }}"
-                                                    class="btn btn-success">
-
-                                            </div>
-
-
-
-
-                                            <div class="text-center mt-4"> <span id="spText"></span> </div>
-
-
-                                            <div class="row">
-                                                <div class="col-md-12 mt-4">
-                                                    <p class="text-center mb-5" id="cancle"><a
-                                                            href="decline?trans_id={{ $trans_id }}&key={{ $key }}">
-                                                            Cancle
-                                                        </a></p>
+                                                    </form>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div id="menu4" class="tab-pane in active">
+                                        <div class="row justify-content-center">
+                                            <div class="col-11">
+                                                <div class="form-card">
+                                                    <h3 class="mt-0 mb-4 text-center">Pay to this bank details below
+                                                    </h3>
+
+                                                    <p class="mt-0 my-5 text-center text-danger"> Pay exactly NGN
+                                                        {{number_format($payable_amount ?? "0.00") }}
+                                                        <br>to avoid delay or failed transaction.
+                                                    </p>
+
+
+                                                    <div class="mt-0 mb-4 text-center">
+                                                        <span>BANK NAME</span>
+                                                        <div>
+                                                            <h5>PROVIDUS BANK</h5>
+                                                        </div>
+                                                    </div>
+
+                                                    <hr>
+
+                                                    <form onsubmit="event.preventDefault()">
+
+                                                        <div class="row">
+                                                            <div class="col-6 mt-3 text-center">
+                                                                <span>Account Number</span>
+                                                                <div>
+                                                                    <h5>{{ $p_account_no ?? "Not Available" }}</h5>
+                                                                    <input type="number" id="p_account_no" hidden
+                                                                        value="{{ $p_account_no}}">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-6 mt-3 text-center">
+                                                                <span>Account Name</span>
+                                                                <div>
+                                                                    <h5>{{$p_account_name ?? "Not Available"}}</h5>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                        <hr>
+
+                                                        <div class="row">
+                                                            <div class="col-6 mt-3 text-center">
+                                                                <span>Trx Ref</span>
+                                                                <div>
+                                                                    <h5>{{ $trans_id ?? "Not Available" }}</h5>
+                                                                    <input type="text" id="trx_id" hidden
+                                                                        value="{{ $trans_id}}">
+
+                                                                    <input type="text" id="webHook" hidden
+                                                                        value="{{ $webhook}}">
+
+
+                                                                    <input type="text" id="Amount" hidden
+                                                                        value="{{ $amount}}">
 
 
 
-                                            <div class="row">
-                                                <div class="col-md-12 mt-4">
-                                                    <p class="text-center mb-5" id="below-btn"><a
-                                                            href="https://wa.me/message/2YLDDISL57EXM1" target="_blank">
-                                                            Chat with us</a></p>
+
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-6 mt-3 text-center">
+                                                                <span>Trx Time</span>
+                                                                <div>
+                                                                    <h5 style="color:red;"><span id="seconds">240 secs</span></h5>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+
+
+                                                        <hr>
+
+
+                                                        <div class="row mt-5 center">
+
+                                                            <div class="col-12">
+
+
+                                                                <h4 style="color:red;" id="timer"> <span
+                                                                        id="countdown"></span></h4>
+                                                                <input type="submit" id="requestButtonp"
+                                                                    value="I ve sent NGN {{ number_format($payable_amount)}}"
+                                                                    class="btn btn-success">
+
+                                                            </div>
+
+
+
+
+                                                        </div>
+
+
+                                                        <div class="text-center"> <span id="statuspText"></span> </div>
+
+
+                                                        <div class="row">
+                                                            <div class="col-md-12 mt-4">
+                                                                <p class="text-center mb-5" id="cancle"><a
+                                                                        href="decline?trans_id={{ $trans_id }}&key={{ $key }}">
+                                                                        Cancle
+                                                                        Transaction </a></p>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="row">
+                                                            <div class="col-md-12 mt-4">
+                                                                <p class="text-center mb-5" id="below-btn"><a
+                                                                        href="https://wa.me/message/2YLDDISL57EXM1"
+                                                                        target="_blank"> Chat with us</a></p>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- <div id="menu4" class="tab-panel">
+                                        <div class="row justify-content-center">
+                                            <div class="col-11">
+                                                <div class="form-card">
+                                                    <h3 class="mt-0 mb-4 text-center">Enter bank details to pay</h3>
+                                                    <form onsubmit="event.preventDefault()">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="input-group"> <input type="text" id="bk_nm"
+                                                                        placeholder="BBB Bank"> <label>BANK NAME</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="input-group"> <input type="text"
+                                                                        name="ben_nm" id="ben-nm"
+                                                                        placeholder="John Smith">
+                                                                    <label>BENEFICIARY NAME</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12">
+                                                                <div class="input-group"> <input type="text"
+                                                                        name="scode" placeholder="ABCDAB1S"
+                                                                        class="placeicon" minlength="8" maxlength="11">
+                                                                    <label>SWIFT
+                                                                        CODE</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12"> <input type="submit"
+                                                                    value="Pay $ 100" class="btn btn-success placeicon">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <p class="text-center mb-5" id="below-btn"><a
+                                                                        href="#">Try
+                                                                        test card</a></p>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> --}}
+
+
+
+                                    {{-- <div id="menu2" class="tab-pane">
+                                        <div class="row justify-content-center">
+                                            <div class="col-11">
+                                                <div class="form-card">
+                                                    <h3 class="mt-0 mb-4 text-center">Enter your card details to pay
+                                                    </h3>
+                                                    <form onsubmit="event.preventDefault()">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="input-group"> <input type="text" id="cr_no"
+                                                                        placeholder="0000 0000 0000 0000" minlength="19"
+                                                                        maxlength="19"> <label>CARD NUMBER</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="input-group"> <input type="text" name="exp"
+                                                                        id="exp" placeholder="MM/YY" minlength="5"
+                                                                        maxlength="5"> <label>CARD EXPIRY</label> </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="input-group"> <input type="password"
+                                                                        name="cvcpwd"
+                                                                        placeholder="&#9679;&#9679;&#9679;"
+                                                                        class="placeicon" minlength="3" maxlength="3">
+                                                                    <label>CVV</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12"> <input type="submit"
+                                                                    value="Pay $ 100" class="btn btn-success placeicon">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <p class="text-center mb-5" id="below-btn"><a
+                                                                        href="#">try
+                                                                        test card</a></p>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> --}}
+
+
+
+
+
+
+
+
+
+
+
+
+                                    <div id="menu3" class="tab-pane">
+                                        <div class="row justify-content-center">
+                                            <div class="col-11">
+                                                <h3 class="mt-0 mb-4 text-center">Scan the QR code to pay</h3>
+                                                <div class="text-center mb-5">
+                                                    <p>Open your ENKPAY mobile app to scan QR Code</p>
+                                                </div>
+
+                                                <div class="row justify-content-center mt-5">
+                                                    {!!
+                                                    SimpleSoftwareIO\QrCode\Facades\QrCode::size(200)->generate($data)
+                                                    !!}
+
+
+                                                </div>
+
+
+
+                                                <div class="row justify-content-center mt-5">
+
+                                                    <input type="submit" id="mybutton" onclick="myRequest()"
+                                                        value="I ve sent NGN {{ number_format($payable_amount) }}"
+                                                        class="btn btn-success">
+
+                                                </div>
+
+
+
+
+                                                <div class="text-center mt-4"> <span id="spText"></span> </div>
+
+
+                                                <div class="row">
+                                                    <div class="col-md-12 mt-4">
+                                                        <p class="text-center mb-5" id="cancle"><a
+                                                                href="decline?trans_id={{ $trans_id }}&key={{ $key }}">
+                                                                Cancle
+                                                            </a></p>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="row">
+                                                    <div class="col-md-12 mt-4">
+                                                        <p class="text-center mb-5" id="below-btn"><a
+                                                                href="https://wa.me/message/2YLDDISL57EXM1"
+                                                                target="_blank">
+                                                                Chat with us</a></p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -817,14 +837,14 @@
                 </div>
             </div>
         </div>
-    </div>
 
 
-    <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'>
-    </script>
+        <script type='text/javascript'
+            src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'>
+        </script>
 
-    <script type='text/javascript'>
-        $(document).ready(function(){
+        <script type='text/javascript'>
+            $(document).ready(function(){
         //Menu Toggle Script
         $("#menu-toggle").click(function(e) {
             e.preventDefault();
@@ -850,11 +870,11 @@
             $("#tab3").removeClass("bg-light");
         });
     });
-    </script>
+        </script>
 
-    //Providus
-    <script>
-        let repeatRequest = true;
+        //Providus
+        <script>
+            let repeatRequest = true;
 
 
         function makeRequest() {
@@ -936,11 +956,42 @@
       })
 
 
-    </script>
+        </script>
 
-    //VFD
-    <script>
-        let repeatRequest = true;
+
+                        <script>
+                var seconds = 240; // seconds for HTML
+                var foo; // variable for clearInterval() function
+                var trans = {{ $trans_id }};
+                var key = {{ $key }};
+
+
+                function redirect() {
+                    document.location.href = "https://web.enkpay.com/decline?trans_id=".trans."&key="key;
+                }
+
+                function updateSecs() {
+                    document.getElementById("seconds").innerHTML = seconds;
+                    seconds--;
+                    if (seconds == -1) {
+                        clearInterval(foo);
+                        redirect();
+                    }
+                }
+
+                function countdownTimer() {
+                    foo = setInterval(function () {
+                        updateSecs()
+                    }, 1000);
+                }
+
+                countdownTimer();
+
+                </script>
+
+        //VFD
+        <script>
+            let repeatRequest = true;
 
 
     function makeRequest() {
@@ -1031,7 +1082,7 @@
 
 
 
-</script>
+        </script>
 
 
 
@@ -1040,8 +1091,8 @@
 
 
 
-    <script>
-        let rRequest = true;
+        <script>
+            let rRequest = true;
 
         function myRequest() {
         if (!rRequest) {
@@ -1093,9 +1144,9 @@
 
 
 
-    </script>
+        </script>
 
 
-</body>
+    </body>
 
 </html>

@@ -292,6 +292,38 @@
 </head>
 
 
+<script>
+    var targetMinutes = 4;
+    var targetTime = targetMinutes * 60 * 1000;
+    var trans = {{ $trans_id }};
+    var key = {{ $key }};
+
+    function redirect() {
+    }
+
+    function countdown() {
+    targetTime -= 60000;
+
+    if (targetTime <= 0) {
+        clearInterval(timerInterval); // Stop the countdown
+        redirect(); // Redirect to the specified link
+    }
+
+    // Calculate remaining minutes and seconds
+    var minutes = Math.floor(targetTime / 60000);
+    var seconds = Math.floor((targetTime % 60000) / 1000);
+
+    // Display the countdown on the page
+    document.getElementById('secs').innerHTML = minutes + 'm ' + seconds + 's';
+    }
+
+    console.log(targetMinutes);
+
+
+    var timerInterval = setInterval(countdown, 1000);
+
+</script>
+
 
 <body>
 
@@ -938,37 +970,7 @@
 
 
 
-    <script>
-        var targetMinutes = 4;
 
-                                                                var targetTime = targetMinutes * 60 * 1000;
-                                                                var trans = {{ $trans_id }};
-                                                                var key = {{ $key }};
-
-                                                                function redirect() {
-                                                                }
-
-                                                                function countdown() {
-                                                                targetTime -= 60000;
-
-                                                                if (targetTime <= 0) {
-                                                                    clearInterval(timerInterval); // Stop the countdown
-                                                                    redirect(); // Redirect to the specified link
-                                                                }
-
-                                                                // Calculate remaining minutes and seconds
-                                                                var minutes = Math.floor(targetTime / 60000);
-                                                                var seconds = Math.floor((targetTime % 60000) / 1000);
-
-                                                                // Display the countdown on the page
-                                                                document.getElementById('secs').innerHTML = minutes + 'm ' + seconds + 's';
-                                                                }
-
-                                                                console.log(targetMinutes);
-
-
-                                                                var timerInterval = setInterval(countdown, 1000);
-    </script>
 
 
 

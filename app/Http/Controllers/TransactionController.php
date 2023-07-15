@@ -774,7 +774,7 @@ class TransactionController extends Controller
 
             if ($trx != null) {
 
-                if ($trx->status == 101) {
+                if ($trx->status == 1) {
 
                     return response()->json([
                         'status' => true,

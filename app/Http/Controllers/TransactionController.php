@@ -158,27 +158,27 @@ class TransactionController extends Controller
                 $p_account_no = $account2;
             }
 
-            if($acct2 != 0){
+            elseif($acct2 != 0){
                 $p_account_no = $account3;
             }
-            if($acct3 != 0){
+            elseif($acct3 != 0){
 
                 $p_account_no = $account4;
             }
-            if($acct4 != 0){
+            elseif($acct4 != 0){
                 $p_account_no = $account5;
 
-            }if($acct6 != 0){
+            }elseif($acct6 != 0){
 
                 $p_account_no = $account7;
 
             }
-            if($acct7 != 0){
+            elseif($acct7 != 0){
 
                 $p_account_no = $account8;
 
             }
-            if($acct8 != 0){
+            else{
 
                 $p_account_no = $account1;
             }

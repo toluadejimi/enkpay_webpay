@@ -134,13 +134,16 @@ class TransactionController extends Controller
             ->first()->user_id ?? null;
 
             $account_no_p = VirtualAccount::where('user_id', $user_id)
-            ->where('v_bank_name','PROVIDUS BANK')->inRandomOrder()->first()->v_account_no ?? null;
+            ->where('v_bank_name','PROVIDUS BANK')->first()->v_account_no ?? null;
+
+            // $account_no_p = VirtualAccount::where('user_id', $user_id)
+            // ->where('v_bank_name','PROVIDUS BANK')->inRandomOrder()->first()->v_account_no ?? null;
 
         }else{
 
             $user_id = Webkey::where('key', $request->key)
             ->first()->user_id ?? null;
-            
+
             $account_no_p = VirtualAccount::where('user_id', $user_id)
             ->where('v_bank_name','PROVIDUS BANK')->first()->v_account_no ?? null;
 

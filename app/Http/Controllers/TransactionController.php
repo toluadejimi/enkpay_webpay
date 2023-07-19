@@ -128,21 +128,40 @@ class TransactionController extends Controller
 
         $yeekkey = env('YEKEENKEY');
 
+        if($key == $yeekkey ){
+
+            $user_id = Webkey::where('key', $request->key)
+            ->first()->user_id ?? null;
+
+            $account_no_p = VirtualAccount::where('user_id', $user_id)
+            ->where('v_bank_name','PROVIDUS BANK')->inRandomOrder()->first()->v_account_no ?? null;
+
+        }else{
+
+            $user_id = Webkey::where('key', $request->key)
+            ->first()->user_id ?? null;
+            
+            $account_no_p = VirtualAccount::where('user_id', $user_id)
+            ->where('v_bank_name','PROVIDUS BANK')->first()->v_account_no ?? null;
+
+        }
+
+
 
         // if($key == $yeekkey){
 
 
 
-      
-        
-     
 
 
 
 
 
 
-           
+
+
+
+
 
         //     $charge_status = Webkey::where('key', $yeekkey)->first()->charge_status ?? null;
 
@@ -222,7 +241,7 @@ class TransactionController extends Controller
         //         $acct =  $p_account_no;
 
         //     if ($get_trans_id == null) {
-        
+
         //         $trans = new Webtransfer();
         //         $trans->amount = $amount;
         //         $trans->user_id = $user_id;
@@ -287,7 +306,7 @@ class TransactionController extends Controller
         $status = Webkey::where('key', $key)
             ->first()->status ?? null;
 
-        $v_account_no = VirtualAccount::where('user_id', $user_id)
+        $v_account_no =  VirtualAccount::where('user_id', $user_id)
             ->where('v_bank_name', 'VFD MFB')
             ->first()->v_account_no ?? null;
 
@@ -300,9 +319,7 @@ class TransactionController extends Controller
             ->first()->v_bank_name ?? null;
 
 
-        $p_account_no = VirtualAccount::where('user_id', $user_id)
-            ->where('v_bank_name', 'PROVIDUS BANK')
-            ->first()->v_account_no ?? null;
+        $p_account_no = $account_no_p;
 
         $p_account_name = VirtualAccount::where('user_id', $user_id)
             ->where('v_bank_name', 'PROVIDUS BANK')

@@ -348,9 +348,7 @@ class TransactionController extends Controller
 
         if ($get_trx == null) {
 
-            $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
-            $webhook =  $get_trx->webhook;
-
+            $webhook = Webkey::where('key', $request->key)->first()->url ?? null;
             return Redirect::to($webhook);
         }
 

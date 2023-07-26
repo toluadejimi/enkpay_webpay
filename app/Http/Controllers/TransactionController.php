@@ -343,13 +343,17 @@ class TransactionController extends Controller
     public function continue_pay(Request $request)
     {
 
-        $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
-
-
-        if ($get_trx != null) {
-
             $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
 
+
+            if($get_trx == null){
+
+                $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
+                $webhook =  $get_trx->webhook;
+    
+                return Redirect::to($webhook);
+
+            }
 
             $payable_amount = $get_trx->payable_amount;
             $email =  $get_trx->email;
@@ -372,21 +376,7 @@ class TransactionController extends Controller
 
 
             return view('continue-webpay', compact('payable_amount', 'email', 'user_id', 'key', 'data', 'webhook', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name', 'total_received'));
-        } else {
-
-
-            $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
-            $webhook =  $get_trx->webhook;
-
-            return Redirect::to($webhook);
-        }
-
-
-
-
-        // } catch (\Exception $th) {
-        //     return $th->getMessage();
-        // }
+        } 
     }
 
 

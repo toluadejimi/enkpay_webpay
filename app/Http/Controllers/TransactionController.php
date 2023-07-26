@@ -369,6 +369,9 @@ class TransactionController extends Controller
         $key =  $get_trx->key;
 
 
+        dd($v_account_no, $get_trx->v_account_no, $v_account_name);
+
+
 
 
         return view('continue-webpay', compact('payable_amount', 'email', 'user_id', 'key', 'data', 'webhook', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name', 'total_received'));

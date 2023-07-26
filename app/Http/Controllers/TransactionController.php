@@ -347,7 +347,6 @@ class TransactionController extends Controller
 
 
         if ($get_trx == null) {
-
             $webhook = Webkey::where('key', $request->key)->first()->url ?? null;
             return Redirect::to($webhook);
         }

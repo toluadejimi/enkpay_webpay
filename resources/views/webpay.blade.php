@@ -614,7 +614,7 @@
 
 
                                                             <script>
-                                                                var targetMinutes = 600;
+                                                                var targetMinutes = 300;
 
                                                                 var targetTime = targetMinutes * 60 * 1000;
                                                                 var trans = "{{ $trans_id }}";

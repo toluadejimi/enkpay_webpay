@@ -316,6 +316,13 @@ class TransactionController extends Controller
             $trans->client_id = $client_id;
             $trans->email = $email;
             $trans->url = $url;
+            $trans->webhook = $webhook;
+            $trans->key = $key;
+            $trans->both_commmission = $both_commmission;
+
+
+
+
 
 
             $trans->save();
@@ -337,160 +344,44 @@ class TransactionController extends Controller
     public function continue_pay(Request $request)
     {
 
-
-        $key =  $request->key;
-        $amount = $request->amount;
-        $email = $request->email;
-        $ref = $request->ref;
-        $wc_order = $request->wc_order;
-        $client_id = $request->client_id;
-        $iref = $ref ?? $wc_order;
-        $email = $request->email;
+        $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
 
 
+        if($get_trx != null){
 
-        $yeekkey = env('YEKEENKEY');
+            $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
 
-        if($key == $yeekkey ){
 
-            $user_id = Webkey::where('key', $request->key)
-            ->first()->user_id ?? null;
+            if($get_trx != null){
 
-            // $account_no_p = VirtualAccount::where('user_id', $user_id)
-            // ->where('v_bank_name','PROVIDUS BANK')->first()->v_account_no ?? null;
 
-            $account_no_p = VirtualAccount::where('user_id', $user_id)
-            ->where('v_bank_name','PROVIDUS BANK')->inRandomOrder()->first()->v_account_no ?? null;
+                $payable_amount = $get_trx->payable_amount;
+                $email =  $get_trx->email;
+                $data =  $get_trx->data;
+                $webhook =  $get_trx->webhook;
+                $amount =  $get_trx->amount;
+                $v_account_no =  $get_trx->v_account_no;
+                $p_account_no =  $get_trx->p_account_no;
+                $both_commmission =  $get_trx->both_commmission;
+                $v_account_name =  $get_trx->v_account_name;
+                $p_account_name =  $get_trx->p_account_name;
+                $bank_name =  $get_trx->bank_name;
+                $p_bank_name =  $get_trx->p_bank_name;
+                $total_received =  $get_trx->total_received;
 
-        }else{
 
-            $user_id = Webkey::where('key', $request->key)
-            ->first()->user_id ?? null;
 
-            $account_no_p = VirtualAccount::where('user_id', $user_id)
-            ->where('v_bank_name','PROVIDUS BANK')->first()->v_account_no ?? null;
+                return view('continue-webpay', compact('payable_amount', 'email', 'user_id', 'data', 'webhook', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name', 'total_received'));
+
+
+
+            }
+
 
         }
 
 
 
-        $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
-
-        if ($amount == null) {
-            return view('invalid');
-        }
-
-
-        if ($ref == null) {
-            return view('invalid');
-        }
-
-
-        if ($key == null) {
-            return view('invalid');
-        }
-
-        $user_id = Webkey::where('key', $key)
-            ->first()->user_id ?? null;
-
-        if ($user_id == null) {
-            return view('invalidkey');
-        }
-
-
-        $account_details = VirtualAccount::where('user_id', $user_id)->get();
-
-
-        $charge_status = Webkey::where('key', $key)->first()->charge_status ?? null;
-
-        $status = Webkey::where('key', $key)
-            ->first()->status ?? null;
-
-        $v_account_no =  VirtualAccount::where('user_id', $user_id)
-            ->where('v_bank_name', 'VFD MFB')
-            ->first()->v_account_no ?? null;
-
-        $v_account_name = VirtualAccount::where('user_id', $user_id)
-            ->where('v_bank_name', 'VFD MFB')
-            ->first()->v_account_name ?? null;
-
-        $bank_name = VirtualAccount::where('user_id', $user_id)
-            ->where('v_bank_name', 'VFD MFB')
-            ->first()->v_bank_name ?? null;
-
-
-        $p_account_no = $account_no_p;
-
-        $p_account_name = VirtualAccount::where('user_id', $user_id)
-            ->where('v_bank_name', 'PROVIDUS BANK')
-            ->first()->v_account_name ?? null;
-
-        $p_bank_name = VirtualAccount::where('user_id', $user_id)
-            ->where('v_bank_name', 'PROVIDUS BANK')
-            ->first()->v_bank_name ?? null;
-
-
-        $web_commission = Charge::where('title', 'bwebpay')->first()->amount;
-        //Both Commission
-        $amount1 = $web_commission / 100;
-        $amount2 = $amount1 * $amount;
-        $both_commmission = number_format($amount2, 2);
-
-
-
-        if ($both_commmission >= 300) {
-            $commmission = 300;
-        } else {
-            $commmission = $both_commmission;
-        }
-
-
-
-
-        $trans_id = $ref ?? random_int(100000, 999999);
-
-        if ($charge_status == 0) {
-
-            $payable_amount = $amount;
-        } else {
-
-            $payable_amount1 = $amount + $commmission;
-            $payable_amount = round($payable_amount1);
-        }
-
-
-
-
-
-        $total_received = 0.00;
-
-        $webhook = $marchant_url;
-
-
-
-
-        $get_trans_id = Webtransfer::where('trans_id', $trans_id)
-            ->first()->trans_id ?? null;
-
-        $account1 = 9604967850;
-        $account2 = 9608026564;
-
-        $cks = Webtransfer::where('v_account_no', $account1)->first()->status ?? null;
-        if($cks == 0){
-            $account2 = $v_account_no;
-        }
-
-
-
-
-
-        $qrdata = $user_id . " " . $payable_amount . " " . $trans_id;
-
-        $data = Crypt::encryptString($qrdata);
-
-
-
-        return view('webpay', compact('payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name', 'total_received'));
         // } catch (\Exception $th) {
         //     return $th->getMessage();
         // }

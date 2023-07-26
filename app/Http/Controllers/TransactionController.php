@@ -343,40 +343,38 @@ class TransactionController extends Controller
     public function continue_pay(Request $request)
     {
 
+        $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
+
+
+        if ($get_trx == null) {
+
             $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
-
-
-            if($get_trx == null){
-
-                $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
-                $webhook =  $get_trx->webhook;
-    
-                return Redirect::to($webhook);
-
-            }
-
-            $payable_amount = $get_trx->payable_amount;
-            $email =  $get_trx->email;
-            $data =  $get_trx->data;
-            $user_id =  $get_trx->user_id;
-            $trans_id = $get_trx->user_id;
             $webhook =  $get_trx->webhook;
-            $amount =  $get_trx->amount;
-            $v_account_no =  $get_trx->v_account_no;
-            $p_account_no =  $get_trx->p_account_no;
-            $both_commmission =  $get_trx->both_commmission;
-            $v_account_name =  $get_trx->v_account_name;
-            $p_account_name =  $get_trx->p_account_name;
-            $bank_name =  $get_trx->bank_name;
-            $p_bank_name =  $get_trx->p_bank_name;
-            $total_received =  $get_trx->total_received;
-            $key =  $get_trx->key;
+
+            return Redirect::to($webhook);
+        }
+
+        $payable_amount = $get_trx->payable_amount;
+        $email =  $get_trx->email;
+        $data =  $get_trx->data;
+        $user_id =  $get_trx->user_id;
+        $trans_id = $get_trx->user_id;
+        $webhook =  $get_trx->webhook;
+        $amount =  $get_trx->amount;
+        $v_account_no =  $get_trx->v_account_no;
+        $p_account_no =  $get_trx->p_account_no;
+        $both_commmission =  $get_trx->both_commmission;
+        $v_account_name =  $get_trx->v_account_name;
+        $p_account_name =  $get_trx->p_account_name;
+        $bank_name =  $get_trx->bank_name;
+        $p_bank_name =  $get_trx->p_bank_name;
+        $total_received =  $get_trx->total_received;
+        $key =  $get_trx->key;
 
 
 
 
-            return view('continue-webpay', compact('payable_amount', 'email', 'user_id', 'key', 'data', 'webhook', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name', 'total_received'));
-        } 
+        return view('continue-webpay', compact('payable_amount', 'email', 'user_id', 'key', 'data', 'webhook', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name', 'total_received'));
     }
 
 

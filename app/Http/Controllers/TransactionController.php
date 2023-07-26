@@ -358,6 +358,7 @@ class TransactionController extends Controller
                 $payable_amount = $get_trx->payable_amount;
                 $email =  $get_trx->email;
                 $data =  $get_trx->data;
+                $data =  $get_trx->user_id;
                 $webhook =  $get_trx->webhook;
                 $amount =  $get_trx->amount;
                 $v_account_no =  $get_trx->v_account_no;

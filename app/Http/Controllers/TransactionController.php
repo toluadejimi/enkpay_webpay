@@ -356,6 +356,10 @@ class TransactionController extends Controller
         if($get_trx != null){
 
             $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
+            $v_account_no = Webtransfer::where('email', $request->email)->where('status', 0)->first()->v_account_no ?? null;
+
+            dd($v_account_no, $get_trx->v_account_no);
+
 
 
             if($get_trx != null){

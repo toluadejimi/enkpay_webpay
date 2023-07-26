@@ -432,14 +432,14 @@
                                                             <div class="col-6 mt-3 text-center">
                                                                 <span>Account Number</span>
                                                                 <div>
-                                                                    <h5>{{ $v_account_no ?? "Not Available" }}</h5>
+                                                                    <h5>{{ $v_account_no }}</h5>
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-6 mt-3 text-center">
                                                                 <span>Account Name</span>
                                                                 <div>
-                                                                    <h5>{{$v_account_name ?? "Not Available"}}</h5>
+                                                                    <h5>{{$v_account_name}}</h5>
                                                                 </div>
                                                             </div>
 

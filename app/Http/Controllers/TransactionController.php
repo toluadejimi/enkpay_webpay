@@ -127,25 +127,23 @@ class TransactionController extends Controller
 
         $yeekkey = env('YEKEENKEY');
 
-        if($key == $yeekkey ){
+        if ($key == $yeekkey) {
 
             $user_id = Webkey::where('key', $request->key)
-            ->first()->user_id ?? null;
+                ->first()->user_id ?? null;
 
             // $account_no_p = VirtualAccount::where('user_id', $user_id)
             // ->where('v_bank_name','PROVIDUS BANK')->first()->v_account_no ?? null;
 
             $account_no_p = VirtualAccount::where('user_id', $user_id)
-            ->where('v_bank_name','PROVIDUS BANK')->inRandomOrder()->first()->v_account_no ?? null;
-
-        }else{
+                ->where('v_bank_name', 'PROVIDUS BANK')->inRandomOrder()->first()->v_account_no ?? null;
+        } else {
 
             $user_id = Webkey::where('key', $request->key)
-            ->first()->user_id ?? null;
+                ->first()->user_id ?? null;
 
             $account_no_p = VirtualAccount::where('user_id', $user_id)
-            ->where('v_bank_name','PROVIDUS BANK')->first()->v_account_no ?? null;
-
+                ->where('v_bank_name', 'PROVIDUS BANK')->first()->v_account_no ?? null;
         }
 
 
@@ -211,7 +209,7 @@ class TransactionController extends Controller
 
 
 
-        $message = $p_account_name. "|" .$email. " | ".$iref ."| NGN". $amount. "|". date('d-m-y h:i:s');
+        $message = $p_account_name . "|" . $email . " | " . $iref . "| NGN" . $amount . "|" . date('d-m-y h:i:s');
         send_notification($message);
 
 
@@ -264,7 +262,7 @@ class TransactionController extends Controller
         $account2 = 9608026564;
 
         $cks = Webtransfer::where('v_account_no', $account1)->first()->status ?? null;
-        if($cks == 0){
+        if ($cks == 0) {
             $account2 = $v_account_no;
         }
 
@@ -275,30 +273,25 @@ class TransactionController extends Controller
         $get_trx = Webtransfer::where('email', $email)->where('status', 0)->first() ?? null;
 
 
-        if($get_trx != null){
+        if ($get_trx != null) {
 
             $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
 
 
-            if($get_trx != null){
+            if ($get_trx != null) {
 
 
                 $url = $get_trx->url;
                 $order_id =  $get_trx->trans_id;
 
                 return view('pending-pay', compact('url', 'order_id'));
-
-
-
             }
-
-
         }
 
 
 
 
-        $url ="https://web.enkpay.com/continue-pay?amount=$amount&key=$key&ref=$trans_id&email=$email";
+        $url = "https://web.enkpay.com/continue-pay?amount=$amount&key=$key&ref=$trans_id&email=$email";
 
         $qrdata = $user_id . " " . $payable_amount . " " . $trans_id;
 
@@ -353,50 +346,41 @@ class TransactionController extends Controller
         $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
 
 
-        if($get_trx != null){
+        if ($get_trx != null) {
 
             $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
 
 
-                $payable_amount = $get_trx->payable_amount;
-                $email =  $get_trx->email;
-                $data =  $get_trx->data;
-                $user_id =  $get_trx->user_id;
-                $trans_id = $get_trx->user_id;
-                $webhook =  $get_trx->webhook;
-                $amount =  $get_trx->amount;
-                $v_account_no =  $get_trx->v_account_no;
-                $p_account_no =  $get_trx->p_account_no;
-                $both_commmission =  $get_trx->both_commmission;
-                $v_account_name =  $get_trx->v_account_name;
-                $p_account_name =  $get_trx->p_account_name;
-                $bank_name =  $get_trx->bank_name;
-                $p_bank_name =  $get_trx->p_bank_name;
-                $total_received =  $get_trx->total_received;
-                $key =  $get_trx->key;
+            $payable_amount = $get_trx->payable_amount;
+            $email =  $get_trx->email;
+            $data =  $get_trx->data;
+            $user_id =  $get_trx->user_id;
+            $trans_id = $get_trx->user_id;
+            $webhook =  $get_trx->webhook;
+            $amount =  $get_trx->amount;
+            $v_account_no =  $get_trx->v_account_no;
+            $p_account_no =  $get_trx->p_account_no;
+            $both_commmission =  $get_trx->both_commmission;
+            $v_account_name =  $get_trx->v_account_name;
+            $p_account_name =  $get_trx->p_account_name;
+            $bank_name =  $get_trx->bank_name;
+            $p_bank_name =  $get_trx->p_bank_name;
+            $total_received =  $get_trx->total_received;
+            $key =  $get_trx->key;
 
 
 
 
-                return view('continue-webpay', compact('payable_amount', 'email', 'user_id', 'key', 'data', 'webhook', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name', 'total_received'));
+            return view('continue-webpay', compact('payable_amount', 'email', 'user_id', 'key', 'data', 'webhook', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name', 'total_received'));
+        } else {
 
 
+            $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
+            $webhook =  $get_trx->webhook;
 
-            }else{
-
-
-                $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
-                $webhook =  $get_trx->webhook;
-
-                return Redirect::to($webhook);
-
-
-
-
-            }
-
-
+            return Redirect::to($webhook);
         }
+
 
 
 
@@ -548,7 +532,7 @@ class TransactionController extends Controller
         $user_id = Webtransfer::where('trans_id', $trans_id)
             ->first()->user_id ?? null;
 
-            $wc = Webtransfer::where('trans_id', $trans_id)
+        $wc = Webtransfer::where('trans_id', $trans_id)
             ->first()->wc_order ?? null;
 
         $key = Webkey::where('user_id', $user_id)
@@ -953,10 +937,9 @@ class TransactionController extends Controller
         if ($request->trans_id == null) {
 
             $trans_id = "ENK" . random_int(100000, 999999);
-        }else{
+        } else {
 
             $trans_id = $request->trans_id;
-
         }
 
         if ($request->key == null) {
@@ -1149,6 +1132,5 @@ class TransactionController extends Controller
 
 
         return view('receipt-view', $data);
-
     }
 }

@@ -300,6 +300,11 @@ class TransactionController extends Controller
 
         $url ="https://web.enkpay.com/continue-pay?amount=$amount&key=$key&ref=$trans_id&email=$email";
 
+        $qrdata = $user_id . " " . $payable_amount . " " . $trans_id;
+
+        $data = Crypt::encryptString($qrdata);
+
+
 
         if ($get_trans_id == null) {
 
@@ -320,6 +325,8 @@ class TransactionController extends Controller
             $trans->url = $url;
             $trans->webhook = $webhook;
             $trans->key = $key;
+            $trans->data = $data;
+
             $trans->both_commmission = $both_commmission;
 
 
@@ -330,9 +337,6 @@ class TransactionController extends Controller
             $trans->save();
         }
 
-        $qrdata = $user_id . " " . $payable_amount . " " . $trans_id;
-
-        $data = Crypt::encryptString($qrdata);
 
 
 

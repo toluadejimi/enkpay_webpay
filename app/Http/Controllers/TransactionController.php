@@ -296,7 +296,7 @@ class TransactionController extends Controller
 
 
 
-        $url ="https://web.enkpay.com/pay?amount=$amount&key=$key&ref=$trans_id&email=$email";
+        $url ="https://web.enkpay.com/continue-pay?amount=$amount&key=$key&ref=$trans_id&email=$email";
 
 
         if ($get_trans_id == null) {
@@ -482,7 +482,6 @@ class TransactionController extends Controller
 
 
 
-        $url ="https://web.enkpay.com/continue-pay?amount=$amount&key=$key&ref=$trans_id&email=$email";
 
 
         $qrdata = $user_id . " " . $payable_amount . " " . $trans_id;

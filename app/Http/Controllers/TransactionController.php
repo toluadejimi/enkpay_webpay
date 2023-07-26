@@ -372,6 +372,8 @@ class TransactionController extends Controller
                 $bank_name =  $get_trx->bank_name;
                 $p_bank_name =  $get_trx->p_bank_name;
                 $total_received =  $get_trx->total_received;
+                $key =  $get_trx->key;
+
 
 
 

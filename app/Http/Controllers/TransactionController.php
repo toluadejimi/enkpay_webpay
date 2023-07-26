@@ -114,7 +114,7 @@ class TransactionController extends Controller
         $wc_order = $request->wc_order;
         $client_id = $request->client_id;
         $iref = $ref ?? $wc_order;
-        $email = $request->$email;
+        $email = $request->email;
 
 
 
@@ -300,7 +300,7 @@ class TransactionController extends Controller
 
 
         if ($get_trans_id == null) {
-        
+
 
             $trans = new Webtransfer();
             $trans->amount = $amount;

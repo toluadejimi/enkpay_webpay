@@ -1175,8 +1175,8 @@
 
                                 <iframe src="https://embed.lottiefiles.com/animation/120105"></iframe>
 
-                                <h6 class="elementor-heading-title elementor-size-default">You have an unpaid transaction with refrence {{ $order_id }}</h6><br>
-                                <h6 class="elementor-heading-title elementor-size-default">click continue transaction to pay or cancle transaction</h6>
+                                <p>You have an unpaid transaction with refrence <strong>{{ $order_id }}</strong></p><br>
+                                <p>click continue transaction to pay or cancle transaction</p>
 
                             </div>
                         </div>

@@ -207,6 +207,24 @@ class TransactionController extends Controller
         //     ->first()->amount;
 
 
+        $get_trx = Webtransfer::where('email', $email)->where('status', 0)->first() ?? null;
+
+
+        if ($get_trx != null) {
+
+            $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
+
+
+            if ($get_trx != null) {
+
+
+                $url = $get_trx->url;
+                $order_id =  $get_trx->trans_id;
+
+                return view('pending-pay', compact('url', 'order_id'));
+            }
+        }
+
 
 
         $message = $p_account_name . "|" . $email . " | " . $iref . "| NGN" . $amount . "|" . date('d-m-y h:i:s');
@@ -270,23 +288,7 @@ class TransactionController extends Controller
 
 
 
-        $get_trx = Webtransfer::where('email', $email)->where('status', 0)->first() ?? null;
-
-
-        if ($get_trx != null) {
-
-            $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
-
-
-            if ($get_trx != null) {
-
-
-                $url = $get_trx->url;
-                $order_id =  $get_trx->trans_id;
-
-                return view('pending-pay', compact('url', 'order_id'));
-            }
-        }
+     
 
 
 

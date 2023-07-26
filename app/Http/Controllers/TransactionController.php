@@ -355,14 +355,14 @@ class TransactionController extends Controller
         $email =  $get_trx->email;
         $data =  $get_trx->data;
         $user_id =  $get_trx->user_id;
-        $trans_id = $get_trx->user_id;
+        $trans_id = $get_trx->trans_id;
         $webhook =  $get_trx->webhook;
         $amount =  $get_trx->amount;
         $v_account_no =  $get_trx->v_account_no;
-        $p_account_no =  $get_trx->p_account_no;
+        $p_account_no =  $get_trx->v_account_no;
         $both_commmission =  $get_trx->both_commmission;
         $v_account_name =  $get_trx->v_account_name;
-        $p_account_name =  $get_trx->p_account_name;
+        $p_account_name =  $get_trx->v_account_name;
         $bank_name =  $get_trx->bank_name;
         $p_bank_name =  $get_trx->p_bank_name;
         $total_received =  $get_trx->total_received;

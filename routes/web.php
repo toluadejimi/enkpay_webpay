@@ -26,6 +26,9 @@ Route::get('/', function () {
 
 Route::get('receipt', [TransactionController::class, 'receipt']);
 
+Route::get('pending-pay', [TransactionController::class, 'pending_pay']);
+
+
 //Route::match(['get', 'post'], '/botman', 'BotManController@handle');
 
 Route::get('custom-pay', [TransactionController::class, 'custom_pay']);

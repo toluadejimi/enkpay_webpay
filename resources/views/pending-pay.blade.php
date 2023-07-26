@@ -1175,17 +1175,19 @@
 
                                 <iframe src="https://embed.lottiefiles.com/animation/120105"></iframe>
 
-                                <h2 class="elementor-heading-title elementor-size-default">Payment Declined</h2>
+                                <h6 class="elementor-heading-title elementor-size-default">You have an unpaid transaction with refrence {{ $order_id }}</h6><br>
+                                <h6 class="elementor-heading-title elementor-size-default">click continue transaction to pay or cancle transaction</h6>
+
                             </div>
                         </div>
                         <div class="elementor-element elementor-element-23310964 elementor-align-center elementor-widget elementor-widget-button"
                             data-id="23310964" data-element_type="widget" data-widget_type="button.default">
                             <div class="elementor-widget-container">
                                 <div class="elementor-button-wrapper">
-                                    <a href="{{ $webhook }}"
+                                    <a href="{{ $url }}"
                                         class="elementor-button-link elementor-button elementor-size-sm" role="button">
                                         <span class="elementor-button-content-wrapper">
-                                            <span class="elementor-button-text">Return back to Marchant </span>
+                                            <span class="elementor-button-text">Continue Transaction</span>
                                         </span>
                                     </a>
                                 </div>

@@ -1169,7 +1169,7 @@ class TransactionController extends Controller
 
             return response()->json([
                 'status' => false,
-                'message' => "Transaction has been Resolved",
+                'message' => "Transaction has been Resolved, NGN $get_amount has been added to your wallet",
             ], 500);
 
         }

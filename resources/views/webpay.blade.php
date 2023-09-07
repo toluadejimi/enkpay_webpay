@@ -221,13 +221,8 @@
                                                         <div class="row">
                                                             <div class="col-6 mt-3 text-center">
                                                                 <span class="text-muted">Account Number</span>
-
-                    
                                                                 <div>
-                                                                    <input disabled value="{{ $p_account_no}}" class"input_copy_wrapper">{{ $p_account_no ?? "Not Available" }} <span class="icon right">
-                                                                    ></>
-                                                                    <input type="text"  id="p_account_no" hidden
-                                                                        value="{{ $p_account_no}}">
+                                                                    <h6>{{ $p_account_no ?? "Not Available" }}</h6>
 
                                                                 </div>
                                                             </div>

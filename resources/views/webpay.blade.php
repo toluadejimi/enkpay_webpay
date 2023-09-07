@@ -63,16 +63,63 @@
         .bold {
             font-weight: bold
         }
+
+        .input_copy_wrapper{
+            width: 450px;
+            padding: 50px;
+            margin : 0 auto;
+          }
+          .input_copy {
+              padding: 15px 25px;
+              background: #eee;
+              border: 2px solid #aaa;
+              color: #aaa;
+              font-size: .8em;
+          }
+          
+          .input_copy .icon {
+              display: block;
+              max-width: 25px;
+              cursor: pointer;
+              float: right;
+          }
+          
+          .input_copy .icon img{
+            max-width: 25px;
+          }
+          .input_copy .txt {
+              width: 80%;
+              display: inline-block;
+              overflow: hidden;
+          }
+          
+          
+          /* click animation */
+          
+          .flashBG {
+              animation-name: flash;
+              animation-timing-function: ease-out;
+              animation-duration: 1s;
+          }
+          
+          @keyframes flash {
+              0% {
+                  background: #28a745;
+              }
+              100% {
+                  background: transparent;
+              }
+          }
+          
+
+          
     </style>
+
+  
+
 
 
 </head>
-
-<script>
-    function hideLoader(){
-      $('.page-loader').fadeOut('slow');
-    }
-</script>
 
 
 
@@ -174,10 +221,27 @@
                                                         <div class="row">
                                                             <div class="col-6 mt-3 text-center">
                                                                 <span class="text-muted">Account Number</span>
+
+                                                                <div class="input_copy_wrapper">
+                                                                    <div class="input_copy">
+                                                                      <span class="txt"></span>
+                                                                      <span class="icon right">
+                                                                       <img src="http://clipground.com/images/copy-4.png" 
+                                                                            title="Click to Copy"
+                                                                        >
+                                                                      </span>
+                                                                    </div>
+                                                                    
+                                                                  </div>
+
+
                                                                 <div>
-                                                                    <h5>{{ $p_account_no ?? "Not Available" }}</h5>
-                                                                    <input type="number" id="p_account_no" hidden
+                                                                    <input disabled value="{{ $p_account_no}}" class"input_copy_wrapper">{{ $p_account_no ?? "Not Available" }} <span class="icon right">
+                                                                        <img src="http://clipground.com/images/copy-4.png" height="20"  width="30"
+                                                                         ></>
+                                                                    <input type="text"  id="p_account_no" hidden
                                                                         value="{{ $p_account_no}}">
+
                                                                 </div>
                                                             </div>
 
@@ -226,7 +290,7 @@
 
 
                                                             <script>
-                                                                var targetMinutes = 500;
+                                                                var targetMinutes = 15000;
 
                                                                 var targetTime = targetMinutes * 60 * 1000;
                                                                 var trans = "{{ $trans_id }}";
@@ -239,7 +303,7 @@
                                                                 }
 
                                                                 function countdown() {
-                                                                targetTime -= 60000;
+                                                                targetTime -= 150000;
 
                                                                 if (targetTime <= 0) {
                                                                     clearInterval(timerInterval); // Stop the countdown
@@ -422,7 +486,22 @@
 
 
 
-
+    <script>
+        function myFunction() {
+          // Get the text field
+          var copyText = document.getElementById("p_account_no");
+        
+          // Select the text field
+          copyText.select();
+          copyText.setSelectionRange(0, 99999); // For mobile devices
+        
+          // Copy the text inside the text field
+          navigator.clipboard.writeText(copyText.value);
+          
+          // Alert the copied text
+          alert("Copied the text: " + copyText.value);
+        }
+    </script>
 
 
 
@@ -535,7 +614,7 @@
 
               if (timer === 0) {
                 clearInterval(intervalId);
-                countdownElement.textContent = "Have you been debited and payment still not confimed, Refresh this page and click i have paid again.";
+                countdownElement.textContent = "Have you been debited and payment still not confimed, Return to marchant website to resolve.";
 
               }
 
@@ -548,9 +627,34 @@
       btn.addEventListener("click", function(){
         document.getElementById('requestButtonp').classList.add('hidden');
 
-        startTimer(250, 'countdown');
+        startTimer(2500, 'countdown');
         makeRequest()
       })
+
+
+    </script>
+
+
+    <script>
+
+
+        function copyToClipboard(element) {
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val($(element).text()).select();
+            document.execCommand("copy");
+            $temp.remove();
+        }
+        
+         var addrsField = $('.input_copy .txt');
+        addrsField.text(window.location);
+        $('.input_copy .icon').click(function() {
+                copyToClipboard('.input_copy .txt');
+                addrsField.addClass('flashBG')
+                  .delay('1000').queue(function(){
+                    addrsField.removeClass('flashBG').dequeue();
+                });
+            });
 
 
     </script>
@@ -636,27 +740,13 @@
   btn.addEventListener("click", function(){
     document.getElementById('requestButtonv').classList.add('hidden');
 
-    startTimer(300, 'countdownv');
+    startTimer(2500, 'countdownv');
     makeRequest()
   })
 
 
 
-
-
-
-
-
-
-
-
     </script>
-
-
-
-
-
-
 
 
     <script>

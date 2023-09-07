@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Charge;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Validtransfer;
 use App\Models\VirtualAccount;
@@ -297,7 +298,7 @@ class TransactionController extends Controller
 
 
 
-     
+
 
 
 
@@ -1124,5 +1125,56 @@ class TransactionController extends Controller
 
 
         return view('receipt-view', $data);
+    }
+
+    public function resolve_deposit(Request $request)
+    {
+
+        $session_id = $request->session_id;
+
+        if($session_id == null){
+
+            return response()->json([
+                'status' => false,
+                'message' => 'session id  cant be empty',
+            ], 500);
+        }
+
+
+        $get_depo = Transaction::where('p_sessionId', $session_id)->first()->resolve ?? null;
+        $get_amount = Transaction::where('p_sessionId', $session_id)->first()->amount ?? null;
+
+          if($get_depo == null ){
+
+            return response()->json([
+                'status' => false,
+                'message' => "Transaction not found",
+            ], 500);
+
+        }
+
+
+        if($get_depo == 0 ){
+
+            $get_amount = Transaction::where('p_sessionId', $session_id)->update(['resolve' => 1]);
+            return response()->json([
+                'status' => true,
+                'amount' => $get_amount,
+            ], 200);
+
+        }
+
+        if($get_depo == 1 ){
+
+            return response()->json([
+                'status' => false,
+                'message' => "Transaction has been Resolved",
+            ], 500);
+
+        }
+
+
+
+
     }
 }

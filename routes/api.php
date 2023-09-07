@@ -30,7 +30,7 @@ Route::post('verify',[TransactionController::class, 'verify_woo']);
 
 Route::post('pay',[TransactionController::class, 'initialize_payment']);
 
-Route::get('resolve',[TransactionController::class, 'resolve_deposit']);
+Route::post('resolve',[TransactionController::class, 'resolve_deposit']);
 
 
 

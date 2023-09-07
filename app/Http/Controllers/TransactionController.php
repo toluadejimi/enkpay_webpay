@@ -1130,7 +1130,6 @@ class TransactionController extends Controller
     public function resolve_deposit(Request $request)
     {
 
-        dd($request->all());
         $session_id = $request->session_id;
 
         if($session_id == null){

@@ -223,6 +223,7 @@
                                                                 <span class="text-muted">Account Number</span>
                                                                 <div>
                                                                     <h6>{{ $p_account_no ?? "Not Available" }}</h6>
+                                                                    <input hidden value="{{ $p_account_no }}" id="p_account_no">
 
                                                                 </div>
                                                             </div>

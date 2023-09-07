@@ -1156,7 +1156,8 @@ class TransactionController extends Controller
 
         if($get_depo == 0 ){
 
-            $get_amount = Transaction::where('p_sessionId', $session_id)->update(['resolve' => 1]);
+            Transaction::where('p_sessionId', $session_id)->update(['resolve' => 1]);
+
             return response()->json([
                 'status' => true,
                 'amount' => $get_amount,

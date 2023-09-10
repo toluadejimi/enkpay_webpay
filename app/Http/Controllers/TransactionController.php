@@ -1178,4 +1178,31 @@ class TransactionController extends Controller
 
 
     }
+
+
+    public function resolve_complete(Request $request)
+    {
+
+        $order_id = $request->order_id;
+
+        if($order_id == null){
+
+            return response()->json([
+                'status' => false,
+                'message' => 'order id  cant be empty',
+            ], 500);
+        }
+
+
+        $clear = Transaction::where('ref_trans_id', $order_id)->update(['resolve' => 1]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Transaction completely resolved',
+        ], 500);
+
+    }
+
+
+    
 }

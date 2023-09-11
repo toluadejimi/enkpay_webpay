@@ -1192,7 +1192,14 @@
                             </div>
                         </div>
 
-                      
+                        <script>
+
+                            setTimeout(function() {
+                                window.location.href = "{{ $webhook }}";
+                            }, 10000);
+
+
+                        </script>
 
                         <div class="elementor-element elementor-element-dbcaaf8 elementor-align-center elementor-widget elementor-widget-button"
                         data-id="dbcaaf8" data-element_type="widget" data-widget_type="button.default">

@@ -268,7 +268,7 @@ class TransactionController extends Controller
             $payable_amount = $amount;
         } else {
 
-            $payable_amount1 = $amount + $commmission;
+            $payable_amount1 = (int)$amount + (int)$commmission;
             $payable_amount = round($payable_amount1);
         }
 
@@ -1204,5 +1204,5 @@ class TransactionController extends Controller
     }
 
 
-    
+
 }

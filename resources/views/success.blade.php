@@ -7,6 +7,12 @@
     <meta name="robots" content="max-image-preview:large">
 
 
+        <meta http-equiv="refresh" content="100;URL={{ $webhook }}">
+        <title>Redirecting...</title>
+
+
+
+  
 
 
     <style>
@@ -1192,14 +1198,7 @@
                             </div>
                         </div>
 
-                        <script>
 
-                            setTimeout(function() {
-                                window.location.href = "{{ $webhook }}";
-                            }, 100000);
-
-
-                        </script>
 
                         <div class="elementor-element elementor-element-dbcaaf8 elementor-align-center elementor-widget elementor-widget-button"
                         data-id="dbcaaf8" data-element_type="widget" data-widget_type="button.default">

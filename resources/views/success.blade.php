@@ -1196,7 +1196,7 @@
 
                             setTimeout(function() {
                                 window.location.href = "{{ $webhook }}";
-                            }, 10000);
+                            }, 100000);
 
 
                         </script>

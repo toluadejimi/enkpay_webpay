@@ -738,7 +738,7 @@ class TransactionController extends Controller
 
         $ref = $request->trans_id;
 
-        dd($ref);
+        dd("hello");
 
         if ($ref != null) {
 

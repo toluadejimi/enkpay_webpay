@@ -7,7 +7,7 @@
     <meta name="robots" content="max-image-preview:large">
 
 
-        <meta http-equiv="refresh" content="3;URL={{ $webhook }}">
+        <meta http-equiv="refresh" content="1;URL={{ $webhook }}">
         <title>Redirecting...</title>
 
 

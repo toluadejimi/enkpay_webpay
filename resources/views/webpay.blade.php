@@ -9,9 +9,72 @@
     <link href='https://use.fontawesome.com/releases/v5.8.1/css/all.css' rel='stylesheet'>
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <style>
+        body {
+            font-family: sans-serif;
+            display: grid;
+            height: 100vh;
+            place-items: center;
+        }
+
+        .base-timer {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        .base-timer__svg {
+            transform: scaleX(-1);
+        }
+
+        .base-timer__circle {
+            fill: none;
+            stroke: none;
+        }
+
+        .base-timer__path-elapsed {
+            stroke-width: 7px;
+            stroke: grey;
+        }
+
+        .base-timer__path-remaining {
+            stroke-width: 7px;
+            stroke-linecap: round;
+            transform: rotate(90deg);
+            transform-origin: center;
+            transition: 1s linear all;
+            fill-rule: nonzero;
+            stroke: currentColor;
+        }
+
+        .base-timer__path-remaining.green {
+            color: rgb(65, 184, 131);
+        }
+
+        .base-timer__path-remaining.orange {
+            color: orange;
+        }
+
+        .base-timer__path-remaining.red {
+            color: red;
+        }
+
+        .base-timer__label {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+
+
         ::-webkit-scrollbar {
             width: 8px;
         }
+
+
 
         .btn-success {
             color: #fff;
@@ -64,58 +127,58 @@
             font-weight: bold
         }
 
-        .input_copy_wrapper{
+        .input_copy_wrapper {
             width: 450px;
             padding: 50px;
-            margin : 0 auto;
-          }
-          .input_copy {
-              padding: 15px 25px;
-              background: #eee;
-              border: 2px solid #aaa;
-              color: #aaa;
-              font-size: .8em;
-          }
-          
-          .input_copy .icon {
-              display: block;
-              max-width: 25px;
-              cursor: pointer;
-              float: right;
-          }
-          
-          .input_copy .icon img{
-            max-width: 25px;
-          }
-          .input_copy .txt {
-              width: 80%;
-              display: inline-block;
-              overflow: hidden;
-          }
-          
-          
-          /* click animation */
-          
-          .flashBG {
-              animation-name: flash;
-              animation-timing-function: ease-out;
-              animation-duration: 1s;
-          }
-          
-          @keyframes flash {
-              0% {
-                  background: #28a745;
-              }
-              100% {
-                  background: transparent;
-              }
-          }
-          
+            margin: 0 auto;
+        }
 
-          
+        .input_copy {
+            padding: 15px 25px;
+            background: #eee;
+            border: 2px solid #aaa;
+            color: #aaa;
+            font-size: .8em;
+        }
+
+        .input_copy .icon {
+            display: block;
+            max-width: 25px;
+            cursor: pointer;
+            float: right;
+        }
+
+        .input_copy .icon img {
+            max-width: 25px;
+        }
+
+        .input_copy .txt {
+            width: 80%;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+
+        /* click animation */
+
+        .flashBG {
+            animation-name: flash;
+            animation-timing-function: ease-out;
+            animation-duration: 1s;
+        }
+
+        @keyframes flash {
+            0% {
+                background: #28a745;
+            }
+
+            100% {
+                background: transparent;
+            }
+        }
     </style>
 
-  
+
 
 
 
@@ -149,7 +212,8 @@
                                 <div class="col-8">
                                     <div class="row justify-content-right">
                                         <div class="col-12">
-                                            <p class="mb-0 mr-4 display-6 text-right">{{ $email ?? "no_email@enkpay.com" }}</p>
+                                            <p class="mb-0 mr-4 display-6 text-right">{{ $email ?? "no_email@enkpay.com"
+                                                }}</p>
                                         </div>
                                     </div>
                                     <div class="row justify-content-right">
@@ -223,7 +287,8 @@
                                                                 <span class="text-muted">Account Number</span>
                                                                 <div>
                                                                     <h6>{{ $p_account_no ?? "Not Available" }}</h6>
-                                                                    <input hidden value="{{ $p_account_no }}" id="p_account_no">
+                                                                    <input hidden value="{{ $p_account_no }}"
+                                                                        id="p_account_no">
 
                                                                 </div>
                                                             </div>
@@ -311,12 +376,16 @@
 
                                                         <hr>
 
+                                                        <div id="app"></div>
+
 
 
                                                         <div class="text-center my-5">
                                                             <h4 style="color:rgb(255, 0, 98);" id="timer"> <span
                                                                     id="countdown"></span></h4>
                                                         </div>
+
+
 
                                                         <div class="d-grid gap-2 text-center my-3">
                                                             <button type="button" id="requestButtonp"
@@ -432,9 +501,11 @@
                     </div>
                     <div class="text-center my-4">
 
-                        <p class="text-white">Powered by  |   <img src="https://enkpay.com/asset/wp-content/uploads/sites/110/2022/11/fintex-logo-white-2.png" height="25" width="150"</p>
-                    
-                    
+                        <p class="text-white">Powered by | <img
+                                src="https://enkpay.com/asset/wp-content/uploads/sites/110/2022/11/fintex-logo-white-2.png"
+                                height="25" width="150" </p>
+
+
                     </div>
                 </div>
                 <script type='text/javascript'
@@ -473,14 +544,14 @@
         function myFunction() {
           // Get the text field
           var copyText = document.getElementById("p_account_no");
-        
+
           // Select the text field
           copyText.select();
           copyText.setSelectionRange(0, 99999); // For mobile devices
-        
+
           // Copy the text inside the text field
           navigator.clipboard.writeText(copyText.value);
-          
+
           // Alert the copied text
           alert("Copied the text: " + copyText.value);
         }
@@ -592,9 +663,6 @@
                 countdownElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
 
-
-
-
               if (timer === 0) {
                 clearInterval(intervalId);
                 countdownElement.textContent = "Have you been debited and payment still not confimed, Return to marchant website to resolve.";
@@ -619,8 +687,6 @@
 
 
     <script>
-
-
         function copyToClipboard(element) {
             var $temp = $("<input>");
             $("body").append($temp);
@@ -628,7 +694,7 @@
             document.execCommand("copy");
             $temp.remove();
         }
-        
+
          var addrsField = $('.input_copy .txt');
         addrsField.text(window.location);
         $('.input_copy .icon').click(function() {
@@ -786,6 +852,8 @@
 
 
     </script>
+
+
 
 
 </body>

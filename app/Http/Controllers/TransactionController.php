@@ -122,8 +122,8 @@ class TransactionController extends Controller
 
 
 
-        $user_id = Webkey::where('key', $request->key)->first()->user_id;
-        $business_id = VirtualAccount::where('user_id', $user_id)->first()->business_id;
+        $user_id = Webkey::where('key', $request->key)->first()->user_id ?? null;
+        $business_id = VirtualAccount::where('user_id', $user_id)->first()->business_id ?? null;
 
         if($business_id != null){
 
@@ -913,7 +913,7 @@ class TransactionController extends Controller
         $data = Crypt::encryptString($qrdata);
 
 
-        $url = "https://web.enkpay.com/pay?amount=$amount&key=$key&ref=$trans_id";
+        $url = "https://web.enkpay.com/pay?amount=$amount&key=$key&ref=$trans_id&email=$email";
 
 
         return response()->json([

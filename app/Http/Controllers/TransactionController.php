@@ -738,6 +738,8 @@ class TransactionController extends Controller
 
         $ref = $request->trans_id;
 
+        dd($ref);
+
         if ($ref != null) {
 
 

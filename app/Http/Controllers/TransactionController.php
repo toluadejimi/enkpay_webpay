@@ -738,12 +738,6 @@ class TransactionController extends Controller
 
         $ref = $request->trans_id;
 
-        return response()->json([
-            'status' => true,
-            'detail' => 'success',
-            'price' =>  $ref,
-        ], 200);
-
         if ($ref != null) {
 
 
@@ -761,11 +755,15 @@ class TransactionController extends Controller
                 }
 
 
-                return response()->json([
-                    'status' => true,
-                    'detail' => 'pending',
-                    'price' =>  $trx->amount,
-                ], 200);
+                if ($trx->status == 0) {
+
+                    return response()->json([
+                        'status' => true,
+                        'detail' => 'pending',
+                        'price' =>  $trx->amount,
+                    ], 200);
+                }
+
             } else {
 
                 return response()->json([

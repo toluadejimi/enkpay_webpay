@@ -740,7 +740,6 @@ class TransactionController extends Controller
 
         if ($ref != null) {
 
-
             $trx = Webtransfer::where('trans_id', $ref)->first() ?? null;
 
             if ($trx != null) {
@@ -768,7 +767,8 @@ class TransactionController extends Controller
 
                 return response()->json([
                     'status' => false,
-                    'detail' => 'Transaction not found'
+                    'detail' => 'failed',
+                    'message' => 'Transaction not found'
                 ], 500);
             }
         } else {

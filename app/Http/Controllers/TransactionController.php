@@ -122,13 +122,10 @@ class TransactionController extends Controller
 
 
 
+        $user_id = Webkey::where('key', $request->key)->first()->user_id;
+        $business_id = VirtualAccount::where('user_id', $user_id)->first()->business_id;
 
-
-
-
-        $yeekkey = env('YEKEENKEY');
-
-        if ($key == $yeekkey) {
+        if($business_id != null){
 
             if($request->email == null){
                 $webhook = Webkey::where('key', $request->key)->first()->url ?? null;
@@ -138,16 +135,10 @@ class TransactionController extends Controller
             $user_id = Webkey::where('key', $request->key)
                 ->first()->user_id ?? null;
 
-
-
-
-
-            // $account_no_p = VirtualAccount::where('user_id', $user_id)
-            // ->where('v_bank_name','PROVIDUS BANK')->first()->v_account_no ?? null;
-
             $account_no_p = VirtualAccount::where('user_id', $user_id)
                 ->where('v_bank_name', 'PROVIDUS BANK')->inRandomOrder()->first()->v_account_no ?? null;
-        } else {
+
+        }else {
 
             $user_id = Webkey::where('key', $request->key)
                 ->first()->user_id ?? null;
@@ -155,6 +146,16 @@ class TransactionController extends Controller
             $account_no_p = VirtualAccount::where('user_id', $user_id)
                 ->where('v_bank_name', 'PROVIDUS BANK')->first()->v_account_no ?? null;
         }
+
+
+
+        // $yeekkey = env('YEKEENKEY');
+
+        // if ($key == $yeekkey) {
+
+
+        // }
+
 
 
 

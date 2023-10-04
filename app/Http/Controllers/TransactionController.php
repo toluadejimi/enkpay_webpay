@@ -1136,7 +1136,6 @@ class TransactionController extends Controller
     {
 
 
-        dd($request->session_id);
         $session_id = $request->session_id;
 
         if($session_id == null){

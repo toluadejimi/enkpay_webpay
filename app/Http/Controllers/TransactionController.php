@@ -529,11 +529,11 @@ class TransactionController extends Controller
         $wc = Webtransfer::where('trans_id', $trans_id)
             ->first()->wc_order ?? null;
 
-        $key = Webkey::where('user_id', $user_id)
-            ->first()->key ?? null;
 
+        $key = Webtransfer::where('trans_id', $trans_id)
+        ->first()->key ?? null;
 
-
+     
         $status = Webtransfer::where('trans_id', $trans_id)
             ->first()->status ?? null;
 

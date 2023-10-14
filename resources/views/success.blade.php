@@ -7,8 +7,8 @@
     <meta name="robots" content="max-image-preview:large">
 
 
-        <meta http-equiv="refresh" content="1;URL={{ $webhook }}">
-        <title>Redirecting...</title>
+        {{-- <meta http-equiv="refresh" content="1;URL={{ $webhook }}">
+        <title>Redirecting...</title> --}}
 
 
 
@@ -1188,12 +1188,15 @@
                             data-id="dbcaaf8" data-element_type="widget" data-widget_type="button.default">
                             <div class="elementor-widget-container">
                                 <div class="elementor-button-wrapper">
-                                    <a href="{{ $webhook }}" class="elementor-button-link elementor-button elementor-size-sm"
+
+                                    <p>You should be automatically redirected in <span id="seconds">3</span> seconds.
+                                    </p>
+                                    {{-- <a href="{{ $webhook }}" class="elementor-button-link elementor-button elementor-size-sm"
                                         role="button">
                                         <span class="elementor-button-content-wrapper">
                                             <span class="elementor-button-text">Return back to Marchant </span>
                                         </span>
-                                    </a>
+                                    </a> --}}
                                 </div>
                             </div>
                         </div>
@@ -1285,6 +1288,33 @@
             z-index: 100000;
         }
     </style>
+
+    <script>
+
+        var seconds = 3; // seconds for HTML
+var foo; // variable for clearInterval() function
+
+function redirect() {
+    document.location.href = "{{ $webhook }}";
+}
+
+function updateSecs() {
+    document.getElementById("seconds").innerHTML = seconds;
+    seconds--;
+    if (seconds == -1) {
+        clearInterval(foo);
+        redirect();
+    }
+}
+
+function countdownTimer() {
+    foo = setInterval(function () {
+        updateSecs()
+    }, 1000);
+}
+
+countdownTimer();
+    </script>
     <script>
         (function () {
 			var skipLinkTarget = document.querySelector('main'),

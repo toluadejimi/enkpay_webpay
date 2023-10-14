@@ -533,7 +533,7 @@ class TransactionController extends Controller
         $key = Webtransfer::where('trans_id', $trans_id)
         ->first()->key ?? null;
 
-     
+
         $status = Webtransfer::where('trans_id', $trans_id)
             ->first()->status ?? null;
 
@@ -558,7 +558,7 @@ class TransactionController extends Controller
 
         $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
 
-        $webhook = $marchant_url . "?amount=$amount&trans_id=$trans_id&status=success&wc_order=$wc_order&client_id=$client_id" ?? null;
+        $webhook = $marchant_url . "?"."amount=$amount"."&trans_id=$trans_id"."&status=success"."&wc_order=$wc_order"."&client_id=$client_id" ?? null;
 
 
         $recepit = "https://web.enkpay.com/receipt?trans_id=$trans_id&amount=$amount";

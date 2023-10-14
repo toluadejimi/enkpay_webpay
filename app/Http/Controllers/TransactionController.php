@@ -565,7 +565,7 @@ class TransactionController extends Controller
 
         //
 
-        return view('success', compact('webhook', 'wc', 'recepit'));
+        return view('success', compact('webhook', 'marchant_url', 'amount', 'trans_id', 'wc_order', 'client_id', 'wc', 'recepit'));
     }
 
 

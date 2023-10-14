@@ -1293,12 +1293,11 @@
 
         var seconds = 10; // seconds for HTML
         var foo; // variable for clearInterval() function
-        var url = "{{ $webhook }}";
+        var url = {{ $marchant_url }}+'?amount={{ $amount }}&trans_id={{ $trans_id }}&status=success&wc_order={{ $wc_order }}&client_id={{ $client_id }}';
 
         console.log(url);
 
 function redirect() {
-
     document.location.href = url;
 }
 

@@ -1189,7 +1189,7 @@
                             <div class="elementor-widget-container">
                                 <div class="elementor-button-wrapper">
 
-                                    <p>You should be automatically redirected in <span id="seconds">10</span> seconds.
+                                    <p>You should be automatically redirected back to marchant in <span id="seconds">3</span> seconds.
                                     </p>
                                     {{-- <a href="{{ $webhook }}" class="elementor-button-link elementor-button elementor-size-sm"
                                         role="button">
@@ -1291,11 +1291,10 @@
 
     <script>
 
-        var seconds = 10; // seconds for HTML
+        var seconds = 3; // seconds for HTML
         var foo; // variable for clearInterval() function
         var url = "{{ $marchant_url }}?amount={{ $amount }}&trans_id={{ $trans_id }}&status=success&wc_order={{ $wc_order }}&client_id={{ $client_id }}";
 
-        console.log(url);
 
 function redirect() {
     document.location.href = url;

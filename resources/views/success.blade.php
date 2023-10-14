@@ -1295,7 +1295,9 @@
 var foo; // variable for clearInterval() function
 
 function redirect() {
-    document.location.href = "{{ $webhook }}";
+    var url = {{ $webhook }};
+    console.log();
+    document.location.href = url;
 }
 
 function updateSecs() {

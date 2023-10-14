@@ -1189,7 +1189,7 @@
                             <div class="elementor-widget-container">
                                 <div class="elementor-button-wrapper">
 
-                                    <p>You should be automatically redirected in <span id="seconds">3</span> seconds.
+                                    <p>You should be automatically redirected in <span id="seconds">10</span> seconds.
                                     </p>
                                     {{-- <a href="{{ $webhook }}" class="elementor-button-link elementor-button elementor-size-sm"
                                         role="button">
@@ -1291,12 +1291,14 @@
 
     <script>
 
-        var seconds = 3; // seconds for HTML
-var foo; // variable for clearInterval() function
+        var seconds = 10; // seconds for HTML
+        var foo; // variable for clearInterval() function
+        var url = "{{ $webhook }}";
+
+        console.log(url);
 
 function redirect() {
-    var url = '{{ $webhook }}';
-    console.log();
+
     document.location.href = url;
 }
 

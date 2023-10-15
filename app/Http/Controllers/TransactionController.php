@@ -1149,6 +1149,8 @@ class TransactionController extends Controller
 
         $get_depo = Transaction::where('p_sessionId', $session_id)->first()->resolve ?? null;
         $get_amount = Transaction::where('p_sessionId', $session_id)->first()->amount ?? null;
+        $trx = Transaction::where('p_sessionId', $session_id)->first()->ref_trans_id ?? null;
+
 
           if($get_depo == null ){
 
@@ -1167,6 +1169,8 @@ class TransactionController extends Controller
             return response()->json([
                 'status' => true,
                 'amount' => $get_amount,
+                'trx' => $trx,
+
             ], 200);
 
         }

@@ -82,7 +82,7 @@ class TransactionController extends Controller
 
 
             $get_user = User::select('main_wallet', 'v_account_no', 'v_account_name', 'v_bank_name')->where('id', $user_id)
-                ->first() ?? null;
+            ->first() ?? null;
 
 
             if ($get_user == null) {
@@ -117,7 +117,9 @@ class TransactionController extends Controller
         $wc_order = $request->wc_order;
         $client_id = $request->client_id;
         $iref = $ref ?? $wc_order;
-        $email = $request->email;
+        $email = $request->email ?? "example@gmail.com";
+
+
 
 
 
@@ -125,9 +127,17 @@ class TransactionController extends Controller
         $user_id = Webkey::where('key', $request->key)->first()->user_id ?? null;
         $business_id = VirtualAccount::where('user_id', $user_id)->first()->business_id ?? null;
 
+
+
+
+
+
         if($business_id != null){
 
-            if($request->email == null){
+
+
+
+            if($email == null){
                 $webhook = Webkey::where('key', $request->key)->first()->url ?? null;
                 return Redirect::to($webhook);
             }

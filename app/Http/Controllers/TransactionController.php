@@ -238,7 +238,8 @@ class TransactionController extends Controller
 
             if ($get_trx != null) {
 
-                $webhook = $get_trx->webhook . "?amount=$get_trx->amount&trans_id=$get_trx->trans_id&status=failed";
+
+                $webhook = url('')."/decline?"."amount=$get_trx->amount&key=$key&trans_id=$get_trx->trans_id&status=failed";
                 $order_id = $get_trx->trans_id;
 
                 return view('pending-pay', compact('webhook', 'order_id'));
@@ -402,15 +403,15 @@ class TransactionController extends Controller
 
         $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
 
-        $webhook = $marchant_url . "?amount=$amount&trans_id=$trans_id&status=failed";
 
 
         Webtransfer::where('trans_id', $request->trans_id)
             ->delete();
 
 
+        $webhook = $marchant_url . "?amount=$amount&trans_id=$trans_id&status=failed";
+        return Redirect::to($webhook);
 
-        return view('decline', compact('webhook'));
     }
 
 

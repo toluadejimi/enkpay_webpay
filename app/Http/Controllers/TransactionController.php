@@ -238,11 +238,10 @@ class TransactionController extends Controller
 
             if ($get_trx != null) {
 
+                $webhook = $get_trx->webhook . "?amount=$get_trx->amount&trans_id=$get_trx->trans_id&status=failed";
+                $order_id = $get_trx->trans_id;
 
-                $url = $get_trx->url;
-                $order_id =  $get_trx->trans_id;
-
-                return view('pending-pay', compact('url', 'order_id'));
+                return view('pending-pay', compact('webhook', 'order_id'));
             }
         }
 
@@ -307,13 +306,6 @@ class TransactionController extends Controller
 
 
 
-
-
-
-
-
-
-
         $url = "https://web.enkpay.com/continue-pay?amount=$amount&key=$key&ref=$trans_id&email=$email";
 
         $qrdata = $user_id . " " . $payable_amount . " " . $trans_id;
@@ -363,35 +355,35 @@ class TransactionController extends Controller
     }
 
 
-    public function continue_pay(Request $request)
-    {
+    // public function continue_pay(Request $request)
+    // {
 
-        $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
+    //     Webtransfer::where('trans_id', $request->trans_id)->where('status', 0)->delete() ?? null;
+
+    //     $webhook = $marchant_url . "?amount=$amount&trans_id=$trans_id&status=failed";
 
 
-        if ($get_trx == null) {
-            $webhook = Webkey::where('key', $request->key)->first()->url ?? null;
-            return Redirect::to($webhook);
-        }
+    //     return Redirect::to($webhook);
 
-        $payable_amount = $get_trx->payable_amount;
-        $email =  $get_trx->email;
-        $data =  $get_trx->data;
-        $user_id =  $get_trx->user_id;
-        $trans_id = $get_trx->trans_id;
-        $webhook =  $get_trx->webhook;
-        $amount =  $get_trx->amount;
-        $v_account_no =  $get_trx->v_account_no;
-        $p_account_no =  $get_trx->v_account_no;
-        $both_commmission =  $get_trx->both_commmission;
-        $v_account_name =  $get_trx->v_account_name;
-        $p_account_name =  $get_trx->v_account_name;
-        $bank_name =  $get_trx->bank_name;
-        $p_bank_name =  $get_trx->p_bank_name;
-        $total_received =  $get_trx->total_received;
-        $key =  $get_trx->key;
-        return view('continue-webpay', compact('payable_amount', 'email', 'user_id', 'key', 'data', 'webhook', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name', 'total_received'));
-    }
+
+    //     $payable_amount = $get_trx->payable_amount;
+    //     $email =  $get_trx->email;
+    //     $data =  $get_trx->data;
+    //     $user_id =  $get_trx->user_id;
+    //     $trans_id = $get_trx->trans_id;
+    //     $webhook =  $get_trx->webhook;
+    //     $amount =  $get_trx->amount;
+    //     $v_account_no =  $get_trx->v_account_no;
+    //     $p_account_no =  $get_trx->v_account_no;
+    //     $both_commmission =  $get_trx->both_commmission;
+    //     $v_account_name =  $get_trx->v_account_name;
+    //     $p_account_name =  $get_trx->v_account_name;
+    //     $bank_name =  $get_trx->bank_name;
+    //     $p_bank_name =  $get_trx->p_bank_name;
+    //     $total_received =  $get_trx->total_received;
+    //     $key =  $get_trx->key;
+    //     return view('continue-webpay', compact('payable_amount', 'email', 'user_id', 'key', 'data', 'webhook', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name', 'total_received'));
+    // }
 
 
 
@@ -409,8 +401,6 @@ class TransactionController extends Controller
 
 
         $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
-
-
 
         $webhook = $marchant_url . "?amount=$amount&trans_id=$trans_id&status=failed";
 

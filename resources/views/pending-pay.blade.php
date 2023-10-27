@@ -1183,10 +1183,10 @@
                             data-id="23310964" data-element_type="widget" data-widget_type="button.default">
                             <div class="elementor-widget-container">
                                 <div class="elementor-button-wrapper">
-                                    <a href="{{ $url }}"
+                                    <a href="{{ $webhook }}"
                                         class="elementor-button-link elementor-button elementor-size-sm" role="button">
                                         <span class="elementor-button-content-wrapper">
-                                            <span class="elementor-button-text">Continue Transaction</span>
+                                            <span class="elementor-button-text">End Transaction</span>
                                         </span>
                                     </a>
                                 </div>

@@ -1185,7 +1185,7 @@
                                     <a href="{{ $webhook }}"
                                         class="elementor-button-link elementor-button elementor-size-sm" role="button">
                                         <span class="elementor-button-content-wrapper">
-                                            <span class="elementor-button-text">Return back to Marchant </span>
+                                            <span class="elementor-button-text">End Transaction</span>
                                         </span>
                                     </a>
                                 </div>

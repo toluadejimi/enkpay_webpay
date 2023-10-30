@@ -395,7 +395,7 @@
                                                             <div class="col-md-12 mt-4">
                                                                 <p class="text-center mb-5" id="below-btn"><a
                                                                         style="color:rgb(255, 0, 98);"
-                                                                        href="https://wa.me/message/2YLDDISL57EXM1"
+                                                                        href="#"
                                                                         target="_blank">Report
                                                                         Transaction</a></p>
                                                             </div>
@@ -457,7 +457,7 @@
                                                 </div>
                                                 <div class="modal-footer">
 
-                                                    <a href="https://wa.me/message/2YLDDISL57EXM1"
+                                                    <a href="#"
                                                         class="btn btn-danger">Report Transaction</a>
                                                 </div>
                                             </div>

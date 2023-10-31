@@ -1189,7 +1189,7 @@
                             <div class="elementor-widget-container">
                                 <div class="elementor-button-wrapper">
 
-                                    <p>You should be automatically redirected back to marchant in <span id="seconds">3</span> seconds.
+                                    <p>You should be automatically redirected back to merchant in <span id="seconds">3</span> seconds.
                                     </p>
                                     {{-- <a href="{{ $webhook }}" class="elementor-button-link elementor-button elementor-size-sm"
                                         role="button">

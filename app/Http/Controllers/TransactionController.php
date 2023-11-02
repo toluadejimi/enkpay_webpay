@@ -226,16 +226,6 @@ class TransactionController extends Controller
         //     ->first()->amount;
 
 
-   
-
-
-
-        $message = $p_account_name . "|" . $email . " | " . $iref . "| NGN" . $amount . "|" . date('d-m-y h:i:s');
-        send_notification($message);
-
-
-
-
 
         $web_commission = Charge::where('title', 'bwebpay')->first()->amount;
         //Both Commission
@@ -322,6 +312,11 @@ class TransactionController extends Controller
 
             $trans->save();
         }
+
+
+
+        $message = $p_account_name . "|" . $email . " | " . $iref . "| NGN" . $amount . "|" . date('d-m-y h:i:s');
+        send_notification($message);
 
 
 

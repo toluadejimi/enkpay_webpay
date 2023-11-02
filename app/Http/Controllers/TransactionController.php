@@ -128,6 +128,15 @@ class TransactionController extends Controller
         $business_id = VirtualAccount::where('user_id', $user_id)->first()->business_id ?? null;
 
 
+        $get_trx = Webtransfer::where('email', $email)->where('status', 0)->first() ?? null;
+        if ($get_trx != null) {
+            $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
+            if ($get_trx != null) {
+                Webtransfer::where('email', $request->email)->delete();
+            }
+        }
+
+
 
 
 
@@ -157,14 +166,6 @@ class TransactionController extends Controller
                 ->where('v_bank_name', 'PROVIDUS BANK')->first()->v_account_no ?? null;
         }
 
-
-
-        // $yeekkey = env('YEKEENKEY');
-
-        // if ($key == $yeekkey) {
-
-
-        // }
 
 
 
@@ -228,23 +229,7 @@ class TransactionController extends Controller
         //     ->first()->amount;
 
 
-        $get_trx = Webtransfer::where('email', $email)->where('status', 0)->first() ?? null;
-
-
-        if ($get_trx != null) {
-
-            $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
-
-
-            if ($get_trx != null) {
-
-
-                $webhook = url('')."/decline?"."amount=$get_trx->amount&key=$key&trans_id=$get_trx->trans_id&status=failed";
-                $order_id = $get_trx->trans_id;
-
-                return view('pending-pay', compact('webhook', 'order_id'));
-            }
-        }
+   
 
 
 

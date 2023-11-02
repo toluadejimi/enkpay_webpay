@@ -128,16 +128,13 @@ class TransactionController extends Controller
         $business_id = VirtualAccount::where('user_id', $user_id)->first()->business_id ?? null;
 
 
-        $get_trx = Webtransfer::where('email', $email)->where('status', 0)->first() ?? null;
-        if ($get_trx != null) {
-            $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
-            if ($get_trx != null) {
-                Webtransfer::where('email', $request->email)->delete();
-            }
-        }
-
-
-
+        // $get_trx = Webtransfer::where('email', $email)->where('status', 0)->first() ?? null;
+        // if ($get_trx != null) {
+        //     $get_trx = Webtransfer::where('email', $request->email)->where('status', 0)->first() ?? null;
+        //     if ($get_trx != null) {
+        //         Webtransfer::where('email', $request->email)->delete();
+        //     }
+        // }
 
 
 
@@ -322,11 +319,6 @@ class TransactionController extends Controller
             $trans->data = $data;
 
             $trans->both_commmission = $both_commmission;
-
-
-
-
-
 
             $trans->save();
         }

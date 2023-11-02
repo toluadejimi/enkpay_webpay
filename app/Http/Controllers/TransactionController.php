@@ -315,8 +315,8 @@ class TransactionController extends Controller
 
 
 
-        $message = $p_account_name . "|" . $email . " | " . $iref . "| NGN" . $amount . "|" . date('d-m-y h:i:s');
-        send_notification($message);
+        // $message = $p_account_name . "|" . $email . " | " . $iref . "| NGN" . $amount . "|" . date('d-m-y h:i:s');
+        // send_notification($message);
 
 
 

@@ -205,8 +205,8 @@ class TransactionController extends Controller
         $p_account_no = $account_no_p;
 
         $p_account_name = VirtualAccount::where('user_id', $user_id)
-            ->where('v_bank_name', 'PROVIDUS BANK')
-            ->first()->v_account_name ?? null;
+        ->where('v_account_no', $p_account_no)
+        ->first()->v_account_name ?? null;
 
         $p_bank_name = VirtualAccount::where('user_id', $user_id)
             ->where('v_account_no', $p_account_no)

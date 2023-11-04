@@ -209,7 +209,7 @@ class TransactionController extends Controller
             ->first()->v_account_name ?? null;
 
         $p_bank_name = VirtualAccount::where('user_id', $user_id)
-            ->where('account_no_p', $p_account_no)
+            ->where('v_account_no', $p_account_no)
             ->first()->v_bank_name ?? null;
 
         // $web_charges = Charge::where('title', 'webcharge')

@@ -384,6 +384,16 @@
 
                                                         </div>
 
+
+
+                                                        <div id="app"></div>
+
+                                                        <div class="d-grid gap-2 text-center my-5">
+                                                            <a class="btn btn-outline-danger" href="decline?trans_id={{ $trans_id }}&key={{ $key }}">Cancle Transaction</a>
+                                                        </div>
+
+
+
                                                         {{-- <div class="d-grid gap-2 text-center mb-5">
                                                             <a href="decline?trans_id={{ $trans_id }}&key={{ $key }}"
                                                                 class="btn btn-danger" role="button"
@@ -483,6 +493,14 @@
                                                     {!!
                                                     SimpleSoftwareIO\QrCode\Facades\QrCode::size(200)->generate($data)
                                                     !!}
+
+                                                </div>
+
+                                                <div class="row justify-content-center mt-5">
+
+                                                    <input type="submit" id="mybutton" onclick="myRequest()"
+                                                        value="I ve sent NGN {{ number_format($payable_amount) }}"
+                                                        class="btn btn-success">
 
                                                 </div>
 

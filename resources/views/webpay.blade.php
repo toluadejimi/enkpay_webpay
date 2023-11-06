@@ -10,6 +10,10 @@
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 
 
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+
+
+
     <style>
         body {
             font-family: sans-serif;
@@ -297,6 +301,10 @@
             width: auto;
         }
 
+        body {
+            font-family: 'Poppins';
+        }
+
         
             
     </style>
@@ -350,8 +358,8 @@
                                             height="80" width="auto">
 
                                         <strong>
-                                            <h3><span class="badge badge-danger center my-4 p-2">Pay NGN {{
-                                                    number_format($payable_amount, 2) }}</span></h3>
+                                            <h2 class="text-center text-re text-muted my-2 p-2">Pay NGN {{
+                                                    number_format($payable_amount, 2) }}</h2>
 
                                         </strong>
 
@@ -475,7 +483,7 @@
                                                  
 
                                                     <div class="mt-0 text-center">
-                                                        <div class="container-fluid alert alert-primary my-2 p-4"
+                                                        <div class="container-fluid alert alert-info my-2 p-4"
                                                             role="alert">
 
                                                             <p class="text-muted">BANK NAME</p>
@@ -491,10 +499,10 @@
 
                                                             <div class="row">
                                                                 <div class="col-6 mt-1 text-center">
-                                                                    <p class="text-muted">Account
+                                                                    <p class="text-muted ">Account
                                                                         No</p>
                                                                     <div>
-                                                                        <h6>{{
+                                                                        <h6 class="rounded-pill">{{
                                                                             $p_account_no
                                                                             ??
                                                                             "Not Available"

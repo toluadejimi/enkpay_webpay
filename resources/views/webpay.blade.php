@@ -475,7 +475,7 @@
                                                  
 
                                                     <div class="mt-0 text-center">
-                                                        <div class="container-fluid alert alert-warning my-2 p-4"
+                                                        <div class="container-fluid alert alert-primary my-2 p-4"
                                                             role="alert">
 
                                                             <p class="text-muted">BANK NAME</p>

@@ -8,6 +8,8 @@
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet'>
     <link href='https://use.fontawesome.com/releases/v5.8.1/css/all.css' rel='stylesheet'>
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+
+
     <style>
         body {
             font-family: sans-serif;
@@ -178,9 +180,132 @@
         }
     </style>
 
+
+
+
+
+    <script type="text/javascript">
+        $(window).on('load', function() {
+            $('#warning').modal('show');
+        });
+    </script>
+
+
+    <style>
+        .modal {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1050;
+            display: none;
+            overflow: hidden;
+            outline: 0;
+            background-color: rgb(0, 0, 0);
+        }
+    </style>
+
+
+
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgb(0, 0, 0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            opacity: 1;
+            transition: opacity 1s ease;
+        }
+
+        .loader.active {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
+        }
+
+        .spinner {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+        }
+
+        .content {
+            display: none;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+        }
+
+        h5 {
+            color: #030200;
+            font-size: 20px;
+        }
+
+        p {
+            color: #737373;
+            font-size: 12px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: auto;
+        }
+    </style>
+
+
+    <script>
+        setTimeout(function() {
+            document.querySelector('.loader').classList.add('active');
+            document.querySelector('.content').style.display = 'block';
+        }, 9000); // 3 seconds
+    </script>
+
 </head>
 
 <body>
+
+
+    <div class="loader">
+        <div class="spinner"></div>
+    </div>
+
+
+
+
 
     <body className='snippet-body'>
         <div class="container py-5">
@@ -191,6 +316,71 @@
                 </div>
             </div> <!-- End -->
             <div class="row">
+
+                <div class="modal fade" id="warning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+
+                            <div class="modal-body">
+
+
+
+                                <div class="card border-0">
+
+                                    <div class="card-body border-0">
+
+                                        <img class="center" src="https://pngimg.com/uploads/bank/bank_PNG13.png"
+                                            height="80" width="auto">
+
+                                        <strong>
+                                            <h3><span class="badge badge-danger center my-4 p-2">Pay NGN {{
+                                                    number_format($payable_amount, 2) }}</span></h3>
+
+                                        </strong>
+
+                                        <div class="text-center my-3 ">
+                                            <strong>Before you make this transfer</strong>
+                                        </div>
+
+                                        <div class="container-fluid alert alert-warning my-2 p-4" role="alert">
+                                            <h6><i class="fa fa-check-circle"> Transfer only exact amount</i></h6>
+                                            <p class="text-small">Do not transfer an incorret amount</p>
+                                            <hr>
+
+                                            <h6><i class="fa fa-check-circle"> Do not save or resuse the account</i>
+                                            </h6>
+                                            <p class="text-small">Only Transfer to the account details provided</p>
+
+                                            <hr>
+
+                                            <button type="button" class="btn btn-primary btn-lg btn-block my-3"
+                                                data-dismiss="modal">I Understand</button>
+
+
+                                        </div>
+
+
+
+
+                                    </div>
+
+
+                                </div>
+
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
                 <div class="col-lg-6 mx-auto">
                     <div class="card ">
                         <div class="card-header">
@@ -217,6 +407,17 @@
                                             </p>
                                         </div>
                                     </div>
+
+                                    <div class="row justify-content-right">
+                                        <div class="col-12">
+                                            <p class="mb-0 mr-4 text-right"> Ref -:
+                                                {{
+                                                $trans_id
+                                                ??
+                                                "Not Available" }}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -229,9 +430,9 @@
                                             With Bank
                                             Transfer
                                         </a> </li>
-                                    <li class="nav-item"> <a data-toggle="pill" href="#paypal" class="nav-link ">
+                                    {{-- <li class="nav-item"> <a data-toggle="pill" href="#paypal" class="nav-link ">
                                             <i class="fa-qrcode mr-2"></i>
-                                            Pay with QR CODE </a> </li>
+                                            Pay with QR CODE </a> </li> --}}
 
                                 </ul>
                             </div> <!-- End -->
@@ -245,319 +446,192 @@
                                         <div class="row justify-content-center">
                                             <div class="col-11">
                                                 <div class="form-card">
-                                                    <h5 class="mt-0 mb-4 text-center">Pay
+                                                    <h6 class="mt-0 mb-4 text-center">Pay
                                                         to this bank details
                                                         below
-                                                    </h5>
+                                                    </h6>
 
-                                                    {{-- <p class="mt-0 my-5 text-center text-danger">
-                                                        Pay exactly NGN
-                                                        {{number_format($payable_amount
-                                                        ?? "0.00") }}
-                                                        <br>to avoid delay
-                                                        or failed
-                                                        transaction.
-                                                    </p> --}}
+                                                 
 
                                                     <div class="mt-0 mb-4 text-center">
-                                                        <span class="text-muted">BANK
-                                                            NAME</span>
-                                                        <div>
-                                                            <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple123/v4/0f/7f/1e/0f7f1eac-e93f-0517-2e7b-23c6ef9d920e/AppIcon-0-1x_U007emarketing-0-0-GLES2_U002c0-512MB-sRGB-0-0-0-85-220-0-0-0-5.png/1200x600wa.png"
-                                                                height="70" width="160">
-                                                            <h6>PROVIDUS
-                                                                BANK</h6>
+                                                        <div class="container-fluid alert alert-warning my-2 p-4"
+                                                            role="alert">
+
+                                                            <p class="text-muted">BANK NAME</p>
+
+                                                            {{-- <div>
+                                                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple123/v4/0f/7f/1e/0f7f1eac-e93f-0517-2e7b-23c6ef9d920e/AppIcon-0-1x_U007emarketing-0-0-GLES2_U002c0-512MB-sRGB-0-0-0-85-220-0-0-0-5.png/1200x600wa.png"
+                                                                    height="auto" width="50">
+
+                                                            </div> --}}
+
+                                                            <h6>PROVIDUS BANK</h6>
+                                                            <hr>
+
+                                                            <div class="row">
+                                                                <div class="col-6 mt-1 text-center">
+                                                                    <p class="text-muted">Account
+                                                                        No</p>
+                                                                    <div>
+                                                                        <h6>{{
+                                                                            $p_account_no
+                                                                            ??
+                                                                            "Not Available"
+                                                                            }}</h6>
+                                                                        <input hidden value="{{ $p_account_no }}"
+                                                                            id="p_account_no">
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-6 mt-1 text-center">
+                                                                    <p class="text-muted">Account
+                                                                        Name</p>
+                                                                    <div>
+                                                                        <p>{{$p_account_name
+                                                                            ??
+                                                                            "Not Available"}}
+                                                                        <p>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+
+
+
+
+
                                                         </div>
+
+
                                                     </div>
 
-                                                    <hr>
 
                                                     <form onsubmit="event.preventDefault()">
 
-                                                        <div class="row">
-                                                            <div class="col-6 mt-3 text-center">
-                                                                <span class="text-muted">Account
-                                                                    Number</span>
-                                                                <div>
-                                                                    <h6>{{
-                                                                        $p_account_no
-                                                                        ??
-                                                                        "Not Available"
-                                                                        }}</h6>
-                                                                    <input hidden value="{{ $p_account_no }}"
-                                                                        id="p_account_no">
 
-                                                                </div>
-                                                            </div>
 
-                                                            <div class="col-6 mt-3 text-center">
-                                                                <span class="text-muted">Account
-                                                                    Name</span>
-                                                                <div>
-                                                                    <h6>{{$p_account_name
-                                                                        ??
-                                                                        "Not Available"}}</h6>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-
-                                                        <hr>
 
                                                         <div class="row">
                                                             <div class="col-12 mt-3 text-center">
-                                                                <span class="text-muted">Trx
-                                                                    Ref</span>
-                                                                <div>
-                                                                    <h5>{{
-                                                                        $trans_id
-                                                                        ??
-                                                                        "Not Available"
-                                                                        }}</h5>
-                                                                    <input type="text" id="trx_id" hidden
-                                                                        value="{{ $trans_id}}">
+                                                                <input type="text" id="trx_id" hidden
+                                                                    value="{{ $trans_id}}">
 
-                                                                    <input type="text" id="webHook" hidden
-                                                                        value="{{ $webhook}}">
+                                                                <input type="text" id="webHook" hidden
+                                                                    value="{{ $webhook}}">
 
-                                                                    <input type="text" id="Amount" hidden
-                                                                        value="{{ $amount}}">
+                                                                <input type="text" id="Amount" hidden
+                                                                    value="{{ $amount}}">
 
-                                                                </div>
                                                             </div>
-
-                                                            {{-- <div class="col-6 mt-3 text-center">
-                                                                <span class="text-muted">Trx
-                                                                    Time
-                                                                    Remaining</span>
-                                                                <div>
-                                                                    <h5 style="color:rgb(255, 0, 144);"><span
-                                                                            class="nav-pills rounded"
-                                                                            id="timers"></span></h5>
-                                                                </div>
-                                                            </div> --}}
-
-                                                            {{-- <script>
-                                                                var targetMinutes = 15000;
-
-                                                                var targetTime = targetMinutes * 60 * 1000;
-                                                                var trans = "{{ $trans_id }}";
-                                                                var key = {{ $key }};
-
-
-
-                                                                function redirect() {
-                                                                window.location.href = "https://web.enkpay.com/decline?trans_id="+trans+"&key="+key;
-                                                                }
-
-                                                                function countdown() {
-                                                                targetTime -= 150000;
-
-                                                                if (targetTime <= 0) {
-                                                                    clearInterval(timerInterval); // Stop the countdown
-                                                                    redirect(); // Redirect to the specified link
-                                                                }
-
-                                                                // Calculate remaining minutes and seconds
-                                                                var minutes = Math.floor(targetTime / 60000);
-                                                                var seconds = Math.floor((targetTime % 60000) / 1000);
-
-                                                                // Display the countdown on the page
-                                                                document.getElementById('timers').innerHTML = minutes + 'secs ';
-                                                                }
-
-                                                                var timerInterval = setInterval(countdown, 1000);
-                                                            </script> --}}
-
                                                         </div>
 
-                                                        <hr>
-
-                                                        <div id="app"></div>
-
-                                                        <div class="d-grid gap-2 text-center my-5">
-                                                            <button data-toggle="modal"
-                                                                data-target="#exampleModalCenter" type="button"
-                                                                id="requestButtonp" class="btn btn-success btn-lg">I
-                                                                ve sent ₦{{
-                                                                number_format($payable_amount)}}</button>
-
-                                                        </div>
-
-
-
-                                                        <div id="app"></div>
-
-                                                        <div class="d-grid gap-2 text-center my-5">
-                                                            <a class="btn btn-outline-danger" href="decline?trans_id={{ $trans_id }}&key={{ $key }}">Cancle Transaction</a>
-                                                        </div>
-
-
-
-                                                        {{-- <div class="d-grid gap-2 text-center mb-5">
-                                                            <a href="decline?trans_id={{ $trans_id }}&key={{ $key }}"
-                                                                class="btn btn-danger" role="button"
-                                                                data-bs-toggle="button">Cancle
-                                                                Transaction</a>
-                                                        </div> --}}
-
-                                                        {{-- <div class="row">
-                                                            <div class="col-md-12 mt-4">
-                                                                <p class="text-center mb-5" id="below-btn"><a
-                                                                        style="color:rgb(255, 0, 98);"
-                                                                        href="#"
-                                                                        target="_blank">Report
-                                                                        Transaction</a></p>
-                                                            </div>
-                                                        </div> --}}
-
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="card-footer">
-                                    </div>
-
-
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-                                        aria-labelledby="exampleModalCenterTitle" data-keyboard="false"
-                                        data-backdrop="static" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLongTitle"></h5>
-                                                    <a class="close"
-                                                        href="decline?trans_id={{ $trans_id }}&key={{ $key }}"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </a>
-                                                </div>
-
-                                                <div class="modal-body">
-
-                                                    <div class="d-flex justify-content-center">
-                                                        <h6 class="mt-1">Payment
-                                                            Processing</h6>
-
-                                                    </div>
-
-                                                    <div class="d-flex justify-content-center p-4">
-                                                        <script
-                                                            src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
-                                                            type="module"></script>
-                                                        <dotlottie-player
-                                                            src="https://lottie.host/0af67ec1-fef7-4a93-bc78-8c7df7ce435b/79p7ffiBfn.json"
-                                                            background="transparent" speed="2"
-                                                            style="width: 100; height: 100" direction="1" mode="normal"
-                                                            loop autoplay></dotlottie-player>
-                                                    </div>
-
-                                                    <div class="d-flex justify-content-center">
-                                                        <div class="text-center">
-                                                            <hp style="color:rgb(255, 0, 98);" id="timer"> <span
-                                                                    id="countdown"></span></p>
-                                                        </div>
-
-                                                    </div>
-
-                                                </div>
-                                                <div class="modal-footer">
-
-                                                    <a href="#"
-                                                        class="btn btn-danger">Report Transaction</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div> <!-- End -->
-                                <!-- Paypal info -->
-                                <div id="paypal" class="tab-pane fade pt-3">
-
-                                    <div id="menu3" class="tab-pane">
-                                        <div class="row justify-content-center">
-                                            <div class="col-11">
-                                                <h3 class="mt-0 mb-4 text-center">Scan
-                                                    the QR code to pay</h3>
-                                                <div class="text-center mb-5">
-                                                    <p>Open your ENKPAY
-                                                        mobile app to scan
-                                                        QR Code</p>
-                                                </div>
-
-                                                <div class="row justify-content-center mt-5">
-                                                    {!!
-                                                    SimpleSoftwareIO\QrCode\Facades\QrCode::size(200)->generate($data)
-                                                    !!}
+                                                       
 
                                                 </div>
 
-                                                <div class="row justify-content-center mt-5">
 
-                                                    <input type="submit" id="mybutton" onclick="myRequest()"
-                                                        value="I ve sent NGN {{ number_format($payable_amount) }}"
-                                                        class="btn btn-success">
+                                                <div class="row my-3 gap-2">
+
+
+                                                    <div class="col-sm-12 text-center">
+                                                        <button data-toggle="modal" data-target="#exampleModalCenter"
+                                                            type="button" id="requestButtonp"
+                                                            class="btn btn-success btn-lg">I
+                                                            ve sent ₦{{
+                                                            number_format($payable_amount)}}</button>
+
+
+                                                            <a class="btn btn-outline-danger"
+                                                            href="decline?trans_id={{ $trans_id }}&key={{ $key }}">Cancle
+                                                            Transaction</a>
+                                                     </div>
+
+                                                    
 
                                                 </div>
 
-                                                <div class="row justify-content-center mt-5">
 
-                                                    <input type="submit" id="mybutton" onclick="myRequest()"
-                                                        value="I ve sent NGN {{ number_format($payable_amount) }}"
-                                                        class="btn btn-success">
 
-                                                </div>
+                                                <div id="app"></div>
 
-                                                <div class="text-center mt-4">
-                                                    <span id="spText"></span>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12 mt-4">
-                                                        <p class="text-center mb-5" id="cancle"><a
-                                                                href="decline?trans_id={{ $trans_id }}&key={{ $key }}">
-                                                                Cancle
-                                                            </a></p>
-                                                    </div>
-                                                </div>
 
-                                                <div class="row">
-                                                    <div class="col-md-12 mt-4">
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                </div>
 
-                                <div id="test" class="tab-pane fade pt-3">
-
-                                    <div id="menu4" class="tab-pane">
-                                        <div class="row justify-content-center">
-                                            <div class="col-11">
-
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
+                              
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalCenterTitle" data-keyboard="false"
+                                    data-backdrop="static" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                                                <a class="close" href="decline?trans_id={{ $trans_id }}&key={{ $key }}"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </a>
+                                            </div>
+
+                                            <div class="modal-body">
+
+                                                <div class="d-flex justify-content-center">
+                                                    <h6 class="mt-1">Payment
+                                                        Processing</h6>
+
+                                                </div>
+
+                                                <div class="d-flex justify-content-center p-4">
+                                                    <script
+                                                        src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+                                                        type="module"></script>
+                                                    <dotlottie-player
+                                                        src="https://lottie.host/0af67ec1-fef7-4a93-bc78-8c7df7ce435b/79p7ffiBfn.json"
+                                                        background="transparent" speed="2"
+                                                        style="width: 100; height: 100" direction="1" mode="normal" loop
+                                                        autoplay></dotlottie-player>
+                                                </div>
+
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="text-center">
+                                                        <hp style="color:rgb(255, 0, 98);" id="timer"> <span
+                                                                id="countdown"></span></p>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+
+                                                <a href="#" class="btn btn-danger">Report Transaction</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div> <!-- End -->
+                            
                         </div>
+
                     </div>
                 </div>
             </div>
-            <div class="text-center my-4">
+        </div>
+        <div class="text-center my-1">
 
-                <p class="text-white">Powered by | <img
-                        src="https://enkpay.com/asset/wp-content/uploads/sites/110/2022/11/fintex-logo-white-2.png"
-                        height="25" width="150" </p>
+            <p class="text-white">Powered by | <img
+                    src="https://enkpay.com/asset/wp-content/uploads/sites/110/2022/11/fintex-logo-white-2.png"
+                    height="25" width="150" </p>
 
-            </div>
+        </div>
         </div>
         <script type='text/javascript'
             src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'></script>
@@ -871,6 +945,17 @@
 
 
     </script>
+
+    <script>
+
+
+
+
+    </script>
+
+
+
+
 
 </body>
 

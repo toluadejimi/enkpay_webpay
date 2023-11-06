@@ -305,8 +305,8 @@
             font-family: 'Poppins';
         }
 
-        
-            
+
+
     </style>
 
 
@@ -480,7 +480,7 @@
                                                         below
                                                     </h6>
 
-                                                 
+
 
                                                     <div class="mt-0 text-center">
                                                         <div class="container-fluid alert alert-info my-2 p-4"
@@ -556,7 +556,7 @@
                                                             </div>
                                                         </div>
 
-                                                       
+
 
                                                 </div>
 
@@ -572,7 +572,7 @@
                                                             number_format($payable_amount)}}</button>
                                                      </div>
 
-                                                    
+
 
                                                 </div>
 
@@ -590,7 +590,7 @@
                                     </div>
                                 </div>
 
-                              
+
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalCenterTitle" data-keyboard="false"
@@ -642,7 +642,7 @@
                                 </div>
 
                             </div> <!-- End -->
-                            
+
                         </div>
 
                     </div>
@@ -735,7 +735,7 @@
         }
 
 
-        document.getElementById("cancle").style.visibility = "none";
+        //document.getElementById("cancle").style.visibility = "none";
 
 
         const trx_id = document.getElementById('trx_id').value;

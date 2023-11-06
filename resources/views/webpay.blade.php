@@ -291,7 +291,7 @@
         setTimeout(function() {
             document.querySelector('.loader').classList.add('active');
             document.querySelector('.content').style.display = 'block';
-        }, 9000); // 3 seconds
+        }, 5000); // 3 seconds
     </script>
 
 </head>
@@ -945,15 +945,6 @@
 
 
     </script>
-
-    <script>
-
-
-
-
-    </script>
-
-
 
 
 

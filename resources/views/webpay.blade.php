@@ -210,6 +210,18 @@
 
 
     <style>
+
+        #button2 {
+            float: right;
+            line-height: 12px;
+            width: 18px;
+            font-size: 8pt;
+            font-family: tahoma;
+            margin-top: 1px;
+            margin-right: 1px;
+          }
+
+
         body {
             margin: 0;
             padding: 0;
@@ -284,6 +296,9 @@
             margin-right: auto;
             width: auto;
         }
+
+        
+            
     </style>
 
 
@@ -329,6 +344,7 @@
                                 <div class="card border-0">
 
                                     <div class="card-body border-0">
+
 
                                         <img class="center" src="https://pngimg.com/uploads/bank/bank_PNG13.png"
                                             height="80" width="auto">
@@ -384,6 +400,11 @@
                 <div class="col-lg-6 mx-auto">
                     <div class="card ">
                         <div class="card-header">
+
+                            <div><a href="decline?trans_id={{ $trans_id }}&key={{ $key }}" class="text-white badge rounded-pill bg-danger btn-close btn-close-danger float-right" aria-label="Close">X</a>
+
+                            </div>
+
 
                             <div class="row pt-3 my-3" id="border-btm">
                                 <div class="col-4">
@@ -453,7 +474,7 @@
 
                                                  
 
-                                                    <div class="mt-0 mb-4 text-center">
+                                                    <div class="mt-0 text-center">
                                                         <div class="container-fluid alert alert-warning my-2 p-4"
                                                             role="alert">
 
@@ -514,7 +535,7 @@
 
 
                                                         <div class="row">
-                                                            <div class="col-12 mt-3 text-center">
+                                                            <div class="">
                                                                 <input type="text" id="trx_id" hidden
                                                                     value="{{ $trans_id}}">
 
@@ -541,11 +562,6 @@
                                                             class="btn btn-success btn-lg">I
                                                             ve sent ₦{{
                                                             number_format($payable_amount)}}</button>
-
-
-                                                            <a class="btn btn-outline-danger"
-                                                            href="decline?trans_id={{ $trans_id }}&key={{ $key }}">Cancle
-                                                            Transaction</a>
                                                      </div>
 
                                                     

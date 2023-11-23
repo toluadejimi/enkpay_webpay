@@ -23,7 +23,6 @@
         }
 
         .base-timer {
-            position: relative;
             width: 300px;
             height: 300px;
         }
@@ -65,7 +64,6 @@
         }
 
         .base-timer__label {
-            position: absolute;
             width: 300px;
             height: 300px;
             top: 0;
@@ -197,7 +195,6 @@
 
     <style>
         .modal {
-            position: fixed;
             top: 0;
             right: 0;
             bottom: 0;
@@ -214,7 +211,6 @@
 
 
     <style>
-
         #button2 {
             float: right;
             line-height: 12px;
@@ -223,13 +219,12 @@
             font-family: tahoma;
             margin-top: 1px;
             margin-right: 1px;
-          }
+        }
 
 
         body {
             margin: 0;
             padding: 0;
-            overflow: hidden;
             font-family: Arial, sans-serif;
         }
 
@@ -304,9 +299,6 @@
         body {
             font-family: 'Poppins';
         }
-
-
-
     </style>
 
 
@@ -359,7 +351,7 @@
 
                                         <strong>
                                             <h2 class="text-center text-re text-muted my-2 p-2">Pay NGN {{
-                                                    number_format($payable_amount, 2) }}</h2>
+                                                number_format($payable_amount, 2) }}</h2>
 
                                         </strong>
 
@@ -409,7 +401,9 @@
                     <div class="card ">
                         <div class="card-header">
 
-                            <div><a href="decline?trans_id={{ $trans_id }}&key={{ $key }}" class="text-white badge rounded-pill bg-danger btn-close btn-close-danger float-right" aria-label="Close">X</a>
+                            <div><a href="decline?trans_id={{ $trans_id }}&key={{ $key }}"
+                                    class="text-white badge rounded-pill bg-danger btn-close btn-close-danger float-right"
+                                    aria-label="Close">X</a>
 
                             </div>
 
@@ -486,7 +480,11 @@
                                                         <div class="container-fluid alert alert-info my-2 p-4"
                                                             role="alert">
 
-                                                            <p class="text-muted">BANK NAME</p>
+
+                                                            <p
+                                                                class="text-muted justify-content-between align-items-center">
+                                                                BANK NAME</p>
+                                                            <h6>PROVIDUS BANK</h6>
 
                                                             {{-- <div>
                                                                 <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple123/v4/0f/7f/1e/0f7f1eac-e93f-0517-2e7b-23c6ef9d920e/AppIcon-0-1x_U007emarketing-0-0-GLES2_U002c0-512MB-sRGB-0-0-0-85-220-0-0-0-5.png/1200x600wa.png"
@@ -494,37 +492,38 @@
 
                                                             </div> --}}
 
-                                                            <h6>PROVIDUS BANK</h6>
+
                                                             <hr>
 
-                                                            <div class="row">
-                                                                <div class="col-6 mt-1 text-center">
-                                                                    <p class="text-muted ">Account
-                                                                        No</p>
-                                                                    <div>
-                                                                        <h6 class="rounded-pill">{{
-                                                                            $p_account_no
-                                                                            ??
-                                                                            "Not Available"
-                                                                            }}</h6>
-                                                                        <input hidden value="{{ $p_account_no }}"
-                                                                            id="p_account_no">
+                                                            <div class="col-12 mt-1 justify-content-between align-items-center">
+                                                                <p class="text-muted ">Account
+                                                                    No</p>
+                                                                <div>
+                                                                    <h6 class="rounded-pill">{{
+                                                                        $p_account_no
+                                                                        ??
+                                                                        "Not Available"
+                                                                        }}</h6>
+                                                                    <input hidden value="{{ $p_account_no }}"
+                                                                        id="p_account_no">
 
-                                                                    </div>
                                                                 </div>
-
-                                                                <div class="col-6 mt-1 text-center">
-                                                                    <p class="text-muted">Account
-                                                                        Name</p>
-                                                                    <div>
-                                                                        <p>{{$p_account_name
-                                                                            ??
-                                                                            "Not Available"}}
-                                                                        <p>
-                                                                    </div>
-                                                                </div>
-
                                                             </div>
+
+                                                            <hr>
+
+
+                                                            <div class="col-12 mt-1 justify-content-between align-items-center">
+                                                                <p class="text-muted">Account
+                                                                    Name</p>
+                                                                <div>
+                                                                    <h6>{{$p_account_name
+                                                                        ??
+                                                                        "Not Available"}}</h6>
+                                                                
+                                                                </div>
+                                                            </div>
+
 
 
 
@@ -570,7 +569,7 @@
                                                             class="btn btn-success btn-lg">I
                                                             ve sent ₦{{
                                                             number_format($payable_amount)}}</button>
-                                                     </div>
+                                                    </div>
 
 
 

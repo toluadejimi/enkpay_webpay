@@ -403,7 +403,7 @@
 
                             <div><a href="decline?trans_id={{ $trans_id }}&key={{ $key }}"
                                     class="text-white badge rounded-pill bg-danger btn-close btn-close-danger float-right"
-                                    aria-label="Close">X</a>
+                                    aria-label="Close">Cancle Transaction</a>
 
                             </div>
 

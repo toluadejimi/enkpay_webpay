@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\BotManController;
+use App\Http\Controllers\CardPaymentController;
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +31,9 @@ Route::get('receipt', [TransactionController::class, 'receipt']);
 Route::get('pending-pay', [TransactionController::class, 'pending_pay']);
 
 Route::get('continue-pay', [TransactionController::class, 'continue_pay']);
+
+Route::get('prepay', [CardPaymentController::class, 'pre_pay']);
+
 
 
 

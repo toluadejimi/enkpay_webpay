@@ -389,5 +389,22 @@ function create_dynamic_p_account($name, $business_id)
 
 
 
+function trx()
+{
+
+    $refcode = "CARD" . random_int(100, 999).date('YmdHis');
+
+
+    return $refcode;
+
+}
+
+
+
+
+
+
+
+
 
 }

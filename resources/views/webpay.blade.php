@@ -574,8 +574,10 @@
                                                     <div class="col-sm-12 text-center">
 
 
-                                                        <div><a href="decline?trans_id={{ $trans_id }}&key={{ $key }}"
-                                                                class="text-white bg-danger btn-danger"
+                                                        <div>
+                                                            
+                                                            <a href="decline?trans_id={{ $trans_id }}&key={{ $key }}"
+                                                                class="text-white btn btn-danger"
                                                                 aria-label="Close">Cancle Transaction</a>
 
                                                         </div>

@@ -489,7 +489,8 @@
 
                                                             <hr>
 
-                                                            <div class="col-12 mt-1 justify-content-between align-items-center">
+                                                            <div
+                                                                class="col-12 mt-1 justify-content-between align-items-center">
                                                                 <p class="text-muted ">Account
                                                                     No</p>
                                                                 <div>
@@ -507,14 +508,15 @@
                                                             <hr>
 
 
-                                                            <div class="col-12 mt-1 justify-content-between align-items-center">
+                                                            <div
+                                                                class="col-12 mt-1 justify-content-between align-items-center">
                                                                 <p class="text-muted">Account
                                                                     Name</p>
                                                                 <div>
                                                                     <h6>{{$p_account_name
                                                                         ??
                                                                         "Not Available"}}</h6>
-                                                                
+
                                                                 </div>
                                                             </div>
 
@@ -572,13 +574,13 @@
                                                     <div class="col-sm-12 text-center">
 
 
-                                                    <div><a href="decline?trans_id={{ $trans_id }}&key={{ $key }}"
-                                                        class="text-white bg-danger btn-danger"
-                                                        aria-label="Close">Cancle Transaction</a>
+                                                        <div><a href="decline?trans_id={{ $trans_id }}&key={{ $key }}"
+                                                                class="text-white bg-danger btn-danger"
+                                                                aria-label="Close">Cancle Transaction</a>
+
+                                                        </div>
 
                                                     </div>
-                    
-                                                </div>
 
 
 

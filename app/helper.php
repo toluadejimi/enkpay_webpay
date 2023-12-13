@@ -409,10 +409,8 @@ function trx()
 }
 
 
-
 function resolve_bank($bank_code, $account_number)
 {
-
     $set = Setting::where('id', 1)->first();
 
     if ($set->bank == 'ttmfb') {

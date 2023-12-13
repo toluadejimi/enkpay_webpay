@@ -1157,4 +1157,27 @@ class TransactionController extends Controller
 
 
 
+    public function resolve_bank(request $request)
+    {
+
+        try {
+
+            $bank_code = $request->bank_code;
+            $account_number = $request->account_number;
+            //$bvn = $request->bvn;
+
+            $resolve = resolve_bank($bank_code, $account_number);
+
+            return response()->json([
+                'status' => true,
+                'customer_name' => $resolve,
+
+            ], 200);
+        } catch (\Exception $th) {
+            return $th->getMessage();
+        }
+    }
+
+
+
 }

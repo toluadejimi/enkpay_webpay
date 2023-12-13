@@ -571,13 +571,13 @@
 
                                                     </div>
 
-                                                    <div class="col-sm-12 text-center">
+                                                    <div class="col-sm-12 text-center my-2">
 
 
                                                         <div>
                                                             
                                                             <a href="decline?trans_id={{ $trans_id }}&key={{ $key }}"
-                                                                class="text-white btn btn-danger"
+                                                                class="text-white btn btn-danger "
                                                                 aria-label="Close">Cancle Transaction</a>
 
                                                         </div>

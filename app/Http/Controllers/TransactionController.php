@@ -1162,6 +1162,9 @@ class TransactionController extends Controller
 
         try {
 
+
+
+
             $bank_code = $request->bank_code;
             $account_number = $request->account_number;
             //$bvn = $request->bvn;

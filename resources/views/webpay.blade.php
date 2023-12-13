@@ -401,12 +401,6 @@
                     <div class="card ">
                         <div class="card-header">
 
-                            <div><a href="decline?trans_id={{ $trans_id }}&key={{ $key }}"
-                                    class="text-white badge rounded-pill bg-danger btn-close btn-close-danger float-right"
-                                    aria-label="Close">Cancle Transaction</a>
-
-                            </div>
-
 
                             <div class="row pt-3 my-3" id="border-btm">
                                 <div class="col-4">
@@ -569,7 +563,22 @@
                                                             class="btn btn-success btn-lg">I
                                                             ve sent ₦{{
                                                             number_format($payable_amount)}}</button>
+
+
+
+
                                                     </div>
+
+                                                    <div class="col-sm-12 text-center">
+
+
+                                                    <div><a href="decline?trans_id={{ $trans_id }}&key={{ $key }}"
+                                                        class="text-white bg-danger btn-danger"
+                                                        aria-label="Close">Cancle Transaction</a>
+
+                                                    </div>
+                    
+                                                </div>
 
 
 

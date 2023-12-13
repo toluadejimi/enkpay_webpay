@@ -25,7 +25,6 @@ Route::get('get-banks',[TransactionController::class, 'get_banks']);
 
 Route::post('resolve-bank',[TransactionController::class, 'resolve_bank']);
 
-
 Route::post('verify',[TransactionController::class, 'verify_woo']);
 
 Route::post('pay',[TransactionController::class, 'initialize_payment']);

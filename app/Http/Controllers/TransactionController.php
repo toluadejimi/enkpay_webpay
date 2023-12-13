@@ -583,7 +583,7 @@ class TransactionController extends Controller
 
             if($set->bank == 'ttmfb'){
                $data =  Ttmfb::select('bankName', 'code')->get();
-               return $data;
+               return response()->json(['data'=> $data]);
             }
 
 

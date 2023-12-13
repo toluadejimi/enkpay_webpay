@@ -1175,7 +1175,7 @@ class TransactionController extends Controller
                 'status' => true,
                 'customer_name' => $resolve,
 
-            ], 200)->header('Access-Control-Allow-Origin', 'http://127.0.0.1:8000');
+            ], 200)->header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
 
         } catch (\Exception $th) {

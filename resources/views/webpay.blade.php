@@ -575,7 +575,7 @@
 
 
                                                         <div>
-                                                            
+
                                                             <a href="decline?trans_id={{ $trans_id }}&key={{ $key }}"
                                                                 class="text-white btn btn-danger "
                                                                 aria-label="Close">Cancle Transaction</a>

@@ -23,7 +23,7 @@ use App\Http\Controllers\VirtualAccount\VirtualController;
 Route::post('get-account',[TransactionController::class, 'get_account_details']);
 Route::get('get-banks',[TransactionController::class, 'get_banks']);
 
-Route::post('resolve-bank',[TransactionController::class, 'resolve_bank']);
+Route::get('resolve-bank',[TransactionController::class, 'resolve_bank']);
 
 Route::post('verify',[TransactionController::class, 'verify_woo']);
 

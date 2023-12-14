@@ -1171,13 +1171,14 @@ class TransactionController extends Controller
 
             $resolve = resolve_bank($bank_code, $account_number);
 
-            return response()->json([
-                'status' => true,
-                'customer_name' => $resolve,
+            // return response()->json([
+            //     'status' => true,
+            //     'customer_name' => $resolve,
 
-            ], 200)->header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-            ->header('Access-Control-Allow-Methods', 'POST')
-            ->header('Access-Control-Allow-Origin', 'http://127.0.0.1:8000');
+            // ], 200);
+
+
+            return $resolve;
 
 
 

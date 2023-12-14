@@ -1171,6 +1171,7 @@ class TransactionController extends Controller
 
             $resolve = resolve_bank($bank_code, $account_number);
 
+
             return response()->json([
                 'status' => true,
                 'customer_name' => $resolve,

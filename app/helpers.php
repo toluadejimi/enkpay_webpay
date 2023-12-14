@@ -363,10 +363,6 @@ function trx()
     return $refcode;
 }
 
-function timejkl()
-{
-    return "hello";
-}
 
 function resolve_bank($bank_code, $account_number)
 {
@@ -417,6 +413,7 @@ function resolve_bank($bank_code, $account_number)
         curl_close($curl);
         $var = json_decode($var);
 
+        // dd($var);
 
 
         $customer_name = $var->AccountName ?? null;
@@ -424,6 +421,13 @@ function resolve_bank($bank_code, $account_number)
         $status = $var->ResponseCode ?? null;
 
         $bankName = Ttmfb::where('code', $bank_code)->first()->bankName;
+
+
+        if($status == 10002){
+
+            return "Account does not match with bank";
+
+        }
 
         if ($status == 90000) {
 
@@ -437,11 +441,9 @@ function resolve_bank($bank_code, $account_number)
 
             return $customer_name;
         } else {
-
             return $var->ResponseDescription;
         }
 
-        return $error;
     }
 
     if ($set->bank == 'manuel') {

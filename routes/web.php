@@ -3,6 +3,8 @@
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\BotManController;
 use App\Http\Controllers\CardPaymentController;
+use App\Http\Controllers\ProxyController;
+
 
 
 use Illuminate\Support\Facades\Route;
@@ -36,6 +38,7 @@ Route::get('prepay', [CardPaymentController::class, 'pre_pay']);
 
 
 
+Route::get('/proxy', [ProxyController::class, 'proxy']);
 
 
 

@@ -441,7 +441,8 @@ function resolve_bank($bank_code, $account_number)
 
             return $customer_name;
         } else {
-            return $var->ResponseDescription;
+
+            return $var->ResponseDescription ?? "Account does not match with bank";
         }
 
     }

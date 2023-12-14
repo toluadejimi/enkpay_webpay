@@ -1178,7 +1178,7 @@ class TransactionController extends Controller
             // ], 200);
 
 
-            return $resolve;
+            echo $resolve;
 
 
 

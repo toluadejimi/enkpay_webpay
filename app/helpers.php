@@ -383,8 +383,6 @@ function resolve_bank($bank_code, $account_number)
         }
 
 
-        dd($bank_code, $account_number);
-
         $username = env('MUSERNAME');
         $prkey = env('MPRKEY');
         $sckey = env('MSCKEY');

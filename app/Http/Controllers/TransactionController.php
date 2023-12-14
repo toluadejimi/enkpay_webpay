@@ -1177,8 +1177,6 @@ class TransactionController extends Controller
             ], 200);
 
 
-
-
         } catch (\Exception $th) {
             return $th->getMessage();
         }

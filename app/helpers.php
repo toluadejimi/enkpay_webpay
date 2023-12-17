@@ -414,6 +414,7 @@ function resolve_bank($bank_code, $account_number)
         $var = json_decode($var);
 
 
+        dd($var);
 
         $customer_name = $var->AccountName ?? null;
         $error = $var->error->message ?? null;

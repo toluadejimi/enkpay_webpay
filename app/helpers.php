@@ -413,7 +413,6 @@ function resolve_bank($bank_code, $account_number)
         curl_close($curl);
         $var = json_decode($var);
 
-        // dd($var);
 
 
         $customer_name = $var->AccountName ?? null;
@@ -437,7 +436,6 @@ function resolve_bank($bank_code, $account_number)
             $sv->bankName = $bankName;
             $sv->customer_name = $customer_name;
             $sv->save();
-
 
             return $customer_name;
         } else {

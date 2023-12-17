@@ -410,9 +410,6 @@ function resolve_bank($bank_code, $account_number)
         ));
 
         $var = curl_exec($curl);
-
-        dd($var);
-
         curl_close($curl);
         $var = json_decode($var);
 

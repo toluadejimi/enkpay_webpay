@@ -4,8 +4,29 @@ use App\Models\User;
 use App\Models\Ttmfb;
 use App\Models\Setting;
 use App\Models\AccountInfo;
+use Illuminate\Support\Str;
 use App\Models\VirtualAccount;
 use Illuminate\Support\Facades\Auth;
+
+
+
+function refx(){
+    $ref = date('YmdHis');
+    return $ref;
+}
+
+
+
+
+function refrence_code(){
+
+    $ref = "ENK|API".random_int(1000000, 999999999).date('his');
+    return $ref;
+
+
+}
+
+
 
 if (!function_exists('send_notification')) {
 
@@ -604,3 +625,352 @@ function resolve_bank($bank_code, $account_number)
         }
     }
 }
+
+
+
+function get_services($code){
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api-service.vtpass.com/api/get-international-airtime-product-types?code=$code",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+
+    ));
+
+    $var = curl_exec($curl);
+
+    curl_close($curl);
+    $var = json_decode($var);
+    $status = $var->response_description ?? null;
+    $service_code = $var->content ?? null;
+
+
+
+    if($status == 000){
+
+    foreach ($service_code as $product) {
+
+        if ($product->product_type_id == 1 || $product->product_type_id == 2) {
+
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://api-service.vtpass.com/api/get-international-airtime-operators?code=$code&product_type_id=$product->product_type_id",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+
+            ));
+
+            $var = curl_exec($curl);
+
+            curl_close($curl);
+            $var = json_decode($var);
+            $status = $var->response_description ?? null;
+            $result = $var->content;
+
+
+            if($status == 000){
+
+                $data=[];
+                $data['product_id'] = $product->product_type_id;
+                foreach ($result as $key => $value) {
+                    $data[] = array(
+                        "operator_id" => $value->operator_id,
+                        "name" => $value->name,
+                    );
+                }
+
+                return $data;
+
+            }else{
+
+                return false;
+
+            }
+
+
+
+
+        }
+    }
+
+    }else{
+        return false;
+    }
+
+
+}
+
+
+function get_services_cost($operator_id){
+
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api-service.vtpass.com/api/service-variations?serviceID=foreign-airtime&operator_id=$operator_id&product_type_id=1",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+
+    ));
+
+    $var = curl_exec($curl);
+
+    curl_close($curl);
+    $var = json_decode($var);
+    $status = $var->response_description ?? null;
+    $variations = $var->content->variations ?? null;
+
+
+
+        if($status == 000){
+
+
+
+
+            $data = [];
+            foreach ($variations as $key => $value) {
+
+                $percentageAmount = (50 / 100) * $value->variation_rate;
+
+
+                $data[] = array(
+                    "product_id" => $value->variation_code,
+                    "product_name" => $value->name,
+                    "min" => $value->variation_amount_min,
+                    "max" => $value->variation_amount_max,
+                    "rate" => $value->variation_rate + $percentageAmount,
+                    "fixed_price" => $value->fixedPrice,
+
+                );
+            }
+
+            return $data;
+
+        }else{
+
+            return false;
+
+        }
+
+
+}
+
+
+function buy_airtime($country_code, $service_id, $amount, $phone,$product_id,$rate,$operator_id){
+
+    $code = $country_code;
+    $service = get_services($code);
+    $p_id = $service['product_id'];
+    $request_id = refx();
+
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://sandbox.vtpass.com/api/pay',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => array(
+            'request_id' => $request_id,
+            'serviceID' => 'foreign-airtime',
+            'billersCode' => $phone,
+            'amount' => $amount,
+            'variation_code' => $product_id,
+            'phone' => $phone,
+            'operator_id' => $operator_id,
+            'country_code' =>$country_code,
+            'product_type_id' => $p_id,
+            'email' => Auth::user()->email,
+
+        ),
+        CURLOPT_HTTPHEADER => array(
+            'api-key: e334b8de50dfd7dca64c02c3b46e3c1a',
+            'secret-key: SK_3147aff98c2584bf32a858e9525fbe65d4c17c196ad'
+        ),
+    ));
+
+    $var = curl_exec($curl);
+    curl_close($curl);
+    $var = json_decode($var);
+    $status = $var->code ?? null;
+
+
+    if($status == 000){
+
+        $data['status'] = true;
+        $data['amount'] = $var->content->transactions->total_amount;
+        $data['transactionId'] = $var->content->transactions->transactionId;
+
+        return $data;
+
+    }
+
+
+}
+
+
+function check_balance($amount){
+
+    if(Auth::user()->main_wallet < $amount){
+        return false;
+    }else{
+        return true;
+    }
+
+
+}
+
+
+function charge_wallet($amount){
+
+    if(Auth::user()->main_wallet < $amount){
+        User::where('id', Auth::id())->decrement('main_wallet', $amount);
+        return true;
+    }else{
+        return true;
+    }
+
+
+
+}
+
+
+function tokenkey()
+{
+
+    $databody = array(
+        'clientId' => env('PELPAYCLIENTID'),
+        'clientSecret' => env('PELPAYCLIENTSECRET'),
+
+    );
+
+
+    $post_data = json_encode($databody);
+
+
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://api.pelpay.ng/api/Account/login',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => $post_data,
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json'
+        ),
+    ));
+
+    $var = curl_exec($curl);
+    curl_close($curl);
+
+    $var = json_decode($var);
+    return $var->access_token;
+}
+
+
+function pre_pay($amount, $first_name, $last_name, $email, $user_id){
+
+
+    $token = tokenkey();
+    $databody = array(
+
+        "amount" => $amount ?? 200,
+        "currency" =>  "NGN",
+        "merchantRef" => trx(),
+        "narration" =>  "Card Payment",
+        "callBackUrl" => "https://enkpayapp.enkwave.com/api/v1/cash-out-webhook",
+        "splitCode" => "",
+        "shouldTokenizeCard" => true,
+
+        "customer" => array(
+            "customerId" => "24",
+            "customerLastName" => $first_name,
+            "customerFirstName" => $last_name,
+            "customerEmail" => $email ?? "test@email.com",
+            "customerPhoneNumber" => "",
+            "customerAddress" => "",
+            "customerCity" => "",
+            "customerStateCode" => "",
+            "customerPostalCode" => "",
+            "customerCountryCode"  => "NG"
+        ),
+
+        "integrationKey" => env('PELPAYTOKEN'),
+        "mcc" => 0,
+        "merchantDescriptor" =>  "string"
+
+
+
+    );
+
+
+    $post_data = json_encode($databody);
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://api.pelpay.ng/payment/advice',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => $post_data,
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json',
+            "Authorization: Bearer $token"
+        ),
+    ));
+
+    $var = curl_exec($curl);
+    curl_close($curl);
+
+    $var = json_decode($var);
+
+    dd($var, $databody);
+
+    $data['status'] = $var->responseData->status;
+    $data['adviceReference'] = $var->responseData->adviceReference;
+    $data['paymentUrl'] = $var->responseData->paymentUrl;
+
+    return $data;
+
+
+}
+
+
+
+// <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet'>
+// <link href='https://use.fontawesome.com/releases/v5.8.1/css/all.css' rel='stylesheet'>
+
+
+
+

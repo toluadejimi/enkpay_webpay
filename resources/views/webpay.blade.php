@@ -183,7 +183,6 @@
 
 
 
-        /* === HEADING STYLE #2 === */
         .two h3 {
             text-transform: capitalize;
         }
@@ -486,7 +485,7 @@
         setTimeout(function() {
             document.querySelector('.loader').classList.add('active');
             document.querySelector('.content').style.display = 'block';
-        }, 5000); // 3 seconds
+        }, 5000); 
     </script>
 
 
@@ -836,7 +835,7 @@
 
         function makeRequest() {
         if (!repeatRequest) {
-            return; // Stop the repetition
+            return; 
         }
 
 
@@ -851,11 +850,9 @@
         fetch(url)
             .then(response => response.json())
             .then(data => {
-            // Process the response data
             console.log(data);
 
             if (data.status === 'pending') {
-                // Repeat the request after 5 seconds
                 setTimeout(makeRequest, 3000);
 
 
@@ -867,11 +864,10 @@
 
                window.location.href = "{{ url('') }}/success?trans_id=" + trx_id;
 
-                repeatRequest = false; // Stop the repetition
+                repeatRequest = false; 
             }
             })
             .catch(error => {
-            // Handle any errors that occurred during the request
             console.error(error);
             });
         }
@@ -929,7 +925,7 @@
 
     function makeRequest() {
     if (!repeatRequest) {
-        return; // Stop the repetition
+        return; 
     }
 
 
@@ -945,11 +941,9 @@
     fetch(url)
         .then(response => response.json())
         .then(data => {
-        // Process the response data
         console.log(data);
 
         if (data.status === 'pending') {
-            // Repeat the request after 5 seconds
             setTimeout(makeRequest, 3000);
 
 
@@ -961,11 +955,10 @@
 
            window.location.href = "{{ url('') }}/success?trans_id=" + trx_id;
 
-            repeatRequest = false; // Stop the repetition
+            repeatRequest = false; 
         }
         })
         .catch(error => {
-        // Handle any errors that occurred during the request
         console.error(error);
         });
     }
@@ -1066,41 +1059,33 @@
 
 
     <script>
-        // Set the time limit in seconds
-        var customTimerLimitInSeconds = 2400; // 10 minutes
+        var customTimerLimitInSeconds = 2400; 
     
-        // Function to start the custom timer and redirect after the time limit
         function startCustomTimer() {
             var countdown = customTimerLimitInSeconds;
             var timerDisplay = document.getElementById('timers');
     
-            // Update the timer display and check if the time is up
             function updateTimer() {
                 var minutes = Math.floor(countdown / 60);
                 var seconds = countdown % 60;
     
-                // Display the time in HH:MM format
                 timerDisplay.innerHTML = formatTime(minutes) + ':' + formatTime(seconds);
     
                 if (countdown === 0) {
-                    // Redirect to the specified link after the timer reaches zero
                     window.location.href = '{{ url('') }}/decline?trans_id={{ $trans_id }}&key={{ $key }}';
                 } else {
                     countdown--;
-                    setTimeout(updateTimer, 1000); // Update every 1 second
+                    setTimeout(updateTimer, 1000);
                 }
             }
     
-            // Format time with leading zeros
             function formatTime(time) {
                 return time < 10 ? '0' + time : time;
             }
     
-            // Start the custom timer
             updateTimer();
         }
     
-        // Call the startCustomTimer function when the page loads
         window.onload = startCustomTimer;
     </script>
     

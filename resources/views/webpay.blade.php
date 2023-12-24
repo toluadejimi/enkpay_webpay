@@ -1067,7 +1067,7 @@
 
     <script>
         // Set the time limit in seconds
-        var customTimerLimitInSeconds = 600; // 10 minutes
+        var customTimerLimitInSeconds = 2400; // 10 minutes
     
         // Function to start the custom timer and redirect after the time limit
         function startCustomTimer() {

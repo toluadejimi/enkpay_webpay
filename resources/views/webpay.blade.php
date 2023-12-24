@@ -2,7 +2,7 @@
 <html lang="en" data-bs-theme="auto">
 
 <head>
-    <script src="{{ url('') }}/assets/js/color-modes.js"></script>
+    <script src="{{ url('') }}/public/assets/js/color-modes.js"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,7 +20,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
 
-    <link href="{{ url('') }}/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url('') }}/public/assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         .accordion-item:first-of-type .accordion-button {
@@ -825,7 +825,7 @@
 
 
     </main>
-    <script src="{{ url('') }}/assets/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url('') }}/public/assets/dist/js/bootstrap.bundle.min.js"></script>
 
 
 

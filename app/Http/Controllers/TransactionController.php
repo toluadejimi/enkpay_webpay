@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Faker\Factory;
 use App\Models\User;
 use App\Models\Ttmfb;
 use App\Models\Charge;
@@ -312,8 +313,29 @@ class TransactionController extends Controller
 
 
 
+        $faker = Factory::create();
 
-        return view('webpay', compact('payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name', 'total_received'));
+        $first_name = $faker->name;
+        $last_name = $faker->lastName;
+        $email = $faker->email;
+        $user_id = "23";
+        $amount = $payable_amount;
+
+
+        $pre = pre_pay($amount, $first_name, $last_name, $email, $user_id);
+
+        $pre_link = $pre['paymentUrl'];
+
+
+       $set = Setting::where('id', 1)->first();
+
+       $card = $set->pay_by_card;
+       $transfer = $set->pay_by_trx;
+       $bank = $set->pay_with_providus;
+
+
+
+        return view('webpay', compact('card','transfer','bank','pre_link','payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name', 'total_received'));
         // } catch (\Exception $th) {
         //     return $th->getMessage();
         // }
@@ -352,6 +374,14 @@ class TransactionController extends Controller
 
 
 
+    public function card_webhook(Request $request)
+    {
+
+        dd($request->all());
+
+        
+
+    }
 
 
 
@@ -363,17 +393,13 @@ class TransactionController extends Controller
         $trans_id = $request->trans_id;
         $key = $request->key;
 
-
-
         $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
-
-
 
         Webtransfer::where('trans_id', $request->trans_id)
             ->delete();
 
-
         $webhook = $marchant_url . "?amount=$amount&trans_id=$trans_id&status=failed";
+        
         return Redirect::to($webhook);
 
     }

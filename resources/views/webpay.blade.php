@@ -683,6 +683,8 @@
                 <p class="text-small mt-3 mb-3">Choose your prferred payment method</p>
 
                 <div class="accordion border-0" id="accordionExample">
+
+                    @if($card == 1)
                     <div class="accordion-item border-0">
                         <h6 class="accordion-header" style="bbackground: #070079;">
                             <button class="accordion-button collapsed" style="bbackground: #070079;" type="button"
@@ -696,19 +698,17 @@
                         </h6>
 
                     </div>
-
                     <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div class="accordion-body mb-3">
-                            <a style="text-decoration:none " href="#" class="button-34"> <i
+                            <a style="text-decoration:none " href="{{ $pre_link }}" class="button-34"> <i
                                     class="bi bi-credit-card-2-back-fill"> Pay Now </a></i>
                         </div>
                     </div>
+                    @endif
 
 
 
-
-
-
+                    @if($transfer == 1 && $bank == 1)
                     <div class="accordion-item border-0">
                         <h2 class="accordion-header text-dark" >
                             <button class="accordion-button collapsed border-0 text-dark" type="button" data-bs-toggle="collapse"
@@ -727,7 +727,7 @@
                         </h2>
 
 
-                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div id="collapseTwo" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
 
 
@@ -774,6 +774,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
 
 
                     <div class="my-3">
@@ -1083,7 +1084,7 @@
     
                 if (countdown === 0) {
                     // Redirect to the specified link after the timer reaches zero
-                    window.location.href = 'https://example.com';
+                    window.location.href = '{{ url('') }}/decline?trans_id={{ $trans_id }}&key={{ $key }}';
                 } else {
                     countdown--;
                     setTimeout(updateTimer, 1000); // Update every 1 second

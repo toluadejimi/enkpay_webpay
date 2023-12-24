@@ -888,7 +888,6 @@ function tokenkey()
 
     $var = curl_exec($curl);
     curl_close($curl);
-
     $var = json_decode($var);
     return $var->access_token;
 }
@@ -898,13 +897,15 @@ function pre_pay($amount, $first_name, $last_name, $email, $user_id){
 
 
     $token = tokenkey();
+
+
     $databody = array(
 
         "amount" => $amount ?? 200,
         "currency" =>  "NGN",
         "merchantRef" => trx(),
         "narration" =>  "Card Payment",
-        "callBackUrl" => "https://enkpayapp.enkwave.com/api/v1/cash-out-webhook",
+        "callBackUrl" => url('')."/response",
         "splitCode" => "",
         "shouldTokenizeCard" => true,
 
@@ -921,9 +922,15 @@ function pre_pay($amount, $first_name, $last_name, $email, $user_id){
             "customerCountryCode"  => "NG"
         ),
 
+        "channel" => array(
+            "Card"
+        ),
+         
+
         "integrationKey" => env('PELPAYTOKEN'),
         "mcc" => 0,
         "merchantDescriptor" =>  "string"
+
 
 
 
@@ -955,7 +962,6 @@ function pre_pay($amount, $first_name, $last_name, $email, $user_id){
 
     $var = json_decode($var);
 
-    dd($var, $databody);
 
     $data['status'] = $var->responseData->status;
     $data['adviceReference'] = $var->responseData->adviceReference;

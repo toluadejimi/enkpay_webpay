@@ -28,6 +28,9 @@ Route::get('/', function () {
 
 
 
+Route::get('response', [TransactionController::class, 'card_webhook']);
+
+
 Route::get('receipt', [TransactionController::class, 'receipt']);
 
 Route::get('pending-pay', [TransactionController::class, 'pending_pay']);

@@ -39,6 +39,8 @@ class TransactionController extends Controller
             $user_id = Webkey::where('key', $key)
                 ->first()->user_id ?? null;
 
+
+
             $status = Webkey::where('key', $key)
                 ->first()->status ?? null;
 
@@ -129,6 +131,7 @@ class TransactionController extends Controller
 
         $user_id = Webkey::where('key', $request->key)->first()->user_id ?? null;
         $business_id = VirtualAccount::where('user_id', $user_id)->first()->business_id ?? null;
+
 
 
 
@@ -271,6 +274,7 @@ class TransactionController extends Controller
 
 
 
+
         $url = "https://web.enkpay.com/continue-pay?amount=$amount&key=$key&ref=$trans_id&email=$email";
         $qrdata = $user_id . " " . $payable_amount . " " . $trans_id;
 
@@ -285,11 +289,10 @@ class TransactionController extends Controller
             $first_name = $faker->name;
             $last_name = $faker->lastName;
             $email = $faker->email;
-            $user_id = $request->user_id;
-            $user_id = $request->user_id;
+            $userId = $request->user_id;
             $trans_id = $iref;
 
-            $pre = pre_pay($amount, $first_name, $last_name, $email, $user_id, $trans_id, $key);
+            $pre = pre_pay($amount, $first_name, $last_name, $email, $userId, $trans_id, $key);
             $adviceReference = $pre['adviceReference'];
 
             $pre_link = $pre['paymentUrl'];
@@ -297,6 +300,7 @@ class TransactionController extends Controller
 
             $pre_link = "#";
         }
+
 
 
 
@@ -320,7 +324,7 @@ class TransactionController extends Controller
             $trans->webhook = $webhook;
             $trans->key = $key;
             $trans->data = $data;
-            $trans->adviceReference = $adviceReference;
+            $trans->adviceReference = $adviceReference ?? null;
 
             $trans->both_commmission = $both_commmission;
 
@@ -440,7 +444,58 @@ class TransactionController extends Controller
 
             $recepit = "https://web.enkpay.com/receipt?trans_id=$trans_id&amount=$amount";
 
-            //
+
+              //Business Information
+              $card_commission = Charge::where('title', 'card_pay')->first()->amount;
+              //Both Commission
+              $amount1 = $card_commission / 100;
+              $amount2 = $amount1 * $amount;
+              $commmission_to_remove = number_format($amount2, 3);
+
+
+              $enkPay_commision_amount = (int)$amount -  (int)$commmission_to_remove;
+              $enkpay_commision = number_format($enkPay_commision_amount, 3);
+
+
+
+            $amt_to_credit = $enkpay_commision;
+
+            $amt1 = (int)$amt_to_credit - 4;
+
+            User::where('id', $user_id)->increment('main_wallet', $amt1);
+            User::where('id', 95)->increment('bonus_wallet', 2);
+            User::where('id', 109)->increment('bonus_wallet', 2);
+
+
+            $balance = User::where('id', $user_id)->first()->main_wallet;
+            $first_name = User::where('id', $user_id)->first()->first_name ?? null;
+            $last_name = User::where('id', $user_id)->first()->last_name ?? null;
+
+
+
+
+                //update Transactions
+                $trasnaction = new Transaction();
+                $trasnaction->user_id = $user_id;
+                $trasnaction->ref_trans_id = $trans_id;
+                $trasnaction->e_ref = $request->adviceReference;
+                $trasnaction->type = "webpay";
+                $trasnaction->transaction_type = "CARD";
+                $trasnaction->title = "Wallet Funding";
+                $trasnaction->main_type = "cardweb";
+                $trasnaction->credit = $amt_to_credit;
+                $trasnaction->note = "Card Payment | Web Pay";
+                $trasnaction->fee = $commmission_to_remove;
+                $trasnaction->amount = $amount;
+                $trasnaction->e_charges = 0;
+                $trasnaction->enkPay_Cashout_profit = 0;
+                $trasnaction->balance = $balance;
+                $trasnaction->status = 1;
+                $trasnaction->save();
+
+                $message = "Business funded | $amt1 | $first_name " . " " . $last_name;
+                send_notification($message);
+
 
             return view('success', compact('webhook', 'marchant_url', 'amount', 'trans_id', 'wc_order', 'client_id', 'wc', 'recepit'));
 

@@ -876,7 +876,7 @@ function tokenkey()
 }
 
 
-function pre_pay($amount, $first_name, $last_name, $email, $user_id, $trans_id, $key)
+function pre_pay($amount, $first_name, $last_name, $email, $userId, $trans_id, $key)
 {
 
 

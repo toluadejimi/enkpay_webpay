@@ -282,12 +282,13 @@ class TransactionController extends Controller
 
 
 
+
         $set = Setting::where('id', 1)->first();
         if ($set->pay_by_card == 1) {
             $faker = Factory::create();
             $amount = $request->amount;
-            $first_name = $faker->name;
-            $last_name = $faker->lastName;
+            $first_name = User::inRandomOrder()->first()->first_name;
+            $last_name = User::inRandomOrder()->first()->last_name;
             $email = $faker->email;
             $userId = $request->user_id;
             $trans_id = $iref;
@@ -493,7 +494,7 @@ class TransactionController extends Controller
                 $trasnaction->status = 1;
                 $trasnaction->save();
 
-                $message = "Business funded | $amt1 | $first_name " . " " . $last_name;
+                $message = "Card Payment | Business funded | $amt1 | $first_name " . " " . $last_name;
                 send_notification($message);
 
 

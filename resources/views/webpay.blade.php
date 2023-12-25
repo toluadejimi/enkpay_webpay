@@ -7,8 +7,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.118.2">
     <title>ENKPAY | Make Payment</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/jumbotron/">
@@ -28,6 +26,15 @@
             border-top-right-radius: var(--bs-accordion-inner-border-radius);
             background: lavender;
             color: rgb(0, 0, 59);
+
+
+        }
+
+
+        .accordion-button:not(.collapsed) {
+            color: #bbc4d2;
+            background-color: #e6e6fb;
+            box-shadow: inset 0 calc(-1 * var(--bs-accordion-border-width)) 0 #549ae0;
         }
 
         .accordion-item:last-of-type .accordion-button.collapsed {
@@ -115,6 +122,8 @@
             padding: var(--bs-accordion-body-padding-y) var(--bs-accordion-body-padding-x);
             background: lavender;
             padding-bottom: 30px;
+            padding-top: 30px;
+
         }
 
         .b-example-vr {
@@ -172,13 +181,13 @@
         }
 
         p {
-       
+
                 margin-top: 0;
                 margin-bottom: 1px;
                 font-size: 10px;
                 color: #8a8a8a;
                 font-weight: 300;
-            
+
         }
 
 
@@ -326,7 +335,7 @@
             word-break: break-word;
             border: 0;
         }
-        
+
         .button-39 {
             background: #ff8604;
             border-radius: 999px;
@@ -351,7 +360,7 @@
             word-break: break-word;
             border: 0;
         }
-        
+
     </style>
 
 
@@ -383,7 +392,7 @@
 
     </style>
 
-  
+
 
 
 
@@ -485,7 +494,7 @@
         setTimeout(function() {
             document.querySelector('.loader').classList.add('active');
             document.querySelector('.content').style.display = 'block';
-        }, 5000); 
+        }, 5000);
     </script>
 
 
@@ -613,7 +622,7 @@
 
                                 <button type="button" class="btn btn-primary btn-lg btn-block my-3" data-bs-dismiss="modal">I Understand</button>
 
-                             
+
 
                             </div>
 
@@ -622,7 +631,7 @@
 
                         </div>
 
-                      
+
 
 
                     </div>
@@ -637,11 +646,11 @@
             </div>
 
 
-         
+
 
         </div>
 
-      
+
     </div>
 
 
@@ -649,7 +658,7 @@
         <div class="loader">
             <div class="spinner"></div>
         </div>
-    
+
 
         <div class="container py-4 d-flex align-items-center justify-content-center">
 
@@ -689,7 +698,7 @@
                             <button class="accordion-button collapsed" style="bbackground: #070079;" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false"
                                 aria-controls="collapseOne">
-                                <i class="bi bi-credit-card-2-back-fill"></i>|
+                               
                                 Pay With Card
 
                             </button>
@@ -699,7 +708,7 @@
                     </div>
                     <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div class="accordion-body mb-3">
-                            <a style="text-decoration:none " href="{{ $pre_link }}" class="button-34"> <i
+                            <a style="text-decoration:none mb-5" href="{{ $pre_link }}" class="button-34"> <i
                                     class="bi bi-credit-card-2-back-fill"> Pay Now </a></i>
                         </div>
                     </div>
@@ -712,21 +721,15 @@
                         <h2 class="accordion-header text-dark" >
                             <button class="accordion-button collapsed border-0 text-dark" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-bank" viewBox="0 0 16 16">
-                                    <path
-                                        d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.501.501 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89zM3.777 3h8.447L8 1zM2 6v7h1V6zm2 0v7h2.5V6zm3.5 0v7h1V6zm2 0v7H12V6zM13 6v7h1V6zm2-1V4H1v1zm-.39 9H1.39l-.25 1h13.72l-.25-1Z" />
-                                </svg>
 
-
-                                | Pay with Transfer
+                                Pay with Transfer
 
 
                             </button>
                         </h2>
 
 
-                        <div id="collapseTwo" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
 
 
@@ -776,6 +779,30 @@
                     @endif
 
 
+                    @if($crypto == 1)
+                    <div class="accordion-item border-0">
+                        <h6 class="accordion-header text-dark" style="bbackground: #d4d2ff;">
+                            <button class="accordion-button collapsed text-dark" style="bbackground: #d4d2ff;" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapsefour" aria-expanded="false"
+                                aria-controls="collapsefour">
+                                Pay With Crypto
+
+                            </button>
+                            </h2>
+                        </h6>
+
+                    </div>
+                    <div id="collapsefour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body mb-3">
+                            <a style="text-decoration:none " href="cpay?webhook={{ $webhook}}&key={{ $key }}&amount={{ $payable_amount }}&order_id={{ $iref }}" class="button-34"> Continue </a>
+                        </div>
+                    </div>
+                    @endif
+
+
+
+
+
                     <div class="my-3">
                         <div class="text-center">
                             <hp style="color:rgb(232, 3, 106);" id="timer"><span id="countdown"></span></p>
@@ -798,14 +825,14 @@
                         <a style="text-decoration:none" href="decline?trans_id={{ $trans_id }}&key={{ $key }}"
                             class="button-38 my-3" aria-label="Close">Cancle Transaction</a>
 
-                       
+
 
                     </div>
 
 
                     <div class="mt-4 mb-4">
 
-                     
+
                             <a style="text-decoration:none" href="#" class="button-39 my-3" aria-label="Close">Report
                                 Transaction</a>
 
@@ -835,7 +862,7 @@
 
         function makeRequest() {
         if (!repeatRequest) {
-            return; 
+            return;
         }
 
 
@@ -864,7 +891,7 @@
 
                window.location.href = "{{ url('') }}/success?trans_id=" + trx_id;
 
-                repeatRequest = false; 
+                repeatRequest = false;
             }
             })
             .catch(error => {
@@ -917,7 +944,7 @@
 
     </script>
 
-   
+
 
     <script>
         let repeatRequest = true;
@@ -925,7 +952,7 @@
 
     function makeRequest() {
     if (!repeatRequest) {
-        return; 
+        return;
     }
 
 
@@ -955,7 +982,7 @@
 
            window.location.href = "{{ url('') }}/success?trans_id=" + trx_id;
 
-            repeatRequest = false; 
+            repeatRequest = false;
         }
         })
         .catch(error => {
@@ -1059,18 +1086,18 @@
 
 
     <script>
-        var customTimerLimitInSeconds = 2400; 
-    
+        var customTimerLimitInSeconds = 2400;
+
         function startCustomTimer() {
             var countdown = customTimerLimitInSeconds;
             var timerDisplay = document.getElementById('timers');
-    
+
             function updateTimer() {
                 var minutes = Math.floor(countdown / 60);
                 var seconds = countdown % 60;
-    
+
                 timerDisplay.innerHTML = formatTime(minutes) + ':' + formatTime(seconds);
-    
+
                 if (countdown === 0) {
                     window.location.href = '{{ url('') }}/decline?trans_id={{ $trans_id }}&key={{ $key }}';
                 } else {
@@ -1078,17 +1105,17 @@
                     setTimeout(updateTimer, 1000);
                 }
             }
-    
+
             function formatTime(time) {
                 return time < 10 ? '0' + time : time;
             }
-    
+
             updateTimer();
         }
-    
+
         window.onload = startCustomTimer;
     </script>
-    
+
 
 
 

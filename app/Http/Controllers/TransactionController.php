@@ -85,7 +85,7 @@ class TransactionController extends Controller
 
 
             $get_user = User::select('main_wallet', 'v_account_no', 'v_account_name', 'v_bank_name')->where('id', $user_id)
-            ->first() ?? null;
+                ->first() ?? null;
 
 
             if ($get_user == null) {
@@ -134,9 +134,9 @@ class TransactionController extends Controller
 
 
 
-        if($business_id != null){
+        if ($business_id != null) {
 
-            if($email == null){
+            if ($email == null) {
                 $webhook = Webkey::where('key', $request->key)->first()->url ?? null;
                 return Redirect::to($webhook);
             }
@@ -146,8 +146,7 @@ class TransactionController extends Controller
 
             $account_no_p = VirtualAccount::where('user_id', $user_id)
                 ->where('v_bank_name', 'PROVIDUS BANK')->inRandomOrder()->orderBy('id', 'asc')->first()->v_account_no ?? null;
-
-        }else {
+        } else {
 
             $user_id = Webkey::where('key', $request->key)
                 ->first()->user_id ?? null;
@@ -208,8 +207,8 @@ class TransactionController extends Controller
         $p_account_no = $account_no_p;
 
         $p_account_name = VirtualAccount::where('user_id', $user_id)
-        ->where('v_account_no', $p_account_no)
-        ->first()->v_account_name ?? null;
+            ->where('v_account_no', $p_account_no)
+            ->first()->v_account_name ?? null;
 
         $p_bank_name = VirtualAccount::where('user_id', $user_id)
             ->where('v_account_no', $p_account_no)
@@ -273,10 +272,31 @@ class TransactionController extends Controller
 
 
         $url = "https://web.enkpay.com/continue-pay?amount=$amount&key=$key&ref=$trans_id&email=$email";
-
         $qrdata = $user_id . " " . $payable_amount . " " . $trans_id;
 
         $data = Crypt::encryptString($qrdata);
+
+
+
+        $set = Setting::where('id', 1)->first();
+        if ($set->pay_by_card == 1) {
+            $faker = Factory::create();
+            $amount = $request->amount;
+            $first_name = $faker->name;
+            $last_name = $faker->lastName;
+            $email = $faker->email;
+            $user_id = $request->user_id;
+            $user_id = $request->user_id;
+            $trans_id = $iref;
+
+            $pre = pre_pay($amount, $first_name, $last_name, $email, $user_id, $trans_id, $key);
+            $adviceReference = $pre['adviceReference'];
+
+            $pre_link = $pre['paymentUrl'];
+        } else {
+
+            $pre_link = "#";
+        }
 
 
 
@@ -300,6 +320,7 @@ class TransactionController extends Controller
             $trans->webhook = $webhook;
             $trans->key = $key;
             $trans->data = $data;
+            $trans->adviceReference = $adviceReference;
 
             $trans->both_commmission = $both_commmission;
 
@@ -313,29 +334,18 @@ class TransactionController extends Controller
 
 
 
-        $faker = Factory::create();
-
-        $first_name = $faker->name;
-        $last_name = $faker->lastName;
-        $email = $faker->email;
-        $user_id = "23";
-        $amount = $payable_amount;
-
-
-        $pre = pre_pay($amount, $first_name, $last_name, $email, $user_id);
-
-        $pre_link = $pre['paymentUrl'];
-
-
-       $set = Setting::where('id', 1)->first();
-
-       $card = $set->pay_by_card;
-       $transfer = $set->pay_by_trx;
-       $bank = $set->pay_with_providus;
 
 
 
-        return view('webpay', compact('card','transfer','bank','pre_link','payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name', 'total_received'));
+        $set = Setting::where('id', 1)->first();
+        $card = $set->pay_by_card;
+        $transfer = $set->pay_by_trx;
+        $bank = $set->pay_with_providus;
+        $crypto = $set->pay_by_crypto;
+
+
+
+        return view('webpay', compact('iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name', 'total_received'));
         // } catch (\Exception $th) {
         //     return $th->getMessage();
         // }
@@ -377,9 +387,62 @@ class TransactionController extends Controller
     public function card_webhook(Request $request)
     {
 
-        dd($request->all());
+        if ($request->paymentReference == null) {
 
-        
+            $trx = Webtransfer::where('adviceReference', $request->adviceReference)->first();
+            $marchant_url = Webkey::where('key', $trx->key)->first()->url ?? null;
+            Webtransfer::where('trans_id', $trx->trans_id)->delete();
+            $webhook = $marchant_url . "?amount=$trx->payable_amount&trans_id=$trx->trans_id&status=failed";
+            return Redirect::to($webhook);
+        }
+
+
+        $trx = Webtransfer::where('adviceReference', $request->adviceReference)->first() ?? null;
+        if ($trx == null) {
+            return view('error');
+        }
+
+
+        if ($trx->status == 1) {
+            return view('error');
+        }
+
+            Webtransfer::where('trans_id', $trx->trans_id)->update(['status'=> 1]);
+            $trans_id = $trx->trans_id;
+            $user_id = Webtransfer::where('trans_id', $trans_id)
+                ->first()->user_id ?? null;
+            $wc = Webtransfer::where('trans_id', $trans_id)
+                ->first()->wc_order ?? null;
+            $key = Webtransfer::where('trans_id', $trans_id)
+                ->first()->key ?? null;
+            $status = Webtransfer::where('trans_id', $trans_id)
+                ->first()->status ?? null;
+
+
+            $amount = Webtransfer::where('trans_id', $trans_id)
+                ->first()->amount ?? 0;
+
+            $wc_order = Webtransfer::where('trans_id', $trans_id)
+                ->first()->wc_order ?? null;
+
+
+            $client_id = Webtransfer::where('trans_id', $trans_id)
+                ->first()->client_id ?? null;
+
+
+            $amount_received = Webtransfer::where('trans_id', $trans_id)
+                ->first()->total_received ?? null;
+
+            $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
+
+            $webhook = $marchant_url . "?" . "amount=$amount" . "&trans_id=$trans_id" . "&status=success" . "&wc_order=$wc_order" . "&client_id=$client_id" ?? null;
+
+
+            $recepit = "https://web.enkpay.com/receipt?trans_id=$trans_id&amount=$amount";
+
+            //
+
+            return view('success', compact('webhook', 'marchant_url', 'amount', 'trans_id', 'wc_order', 'client_id', 'wc', 'recepit'));
 
     }
 
@@ -399,9 +462,8 @@ class TransactionController extends Controller
             ->delete();
 
         $webhook = $marchant_url . "?amount=$amount&trans_id=$trans_id&status=failed";
-        
-        return Redirect::to($webhook);
 
+        return Redirect::to($webhook);
     }
 
 
@@ -522,7 +584,7 @@ class TransactionController extends Controller
 
 
         $key = Webtransfer::where('trans_id', $trans_id)
-        ->first()->key ?? null;
+            ->first()->key ?? null;
 
 
         $status = Webtransfer::where('trans_id', $trans_id)
@@ -549,7 +611,7 @@ class TransactionController extends Controller
 
         $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
 
-        $webhook = $marchant_url . "?"."amount=$amount"."&trans_id=$trans_id"."&status=success"."&wc_order=$wc_order"."&client_id=$client_id" ?? null;
+        $webhook = $marchant_url . "?" . "amount=$amount" . "&trans_id=$trans_id" . "&status=success" . "&wc_order=$wc_order" . "&client_id=$client_id" ?? null;
 
 
         $recepit = "https://web.enkpay.com/receipt?trans_id=$trans_id&amount=$amount";
@@ -607,12 +669,10 @@ class TransactionController extends Controller
 
             $set = Setting::where('id', 1)->first();
 
-            if($set->bank == 'ttmfb'){
-               $data =  Ttmfb::select('bankName', 'code')->get();
-               return response()->json(['data'=> $data]);
+            if ($set->bank == 'ttmfb') {
+                $data =  Ttmfb::select('bankName', 'code')->get();
+                return response()->json(['data' => $data]);
             }
-
-
         } catch (\Exception $th) {
             return $th->getMessage();
         }
@@ -730,7 +790,6 @@ class TransactionController extends Controller
                         'price' =>  $trx->amount,
                     ], 200);
                 }
-
             } else {
 
                 return response()->json([
@@ -1106,7 +1165,7 @@ class TransactionController extends Controller
 
         $session_id = $request->session_id;
 
-        if($session_id == null){
+        if ($session_id == null) {
 
             return response()->json([
                 'status' => false,
@@ -1120,17 +1179,16 @@ class TransactionController extends Controller
         $trx = Transaction::where('p_sessionId', $session_id)->first()->ref_trans_id ?? null;
 
 
-          if($get_depo == null ){
+        if ($get_depo == null) {
 
             return response()->json([
                 'status' => false,
                 'message' => "Transaction not found",
             ], 500);
-
         }
 
 
-        if($get_depo == 0 ){
+        if ($get_depo == 0) {
 
             Transaction::where('p_sessionId', $session_id)->update(['resolve' => 1]);
 
@@ -1140,21 +1198,15 @@ class TransactionController extends Controller
                 'trx' => $trx,
 
             ], 200);
-
         }
 
-        if($get_depo == 1 ){
+        if ($get_depo == 1) {
 
             return response()->json([
                 'status' => false,
                 'message' => "Transaction has been Resolved, NGN $get_amount has been added to your wallet",
             ], 500);
-
         }
-
-
-
-
     }
 
 
@@ -1163,7 +1215,7 @@ class TransactionController extends Controller
 
         $order_id = $request->order_id;
 
-        if($order_id == null){
+        if ($order_id == null) {
 
             return response()->json([
                 'status' => false,
@@ -1178,7 +1230,6 @@ class TransactionController extends Controller
             'status' => true,
             'message' => 'Transaction completely resolved',
         ], 500);
-
     }
 
 
@@ -1202,13 +1253,8 @@ class TransactionController extends Controller
                 'status' => true,
                 'customer_name' => $resolve,
             ], 200);
-
-
         } catch (\Exception $th) {
             return $th->getMessage();
         }
     }
-
-
-
 }

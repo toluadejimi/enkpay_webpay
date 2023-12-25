@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\BotManController;
-use App\Http\Controllers\CardPaymentController;
-use App\Http\Controllers\ProxyController;
-
-
-
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProxyController;
+use App\Http\Controllers\BotManController;
+use App\Http\Controllers\CryptopayController;
+
+
+
+use App\Http\Controllers\CardPaymentController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,16 @@ Route::get('pending-pay', [TransactionController::class, 'pending_pay']);
 Route::get('continue-pay', [TransactionController::class, 'continue_pay']);
 
 Route::get('prepay', [CardPaymentController::class, 'pre_pay']);
+
+
+Route::get('crypto-pay', [CryptopayController::class, 'crypto_pay']);
+Route::get('crypto-price', [CryptopayController::class, 'crypto_pay_price']);
+
+
+
+Route::get('cpay', [CryptopayController::class, 'crypto_pay_view']);
+
+
 
 
 

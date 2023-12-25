@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 
 
-function refx(){
+function refx()
+{
     $ref = date('YmdHis');
     return $ref;
 }
@@ -18,12 +19,11 @@ function refx(){
 
 
 
-function refrence_code(){
+function refrence_code()
+{
 
-    $ref = "ENK|API".random_int(1000000, 999999999).date('his');
+    $ref = "ENK|API" . random_int(1000000, 999999999) . date('his');
     return $ref;
-
-
 }
 
 
@@ -443,10 +443,9 @@ function resolve_bank($bank_code, $account_number)
         $bankName = Ttmfb::where('code', $bank_code)->first()->bankName;
 
 
-        if($status == 10002){
+        if ($status == 10002) {
 
             return "Account does not match with bank";
-
         }
 
         if ($status == 90000) {
@@ -463,7 +462,6 @@ function resolve_bank($bank_code, $account_number)
 
             return $var->ResponseDescription ?? "Account does not match with bank";
         }
-
     }
 
     if ($set->bank == 'manuel') {
@@ -628,7 +626,8 @@ function resolve_bank($bank_code, $account_number)
 
 
 
-function get_services($code){
+function get_services($code)
+{
 
     $curl = curl_init();
 
@@ -653,67 +652,59 @@ function get_services($code){
 
 
 
-    if($status == 000){
+    if ($status == 000) {
 
-    foreach ($service_code as $product) {
+        foreach ($service_code as $product) {
 
-        if ($product->product_type_id == 1 || $product->product_type_id == 2) {
+            if ($product->product_type_id == 1 || $product->product_type_id == 2) {
 
-            $curl = curl_init();
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://api-service.vtpass.com/api/get-international-airtime-operators?code=$code&product_type_id=$product->product_type_id",
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'GET',
+                $curl = curl_init();
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => "https://api-service.vtpass.com/api/get-international-airtime-operators?code=$code&product_type_id=$product->product_type_id",
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
 
-            ));
+                ));
 
-            $var = curl_exec($curl);
+                $var = curl_exec($curl);
 
-            curl_close($curl);
-            $var = json_decode($var);
-            $status = $var->response_description ?? null;
-            $result = $var->content;
+                curl_close($curl);
+                $var = json_decode($var);
+                $status = $var->response_description ?? null;
+                $result = $var->content;
 
 
-            if($status == 000){
+                if ($status == 000) {
 
-                $data=[];
-                $data['product_id'] = $product->product_type_id;
-                foreach ($result as $key => $value) {
-                    $data[] = array(
-                        "operator_id" => $value->operator_id,
-                        "name" => $value->name,
-                    );
+                    $data = [];
+                    $data['product_id'] = $product->product_type_id;
+                    foreach ($result as $key => $value) {
+                        $data[] = array(
+                            "operator_id" => $value->operator_id,
+                            "name" => $value->name,
+                        );
+                    }
+
+                    return $data;
+                } else {
+
+                    return false;
                 }
-
-                return $data;
-
-            }else{
-
-                return false;
-
             }
-
-
-
-
         }
-    }
-
-    }else{
+    } else {
         return false;
     }
-
-
 }
 
 
-function get_services_cost($operator_id){
+function get_services_cost($operator_id)
+{
 
 
     $curl = curl_init();
@@ -739,41 +730,38 @@ function get_services_cost($operator_id){
 
 
 
-        if($status == 000){
+    if ($status == 000) {
 
 
 
 
-            $data = [];
-            foreach ($variations as $key => $value) {
+        $data = [];
+        foreach ($variations as $key => $value) {
 
-                $percentageAmount = (50 / 100) * $value->variation_rate;
+            $percentageAmount = (50 / 100) * $value->variation_rate;
 
 
-                $data[] = array(
-                    "product_id" => $value->variation_code,
-                    "product_name" => $value->name,
-                    "min" => $value->variation_amount_min,
-                    "max" => $value->variation_amount_max,
-                    "rate" => $value->variation_rate + $percentageAmount,
-                    "fixed_price" => $value->fixedPrice,
+            $data[] = array(
+                "product_id" => $value->variation_code,
+                "product_name" => $value->name,
+                "min" => $value->variation_amount_min,
+                "max" => $value->variation_amount_max,
+                "rate" => $value->variation_rate + $percentageAmount,
+                "fixed_price" => $value->fixedPrice,
 
-                );
-            }
-
-            return $data;
-
-        }else{
-
-            return false;
-
+            );
         }
 
+        return $data;
+    } else {
 
+        return false;
+    }
 }
 
 
-function buy_airtime($country_code, $service_id, $amount, $phone,$product_id,$rate,$operator_id){
+function buy_airtime($country_code, $service_id, $amount, $phone, $product_id, $rate, $operator_id)
+{
 
     $code = $country_code;
     $service = get_services($code);
@@ -800,7 +788,7 @@ function buy_airtime($country_code, $service_id, $amount, $phone,$product_id,$ra
             'variation_code' => $product_id,
             'phone' => $phone,
             'operator_id' => $operator_id,
-            'country_code' =>$country_code,
+            'country_code' => $country_code,
             'product_type_id' => $p_id,
             'email' => Auth::user()->email,
 
@@ -817,43 +805,37 @@ function buy_airtime($country_code, $service_id, $amount, $phone,$product_id,$ra
     $status = $var->code ?? null;
 
 
-    if($status == 000){
+    if ($status == 000) {
 
         $data['status'] = true;
         $data['amount'] = $var->content->transactions->total_amount;
         $data['transactionId'] = $var->content->transactions->transactionId;
 
         return $data;
-
     }
-
-
 }
 
 
-function check_balance($amount){
+function check_balance($amount)
+{
 
-    if(Auth::user()->main_wallet < $amount){
+    if (Auth::user()->main_wallet < $amount) {
         return false;
-    }else{
+    } else {
         return true;
     }
-
-
 }
 
 
-function charge_wallet($amount){
+function charge_wallet($amount)
+{
 
-    if(Auth::user()->main_wallet < $amount){
+    if (Auth::user()->main_wallet < $amount) {
         User::where('id', Auth::id())->decrement('main_wallet', $amount);
         return true;
-    }else{
+    } else {
         return true;
     }
-
-
-
 }
 
 
@@ -872,7 +854,7 @@ function tokenkey()
 
     $curl = curl_init();
     curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://api.pelpay.ng/api/Account/login',
+        CURLOPT_URL => 'https://api.pelpay.africa/api/Account/login',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -889,11 +871,13 @@ function tokenkey()
     $var = curl_exec($curl);
     curl_close($curl);
     $var = json_decode($var);
+
     return $var->access_token;
 }
 
 
-function pre_pay($amount, $first_name, $last_name, $email, $user_id){
+function pre_pay($amount, $first_name, $last_name, $email, $user_id, $trans_id, $key)
+{
 
 
     $token = tokenkey();
@@ -905,12 +889,12 @@ function pre_pay($amount, $first_name, $last_name, $email, $user_id){
         "currency" =>  "NGN",
         "merchantRef" => trx(),
         "narration" =>  "Card Payment",
-        "callBackUrl" => url('')."/response",
+        "callBackUrl" => url('') . "/response",
         "splitCode" => "",
         "shouldTokenizeCard" => true,
 
         "customer" => array(
-            "customerId" => "24",
+            "customerId" => Str::random(2),
             "customerLastName" => $first_name,
             "customerFirstName" => $last_name,
             "customerEmail" => $email ?? "test@email.com",
@@ -922,10 +906,10 @@ function pre_pay($amount, $first_name, $last_name, $email, $user_id){
             "customerCountryCode"  => "NG"
         ),
 
-        "channel" => array(
-            "Card"
+        "channels" => array(
+            0 => "Card"
         ),
-         
+
 
         "integrationKey" => env('PELPAYTOKEN'),
         "mcc" => 0,
@@ -942,7 +926,7 @@ function pre_pay($amount, $first_name, $last_name, $email, $user_id){
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://api.pelpay.ng/payment/advice',
+        CURLOPT_URL => 'https://api.pelpay.africa/payment/advice',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -959,8 +943,12 @@ function pre_pay($amount, $first_name, $last_name, $email, $user_id){
 
     $var = curl_exec($curl);
     curl_close($curl);
-
     $var = json_decode($var);
+
+
+    if($var->requestSuccessful == null){
+        return null;
+    }
 
 
     $data['status'] = $var->responseData->status;
@@ -968,15 +956,228 @@ function pre_pay($amount, $first_name, $last_name, $email, $user_id){
     $data['paymentUrl'] = $var->responseData->paymentUrl;
 
     return $data;
+}
+
+
+
+function crypto_token()
+{
+
+
+    $databody = array(
+
+        "email" => env('CRYPEMAIL'),
+        "password" => env('CRYPPASS'),
+
+    );
+
+
+    $post_data = json_encode($databody);
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://api.nowpayments.io/v1/auth',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS =>  $post_data,
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json'
+        ),
+    ));
+
+    $var = curl_exec($curl);
+    curl_close($curl);
+    $var = json_decode($var);
+
+    return $var->token;
+}
+
+
+function crypto_currency()
+{
+
+    $key = env("CRYPAPI");
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://api.nowpayments.io/v1/full-currencies',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            "x-api-key: $key"
+        ),
+    ));
+
+    $var = curl_exec($curl);
+    curl_close($curl);
+    $var = json_decode($var);
+
+
+    return $var->currencies;
+}
+
+
+function get_min($to_curr)
+{
+
+    $key = env("CRYPAPI");
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.nowpayments.io/v1/min-amount?currency_from=$to_curr&currency_to=usd&fiat_equivalent=usd&is_fee_paid_by_user=False",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            "x-api-key: $key"
+        ),
+    ));
+
+    $var = curl_exec($curl);
+    curl_close($curl);
+    $var = json_decode($var);
+
+    return $var->fiat_equivalent;
+}
+
+
+function get_rate()
+{
+
+    $key = env('BKEY');
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://issuecards.api.bridgecard.co/v1/issuing/cards/fx-rate',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            "token: Bearer $key"
+        ),
+    ));
+
+    $var = curl_exec($curl);
+    curl_close($curl);
+    $var = json_decode($var);
+
+    $status = $var->status ?? null;
+
+    if ($status == 'success') {
+        return $var->data->{'NGN-USD'} / 100;
+    } else {
+        return 0;
+    }
+}
+
+
+
+function estimate($amount, $code)
+{
+
+
+    $key = env("CRYPAPI");
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.nowpayments.io/v1/estimate?amount=$amount&currency_from=usd&currency_to=$code",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            "x-api-key: $key"
+        ),
+    ));
+
+    $var = curl_exec($curl);
+    curl_close($curl);
+    $var = json_decode($var);
+
+
+    return $var->estimated_amount;
 
 
 }
 
 
 
-// <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet'>
-// <link href='https://use.fontawesome.com/releases/v5.8.1/css/all.css' rel='stylesheet'>
 
 
+function create_payment($amount, $code, $order_id, $order_description)
+{
+
+    $key = env("CRYPAPI");
+    $databody = array(
+
+        "price_amount" => $amount,
+        "price_currency" => "usd",
+        "pay_currency" => $code,
+        "ipn_callback_url" => url('') . "/crypto-process",
+        "order_id" => $order_id,
+        "order_description" => "Apple Macbook Pro 2019 x 1"
+
+    );
 
 
+    $post_data = json_encode($databody);
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://api.nowpayments.io/v1/payment',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => $post_data,
+        CURLOPT_HTTPHEADER => array(
+            "x-api-key: $key",
+            'Content-Type: application/json'
+        ),
+    ));
+
+
+    $var = curl_exec($curl);
+    curl_close($curl);
+    $var = json_decode($var);
+
+    $data['payment_id'] = $var->payment_id;
+    $data['payment_status'] = $var->payment_status;
+    $data['pay_address'] = $var->pay_address;
+    $data['price_amount'] = $var->price_amount;
+    $data['pay_amount'] = $var->pay_amount;
+    $data['pay_currency'] = $var->pay_currency;
+    $data['order_id'] = $var->order_id;
+    $data['purchase_id'] = $var->purchase_id;
+    $data['valid_until'] = $var->valid_until;
+
+    return $data;
+
+}

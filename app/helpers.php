@@ -989,7 +989,6 @@ function verify_payment($ref)
 
         $data['transactionStatus'] = $var->responseData->transactionStatus;
         $data['amount'] = $var->responseData->amountCollected;
-        $data['processorCode'] = $var->responseData->processorCode;
         $data['merchantReference'] = $var->responseData->merchantReference;
         return $data;
 

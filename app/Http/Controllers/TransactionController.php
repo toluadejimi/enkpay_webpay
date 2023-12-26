@@ -404,6 +404,15 @@ class TransactionController extends Controller
         $payment = verify_payment($ref);
         if($payment != null){
 
+            if($payment['transactionStatus'] == 'Failed'){
+                $trx = Webtransfer::where('adviceReference', $request->adviceReference)->first();
+                $marchant_url = Webkey::where('key', $trx->key)->first()->url ?? null;
+                Webtransfer::where('trans_id', $trx->trans_id)->delete();
+                $webhook = $marchant_url . "?amount=$trx->payable_amount&trans_id=$trx->trans_id&status=failed";
+                return Redirect::to($webhook);
+            }
+
+
             $trx = Webtransfer::where('adviceReference', $request->adviceReference)->first() ?? null;
             if ($trx == null) {
 

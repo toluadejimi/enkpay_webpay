@@ -471,18 +471,23 @@ class TransactionController extends Controller
               $card_commission = Charge::where('title', 'card_pay')->first()->amount;
               //Both Commission
               $amount1 = $card_commission / 100;
-              $amount2 = $amount1 * $amount;
-              $commmission_to_remove = number_format($amount2, 3);
+              $amount2 = $amount1 * $payment['amount'];
+              $commmission_to_remove = round($amount2, 3);
 
 
-              $enkPay_commision_amount = (int)$amount -  (int)$commmission_to_remove;
-              $enkpay_commision = number_format($enkPay_commision_amount, 3);
+              $enkPay_commision_amount = (int)$payment['amount'] -  (int)$commmission_to_remove;
+              $enkpay_commision = $enkPay_commision_amount;
 
 
 
-            $amt_to_credit = (int)$enkpay_commision;
 
-            $amt1 = (int)$amt_to_credit - 4;
+
+
+            $amt_to_credit = $enkpay_commision;
+
+            $amt1 = $amt_to_credit - 4;
+
+
 
             User::where('id', $user_id)->increment('main_wallet', $amt1);
             User::where('id', 95)->increment('bonus_wallet', 2);
@@ -515,7 +520,7 @@ class TransactionController extends Controller
                 $trasnaction->status = 1;
                 $trasnaction->save();
 
-                $message = "Card Payment | Business funded | $amt1 | $first_name " . " " . $last_name;
+                $message = "Card Payment |". $payment['merchantReference']. " Business funded | " .number_format($amt1, 2). "| $first_name " . " " . $last_name;
                 send_notification($message);
 
 

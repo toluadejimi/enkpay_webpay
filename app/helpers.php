@@ -911,7 +911,7 @@ function pre_pay($amount, $first_name, $last_name, $email, $ref, $userId, $trans
 
         "integrationKey" => env('PELPAYTOKEN'),
         "mcc" => 0,
-        "merchantDescriptor" =>  "Web Payment"
+        "merchantDescriptor" =>  $ref
 
 
 

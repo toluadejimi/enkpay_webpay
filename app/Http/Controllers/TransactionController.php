@@ -499,7 +499,7 @@ class TransactionController extends Controller
                 $trasnaction->e_ref = $request->adviceReference;
                 $trasnaction->type = "webpay";
                 $trasnaction->transaction_type = "CARD";
-                $trasnaction->title = "Wallet Funding";
+                $trasnaction->title = "Card Funding";
                 $trasnaction->main_type = "cardweb";
                 $trasnaction->credit = $amt_to_credit;
                 $trasnaction->note = "Card Payment | Web Pay";

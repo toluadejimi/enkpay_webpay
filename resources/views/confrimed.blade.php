@@ -1175,8 +1175,11 @@
 
                                 <iframe src="https://embed.lottiefiles.com/animation/120105"></iframe>
 
-                                <h2 class="elementor-heading-title elementor-size-default">Payment Not Processed</h2>
-                                <p class="elementor-size-default">Return to merchnat website and contact support for assistance</p>
+                                <h2 class="elementor-heading-title elementor-size-default">Payment Confirmed</h2>
+                                <p class="elementor-size-default">You must have gotten value for this transaction, If not</p>
+                                <p class="elementor-size-default">Contact support for more asistance</p>
+
+
 
                             </div>
                         </div>

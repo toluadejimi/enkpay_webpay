@@ -960,6 +960,53 @@ function pre_pay($amount, $first_name, $last_name, $email, $userId, $trans_id, $
 
 
 
+function verify_payment($ref)
+{
+
+
+    $token = tokenkey();
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.pelpay.africa/api/Transaction/bypaymentreference/$ref",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json',
+            "Authorization: Bearer $token"
+        ),
+    ));
+
+    $var = curl_exec($curl);
+    curl_close($curl);
+    $var = json_decode($var);
+
+    if($var->requestSuccessful == true){
+
+        $data['transactionStatus'] = $var->responseData->transactionStatus;
+        $data['amount'] = $var->responseData->amountCollected;
+        $data['processorCode'] = $var->responseData->processorCode;
+        return $data;
+
+    }else{
+
+        $message = "Fools trying to do stuffs";
+        send_notification($message);
+        return null;
+    }
+
+
+
+
+}
+
+
+
 function crypto_token()
 {
 
@@ -1181,3 +1228,12 @@ function create_payment($amount, $code, $order_id, $order_description)
     return $data;
 
 }
+
+
+
+
+
+
+
+
+

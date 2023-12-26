@@ -399,20 +399,38 @@ class TransactionController extends Controller
             Webtransfer::where('trans_id', $trx->trans_id)->delete();
             $webhook = $marchant_url . "?amount=$trx->payable_amount&trans_id=$trx->trans_id&status=failed";
             return Redirect::to($webhook);
+
+
         }
 
 
-        $trx = Webtransfer::where('adviceReference', $request->adviceReference)->first() ?? null;
-        if ($trx == null) {
-            return view('error');
-        }
+
+        $ref = $request->paymentReference;
+        $payment = verify_payment($ref);
+        if($payment != null){
 
 
-        if ($trx->status == 1) {
-            return view('error');
-        }
+            $trx = Webtransfer::where('adviceReference', $request->adviceReference)->first() ?? null;
+            if ($trx == null) {
 
-            Webtransfer::where('trans_id', $trx->trans_id)->update(['status'=> 1]);
+
+                $message = "Fools | Transaction not found on enkpay";
+                send_notification($message);
+                return view('notfound');
+
+            }
+
+            if ($trx->status == 1) {
+
+                $message = "Fools | Transaction already confrimed";
+                send_notification($message);
+
+                return view('confrimed');
+
+            }
+
+
+            Webtransfer::where('trans_id', $trx->trans_id)->where('status', 0)->update(['status'=> 1]);
             $trans_id = $trx->trans_id;
             $user_id = Webtransfer::where('trans_id', $trans_id)
                 ->first()->user_id ?? null;
@@ -499,7 +517,11 @@ class TransactionController extends Controller
 
 
             return view('success', compact('webhook', 'marchant_url', 'amount', 'trans_id', 'wc_order', 'client_id', 'wc', 'recepit'));
+        }else{
 
+            return view('error');
+
+        }
     }
 
 

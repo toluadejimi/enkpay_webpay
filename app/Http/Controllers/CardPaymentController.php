@@ -25,11 +25,10 @@ class CardPaymentController extends Controller
             $last_name = $faker->lastName;
             $email = $faker->email;
             $user_id = $request->user_id;
-            $pre = pre_pay($amount, $first_name, $last_name, $email, $user_id);
- 
+
         }
 
-       
+
 
     }
 }

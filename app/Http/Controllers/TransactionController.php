@@ -292,9 +292,10 @@ class TransactionController extends Controller
             $email = $faker->email;
             $userId = $request->user_id;
             $trans_id = $iref;
-
-            $pre = pre_pay($amount, $first_name, $last_name, $email, $userId, $trans_id, $key);
+            $ref = trx();
+            $pre = pre_pay($amount, $first_name, $last_name, $email, $ref, $userId, $trans_id, $key);
             $adviceReference = $pre['adviceReference'];
+
 
             $pre_link = $pre['paymentUrl'];
         } else {
@@ -326,20 +327,14 @@ class TransactionController extends Controller
             $trans->key = $key;
             $trans->data = $data;
             $trans->adviceReference = $adviceReference ?? null;
-
+            $trans->ref = $ref ?? null;
             $trans->both_commmission = $both_commmission;
-
             $trans->save();
         }
 
 
-
         // $message = $p_account_name . "|" . $email . " | " . $iref . "| NGN" . $amount . "|" . date('d-m-y h:i:s');
         // send_notification($message);
-
-
-
-
 
 
         $set = Setting::where('id', 1)->first();

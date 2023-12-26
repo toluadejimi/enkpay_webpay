@@ -379,8 +379,6 @@ function trx()
 {
 
     $refcode = "CARD" . random_int(100, 999) . date('YmdHis');
-
-
     return $refcode;
 }
 
@@ -876,7 +874,7 @@ function tokenkey()
 }
 
 
-function pre_pay($amount, $first_name, $last_name, $email, $userId, $trans_id, $key)
+function pre_pay($amount, $first_name, $last_name, $email, $ref, $userId, $trans_id, $key)
 {
 
 
@@ -887,7 +885,7 @@ function pre_pay($amount, $first_name, $last_name, $email, $userId, $trans_id, $
 
         "amount" => $amount ?? 200,
         "currency" =>  "NGN",
-        "merchantRef" => trx(),
+        "merchantRef" => $ref,
         "narration" =>  "Card Payment",
         "callBackUrl" => url('') . "/response",
         "splitCode" => "",
@@ -986,11 +984,13 @@ function verify_payment($ref)
     curl_close($curl);
     $var = json_decode($var);
 
+
     if($var->requestSuccessful == true){
 
         $data['transactionStatus'] = $var->responseData->transactionStatus;
         $data['amount'] = $var->responseData->amountCollected;
         $data['processorCode'] = $var->responseData->processorCode;
+        $data['merchantReference'] = $var->responseData->merchantReference;
         return $data;
 
     }else{

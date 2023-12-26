@@ -476,7 +476,7 @@ class TransactionController extends Controller
 
 
 
-            $amt_to_credit = $enkpay_commision;
+            $amt_to_credit = (int)$enkpay_commision;
 
             $amt1 = (int)$amt_to_credit - 4;
 
@@ -501,7 +501,7 @@ class TransactionController extends Controller
                 $trasnaction->transaction_type = "CARD";
                 $trasnaction->title = "Card Funding";
                 $trasnaction->main_type = "cardweb";
-                $trasnaction->credit = $amt_to_credit;
+                $trasnaction->credit = (int)$amt_to_credit;
                 $trasnaction->note = "Card Payment | Web Pay";
                 $trasnaction->fee = $commmission_to_remove;
                 $trasnaction->amount = $amount;

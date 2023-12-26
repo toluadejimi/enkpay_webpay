@@ -1177,7 +1177,7 @@
 
                                 <h2 class="elementor-heading-title elementor-size-default">Payment Not Found</h2>
                                 <p class="elementor-size-default">Are you sure you made this transaction ?</p>
-                                <p class="elementor-size-default">If yes contact support</p>
+                                <p class="elementor-size-default">If yes return to merchnat website and contact support</p>
 
 
                             </div>

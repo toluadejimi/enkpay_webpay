@@ -409,7 +409,6 @@ class TransactionController extends Controller
         $payment = verify_payment($ref);
         if($payment != null){
 
-
             $trx = Webtransfer::where('adviceReference', $request->adviceReference)->first() ?? null;
             if ($trx == null) {
 

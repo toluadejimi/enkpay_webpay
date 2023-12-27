@@ -294,9 +294,7 @@ class TransactionController extends Controller
             $trans_id = $iref;
             $ref = trx();
             $pre = pre_pay($amount, $first_name, $last_name, $email, $ref, $userId, $trans_id, $key);
-            $adviceReference = $pre['adviceReference'];
-
-
+            $adviceReference = $pre['adviceReference'] ?? null;
             $pre_link = $pre['paymentUrl'];
         } else {
 

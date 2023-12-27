@@ -970,9 +970,9 @@ if (!function_exists('tokenkey')) {
         }
 
 
-        $data['status'] = $var->responseData->status;
-        $data['adviceReference'] = $var->responseData->adviceReference;
-        $data['paymentUrl'] = $var->responseData->paymentUrl;
+        $data['status'] = $var->responseData->status ?? null;
+        $data['adviceReference'] = $var->responseData->adviceReference ?? null;
+        $data['paymentUrl'] = $var->responseData->paymentUrl ?? null;
 
         return $data;
     }

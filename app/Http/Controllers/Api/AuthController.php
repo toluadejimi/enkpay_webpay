@@ -30,7 +30,6 @@ class AuthController extends Controller
         $get_token = OauthAccessToken::where('user_id', Auth::id())->first()->user_id ?? null;
 
 
-        dd('hello');
 
         if($get_token != null){
             OauthAccessToken::where('user_id', Auth::id())->delete();
@@ -39,6 +38,10 @@ class AuthController extends Controller
 
 
         $token = auth()->user()->createToken('API Token')->accessToken;
+
+
+        dd('hello');
+
 
         return response()->json([
                 'status' => true,

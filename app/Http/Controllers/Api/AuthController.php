@@ -29,7 +29,6 @@ class AuthController extends Controller
 
         $get_token = OauthAccessToken::where('user_id', Auth::id())->first()->user_id ?? null;
 
-        dd('hello');
 
         if($get_token != null){
             OauthAccessToken::where('user_id', Auth::id())->delete();

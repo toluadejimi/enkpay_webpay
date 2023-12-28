@@ -40,8 +40,6 @@ class AuthController extends Controller
         $token = auth()->user()->createToken('API Token')->accessToken;
 
 
-        dd('hello');
-
 
         return response()->json([
                 'status' => true,

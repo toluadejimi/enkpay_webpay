@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\OauthAccessToken;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
@@ -19,7 +18,6 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
 
-
         if (!auth()->attempt($credentials)) {
             return response()->json([
                 'status' => false,
@@ -28,9 +26,9 @@ class AuthController extends Controller
         }
 
 
+
         $get_token = OauthAccessToken::where('user_id', Auth::id())->first()->user_id ?? null;
 
-       // dd($get_token, Auth::user());
 
         if($get_token != null){
             OauthAccessToken::where('user_id', Auth::id())->delete();

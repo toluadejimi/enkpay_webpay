@@ -273,15 +273,10 @@ class TransactionController extends Controller
         }
 
 
-
-
         $url = "https://web.enkpay.com/continue-pay?amount=$amount&key=$key&ref=$trans_id&email=$email";
         $qrdata = $user_id . " " . $payable_amount . " " . $trans_id;
 
         $data = Crypt::encryptString($qrdata);
-
-
-
 
         $set = Setting::where('id', 1)->first();
         if ($set->pay_by_card == 1) {
@@ -567,7 +562,7 @@ class TransactionController extends Controller
             ->first()->user_id ?? null;
 
         $key = Webkey::where('user_id', $user_id)
-            ->first()->key;
+            ->first()->key ?? null;
 
 
         $status = Webtransfer::where('trans_id', $trans_id)
@@ -576,7 +571,7 @@ class TransactionController extends Controller
 
 
         $amount = Webtransfer::where('trans_id', $trans_id)
-            ->first()->amount;
+            ->first()->amount ?? null;
 
 
         $amount_received = Webtransfer::where('trans_id', $trans_id)

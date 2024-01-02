@@ -871,6 +871,7 @@ if (!function_exists('tokenkey')) {
         $post_data = json_encode($databody);
 
 
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://api.pelpay.africa/api/Account/login',
@@ -890,8 +891,9 @@ if (!function_exists('tokenkey')) {
         $var = curl_exec($curl);
         curl_close($curl);
         $var = json_decode($var);
-
         return $var->access_token;
+        
+
     }
 
 

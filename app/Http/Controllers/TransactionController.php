@@ -1159,7 +1159,7 @@ class TransactionController extends Controller
 
             Transaction::where('p_sessionId', $session_id)->update(['resolve' => 1]);
             $acct = Transaction::where('p_sessionId', $session_id)->first()->receiver_account_no ?? null;
-            VirtualAccount::where('v_account_no', $acct)->update(['state' => 0])
+            VirtualAccount::where('v_account_no', $acct)->update(['state' => 0]);
 
 
             return response()->json([

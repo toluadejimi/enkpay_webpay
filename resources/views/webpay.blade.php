@@ -858,20 +858,13 @@
 
     <script>
         let repeatRequest = true;
-
-
         function makeRequest() {
         if (!repeatRequest) {
             return;
         }
 
-
-
-
         const trx_id = document.getElementById('trx_id').value;
         const p_account_no = document.getElementById('p_account_no').value;
-
-
         const url = "{{ url('') }}/verify?trans_id=" + trx_id+"&account_no="+p_account_no;
 
         fetch(url)
@@ -898,8 +891,6 @@
             console.error(error);
             });
         }
-
-
 
         function startTimer(duration, display) {
             let timer = duration;
@@ -961,8 +952,6 @@
 
     const trx_id = document.getElementById('trx_id').value;
     const p_account_no = document.getElementById('p_account_no').value;
-
-
     const url = "{{ url('') }}/verify?trans_id=" + trx_id+"&account_no="+p_account_no;
 
     fetch(url)
@@ -1001,10 +990,6 @@
             const seconds = timer % 60;
 
             countdownvElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-
-
-
-
 
           if (timerv === 0) {
             clearInterval(intervalId);
@@ -1111,7 +1096,19 @@
             }
 
             updateTimer();
+
+            const p_account_no = document.getElementById('p_account_no').value;
+            const url = "{{ url('') }}/change-state?account_no=" + p_account_no;        
+            fetch(url)
+            .then(response => response.json())
+            .then(data => {
+            console.log(data);
+            })
+            .catch(error => {
+            console.error(error);
+            });
         }
+
 
         window.onload = startCustomTimer;
     </script>

@@ -244,18 +244,6 @@ class TransactionController extends Controller
             $trans->both_commmission = $both_commmission;
             $trans->save();
 
-            $tra = new Transaction();
-            $tra->ref_trans_id = $iref;
-            $tra->user_id = $details->user_id;
-            $tra->amount = $payable_amount ?? null;
-            $tra->transaction_type = "VirtualFundWallet";
-            $tra->title = "Wallet Funding";
-            $tra->type = "webpay";
-            $tra->main_type = "Transfer";
-            $tra->status = 9;
-            $tra->receiver_account_no = $p_account_no;
-            $tra->save();
-
         }
 
 

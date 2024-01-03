@@ -1119,6 +1119,7 @@ class TransactionController extends Controller
 
 
         $session_id = $request->session_id;
+        $ref = $request->ref;
 
         if ($session_id == null) {
 
@@ -1148,6 +1149,10 @@ class TransactionController extends Controller
             Transaction::where('p_sessionId', $session_id)->update(['resolve' => 1]);
             $acct = Transaction::where('p_sessionId', $session_id)->first()->receiver_account_no ?? null;
             VirtualAccount::where('v_account_no', $acct)->update(['state' => 0]);
+
+            if($ref != null){
+            Transaction::where('p_sessionId', $session_id)->where('ref_trans_id', null)->update(['ref_trans_id' => $ref]);
+            }
 
 
             return response()->json([

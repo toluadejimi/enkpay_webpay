@@ -890,14 +890,15 @@ if (!function_exists('tokenkey')) {
 
         $var = curl_exec($curl);
         curl_close($curl);
+
         $var = json_decode($var);
         return $var->access_token;
-        
+
 
     }
 
 
-    function pre_pay($amount, $first_name, $last_name, $email, $ref, $userId, $trans_id, $key)
+    function pre_pay($amount, $first_name, $last_name, $tremail, $ref, $userId, $trans_id, $key)
     {
 
 
@@ -915,10 +916,10 @@ if (!function_exists('tokenkey')) {
             "shouldTokenizeCard" => true,
 
             "customer" => array(
-                "customerId" => Str::random(2),
+                "customerId" => $userId,
                 "customerLastName" => $first_name,
                 "customerFirstName" => $last_name,
-                "customerEmail" => $email ?? "test@email.com",
+                "customerEmail" => $tremail ?? "test@email.com",
                 "customerPhoneNumber" => "",
                 "customerAddress" => "",
                 "customerCity" => "",
@@ -966,7 +967,6 @@ if (!function_exists('tokenkey')) {
         curl_close($curl);
         $var = json_decode($var);
 
-
         if ($var->requestSuccessful == null) {
             return null;
         }
@@ -976,6 +976,7 @@ if (!function_exists('tokenkey')) {
         $data['adviceReference'] = $var->responseData->adviceReference ?? null;
         $data['paymentUrl'] = $var->responseData->paymentUrl ?? null;
 
+     
         return $data;
     }
 }

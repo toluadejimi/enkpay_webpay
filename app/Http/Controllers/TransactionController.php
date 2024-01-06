@@ -10,6 +10,7 @@ use App\Models\Webkey;
 use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\Webtransfer;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Validtransfer;
 use App\Models\VirtualAccount;
@@ -204,15 +205,15 @@ class TransactionController extends Controller
             $amount = $request->amount;
             $first_name = User::inRandomOrder()->first()->first_name;
             $last_name = User::inRandomOrder()->first()->last_name;
-            $email = $faker->email;
-            $userId = $request->user_id;
+            $tremail = $faker->email;
+            $userId = Str::random(4);//$request->user_id;
             $trans_id = $iref;
             $ref = trx();
-            $pre = pre_pay($amount, $first_name, $last_name, $email, $ref, $userId, $trans_id, $key);
+            $pre = pre_pay($amount, $first_name, $last_name, $tremail, $ref, $userId, $trans_id, $key);
             $adviceReference = $pre['adviceReference'] ?? null;
             $pre_link = $pre['paymentUrl'] ?? null;
-        } else {
 
+        } else {
             $pre_link = "#";
         }
 

@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Validtransfer;
 use App\Models\VirtualAccount;
+use App\Models\CompletedWebtransfer;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
 
@@ -139,7 +140,6 @@ class TransactionController extends Controller
             }
 
             $acc = VirtualAccount::where('user_id', $details->user_id)->where('state', 0)->first() ?? null;
-
         }
 
         $marchant_url = $details->url ?? null;
@@ -206,13 +206,12 @@ class TransactionController extends Controller
             $first_name = User::inRandomOrder()->first()->first_name;
             $last_name = User::inRandomOrder()->first()->last_name;
             $tremail = $faker->email;
-            $userId = Str::random(4);//$request->user_id;
+            $userId = Str::random(4); //$request->user_id;
             $trans_id = $iref;
             $ref = trx();
             $pre = pre_pay($amount, $first_name, $last_name, $tremail, $ref, $userId, $trans_id, $key);
             $adviceReference = $pre['adviceReference'] ?? null;
             $pre_link = $pre['paymentUrl'] ?? null;
-
         } else {
             $pre_link = "#";
         }
@@ -244,7 +243,6 @@ class TransactionController extends Controller
             $trans->ref = $ref ?? null;
             $trans->both_commmission = $both_commmission;
             $trans->save();
-
         }
 
 
@@ -719,12 +717,14 @@ class TransactionController extends Controller
     public function verify_woo(request $request)
     {
 
-
         $ref = $request->trans_id;
 
         if ($ref != null) {
 
             $trx = Webtransfer::where('trans_id', $ref)->first() ?? null;
+
+
+
 
             if ($trx != null) {
 
@@ -737,7 +737,6 @@ class TransactionController extends Controller
                     ], 200);
                 }
 
-
                 if ($trx->status == 0) {
                     return response()->json([
                         'status' => true,
@@ -747,11 +746,26 @@ class TransactionController extends Controller
                 }
             } else {
 
-                return response()->json([
-                    'status' => false,
-                    'detail' => 'failed',
-                    'message' => 'Transaction not found'
-                ], 500);
+
+                $trx = CompletedWebtransfer::where('trans_id', $ref)->first() ?? null;
+                if ($trx != null) {
+
+                    if ($trx->status == 1) {
+                        Transaction::where('ref_trans_id', $ref)->update(['resolve' => 1]);
+                        return response()->json([
+                            'status' => true,
+                            'detail' => 'success',
+                            'price' =>  $trx->amount,
+                        ], 200);
+                    }
+                } else {
+
+                    return response()->json([
+                        'status' => false,
+                        'detail' => 'failed',
+                        'message' => 'Transaction not found'
+                    ], 500);
+                }
             }
         } else {
 
@@ -1150,8 +1164,8 @@ class TransactionController extends Controller
             $acct = Transaction::where('p_sessionId', $session_id)->first()->receiver_account_no ?? null;
             VirtualAccount::where('v_account_no', $acct)->update(['state' => 0]);
 
-            if($ref != null){
-            Transaction::where('p_sessionId', $session_id)->where('ref_trans_id', null)->update(['ref_trans_id' => $ref]);
+            if ($ref != null) {
+                Transaction::where('p_sessionId', $session_id)->where('ref_trans_id', null)->update(['ref_trans_id' => $ref]);
             }
 
 
@@ -1225,6 +1239,5 @@ class TransactionController extends Controller
         $state = VirtualAccount::where('v_account_no', $request->account_no)->update(['state' => 1]);
 
         return $state;
-
     }
 }

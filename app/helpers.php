@@ -687,14 +687,14 @@ if (!function_exists('get_services')) {
 
                     if ($status == 000) {
 
-                        $data = [];
-                        $data['product_id'] = $product->product_type_id;
-                        foreach ($result as $key => $value) {
-                            $data[] = array(
-                                "operator_id" => $value->operator_id,
-                                "name" => $value->name,
-                            );
-                        }
+                            $data = [];
+                            foreach ($var->content as $item) {
+                                $data[] = [
+                                    'operator_id' => $item->operator_id,
+                                    'name' => $item->name,
+                                    'product_id' => $product->product_type_id,
+                                ];
+                            }
 
                         return $data;
                     } else {
@@ -976,7 +976,7 @@ if (!function_exists('tokenkey')) {
         $data['adviceReference'] = $var->responseData->adviceReference ?? null;
         $data['paymentUrl'] = $var->responseData->paymentUrl ?? null;
 
-     
+
         return $data;
     }
 }

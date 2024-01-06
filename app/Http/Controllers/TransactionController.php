@@ -729,7 +729,7 @@ class TransactionController extends Controller
             if ($trx != null) {
 
                 if ($trx->status == 1) {
-
+                    Transaction::where('ref_trans_id', $ref)->update(['resolve' => 1]);
                     return response()->json([
                         'status' => true,
                         'detail' => 'success',
@@ -739,7 +739,6 @@ class TransactionController extends Controller
 
 
                 if ($trx->status == 0) {
-
                     return response()->json([
                         'status' => true,
                         'detail' => 'pending',

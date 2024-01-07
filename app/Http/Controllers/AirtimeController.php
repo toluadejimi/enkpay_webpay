@@ -175,19 +175,14 @@ class AirtimeController extends Controller
         $phone = $request->phone;
         $product_id = $request->product_id;
         $rate = $request->rate;
-
-
         $operator_id = $request->operator_id;
+
+
+
         $ramount = $rate * $service_amount + 100;
-
-
         $amount = $request->amount;
-
-
         $balance = check_balance($ramount);
-
         if($balance == false){
-
             return response()->json([
                 'status' => false,
                 'code' => "100004",
@@ -209,7 +204,7 @@ class AirtimeController extends Controller
             $charge = charge_wallet($amount);
             $main = User::where('id', Auth::id())->first()->main_wallet;
 
-            $updated_amount = $main - $ramount;
+           $updated_amount = $main - $ramount;
 
             $ref = refrence_code();
 
@@ -255,38 +250,9 @@ class AirtimeController extends Controller
             }
 
 
-            // $purchase = buy_airtime();
-
-            // if($status == 'TRANSACTION SUCCESSFUL'){
-
-
-            //     echo $var;
-
-            // }
-
-
-
-
-
-
-
-
 
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 

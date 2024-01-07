@@ -653,9 +653,10 @@ if (!function_exists('get_services')) {
 
         curl_close($curl);
         $var = json_decode($var);
+
+
         $status = $var->response_description ?? null;
         $service_code = $var->content ?? null;
-
 
 
         if ($status == 000) {
@@ -774,7 +775,7 @@ if (!function_exists('buy_airtime')) {
 
         $code = $country_code;
         $service = get_services($code);
-        $p_id = $service['product_id'];
+        $p_id = $service['0']['product_id'];
         $request_id = refxx();
 
 
@@ -798,7 +799,7 @@ if (!function_exists('buy_airtime')) {
                 'operator_id' => $operator_id,
                 'country_code' => $country_code,
                 'product_type_id' => $p_id,
-                'email' => Auth::user()->email,
+                'email' => Auth::user()->email ?? "test@email.com",
 
             ),
             CURLOPT_HTTPHEADER => array(

@@ -913,6 +913,7 @@ if (!function_exists('tokenkey')) {
             "merchantRef" => $ref,
             "narration" =>  "Card Payment",
             "callBackUrl" => url('') . "/response",
+            "notificationUrl" => url('') . "/notify",
             "splitCode" => "",
             "shouldTokenizeCard" => true,
 

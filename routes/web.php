@@ -30,6 +30,8 @@ Route::get('/', function () {
 
 
 Route::get('response', [TransactionController::class, 'card_webhook']);
+Route::post('notify', [TransactionController::class, 'notify_webhook']);
+
 Route::get('change-state', [TransactionController::class, 'change_state']);
 
 

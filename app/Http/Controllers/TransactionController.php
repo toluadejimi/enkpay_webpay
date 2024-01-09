@@ -216,12 +216,8 @@ class TransactionController extends Controller
             $pre_link = "#";
         }
 
-
-
         $get_trans_id = Webtransfer::where('trans_id', $iref)->first() ?? null;
         if ($get_trans_id == null) {
-
-
             $trans = new Webtransfer();
             $trans->amount = $amount;
             $trans->user_id = $details->user_id;
@@ -1231,6 +1227,15 @@ class TransactionController extends Controller
         }
     }
 
+
+
+
+    public function notify(request $request)
+    {
+        $message = json_encode($request->all());
+        send_notification($message);
+
+    }
 
 
     public function change_state(request $request)

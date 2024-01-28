@@ -328,7 +328,7 @@ class TransactionController extends Controller
                 ->first()->total_received ?? null;
 
 
-             $refs = Webtransfer::where('trans_id', $trans_id)
+            $refs = Webtransfer::where('trans_id', $trans_id)
                 ->first()->ref ?? null;
 
             $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
@@ -353,18 +353,20 @@ class TransactionController extends Controller
 
             $amt1 = $amt_to_credit - 4;
 
+            if ($request->bypass == null) {
 
-            $trx = Transaction::where('ref_trans_id', $refs)->first() ?? null;
+                $trx = Transaction::where('ref_trans_id', $refs)->first() ?? null;
 
-            if ($trx == null) {
-                return view('notfound');
-            }
+                if ($trx == null) {
+                    return view('notfound');
+                }
 
-            if ($trx->status == 1) {
+                if ($trx->status == 1) {
 
-                $message = "Card Transaction Already Confirmed";
-                send_notification($message);
-                return view('confrimed');
+                    $message = "Card Transaction Already Confirmed";
+                    send_notification($message);
+                    return view('confrimed');
+                }
             }
 
 

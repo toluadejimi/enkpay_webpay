@@ -211,6 +211,7 @@ class TransactionController extends Controller
             $ref = trx();
             $pre = pre_pay($amount, $first_name, $last_name, $tremail, $ref, $userId, $trans_id, $key);
             $adviceReference = $pre['adviceReference'] ?? null;
+            $cardRef = $ref;
             $pre_link = $pre['paymentUrl'] ?? null;
         } else {
             $pre_link = "#";
@@ -248,7 +249,7 @@ class TransactionController extends Controller
         $bank = $set->pay_with_providus;
         $crypto = $set->pay_by_crypto;
 
-        return view('webpay', compact('iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name',  'p_bank_name', 'total_received'));
+        return view('webpay', compact('cardRef', 'iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name',  'p_bank_name', 'total_received'));
     }
 
 
@@ -260,6 +261,7 @@ class TransactionController extends Controller
 
             $trx = Webtransfer::where('adviceReference', $request->adviceReference)->first();
             $marchant_url = Webkey::where('key', $trx->key)->first()->url ?? null;
+            Transaction::where('ref_trans_id', $trx->ref)->delete();
             Webtransfer::where('trans_id', $trx->trans_id)->delete();
             $webhook = $marchant_url . "?amount=$trx->payable_amount&trans_id=$trx->trans_id&status=failed";
             return Redirect::to($webhook);
@@ -273,6 +275,7 @@ class TransactionController extends Controller
 
             if ($payment['transactionStatus'] == 'Failed') {
                 $trx = Webtransfer::where('adviceReference', $request->adviceReference)->first();
+                Transaction::where('ref_trans_id', $trx->ref)->delete();
                 $marchant_url = Webkey::where('key', $trx->key)->first()->url ?? null;
                 Webtransfer::where('trans_id', $trx->trans_id)->delete();
                 $webhook = $marchant_url . "?amount=$trx->payable_amount&trans_id=$trx->trans_id&status=failed";
@@ -324,6 +327,10 @@ class TransactionController extends Controller
             $amount_received = Webtransfer::where('trans_id', $trans_id)
                 ->first()->total_received ?? null;
 
+
+             $refs = Webtransfer::where('trans_id', $trans_id)
+                ->first()->ref ?? null;
+
             $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
 
             $webhook = $marchant_url . "?" . "amount=$amount" . "&trans_id=$trans_id" . "&status=success" . "&wc_order=$wc_order" . "&client_id=$client_id" ?? null;
@@ -342,15 +349,23 @@ class TransactionController extends Controller
 
             $enkPay_commision_amount = (int)$payment['amount'] -  (int)$commmission_to_remove;
             $enkpay_commision = $enkPay_commision_amount;
-
-
-
-
-
-
             $amt_to_credit = $enkpay_commision;
 
             $amt1 = $amt_to_credit - 4;
+
+
+            $trx = Transaction::where('ref_trans_id', $refs)->first() ?? null;
+
+            if ($trx == null) {
+                return view('notfound');
+            }
+
+            if ($trx->status == 1) {
+
+                $message = "Card Transaction Already Confirmed";
+                send_notification($message);
+                return view('confrimed');
+            }
 
 
 
@@ -1232,9 +1247,91 @@ class TransactionController extends Controller
 
     public function notify_webhook(request $request)
     {
-        $message = "Card Webhook | ". json_encode($request->all());
+        $message = "Card Webhook | " . json_encode($request->all());
         send_notification($message);
 
+        $PaymentReference = $request->PaymentReference;
+        $AmountCollected = $request->AmountCollected;
+        $TransactionStatus = $request->TransactionStatus;
+        $MerchantReference = $request->MerchantReference;
+
+
+
+        if ($TransactionStatus != 'Successful') {
+            return response()->json([
+                'message' => 'Transaction Failed',
+            ], 500);
+        }
+
+
+        //Business Information
+        $card_commission = Charge::where('title', 'card_pay')->first()->amount;
+        //Both Commission
+        $amount1 = $card_commission / 100;
+        $amount2 = $amount1 * $AmountCollected;
+        $commmission_to_remove = round($amount2, 3);
+
+        $enkPay_commision_amount = $AmountCollected -  (int)$commmission_to_remove;
+        $enkpay_commision = $enkPay_commision_amount;
+        $amt_to_credit = $enkpay_commision;
+        $amt1 = $amt_to_credit - 4;
+
+        $trx = Transaction::where('ref_trans_id', $MerchantReference)->first() ?? null;
+
+        if ($trx == null) {
+            return response()->json([
+                'message' => 'Transaction Not Found',
+            ], 500);
+        }
+
+        if ($trx->status == 1) {
+
+            $message = "Card Transaction Already Confrimed";
+            send_notification($message);
+
+
+            return response()->json([
+                'message' => 'Transaction can not be proccessed',
+
+            ], 500);
+        }
+
+        User::where('id', $trx->user_id)->increment('main_wallet', $amt1);
+        User::where('id', 95)->increment('bonus_wallet', 2);
+        User::where('id', 109)->increment('bonus_wallet', 2);
+
+
+        $balance = User::where('id', $trx->user_id)->first()->main_wallet;
+        $first_name = User::where('id', $trx->user_id)->first()->first_name ?? null;
+        $last_name = User::where('id', $trx->user_id)->first()->last_name ?? null;
+
+        $amount = Webtransfer::where('ref', $MerchantReference)
+            ->first()->amount ?? 0;
+
+
+        $amount = Webtransfer::where('ref', $MerchantReference)
+            ->update(['status' => 1]) ?? null;
+
+        Transaction::where('ref_trans_id', $MerchantReference)->update([
+
+            'e_ref' => $PaymentReference,
+            'credit' => (int)$amt_to_credit,
+            'fee' => $commmission_to_remove,
+            'amount' => $amount,
+            'balance' => $balance,
+            'status' => 1,
+
+
+        ]);
+
+        //update Transactions
+        $message = "Card Payment Completed |" . $MerchantReference . " Business funded | " . number_format($amt1, 2) . "| $first_name " . " " . $last_name;
+        send_notification($message);
+
+
+        return response()->json([
+            'message' => 'Transaction Successful',
+        ], 200);
     }
 
 
@@ -1244,5 +1341,29 @@ class TransactionController extends Controller
         $state = VirtualAccount::where('v_account_no', $request->account_no)->update(['state' => 1]);
 
         return $state;
+    }
+
+
+    public function card_transaction(request $request)
+    {
+
+        $ref = Webtransfer::where('ref', $request->ref)->first() ?? null;
+        $usr = User::where('id', $ref->user_id)->first();
+
+        $trasnaction = new Transaction();
+        $trasnaction->user_id = $ref->user_id;
+        $trasnaction->ref_trans_id = $ref->ref;
+        $trasnaction->type = "webpay";
+        $trasnaction->transaction_type = "CARD";
+        $trasnaction->title = "Card Funding";
+        $trasnaction->main_type = "cardweb";
+        $trasnaction->note = "Card Payment | Web Pay";
+        $trasnaction->e_charges = 0;
+        $trasnaction->enkPay_Cashout_profit = 0;
+        $trasnaction->status = 0;
+        $trasnaction->save();
+
+        $message = "Card Payment Initiated |" . $request->ref . " For  $usr->first_name " . " " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
+        send_notification($message);
     }
 }

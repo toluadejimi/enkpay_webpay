@@ -696,7 +696,7 @@
                     <div class="accordion-item border-0">
                         <h6 class="accordion-header" style="bbackground: #070079;">
                             <button class="accordion-button collapsed" style="bbackground: #070079;" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false"
+                                data-bs-toggle="collapse"  data-bs-target="#collapseOne" aria-expanded="false"
                                 aria-controls="collapseOne">
                                
                                 Pay With Card
@@ -708,7 +708,7 @@
                     </div>
                     <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div class="accordion-body mb-3">
-                            <a style="text-decoration:none mb-5" href="{{ $pre_link }}" class="button-34"> <i
+                            <a style="text-decoration:none mb-5" href="{{ $pre_link }}" id="CardPost" class="button-34"> <i
                                     class="bi bi-credit-card-2-back-fill"> Pay Now </a></i>
                         </div>
                     </div>
@@ -1067,6 +1067,34 @@
 
 
 
+    </script>
+
+
+
+   <script>
+        document.getElementById('CardPost').addEventListener('click', function() {
+            const url = '{{ url('') }}/api/card-transaction';
+            const data = {
+                ref:'{{ $cardRef }}'
+            };
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data), 
+            })
+            .then(response => response.json())
+            .then(data => {
+                
+                console.log('Response:', data);
+            })
+            .catch(error => {
+               
+                console.error('Error:', error);
+            });
+        });
     </script>
 
 

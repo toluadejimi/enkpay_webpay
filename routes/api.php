@@ -23,6 +23,11 @@ use App\Http\Controllers\VirtualAccount\VirtualController;
 
 Route::post('notify', [TransactionController::class, 'notify_webhook']);
 
+Route::post('card-transaction', [TransactionController::class, 'card_transaction']);
+
+
+
+
 
 Route::group(['middleware' => ['auth:api', 'acess']], function () {
 

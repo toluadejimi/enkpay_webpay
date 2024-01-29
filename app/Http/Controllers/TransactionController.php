@@ -285,15 +285,12 @@ class TransactionController extends Controller
 
             $trx = Webtransfer::where('adviceReference', $request->adviceReference)->first() ?? null;
             if ($trx == null) {
-
-
                 $message = "Fools | Transaction not found on enkpay";
                 send_notification($message);
                 return view('notfound');
             }
 
             if ($trx->status == 1) {
-
                 $message = "Fools | Transaction already confrimed";
                 send_notification($message);
 
@@ -301,7 +298,8 @@ class TransactionController extends Controller
             }
 
 
-            Webtransfer::where('trans_id', $trx->trans_id)->where('status', 0)->update(['status' => 1]);
+            Webtransfer::where('adviceReference', $request->adviceReference)->where('status', 0)->update(['status' => 1]);
+
             $trans_id = $trx->trans_id;
             $user_id = Webtransfer::where('trans_id', $trans_id)
                 ->first()->user_id ?? null;
@@ -339,70 +337,8 @@ class TransactionController extends Controller
             $recepit = "https://web.enkpay.com/receipt?trans_id=$trans_id&amount=$amount";
 
 
-            //Business Information
-            $card_commission = Charge::where('title', 'card_pay')->first()->amount;
-            //Both Commission
-            $amount1 = $card_commission / 100;
-            $amount2 = $amount1 * $payment['amount'];
-            $commmission_to_remove = round($amount2, 3);
 
-
-            $enkPay_commision_amount = (int)$payment['amount'] -  (int)$commmission_to_remove;
-            $enkpay_commision = $enkPay_commision_amount;
-            $amt_to_credit = $enkpay_commision;
-
-            $amt1 = $amt_to_credit - 4;
-
-            if ($request->bypass == null) {
-
-                $trx = Transaction::where('ref_trans_id', $refs)->first() ?? null;
-
-                if ($trx == null) {
-                    return view('notfound');
-                }
-
-                if ($trx->status == 1) {
-
-                    $message = "Card Transaction Already Confirmed";
-                    send_notification($message);
-                    return view('confrimed');
-                }
-            }
-
-
-
-            User::where('id', $user_id)->increment('main_wallet', $amt1);
-            User::where('id', 95)->increment('bonus_wallet', 2);
-            User::where('id', 109)->increment('bonus_wallet', 2);
-
-
-            $balance = User::where('id', $user_id)->first()->main_wallet;
-            $first_name = User::where('id', $user_id)->first()->first_name ?? null;
-            $last_name = User::where('id', $user_id)->first()->last_name ?? null;
-
-
-
-
-            //update Transactions
-            $trasnaction = new Transaction();
-            $trasnaction->user_id = $user_id;
-            $trasnaction->ref_trans_id = $trans_id;
-            $trasnaction->e_ref = $request->adviceReference;
-            $trasnaction->type = "webpay";
-            $trasnaction->transaction_type = "CARD";
-            $trasnaction->title = "Card Funding";
-            $trasnaction->main_type = "cardweb";
-            $trasnaction->credit = (int)$amt_to_credit;
-            $trasnaction->note = "Card Payment | Web Pay";
-            $trasnaction->fee = $commmission_to_remove;
-            $trasnaction->amount = $amount;
-            $trasnaction->e_charges = 0;
-            $trasnaction->enkPay_Cashout_profit = 0;
-            $trasnaction->balance = $balance;
-            $trasnaction->status = 1;
-            $trasnaction->save();
-
-            $message = "Card Payment |" . $payment['merchantReference'] . " Business funded | " . number_format($amt1, 2) . "| $first_name " . " " . $last_name;
+            $message = "Card Payment  Successful |" . $payment['merchantReference'];
             send_notification($message);
 
 
@@ -1263,11 +1199,6 @@ class TransactionController extends Controller
 
             $message = "Card Transaction Failed";
             send_notification($message);
-
-
-            // return response()->json([
-            //     'message' => 'Transaction Failed',
-            // ], 500);
         }
 
 
@@ -1285,25 +1216,17 @@ class TransactionController extends Controller
 
         $trx = Transaction::where('ref_trans_id', $MerchantReference)->first() ?? null;
 
-        if ($trx == null) {
-            // return response()->json([
-            //     'message' => 'Transaction Not Found',
-            // ], 500);
 
+        if ($trx == null) {
             $message = "Card Transaction Not Found";
             send_notification($message);
         }
 
         if ($trx->status == 1) {
 
-            $message = "Card Transaction Already Confrimed";
+            $message = "Card Transaction Already Confirmed";
             send_notification($message);
 
-
-            // return response()->json([
-            //     'message' => 'Transaction can not be proccessed',
-
-            // ], 500);
         }
 
         User::where('id', $trx->user_id)->increment('main_wallet', $amt1);
@@ -1317,10 +1240,6 @@ class TransactionController extends Controller
 
         $amount = Webtransfer::where('ref', $MerchantReference)
             ->first()->amount ?? 0;
-
-
-        $amount = Webtransfer::where('ref', $MerchantReference)
-            ->update(['status' => 1]) ?? null;
 
         Transaction::where('ref_trans_id', $MerchantReference)->update([
 
@@ -1347,9 +1266,7 @@ class TransactionController extends Controller
 
     public function change_state(request $request)
     {
-
         $state = VirtualAccount::where('v_account_no', $request->account_no)->update(['state' => 1]);
-
         return $state;
     }
 
@@ -1364,6 +1281,7 @@ class TransactionController extends Controller
         $trasnaction->user_id = $ref->user_id;
         $trasnaction->ref_trans_id = $ref->ref;
         $trasnaction->type = "webpay";
+        $trasnaction->amount = $ref->amount;
         $trasnaction->transaction_type = "CARD";
         $trasnaction->title = "Card Funding";
         $trasnaction->main_type = "cardweb";

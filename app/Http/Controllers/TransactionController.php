@@ -1260,9 +1260,14 @@ class TransactionController extends Controller
 
 
         if ($TransactionStatus != 'Successful') {
-            return response()->json([
-                'message' => 'Transaction Failed',
-            ], 500);
+
+            $message = "Card Transaction Failed";
+            send_notification($message);
+
+
+            // return response()->json([
+            //     'message' => 'Transaction Failed',
+            // ], 500);
         }
 
 
@@ -1281,9 +1286,12 @@ class TransactionController extends Controller
         $trx = Transaction::where('ref_trans_id', $MerchantReference)->first() ?? null;
 
         if ($trx == null) {
-            return response()->json([
-                'message' => 'Transaction Not Found',
-            ], 500);
+            // return response()->json([
+            //     'message' => 'Transaction Not Found',
+            // ], 500);
+
+            $message = "Card Transaction Not Found";
+            send_notification($message);
         }
 
         if ($trx->status == 1) {
@@ -1292,10 +1300,10 @@ class TransactionController extends Controller
             send_notification($message);
 
 
-            return response()->json([
-                'message' => 'Transaction can not be proccessed',
+            // return response()->json([
+            //     'message' => 'Transaction can not be proccessed',
 
-            ], 500);
+            // ], 500);
         }
 
         User::where('id', $trx->user_id)->increment('main_wallet', $amt1);
@@ -1331,9 +1339,9 @@ class TransactionController extends Controller
         send_notification($message);
 
 
-        return response()->json([
-            'message' => 'Transaction Successful',
-        ], 200);
+        // return response()->json([
+        //     'message' => 'Transaction Successful',
+        // ], 200);
     }
 
 

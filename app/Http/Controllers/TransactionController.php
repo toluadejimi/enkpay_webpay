@@ -1219,6 +1219,8 @@ class TransactionController extends Controller
             if ($ctrx->status == 1) {
             $message = "Card Transaction Already Confirmed";
             send_notification($message);
+
+            return "success";
             }
 
         }else{

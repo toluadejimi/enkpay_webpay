@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Validtransfer;
 use App\Models\VirtualAccount;
+use App\Models\CardwebTransaction;
 use App\Models\CompletedWebtransfer;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
@@ -1212,8 +1213,16 @@ class TransactionController extends Controller
 
         $trx = Transaction::where('ref_trans_id', $MerchantReference)->first() ?? null;
 
-
         if ($trx == null) {
+
+            $ctrx = CardwebTransaction::where('ref_trans_id', $MerchantReference)->first() ?? null;
+            if ($ctrx->status == 1) {
+            $message = "Card Transaction Already Confirmed";
+            send_notification($message);
+            }
+
+        }else{
+
             $message = "Card Transaction Not Found";
             send_notification($message);
         }
@@ -1224,6 +1233,7 @@ class TransactionController extends Controller
             send_notification($message);
 
         }
+
 
         User::where('id', $trx->user_id)->increment('main_wallet', $amt1);
         User::where('id', 95)->increment('bonus_wallet', 2);
@@ -1248,6 +1258,21 @@ class TransactionController extends Controller
 
 
         ]);
+
+
+         CardwebTransaction::where('ref_trans_id', $MerchantReference)->update([
+
+            'e_ref' => $PaymentReference,
+            'credit' => (int)$amt_to_credit,
+            'fee' => $commmission_to_remove,
+            'amount' => $amount,
+            'balance' => $balance,
+            'status' => 1,
+
+
+        ]);
+
+
 
         //update Transactions
         $message = "Card Payment Completed |" . $MerchantReference . " Business funded | " . number_format($amt1, 2) . "| $first_name " . " " . $last_name;
@@ -1274,6 +1299,22 @@ class TransactionController extends Controller
         $usr = User::where('id', $ref->user_id)->first();
 
         $trasnaction = new Transaction();
+        $trasnaction->user_id = $ref->user_id;
+        $trasnaction->ref_trans_id = $ref->ref;
+        $trasnaction->type = "webpay";
+        $trasnaction->amount = $ref->amount;
+        $trasnaction->transaction_type = "CARD";
+        $trasnaction->title = "Card Funding";
+        $trasnaction->main_type = "cardweb";
+        $trasnaction->note = "Card Payment | Web Pay";
+        $trasnaction->e_charges = 0;
+        $trasnaction->enkPay_Cashout_profit = 0;
+        $trasnaction->status = 0;
+        $trasnaction->save();
+
+
+
+        $trasnaction = new CardwebTransaction();
         $trasnaction->user_id = $ref->user_id;
         $trasnaction->ref_trans_id = $ref->ref;
         $trasnaction->type = "webpay";

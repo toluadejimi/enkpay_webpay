@@ -1075,7 +1075,7 @@
         document.getElementById('CardPost').addEventListener('click', function() {
             const url = '{{ url('') }}/api/card-transaction';
             const data = {
-                ref:'{{ $cardRef }}'
+                ref:'{{ $ref }}'
             };
 
             fetch(url, {

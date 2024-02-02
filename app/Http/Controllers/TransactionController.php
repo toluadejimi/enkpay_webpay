@@ -211,7 +211,6 @@ class TransactionController extends Controller
             $ref = trx();
             $pre = pre_pay($amount, $first_name, $last_name, $tremail, $ref, $userId, $trans_id, $key);
             $adviceReference = $pre['adviceReference'] ?? null;
-            $cardRef = $ref;
             $pre_link = $pre['paymentUrl'] ?? null;
         } else {
             $pre_link = "#";
@@ -249,7 +248,7 @@ class TransactionController extends Controller
         $bank = $set->pay_with_providus;
         $crypto = $set->pay_by_crypto;
 
-        return view('webpay', compact('cardRef', 'iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name',  'p_bank_name', 'total_received'));
+        return view('webpay', compact('ref', 'iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name',  'p_bank_name', 'total_received'));
     }
 
 
@@ -504,9 +503,6 @@ class TransactionController extends Controller
 
         $client_id = Webtransfer::where('trans_id', $trans_id)
             ->first()->client_id ?? null;
-
-
-
 
 
         $amount_received = Webtransfer::where('trans_id', $trans_id)

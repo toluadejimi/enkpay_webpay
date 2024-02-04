@@ -1211,7 +1211,8 @@ class TransactionController extends Controller
         $amt_to_credit = $enkpay_commision;
         $amt1 = $amt_to_credit - 4;
 
-        $trx = Transaction::where('ref_trans_id', $MerchantReference)->first() ?? null;
+
+        $trx = CardwebTransaction::where('ref_trans_id', $MerchantReference)->where('status', 0)->first() ?? null;
 
         if ($trx == null) {
 
@@ -1249,17 +1250,25 @@ class TransactionController extends Controller
         $amount = Webtransfer::where('ref', $MerchantReference)
             ->first()->amount ?? 0;
 
-        Transaction::where('ref_trans_id', $MerchantReference)->update([
 
-            'e_ref' => $PaymentReference,
-            'credit' => (int)$amt_to_credit,
-            'fee' => $commmission_to_remove,
-            'amount' => $amount,
-            'balance' => $balance,
-            'status' => 1,
-
-
-        ]);
+        $trasnaction = new Transaction();
+        $trasnaction->user_id = $trx->user_id;
+        $trasnaction->ref_trans_id = $trx->ref;
+        $trasnaction->e_ref = $PaymentReference;
+        $trasnaction->credit = (int)$amt_to_credit;
+        $trasnaction->fee = $commmission_to_remove;
+        $trasnaction->amount = $amount;
+        $trasnaction->balance = $balance;
+        $trasnaction->type = "webpay";
+        $trasnaction->amount = $trx->amount;
+        $trasnaction->transaction_type = "CARD";
+        $trasnaction->title = "Card Funding";
+        $trasnaction->main_type = "cardweb";
+        $trasnaction->note = "Card Payment | Web Pay";
+        $trasnaction->e_charges = 0;
+        $trasnaction->enkPay_Cashout_profit = $commmission_to_remove;
+        $trasnaction->status = 1;
+        $trasnaction->save();
 
 
          CardwebTransaction::where('ref_trans_id', $MerchantReference)->update([
@@ -1299,22 +1308,6 @@ class TransactionController extends Controller
 
         $ref = Webtransfer::where('ref', $request->ref)->first() ?? null;
         $usr = User::where('id', $ref->user_id)->first();
-
-        $trasnaction = new Transaction();
-        $trasnaction->user_id = $ref->user_id;
-        $trasnaction->ref_trans_id = $ref->ref;
-        $trasnaction->type = "webpay";
-        $trasnaction->amount = $ref->amount;
-        $trasnaction->transaction_type = "CARD";
-        $trasnaction->title = "Card Funding";
-        $trasnaction->main_type = "cardweb";
-        $trasnaction->note = "Card Payment | Web Pay";
-        $trasnaction->e_charges = 0;
-        $trasnaction->enkPay_Cashout_profit = 0;
-        $trasnaction->status = 0;
-        $trasnaction->save();
-
-
 
         $trasnaction = new CardwebTransaction();
         $trasnaction->user_id = $ref->user_id;

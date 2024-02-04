@@ -1249,7 +1249,7 @@ class TransactionController extends Controller
 
         $trasnaction = new Transaction();
         $trasnaction->user_id = $trx->user_id;
-        $trasnaction->ref_trans_id = $trx->ref;
+        $trasnaction->ref_trans_id = $MerchantReference;
         $trasnaction->e_ref = $PaymentReference;
         $trasnaction->credit = (int)$amt_to_credit;
         $trasnaction->fee = $commmission_to_remove;

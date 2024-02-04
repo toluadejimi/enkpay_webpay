@@ -1267,17 +1267,7 @@ class TransactionController extends Controller
         $trasnaction->save();
 
 
-         CardwebTransaction::where('ref_trans_id', $MerchantReference)->update([
-
-            'e_ref' => $PaymentReference,
-            'credit' => (int)$amt_to_credit,
-            'fee' => $commmission_to_remove,
-            'amount' => $amount,
-            'balance' => $balance,
-            'status' => 1,
-
-
-        ]);
+        $trx = CardwebTransaction::where('ref_trans_id', $MerchantReference)->update(['status' => 1]);
 
 
 

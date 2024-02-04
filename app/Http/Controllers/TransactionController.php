@@ -1224,10 +1224,6 @@ class TransactionController extends Controller
             return "success";
             }
 
-        }else{
-
-            $message = "Card Transaction Not Found";
-            send_notification($message);
         }
 
         if ($trx->status == 1) {

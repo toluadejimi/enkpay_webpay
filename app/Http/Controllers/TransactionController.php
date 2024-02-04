@@ -1253,7 +1253,6 @@ class TransactionController extends Controller
         $trasnaction->e_ref = $PaymentReference;
         $trasnaction->credit = (int)$amt_to_credit;
         $trasnaction->fee = $commmission_to_remove;
-        $trasnaction->amount = $amount;
         $trasnaction->balance = $balance;
         $trasnaction->type = "webpay";
         $trasnaction->amount = $trx->amount;

@@ -1212,25 +1212,40 @@ class TransactionController extends Controller
         $amt1 = $amt_to_credit - 4;
 
 
-        $trx = CardwebTransaction::where('ref_trans_id', $MerchantReference)->where('status', 0)->first() ?? null;
-
+        $trx = CardwebTransaction::where('ref', $MerchantReference)->where('status', 0)->first() ?? null;
         if ($trx == null) {
 
-            $ctrx = CardwebTransaction::where('ref_trans_id', $MerchantReference)->first() ?? null;
-            if ($ctrx->status == 1) {
-            $message = "Card Transaction Already Confirmed";
-            send_notification($message);
 
-            return "success";
+            $cw = CompletedWebtransfer::where('ref', $MerchantReference)->first() ?? null;
+            if ($cw != null) {
+                $cws = new CardwebTransaction();
+                $cws->user_id = $cw->user_id;
+                $cws->ref_trans_id = $cw->ref;
+                $cws->transaction_type = "CARD";
+                $cws->title = "Card Funding";
+                $cws->type = "webpay";
+                $cws->main_type = "cardweb";
+                $cws->amount = $cw->amount;
+                $cws->note = "Card Payment | Web Pay";
+                $cws->status = 0;
+                $cws->save();
+
+                $message = "Card Transaction saved for approval";
+                send_notification($message);
             }
 
+            // if ($cw->status == 1) {
+            //     $message = "Card Transaction Already Confirmed";
+            //     send_notification($message);
+            //     return "success";
+            // }
         }
 
-        if ($trx->status == 1) {
 
+
+        if ($trx->status == 1){
             $message = "Card Transaction Already Confirmed";
             send_notification($message);
-
         }
 
 
@@ -1242,9 +1257,6 @@ class TransactionController extends Controller
         $balance = User::where('id', $trx->user_id)->first()->main_wallet;
         $first_name = User::where('id', $trx->user_id)->first()->first_name ?? null;
         $last_name = User::where('id', $trx->user_id)->first()->last_name ?? null;
-
-        $amount = Webtransfer::where('ref', $MerchantReference)
-            ->first()->amount ?? 0;
 
 
         $trasnaction = new Transaction();

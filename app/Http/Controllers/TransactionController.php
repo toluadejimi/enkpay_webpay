@@ -1212,9 +1212,8 @@ class TransactionController extends Controller
         $amt1 = $amt_to_credit - 4;
 
 
-        $trx = CardwebTransaction::where('ref', $MerchantReference)->where('status', 0)->first() ?? null;
+        $trx = CardwebTransaction::where('ref_trans_id', $MerchantReference)->where('status', 0)->first() ?? null;
         if ($trx == null) {
-
 
             $cw = CompletedWebtransfer::where('ref', $MerchantReference)->first() ?? null;
             if ($cw != null) {

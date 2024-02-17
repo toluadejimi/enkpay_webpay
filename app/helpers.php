@@ -893,8 +893,11 @@ if (!function_exists('tokenkey')) {
         curl_close($curl);
 
         $var = json_decode($var);
-        return $var->access_token;
 
+        $message = "Error on webpay Pelplay token on null";
+        send_notification($message);
+
+        return $var->access_token ?? null;
 
     }
 
@@ -969,7 +972,9 @@ if (!function_exists('tokenkey')) {
         curl_close($curl);
         $var = json_decode($var);
 
-        if ($var->requestSuccessful == null) {
+        $req = $var->requestSuccessful ?? null;
+
+        if ($req == null) {
             return null;
         }
 

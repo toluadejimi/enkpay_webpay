@@ -894,8 +894,6 @@ if (!function_exists('tokenkey')) {
 
         $var = json_decode($var);
 
-        $message = "Error on webpay Pelplay token on null";
-        send_notification($message);
 
         return $var->access_token ?? null;
 
@@ -1024,7 +1022,7 @@ if (!function_exists('verify_payment')) {
             $data['amount'] = $var->responseData->amountCollected;
             $data['merchantReference'] = $var->responseData->merchantReference;
 
-            
+
             return $data;
         } else {
 

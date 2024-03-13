@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PendingcardTransaction;
 use Faker\Factory;
 use App\Models\User;
 use App\Models\Ttmfb;
@@ -1213,6 +1214,34 @@ class TransactionController extends Controller
 
 
         $trx = CardwebTransaction::where('ref_trans_id', $MerchantReference)->where('status', 0)->first() ?? null;
+        $status = CardwebTransaction::where('ref_trans_id', $MerchantReference)->where('status', 0)->first()->status ?? null;
+
+        if($status == null){
+
+            $trasnaction = new PendingcardTransaction();
+            $trasnaction->user_id = null;
+            $trasnaction->ref_trans_id = $MerchantReference;
+            $trasnaction->e_ref = $PaymentReference;
+            $trasnaction->credit = $AmountCollected;
+            $trasnaction->fee = 0;
+            $trasnaction->balance = 0;
+            $trasnaction->type = "webpay-pendig";
+            $trasnaction->amount = $AmountCollected;
+            $trasnaction->transaction_type = "CARD PENDING";
+            $trasnaction->title = "Card Funding pending";
+            $trasnaction->main_type = "cardweb";
+            $trasnaction->note = "Card Payment | Web Pay";
+            $trasnaction->e_charges = 0;
+            $trasnaction->enkPay_Cashout_profit = 0;
+            $trasnaction->status = 1;
+            $trasnaction->save();
+
+
+            $message = "Card Transaction saved on pending";
+            send_notification($message);
+
+        }
+
         if ($trx == null) {
 
             $cw = CompletedWebtransfer::where('ref', $MerchantReference)->first() ?? null;

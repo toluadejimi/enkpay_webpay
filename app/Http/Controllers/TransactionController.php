@@ -29,6 +29,8 @@ class TransactionController extends Controller
 
     public function get_account_details(Request $request)
     {
+
+
         try {
 
 
@@ -117,7 +119,6 @@ class TransactionController extends Controller
 
     public function webpay_view(Request $request)
     {
-
 
         $key =  $request->key;
         $amount = $request->amount;
@@ -1260,6 +1261,8 @@ class TransactionController extends Controller
 
                 $message = "Card Transaction saved for approval";
                 send_notification($message);
+
+
             }
 
             // if ($cw->status == 1) {

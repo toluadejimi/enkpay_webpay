@@ -8,6 +8,7 @@ use App\Mail\ExceptionOccured;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
+
 class Handler extends ExceptionHandler
 {
     /**
@@ -47,7 +48,7 @@ class Handler extends ExceptionHandler
     /**
      * Write code on Method
      *
-     * @return response()
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application()
      */
     public function sendEmail(Throwable $exception)
     {
@@ -68,16 +69,28 @@ class Handler extends ExceptionHandler
             //$message = "Error Message on ENKPAY APP";
             send_notification($message);
 
+            return view('errors.500');
 
 
 
-
-
-
-           // Mail::to('enkwavedevops@gmail.com')->send(new ExceptionOccured($content));
 
         } catch (Throwable $exception) {
             Log::error($exception);
         }
+    }
+
+
+    public function render($request, Throwable $exception)
+    {
+        if ($this->isHttpException($exception)) {
+            switch ($exception->getStatusCode()) {
+                case 404:
+                    return response()->view('errors.404', [], 404);
+                case 500:
+                    return response()->view('errors.500', [], 500);
+            }
+        }
+
+        return parent::render($request, $exception);
     }
 }

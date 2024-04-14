@@ -235,12 +235,11 @@
 
 
 
-    <div class="bottom-navigation-bar">
-        <div class="tf-container">
+        <div class="tf-container my-5">
             <a href="decline?trans_id={{ $trans_id }}&key={{ $key }}" class="tf-btn danger large">Cancel
                 Transaction</a>
         </div>
-    </div>
+
 
 
 <script src="{{ url('') }}/public/assets/dist/js/bootstrap.bundle.min.js"></script>

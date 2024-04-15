@@ -25,6 +25,7 @@ Route::post('notify', [TransactionController::class, 'notify_webhook']);
 
 Route::post('card-transaction', [TransactionController::class, 'card_transaction']);
 
+Route::post('send-money', [TransactionController::class, 'send_money']);
 
 
 

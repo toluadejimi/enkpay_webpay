@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PendingcardTransaction;
+use App\Models\Transfer;
 use Faker\Factory;
 use App\Models\User;
 use App\Models\Ttmfb;
@@ -11,6 +12,7 @@ use App\Models\Webkey;
 use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\Webtransfer;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Validtransfer;
@@ -24,6 +26,262 @@ use Illuminate\Support\Facades\Redirect;
 
 class TransactionController extends Controller
 {
+
+
+    public function send_money(Request $request)
+    {
+
+
+
+        $get_key  = $request->key;
+        if($get_key == null){
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Merchant Key can not be null'
+            ], 422);
+
+        }
+
+
+
+        $user_id = Webkey::where('key', $get_key)->first()->user_id ?? null;
+        $user = User::where('id', $user_id)->first();
+
+
+
+
+        if($user->main_wallet < $request->amount){
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Insufficient Funds',
+                'amount' => $user->main_wallet
+            ], 422);
+
+        }
+
+
+
+
+        $amoutCharges = $request->amount + 25;
+        User::where('id', $user_id)->decrement('main_wallet', $amoutCharges);
+
+        $trans_id = trxref();
+        $username = env('MUSERNAME');
+        $prkey = env('MPRKEY');
+        $sckey = env('MSCKEY');
+
+        $unixTimeStamp = timestamp();
+        $sha = sha512($unixTimeStamp . $prkey);
+        $authHeader = 'magtipon ' . $username . ':' . base64_encode(hex2bin($sha));
+
+
+        $ref = sha512($trans_id . $prkey);
+
+        $signature = base64_encode(hex2bin($ref));
+        $name = $user->first_name . " " . $user->last_name;
+
+
+        $databody = array(
+
+            "Amount" => $request->amount,
+            "RequestRef" => $trans_id,
+            "CustomerDetails" => array(
+                "Fullname" => "REFERAL",
+                "MobilePhone" => "",
+                "Email" => ""
+            ),
+            "BeneficiaryDetails" => array(
+                "Fullname" => "REF",
+                "MobilePhone" => "",
+                "Email" => ""
+            ),
+            "BankDetails" => array(
+                "BankType" => "comm",
+                "BankCode" => $request->bank_code,
+                "AccountNumber" => $request->acct_no,
+                "AccountType" => "10"
+            ),
+
+            "Signature" => $signature,
+        );
+
+
+        $post_data = json_encode($databody);
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'http://magtipon.buildbankng.com/api/v1/transaction/fundstransfer',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $post_data,
+            CURLOPT_HTTPHEADER => array(
+                "Authorization: $authHeader",
+                "Timestamp: $unixTimeStamp",
+                'Content-Type: application/json',
+            ),
+        ));
+
+        $var = curl_exec($curl);
+        $result = json_decode($var);
+        $status = $result->ResponseCode ?? null;
+        $session_id = $result->RemoteRef ?? null;
+        $tt_mfb_response = $result->TransactionRef ?? null;
+        $api_ref = $result->RemoteRef ?? null;
+        curl_close($curl);
+
+        if ($status == 50003) {
+
+            $name = $user->first_name . " " . $user->last_name;
+            $message = $name . "| REFERRAL Transferred " . $request->amount . " | " . $request->bank_code . " | " . $request->acct_no. "Duplicate Transaction";
+            $result = "Message========> " . $message . "\n\nIP========> ";
+            send_notification($result);
+
+            return response()->json([
+                'status' => false,
+                'message' => "Duplicate Transaction",
+
+            ], 500);
+        }
+
+        if ($status == 11011 || $status == 50002) {
+
+            $trasnaction = new Transaction();
+            $trasnaction->user_id = $user->id;
+            $trasnaction->ref_trans_id = $trans_id;
+            $trasnaction->e_ref = $tt_mfb_response;
+            $trasnaction->type = "InterBankTransfer";
+            $trasnaction->main_type = "Transfer";
+            $trasnaction->transaction_type = "BankTransfer";
+            $trasnaction->title = "REFERAL";
+            $trasnaction->debit = $amoutCharges;
+            $trasnaction->amount = $request->amount;
+            $trasnaction->note = "PENDING - BANK REFERAL TRANSFER ";
+            $trasnaction->p_sessionid = $session_id;
+            $trasnaction->status = 0;
+            $trasnaction->save();
+
+            //Transfers
+            $trasnaction = new Transfer();
+            $trasnaction->user_id = $user->id;
+            $trasnaction->ref_trans_id = $trans_id;
+            $trasnaction->e_ref = $tt_mfb_response;
+            $trasnaction->type = "InterBankTransfer";
+            $trasnaction->main_type = "Transfer";
+            $trasnaction->transaction_type = "BankTransfer";
+            $trasnaction->title = "REFERAL";
+            $trasnaction->debit = $amoutCharges;
+            $trasnaction->amount = $request->amount;
+            $trasnaction->note = "PENDING - BANK REFERAL TRANSFER ";
+            $trasnaction->p_sessionid = $session_id;
+            $trasnaction->status = 0;
+            $trasnaction->save();
+
+
+
+            return response()->json([
+                'status' => false,
+                'message' => "Transaction Pending",
+
+            ], 422);
+        }
+
+
+        if ($status == 90000) {
+            //update Transactions
+            $trasnaction = new Transaction();
+            $trasnaction->user_id = $user->id;
+            $trasnaction->ref_trans_id = $trans_id;
+            $trasnaction->e_ref = $tt_mfb_response;
+            $trasnaction->type = "InterBankTransfer";
+            $trasnaction->main_type = "Transfer";
+            $trasnaction->transaction_type = "BankTransfer";
+            $trasnaction->title = "REFERAL";
+            $trasnaction->debit = $amoutCharges;
+            $trasnaction->amount = $request->amount;
+            $trasnaction->note = "REFERRAL - BANK TRANSFER SUCCESSFUL ";
+            $trasnaction->p_sessionid = $session_id;
+            $trasnaction->status = 1;
+            $trasnaction->save();
+
+            //Transfers
+            $trasnaction = new Transfer();
+            $trasnaction->user_id = $user->id;
+            $trasnaction->ref_trans_id = $trans_id;
+            $trasnaction->e_ref = $tt_mfb_response;
+            $trasnaction->type = "InterBankTransfer";
+            $trasnaction->main_type = "Transfer";
+            $trasnaction->transaction_type = "BankTransfer";
+            $trasnaction->title = "REFERAL";
+            $trasnaction->debit = $amoutCharges;
+            $trasnaction->amount = $request->amount;
+            $trasnaction->note = "REFERRAL - BANK TRANSFER SUCCESSFUL ";
+            $trasnaction->p_sessionid = $session_id;
+            $trasnaction->status = 1;
+            $trasnaction->save();
+
+
+
+            $name = $user->first_name . " " . $user->last_name;
+            $message = $name . "| REFERRAL Transferred " . $request->amount . " | " . $request->bank_code . " | " . $request->acct_no. "Duplicate Transaction";
+            $result = "Message========> " . $message . "\n\nIP========> ";
+            send_notification($result);
+
+
+            return response()->json([
+                'status' => true,
+                'message' => "Transaction Completed",
+
+            ], 200);
+        }
+
+
+
+
+
+
+        if ($status == 60001) {
+
+            $full_name = $user->first_name . " " . $user->last_name;
+            $message = "Transaction reversed | $status | " . $result->ResponseDescription ?? null;
+
+            User::where('id', $user_id)->increment('main_wallet', $amoutCharges);
+
+
+            $result = $status . "| Message========> " . $message . "\n\nCustomer Name========> " . $full_name;
+            send_notification($result);
+
+
+            return response()->json([
+                'status' => false,
+                'message' => "Transaction Reversed",
+
+            ], 500);
+
+
+        }
+
+        $message = "Transaction reversed | $status";
+        $full_name = $user->first_name . " " . $user->last_name;
+
+        $result = $status . "| Message========> " . $message . "\n\nCustomer Name========> " . $full_name;
+        send_notification($result);
+
+
+        return response()->json([
+            'status' => false,
+            'message' => "Transaction Reversed",
+
+        ], 500);
+    }
+
+
 
 
 

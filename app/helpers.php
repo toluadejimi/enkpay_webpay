@@ -387,6 +387,16 @@ if (!function_exists('trx')) {
     }
 }
 
+if (!function_exists('trxref')) {
+
+    function trxref()
+    {
+
+        $refcode = "REFERALPAY" . random_int(100, 999) . date('YmdHis');
+        return $refcode;
+    }
+}
+
 if (!function_exists('resolve_bank')) {
 
     function resolve_bank($bank_code, $account_number)

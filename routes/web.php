@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\VerifyController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProxyController;
 use App\Http\Controllers\BotManController;
@@ -68,6 +69,21 @@ Route::get('custom-pay', [TransactionController::class, 'custom_pay']);
 Route::post('custom-pay-now', [TransactionController::class, 'custom_pay_now']);
 
 
+Route::get('payment', [VerifyController::class, 'verify_view']);
+Route::get('login', [VerifyController::class, 'login']);
+
+Route::post('login-now', [VerifyController::class, 'login_now']);
+
+
+Route::get('payment', [VerifyController::class, 'verify_view']);
+Route::get('complete-transaction', [VerifyController::class, 'complete_transaction']);
+
+
+
+
+
+
+
 Route::get('pay', [TransactionController::class, 'webpay_view']);
 Route::get('invalid', [TransactionController::class, 'invalid']);
 
@@ -77,6 +93,16 @@ Route::get('success', [TransactionController::class, 'success']);
 
 
 Route::get('verify', [TransactionController::class, 'check_status']);
+Route::get('verifyopay', [TransactionController::class, 'opay_check_status']);
+Route::get('verifypalmpay', [TransactionController::class, 'palmpay_check_status']);
+Route::get('verifykuda', [TransactionController::class, 'kuda_check_status']);
+
+
+
+
+
+
+
 Route::get('decline', [TransactionController::class, 'decline']);
 
 

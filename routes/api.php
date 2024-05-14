@@ -25,7 +25,13 @@ Route::post('notify', [TransactionController::class, 'notify_webhook']);
 
 Route::post('card-transaction', [TransactionController::class, 'card_transaction']);
 
+Route::post('opay-transfer-transaction', [TransactionController::class, 'opay_transfer_transaction']);
+Route::post('palmpay-transfer-transaction', [TransactionController::class, 'palmpay_transfer_transaction']);
+Route::post('kuda-transfer-transaction', [TransactionController::class, 'kuda_transfer_transaction']);
+
+
 Route::post('send-money', [TransactionController::class, 'send_money']);
+
 
 
 

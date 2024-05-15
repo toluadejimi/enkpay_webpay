@@ -142,7 +142,7 @@
                         </svg>
                         <div class="content">
                             <h4><a href="#" data-bs-toggle="collapse" data-bs-target="#opay"
-                                   aria-expanded="false" aria-controls="opay" class="fw_6">Pay With OPAY
+                                   aria-expanded="false" aria-controls="opay" class="fw_6">Pay To OPAY
                                     Transfer</a></h4>
                             <p>40 secs confirmation</p>
                         </div>
@@ -155,7 +155,7 @@
 
 
                         <div class="tf-container my-2">
-                            <a id="openModalBtnopay" class="tf-btn success large">Pay with Opay</a>
+                            <a id="openModalBtnopay" class="tf-btn success large">Pay To Opay</a>
                         </div>
 
                         <div id="myModalopay" class="modal">
@@ -419,7 +419,7 @@
 
                             <div class="content">
                                 <h4><a href="#" data-bs-toggle="collapse" data-bs-target="#palmpay"
-                                       aria-expanded="false" aria-controls="opay" class="fw_6">Pay With Palmpay
+                                       aria-expanded="false" aria-controls="opay" class="fw_6">Pay To Palmpay
                                         Transfer</a></h4>
                                 <p>40 secs confirmation</p>
                             </div>
@@ -432,7 +432,7 @@
 
 
                             <div class="tf-container my-2">
-                                <a id="openModalBtnpalmpay" class="tf-btn success large">Pay with Palmpay</a>
+                                <a id="openModalBtnpalmpay" class="tf-btn success large">Pay to Palmpay</a>
                             </div>
 
                             <div id="myModalpalmpay" class="modal">
@@ -675,7 +675,7 @@
                                 buttons.forEach(button => {
                                     button.addEventListener("click", function () {
                                         const trx_id = document.getElementById('trfpalmpay').value;
-                                        const palmpay_account_no = document.getElementById('palmpay_account_no').value;
+                                        //const palmpay_account_no = document.getElementById('palmpay_account_no').value;
 
                                         startTimer(1200, 'countdown');
                                         makeRequest(trx_id, palmpay_account_no);
@@ -727,7 +727,7 @@
 
                             <div class="content">
                                 <h4><a href="#" data-bs-toggle="collapse" data-bs-target="#kuda"
-                                       aria-expanded="false" aria-controls="kuda" class="fw_6">Pay With Kuda
+                                       aria-expanded="false" aria-controls="kuda" class="fw_6">Pay To Kuda
                                         Transfer</a></h4>
                                 <p>40 secs confirmation</p>
                             </div>
@@ -740,7 +740,7 @@
 
 
                             <div class="tf-container my-2">
-                                <a id="openModalBtnkuda" class="tf-btn success large">Pay with Kuda Bank</a>
+                                <a id="openModalBtnkuda" class="tf-btn success large">Pay To Kuda Bank</a>
                             </div>
 
                             <div id="myModalkuda" class="modal">
@@ -991,7 +991,7 @@
                                     makeRequest();
                                     startMessage();
 
-                                    $('#myModalpalmpayshow').modal('show');
+                                    $('#myModalkudashow').modal('show');
                                     requestkudaBtn.disabled = true;
                                     requestkudaBtn.hidden = true;
                                 });
@@ -1018,7 +1018,7 @@
                         <i class="logo icon-bank2"></i>
                         <div class="content">
                             <h4><a href="#" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                   aria-expanded="false" aria-controls="collapseTwo" class="fw_6">Pay With Providus Bank</a></h4>
+                                   aria-expanded="false" aria-controls="collapseTwo" class="fw_6">Pay To Providus Bank</a></h4>
                             <p>Transfer to providus bank account</p>
                         </div>
                     </div>
@@ -1235,7 +1235,7 @@
                 <div class="inner d-flex align-items-center">
                     <i class="logo icon-credit-card2"></i>
                     <div class="content">
-                        <h4><a href="{{ $pre_link }}" class="fw_6">Pay With Debit Card</a></h4>
+                        <h4><a href="{{ $pre_link }}" class="fw_6">Pay To Debit Card</a></h4>
                         <i>Transaction may attract extra charge</i>
                     </div>
                 </div>

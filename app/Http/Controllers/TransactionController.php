@@ -1936,7 +1936,9 @@ class TransactionController extends Controller
         $ref = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
         $usr = User::where('id', $ref->user_id)->first();
 
-        if($ref == null){
+        if($ref->trans_id  == $request->ref){
+            return "duplicate";
+        }
 
             $trasnaction = new Transfertransaction();
             $trasnaction->user_id = $ref->user_id;
@@ -1957,7 +1959,7 @@ class TransactionController extends Controller
 
             $message = "Transfer Payment Initiated |" . $request->ref . "| ON OPAY " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
             send_notification($message);
-        }
+
 
 
     }

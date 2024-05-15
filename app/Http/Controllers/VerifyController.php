@@ -168,17 +168,10 @@ class VerifyController extends Controller
 
         }
 
-        $trx = Webtransfer::where('trans_id', $request->id)->first() ?? null;
-//        if($trx == null){
-//            return back()->with('error', 'Transaction Not Found');
-//        }
 
 
-
-        if($trx->status == 0){
-
-            Webtransfer::where('trans_id', $request->id)->delete();
-            Transfertransaction::where('ref_trans_id', $request->id)->delete();
+            Webtransfer::where('trans_id', $request->id)->delete() ?? null;
+            Transfertransaction::where('ref_trans_id', $request->id)->delete() ?? null;
 
 
             $message = "Transaction | $request->id | Deleted ";
@@ -187,12 +180,12 @@ class VerifyController extends Controller
             return back()->with('message', 'Transaction Deleted Successfully');
 
 
-        }
 
 
 
 
-        return view('login');
+
+
 
 
     }

@@ -159,6 +159,48 @@ class VerifyController extends Controller
 
     }
 
+
+    public function delete_transaction(request $request)
+    {
+
+        if($request->id == null){
+            return back()->with('error', 'Transaction ID missing');
+
+        }
+
+        $trx = Webtransfer::where('trans_id', $request->id)->first() ?? null;
+        if($trx == null){
+            return back()->with('error', 'Transaction Not Found');
+        }
+
+        if($trx->status == 2){
+            return back()->with('error', 'Transaction has been completed');
+        }
+
+        if($trx->status == 0){
+
+            Webtransfer::where('trans_id', $request->id)->delete();
+            Transfertransaction::where('ref_trans_id', $request->id)->delete();
+
+
+            $message = "Transaction | $request->id | Deleted ";
+            send_notification($message);
+
+            return back()->with('message', 'Transaction Deleted Successfully');
+
+
+
+
+        }
+
+
+
+
+        return view('login');
+
+
+    }
+
     public function offpalmpay_account()
     {
         Setting::where('palmpay_trx', 1)->update(['palmpay_trx' => 0]);

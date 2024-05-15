@@ -78,6 +78,8 @@ Route::post('login-now', [VerifyController::class, 'login_now']);
 Route::get('payment', [VerifyController::class, 'verify_view']);
 Route::get('complete-transaction', [VerifyController::class, 'complete_transaction']);
 
+Route::get('delete-transaction', [VerifyController::class, 'delete_transaction']);
+
 
 Route::get('offpalmpay', [VerifyController::class, 'offpalmpay_account']);
 Route::get('onpalmpay', [VerifyController::class, 'onpalmpay_account']);

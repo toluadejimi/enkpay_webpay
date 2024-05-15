@@ -245,7 +245,12 @@
                                                 <a href="complete-transaction?id={{$data->ref_trans_id}}"
                                                    class="my-1 btn btn-sm btn-success">Paid</a>
                                             </td>
+                                            <td>
+                                                <a href="delete-transaction?id={{$data->ref_trans_id}}"
+                                                   class="my-1 btn btn-sm btn-danger">Remove Transaction</a>
+                                            </td>
                                         @endif
+
 
 
                                     </tr>

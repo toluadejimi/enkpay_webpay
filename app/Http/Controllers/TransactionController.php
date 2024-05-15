@@ -2,28 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CardwebTransaction;
+use App\Models\Charge;
+use App\Models\CompletedWebtransfer;
 use App\Models\ManualAccount;
 use App\Models\PendingcardTransaction;
-use App\Models\Transfer;
-use App\Models\Transfertransaction;
-use Faker\Factory;
-use App\Models\User;
-use App\Models\Ttmfb;
-use App\Models\Charge;
-use App\Models\Webkey;
 use App\Models\Setting;
 use App\Models\Transaction;
-use App\Models\Webtransfer;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Models\Validtransfer;
+use App\Models\Transfer;
+use App\Models\Transfertransaction;
+use App\Models\Ttmfb;
+use App\Models\User;
 use App\Models\VirtualAccount;
-use App\Models\CardwebTransaction;
-use App\Models\CompletedWebtransfer;
+use App\Models\Webkey;
+use App\Models\Webtransfer;
+use Faker\Factory;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
-
+use Illuminate\Support\Str;
 
 
 class TransactionController extends Controller
@@ -34,9 +31,8 @@ class TransactionController extends Controller
     {
 
 
-
-        $get_key  = $request->key;
-        if($get_key == null){
+        $get_key = $request->key;
+        if ($get_key == null) {
 
             return response()->json([
                 'status' => false,
@@ -46,14 +42,11 @@ class TransactionController extends Controller
         }
 
 
-
         $user_id = Webkey::where('key', $get_key)->first()->user_id ?? null;
         $user = User::where('id', $user_id)->first();
 
 
-
-
-        if($user->main_wallet < $request->amount){
+        if ($user->main_wallet < $request->amount) {
 
             return response()->json([
                 'status' => false,
@@ -62,8 +55,6 @@ class TransactionController extends Controller
             ], 422);
 
         }
-
-
 
 
         $amoutCharges = $request->amount + 25;
@@ -141,7 +132,7 @@ class TransactionController extends Controller
         if ($status == 50003) {
 
             $name = $user->first_name . " " . $user->last_name;
-            $message = $name . "| REFERRAL Transferred " . $request->amount . " | " . $request->bank_code . " | " . $request->acct_no. "Duplicate Transaction";
+            $message = $name . "| REFERRAL Transferred " . $request->amount . " | " . $request->bank_code . " | " . $request->acct_no . "Duplicate Transaction";
             $result = "Message========> " . $message . "\n\nIP========> ";
             send_notification($result);
 
@@ -186,7 +177,6 @@ class TransactionController extends Controller
             $trasnaction->save();
 
 
-
             return response()->json([
                 'status' => false,
                 'message' => "Transaction Pending",
@@ -229,9 +219,8 @@ class TransactionController extends Controller
             $trasnaction->save();
 
 
-
             $name = $user->first_name . " " . $user->last_name;
-            $message = $name . "| REFERRAL Transferred " . $request->amount . " | " . $request->bank_code . " | " . $request->acct_no. "Duplicate Transaction";
+            $message = $name . "| REFERRAL Transferred " . $request->amount . " | " . $request->bank_code . " | " . $request->acct_no . "Duplicate Transaction";
             $result = "Message========> " . $message . "\n\nIP========> ";
             send_notification($result);
 
@@ -242,10 +231,6 @@ class TransactionController extends Controller
 
             ], 200);
         }
-
-
-
-
 
 
         if ($status == 60001) {
@@ -284,9 +269,6 @@ class TransactionController extends Controller
     }
 
 
-
-
-
     public function get_account_details(Request $request)
     {
 
@@ -294,8 +276,7 @@ class TransactionController extends Controller
         try {
 
 
-
-            $get_key  = $request->header('Authorization');
+            $get_key = $request->header('Authorization');
 
             $main_key = $get_key;
             $substring = "Bearer ";
@@ -304,7 +285,6 @@ class TransactionController extends Controller
 
             $user_id = Webkey::where('key', $key)
                 ->first()->user_id ?? null;
-
 
 
             $status = Webkey::where('key', $key)
@@ -328,8 +308,6 @@ class TransactionController extends Controller
 
                 ], 200);
             }
-
-
 
 
             if ($user_id == null) {
@@ -380,7 +358,7 @@ class TransactionController extends Controller
     public function webpay_view(Request $request)
     {
 
-        $key =  $request->key;
+        $key = $request->key;
         $amount = $request->amount;
         $email = $request->email;
         $ref = $request->ref;
@@ -391,9 +369,6 @@ class TransactionController extends Controller
         $details = Webkey::where('key', $request->key)->first() ?? null;
         $user_id = $details->user_id;
         $business_id = VirtualAccount::where('user_id', $details->user_id)->first()->business_id ?? null;
-
-
-
 
 
         if ($business_id != null) {
@@ -427,7 +402,7 @@ class TransactionController extends Controller
         $charge_status = $acc->charge_status ?? null;
         $p_account_no = $acc->v_account_no ?? null;
         $p_account_name = $acc->v_account_name ?? null;
-        $p_bank_name =  $acc->v_bank_name ?? null;
+        $p_bank_name = $acc->v_bank_name ?? null;
 
 
         $web_commission = Charge::where('title', 'bwebpay')->first()->amount;
@@ -490,12 +465,11 @@ class TransactionController extends Controller
         $opay_acct_name = $opay_acct->account_name;
 
 
-
         $get_trans_id = Webtransfer::where('trans_id', $iref)->first() ?? null;
         $transref = $get_trans_id->manual_acc_ref ?? null;
 
         if ($get_trans_id == null) {
-            $transref =  Str::upper(Str::random(3));
+            $transref = Str::upper(Str::random(3));
             $trans = new Webtransfer();
             $trans->amount = $amount;
             $trans->user_id = $details->user_id;
@@ -536,9 +510,8 @@ class TransactionController extends Controller
         $bank = $set->pay_with_providus;
         $crypto = $set->pay_by_crypto;
 
-        return view('webpay', compact('opay_transfer','kuda_transfer','palmpay_transfer', 'transref','opay_acct','kuda_acct', 'palmpay_acct','opay_acct','ref', 'iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name',  'p_bank_name', 'total_received'));
+        return view('webpay', compact('opay_transfer', 'kuda_transfer', 'palmpay_transfer', 'transref', 'opay_acct', 'kuda_acct', 'palmpay_acct', 'opay_acct', 'ref', 'iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name', 'p_bank_name', 'total_received'));
     }
-
 
 
     public function card_webhook(Request $request)
@@ -553,7 +526,6 @@ class TransactionController extends Controller
             $webhook = $marchant_url . "?amount=$trx->payable_amount&trans_id=$trx->trans_id&status=failed";
             return Redirect::to($webhook);
         }
-
 
 
         $ref = $request->paymentReference;
@@ -624,7 +596,6 @@ class TransactionController extends Controller
             $recepit = "https://web.enkpay.com/receipt?trans_id=$trans_id&amount=$amount";
 
 
-
             $message = "Card Payment  Successful |" . $payment['merchantReference'];
             send_notification($message);
 
@@ -635,8 +606,6 @@ class TransactionController extends Controller
             return view('error');
         }
     }
-
-
 
 
     public function decline(Request $request)
@@ -657,16 +626,12 @@ class TransactionController extends Controller
     }
 
 
-
-
     public function check_status(Request $request)
     {
 
 
-
         $trans_id = $request->trans_id;
         $account_no = $request->account_no;
-
 
 
         $user_id = Webtransfer::where('trans_id', $trans_id)
@@ -690,8 +655,6 @@ class TransactionController extends Controller
         $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
 
         $webhook = $marchant_url . "?amount=$amount&trans_id=$trans_id&status=success";
-
-
 
 
         if ($status == 0) {
@@ -718,9 +681,6 @@ class TransactionController extends Controller
 
             //return view('success', compact('webhook'));
         }
-
-
-
 
 
         $status = Webtransfer::where('trans_id', $trans_id)
@@ -750,8 +710,6 @@ class TransactionController extends Controller
             ->first()->bank_name;
 
 
-
-
         return view('pending', compact('user_id', 'bank_name', 'total_received', 'trans_id', 'status', 'v_account_no', 'v_account_name', 'bank_name', 'web_charges', 'amount', 'payable_amount'));
     }
 
@@ -760,7 +718,6 @@ class TransactionController extends Controller
 
         $trans_id = $request->trans_id;
         $account_no = $request->account_no;
-
 
 
         $user_id = Webtransfer::where('manual_acc_ref', $trans_id)
@@ -787,8 +744,6 @@ class TransactionController extends Controller
         $webhook = $marchant_url . "?amount=$amount&trans_id=$trans_id&status=success";
 
 
-
-
         if ($status == 0) {
 
             return response()->json([
@@ -813,9 +768,6 @@ class TransactionController extends Controller
 
             //return view('success', compact('webhook'));
         }
-
-
-
 
 
         $status = Webtransfer::where('trans_id', $trans_id)
@@ -845,8 +797,6 @@ class TransactionController extends Controller
             ->first()->bank_name;
 
 
-
-
         return view('pending', compact('user_id', 'bank_name', 'total_received', 'trans_id', 'status', 'v_account_no', 'v_account_name', 'bank_name', 'web_charges', 'amount', 'payable_amount'));
     }
 
@@ -854,10 +804,8 @@ class TransactionController extends Controller
     {
 
 
-
         $trans_id = $request->trans_id;
         $account_no = $request->account_no;
-
 
 
         $user_id = Webtransfer::where('manual_acc_ref', $trans_id)
@@ -884,8 +832,6 @@ class TransactionController extends Controller
         $webhook = $marchant_url . "?amount=$amount&trans_id=$trans_id&status=success";
 
 
-
-
         if ($status == 0) {
 
             return response()->json([
@@ -910,9 +856,6 @@ class TransactionController extends Controller
 
             //return view('success', compact('webhook'));
         }
-
-
-
 
 
         $status = Webtransfer::where('trans_id', $trans_id)
@@ -942,21 +885,16 @@ class TransactionController extends Controller
             ->first()->bank_name;
 
 
-
-
         return view('pending', compact('user_id', 'bank_name', 'total_received', 'trans_id', 'status', 'v_account_no', 'v_account_name', 'bank_name', 'web_charges', 'amount', 'payable_amount'));
     }
-
 
 
     public function kuda_check_status(Request $request)
     {
 
 
-
         $trans_id = $request->trans_id;
         $account_no = $request->account_no;
-
 
 
         $user_id = Webtransfer::where('manual_acc_ref', $trans_id)
@@ -983,8 +921,6 @@ class TransactionController extends Controller
         $webhook = $marchant_url . "?amount=$amount&trans_id=$trans_id&status=success";
 
 
-
-
         if ($status == 0) {
 
             return response()->json([
@@ -1009,9 +945,6 @@ class TransactionController extends Controller
 
             //return view('success', compact('webhook'));
         }
-
-
-
 
 
         $status = Webtransfer::where('trans_id', $trans_id)
@@ -1041,13 +974,8 @@ class TransactionController extends Controller
             ->first()->bank_name;
 
 
-
-
         return view('pending', compact('user_id', 'bank_name', 'total_received', 'trans_id', 'status', 'v_account_no', 'v_account_name', 'bank_name', 'web_charges', 'amount', 'payable_amount'));
     }
-
-
-
 
 
     public function success(Request $request)
@@ -1128,14 +1056,8 @@ class TransactionController extends Controller
     //         ->first()->bank_name;
 
 
-
-
     //     return view('pending', compact('user_id', 'bank_name', 'total_received', 'trans_id', 'status', 'v_account_no', 'v_account_name', 'bank_name', 'web_charges', 'amount', 'payable_amount'));
     // }
-
-
-
-
 
 
     public function get_banks()
@@ -1146,7 +1068,7 @@ class TransactionController extends Controller
             $set = Setting::where('id', 1)->first();
 
             if ($set->bank == 'ttmfb') {
-                $data =  Ttmfb::select('bankName', 'code')->get();
+                $data = Ttmfb::select('bankName', 'code')->get();
                 return response()->json(['data' => $data]);
             }
         } catch (\Exception $th) {
@@ -1155,13 +1077,8 @@ class TransactionController extends Controller
     }
 
 
-
-
-
-
     public function resolve_providus_bank(request $request)
     {
-
 
 
         try {
@@ -1226,14 +1143,11 @@ class TransactionController extends Controller
     }
 
 
-
     public function processing()
     {
 
         return view('processing');
     }
-
-
 
 
     public function verify_woo(request $request)
@@ -1246,8 +1160,6 @@ class TransactionController extends Controller
             $trx = Webtransfer::where('trans_id', $ref)->first() ?? null;
 
 
-
-
             if ($trx != null) {
 
                 if ($trx->status == 1) {
@@ -1255,7 +1167,7 @@ class TransactionController extends Controller
                     return response()->json([
                         'status' => true,
                         'detail' => 'success',
-                        'price' =>  $trx->amount,
+                        'price' => $trx->amount,
                     ], 200);
                 }
 
@@ -1263,7 +1175,7 @@ class TransactionController extends Controller
                     return response()->json([
                         'status' => true,
                         'detail' => 'pending',
-                        'price' =>  $trx->amount,
+                        'price' => $trx->amount,
                     ], 200);
                 }
             } else {
@@ -1277,7 +1189,7 @@ class TransactionController extends Controller
                         return response()->json([
                             'status' => true,
                             'detail' => 'success',
-                            'price' =>  $trx->amount,
+                            'price' => $trx->amount,
                         ], 200);
                     }
                 } else {
@@ -1305,13 +1217,11 @@ class TransactionController extends Controller
 
         // try {
 
-        $key =  $request->key;
+        $key = $request->key;
         $amount = $request->amount;
         $email = $request->email;
         $ref = $request->ref;
         $wc_order = $request->wc_order;
-
-
 
 
         $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
@@ -1384,15 +1294,11 @@ class TransactionController extends Controller
         //     ->first()->amount;
 
 
-
         $web_commission = Charge::where('title', 'bwebpay')->first()->amount;
         //Both Commission
         $amount1 = $web_commission / 100;
         $amount2 = $amount1 * $amount;
         $both_commmission = number_format($amount2, 3);
-
-
-
 
 
         $trans_id = $ref;
@@ -1407,14 +1313,9 @@ class TransactionController extends Controller
         }
 
 
-
-
-
         $total_received = 0.00;
 
         $webhook = $marchant_url;
-
-
 
 
         $get_trans_id = Webtransfer::where('trans_id', $trans_id)
@@ -1443,8 +1344,6 @@ class TransactionController extends Controller
         //     return $th->getMessage();
         // }
     }
-
-
 
 
     public function custom_pay(Request $request)
@@ -1486,23 +1385,16 @@ class TransactionController extends Controller
     }
 
 
-
-
-
     public function custom_pay_now(Request $request)
     {
 
 
-
         // try {
 
-        $key =  $request->key;
+        $key = $request->key;
         $amount = $request->amount;
         $email = $request->email;
         $trans_id = $request->trans_id;
-
-
-
 
 
         $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
@@ -1566,7 +1458,6 @@ class TransactionController extends Controller
         //     ->first()->amount;
 
 
-
         $web_commission = Charge::where('title', 'bwebpay')->first()->amount;
         //Both Commission
         $amount1 = $web_commission / 100;
@@ -1574,14 +1465,11 @@ class TransactionController extends Controller
         $both_commmission = number_format($amount2, 2);
 
 
-
         if ($both_commmission >= 300) {
             $commmission = 300;
         } else {
             $commmission = $both_commmission;
         }
-
-
 
 
         $trans_id = $ref ?? random_int(100000, 999999);
@@ -1596,14 +1484,9 @@ class TransactionController extends Controller
         }
 
 
-
-
-
         $total_received = 0.00;
 
         $webhook = $marchant_url;
-
-
 
 
         $get_trans_id = Webtransfer::where('trans_id', $trans_id)
@@ -1631,13 +1514,11 @@ class TransactionController extends Controller
         $data = Crypt::encryptString($qrdata);
 
 
-
-        return view('webpay', compact('payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name',  'p_bank_name', 'total_received'));
+        return view('webpay', compact('payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'v_account_no', 'p_account_no', 'trans_id', 'both_commmission', 'v_account_name', 'p_account_name', 'bank_name', 'p_bank_name', 'total_received'));
         // } catch (\Exception $th) {
         //     return $th->getMessage();
         // }
     }
-
 
 
     public function receipt(Request $request)
@@ -1732,7 +1613,6 @@ class TransactionController extends Controller
     }
 
 
-
     public function resolve_bank(request $request)
     {
 
@@ -1754,8 +1634,6 @@ class TransactionController extends Controller
     }
 
 
-
-
     public function notify_webhook(request $request)
     {
         $message = "Card Webhook | " . json_encode($request->all());
@@ -1765,7 +1643,6 @@ class TransactionController extends Controller
         $AmountCollected = $request->AmountCollected;
         $TransactionStatus = $request->TransactionStatus;
         $MerchantReference = $request->MerchantReference;
-
 
 
         if ($TransactionStatus != 'Successful') {
@@ -1782,7 +1659,7 @@ class TransactionController extends Controller
         $amount2 = $amount1 * $AmountCollected;
         $commmission_to_remove = round($amount2, 3);
 
-        $enkPay_commision_amount = $AmountCollected -  (int)$commmission_to_remove;
+        $enkPay_commision_amount = $AmountCollected - (int)$commmission_to_remove;
         $enkpay_commision = $enkPay_commision_amount;
         $amt_to_credit = $enkpay_commision;
         $amt1 = $amt_to_credit - 4;
@@ -1791,7 +1668,7 @@ class TransactionController extends Controller
         $trx = CardwebTransaction::where('ref_trans_id', $MerchantReference)->where('status', 0)->first() ?? null;
         $status = CardwebTransaction::where('ref_trans_id', $MerchantReference)->where('status', 0)->first()->status ?? null;
 
-        if($status == null){
+        if ($status == null) {
 
             $trasnaction = new PendingcardTransaction();
             $trasnaction->user_id = null;
@@ -1847,8 +1724,7 @@ class TransactionController extends Controller
         }
 
 
-
-        if ($trx->status == 1){
+        if ($trx->status == 1) {
             $message = "Card Transaction Already Confirmed";
             send_notification($message);
         }
@@ -1884,7 +1760,6 @@ class TransactionController extends Controller
 
 
         $trx = CardwebTransaction::where('ref_trans_id', $MerchantReference)->update(['status' => 1]);
-
 
 
         //update Transactions
@@ -1930,36 +1805,34 @@ class TransactionController extends Controller
     }
 
 
-
     public function opay_transfer_transaction(Request $request)
     {
         $ref = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
         $usr = User::where('id', $ref->user_id)->first();
 
-        if($ref->trans_id  == $request->ref){
-            return back()->with('error',"duplicate");
+        if ($ref->trans_id == $request->ref) {
+            return back()->with('error', "duplicate");
         }
 
-            $trasnaction = new Transfertransaction();
-            $trasnaction->user_id = $ref->user_id;
-            $trasnaction->type = "manualtransferpay";
-            $trasnaction->amount = $ref->amount;
-            $trasnaction->transaction_type = "WEBTRANSFER";
-            $trasnaction->ref_trans_id = $ref->trans_id;
-            $trasnaction->bank = "OPAY";
-            $trasnaction->ref = $request->ref;
-            $trasnaction->account_no = $ref->manual_acc_no_opay;
-            $trasnaction->title = "WEBTRANSFER";
-            $trasnaction->main_type = "WEBTRF";
-            $trasnaction->note = "WEBTRANSFER";
-            $trasnaction->e_charges = 0;
-            $trasnaction->enkPay_Cashout_profit = 0;
-            $trasnaction->status = 0;
-            $trasnaction->save();
+        $trasnaction = new Transfertransaction();
+        $trasnaction->user_id = $ref->user_id;
+        $trasnaction->type = "manualtransferpay";
+        $trasnaction->amount = $ref->amount;
+        $trasnaction->transaction_type = "WEBTRANSFER";
+        $trasnaction->ref_trans_id = $ref->trans_id;
+        $trasnaction->bank = "OPAY";
+        $trasnaction->ref = $request->ref;
+        $trasnaction->account_no = $ref->manual_acc_no_opay;
+        $trasnaction->title = "WEBTRANSFER";
+        $trasnaction->main_type = "WEBTRF";
+        $trasnaction->note = "WEBTRANSFER";
+        $trasnaction->e_charges = 0;
+        $trasnaction->enkPay_Cashout_profit = 0;
+        $trasnaction->status = 0;
+        $trasnaction->save();
 
-            $message = "Transfer Payment Initiated |" . $request->ref . "| ON OPAY " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
-            send_notification($message);
-
+        $message = "Transfer Payment Initiated |" . $request->ref . "| ON OPAY " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
+        send_notification($message);
 
 
     }
@@ -1969,28 +1842,32 @@ class TransactionController extends Controller
         $ref = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
         $usr = User::where('id', $ref->user_id)->first();
 
-        if($ref == null) {
-            $trasnaction = new Transfertransaction();
-            $trasnaction->user_id = $ref->user_id;
-            $trasnaction->type = "manualtransferpay";
-            $trasnaction->amount = $ref->amount;
-            $trasnaction->ref_trans_id = $ref->trans_id;
-            $trasnaction->transaction_type = "WEBTRANSFER";
-            $trasnaction->bank = "PALMPAY";
-            $trasnaction->ref = $request->ref;
-            $trasnaction->account_no = $ref->manual_acc_no_opay;
-            $trasnaction->title = "WEBTRANSFER";
-            $trasnaction->main_type = "WEBTRF";
-            $trasnaction->note = "WEBTRANSFER";
-            $trasnaction->e_charges = 0;
-            $trasnaction->enkPay_Cashout_profit = 0;
-            $trasnaction->status = 0;
-            $trasnaction->save();
-
-
-            $message = "Transfer Payment Initiated |" . $request->ref . "| ON PALMPAY " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
-            send_notification($message);
+        if ($ref->trans_id == $request->ref) {
+            return back()->with('error', "duplicate");
         }
+
+
+        $trasnaction = new Transfertransaction();
+        $trasnaction->user_id = $ref->user_id;
+        $trasnaction->type = "manualtransferpay";
+        $trasnaction->amount = $ref->amount;
+        $trasnaction->ref_trans_id = $ref->trans_id;
+        $trasnaction->transaction_type = "WEBTRANSFER";
+        $trasnaction->bank = "PALMPAY";
+        $trasnaction->ref = $request->ref;
+        $trasnaction->account_no = $ref->manual_acc_no_opay;
+        $trasnaction->title = "WEBTRANSFER";
+        $trasnaction->main_type = "WEBTRF";
+        $trasnaction->note = "WEBTRANSFER";
+        $trasnaction->e_charges = 0;
+        $trasnaction->enkPay_Cashout_profit = 0;
+        $trasnaction->status = 0;
+        $trasnaction->save();
+
+
+        $message = "Transfer Payment Initiated |" . $request->ref . "| ON PALMPAY " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
+        send_notification($message);
+
 
     }
 
@@ -1999,7 +1876,7 @@ class TransactionController extends Controller
         $ref = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
         $usr = User::where('id', $ref->user_id)->first();
 
-        if($ref == null) {
+        if ($ref == null) {
             $trasnaction = new Transfertransaction();
             $trasnaction->user_id = $ref->user_id;
             $trasnaction->type = "manualtransferpay";

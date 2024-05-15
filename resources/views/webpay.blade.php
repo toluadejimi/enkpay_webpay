@@ -143,8 +143,9 @@
                         <div class="content">
                             <h4><a href="#" data-bs-toggle="collapse" data-bs-target="#opay"
                                    aria-expanded="false" aria-controls="opay" class="fw_6">Pay To OPAY
-                                    Transfer</a></h4>
-                            <p>40 secs confirmation</p>
+                                    </a>
+                            </h4>
+                            <p>40 seconds confirmation (recommended)</p>
                         </div>
                     </div>
 
@@ -420,8 +421,8 @@
                             <div class="content">
                                 <h4><a href="#" data-bs-toggle="collapse" data-bs-target="#palmpay"
                                        aria-expanded="false" aria-controls="opay" class="fw_6">Pay To Palmpay
-                                        Transfer</a></h4>
-                                <p>40 secs confirmation</p>
+                                        </a></h4>
+                                <p>40 seconds confirmation (recommended)</p>
                             </div>
                         </div>
 
@@ -536,7 +537,7 @@
                                                                             <div class="loader-text">
                                                                                 <p class="text-center mb-4"
                                                                                    style="color:rrgb(11, 1, 63)"
-                                                                                   id="messagepalmpay"></p>
+                                                                                   id="message"></p>
                                                                             </div>
 
                                                                         </div>
@@ -557,7 +558,7 @@
                                                     </div>
 
 
-                                                    <button class="tf-btn accent large my-3 request-btn" id="requestpalmpay1">I
+                                                    <button class="tf-btn accent large my-3 request-btn" id="requestpalmpay">I
                                                         ve sent ₦{{
                                         number_format($payable_amount )}}
 
@@ -665,27 +666,31 @@
                                     }, 1000);
                                 }
 
-                                function startMessage(messageDisplayId, message) {
-                                    var messageDisplay = document.getElementById(messageDisplayId);
-                                    messageDisplay.innerHTML = message;
+
+
+                                function startMessage() {
+
+                                    var messageDisplay = document.getElementById('message');
+                                    messageDisplay.innerHTML = "Confirming Opay payment...";
+
                                 }
 
-                                // Attach event listeners to each button
-                                const buttons = document.querySelectorAll('.request-btn');
-                                buttons.forEach(button => {
-                                    button.addEventListener("click", function () {
-                                        const trx_id = document.getElementById('trfpalmpay').value;
-                                        //const palmpay_account_no = document.getElementById('palmpay_account_no').value;
 
-                                        startTimer(1200, 'countdown');
-                                        makeRequest(trx_id, palmpay_account_no);
-                                        startMessage('messagepalmpay', "Confirming palmpay payment...");
+                                const requestpalmpayBtn = document.getElementById('requestpalmpay');
+                                requestpalmpayBtn.addEventListener("click", function () {
+                                    const requestpalmpayBtn = document.getElementById('requestpalmpay');
 
-                                        $('#myModalpalmpayshow').modal('show');
-                                        button.disabled = true;
-                                        button.hidden = true;
-                                    });
-                                });
+
+                                    startTimer(1200, 'countdown');
+                                    makeRequest();
+                                    startMessage();
+                                    $('#myModalpalmpayshow').modal('show');
+                                    requestpalmpayBtn.disabled = true;
+                                    requestpalmpayBtn.hidden = true;
+
+                                })
+
+
                             </script>
 
                             <!-- Example buttons -->
@@ -727,9 +732,8 @@
 
                             <div class="content">
                                 <h4><a href="#" data-bs-toggle="collapse" data-bs-target="#kuda"
-                                       aria-expanded="false" aria-controls="kuda" class="fw_6">Pay To Kuda
-                                        Transfer</a></h4>
-                                <p>40 secs confirmation</p>
+                                       aria-expanded="false" aria-controls="kuda" class="fw_6">Pay To Kuda</a></h4>
+                                <p>40 seconds confirmation (recommended)</p>
                             </div>
                         </div>
 
@@ -1235,7 +1239,7 @@
                 <div class="inner d-flex align-items-center">
                     <i class="logo icon-credit-card2"></i>
                     <div class="content">
-                        <h4><a href="{{ $pre_link }}" class="fw_6">Pay To Debit Card</a></h4>
+                        <h4><a href="{{ $pre_link }}" class="fw_6">Pay with Debit Card</a></h4>
                         <i>Transaction may attract extra charge</i>
                     </div>
                 </div>

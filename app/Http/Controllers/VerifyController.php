@@ -189,8 +189,6 @@ class VerifyController extends Controller
             return back()->with('message', 'Transaction Deleted Successfully');
 
 
-
-
         }
 
 

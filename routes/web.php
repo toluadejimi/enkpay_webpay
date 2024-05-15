@@ -79,6 +79,18 @@ Route::get('payment', [VerifyController::class, 'verify_view']);
 Route::get('complete-transaction', [VerifyController::class, 'complete_transaction']);
 
 
+Route::get('offpalmpay', [VerifyController::class, 'offpalmpay_account']);
+Route::get('onpalmpay', [VerifyController::class, 'onpalmpay_account']);
+Route::get('offopay', [VerifyController::class, 'offopay_account']);
+Route::get('onopay', [VerifyController::class, 'onopay_account']);
+Route::get('offkuda', [VerifyController::class, 'offkuda_account']);
+Route::get('onkuda', [VerifyController::class, 'onkuda_account']);
+
+
+
+
+
+
 
 
 

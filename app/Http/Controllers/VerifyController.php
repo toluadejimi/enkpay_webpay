@@ -7,6 +7,7 @@ use App\Models\Transaction;
 use App\Models\Transfertransaction;
 use App\Models\User;
 use App\Models\Webtransfer;
+use Hamcrest\Core\Set;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -157,6 +158,45 @@ class VerifyController extends Controller
 
 
     }
+
+    public function offpalmpay_account()
+    {
+        Setting::where('palmpay_trx', 1)->update(['palmpay_trx' => 0]);
+        return back()->with('message', "Palmpay Account is off");
+    }
+
+    public function onpalmpay_account()
+    {
+        Setting::where('palmpay_trx', 0)->update(['palmpay_trx' => 1]);
+        return back()->with('message', "Palmpay Account is ON");
+    }
+
+
+    public function offopay_account()
+    {
+        Setting::where('opay_trx', 1)->update(['opay_trx' => 0]);
+        return back()->with('message', "Opay Account is off");
+    }
+
+    public function onopay_account()
+    {
+        Setting::where('opay_trx', 0)->update(['opay_trx' => 1]);
+        return back()->with('message', "Opay Account is ON");
+    }
+
+    public function offkuda_account()
+    {
+        Setting::where('kuda_trx', 1)->update(['kuda_trx' => 0]);
+        return back()->with('message', "KUDA Account is off");
+    }
+
+    public function onkuda_account()
+    {
+        Setting::where('kuda_trx', 0)->update(['kuda_trx' => 1]);
+        return back()->with('message', "Kuda Account is ON");
+    }
+
+
 
 
 }

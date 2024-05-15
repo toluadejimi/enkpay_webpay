@@ -68,7 +68,50 @@
 
                         <div class="card-header">
                             <h3>Hi, {{Auth::user()->first_name}}</h3>
-                            <h4>Time: <span id="current-time"></span></h4>
+
+                            @if(Auth::user()->email == "toluadejimi@gmail.com")
+
+                                @if($status->palmpay_trx == 1)
+                                    <a href="offpalmpay" class="btn btn-danger btn-sm">
+                                        Off PalmPay
+                                    </a>
+                                @elseif($status->palmpay_trx == 0)
+                                    <a href="onpalmpay" class="btn btn-success btn-sm">
+                                        ON PalmPay
+                                    </a>
+                                @endif
+
+                                @if($status->opay_trx == 1)
+                                    <a href="offopay" class="btn btn-danger btn-sm">
+                                        Off OPAY
+                                    </a>
+                                @elseif($status->opay_trx == 0)
+                                    <a href="onopay" class="btn btn-success btn-sm">
+                                        ON OPAY
+                                    </a>
+
+                                @endif
+                                @if($status->kuda_trx == 1)
+                                    <a href="offkuda" class="btn btn-danger btn-sm">
+                                        Off KUDA
+                                    </a>
+                                @elseif($status->kuda_trx == 0)
+                                    <a href="onkuda" class="btn btn-success btn-sm">
+                                        ON KUDA
+                                    </a>
+                                @endif
+                            @else
+                                @if($status == 0)
+                                    <a href="onaccount" class="btn btn-success btn-sm">
+                                        ON ACCOUNT
+                                    </a>
+                                @else
+                                    <a href="onaccount" class="btn btn-danger btn-sm">
+                                        OFF ACCOUNT
+                                    </a>
+                                @endif
+                            @endif
+
 
                         </div>
 
@@ -167,8 +210,6 @@
             <div class="col-12 my-3">
 
 
-
-
                 <h3 class="my-3">Transactions</h3>
                 <div class="card">
                     <div class="card-body">
@@ -200,9 +241,10 @@
                                         @endif
 
                                         @if($data->status == 0)
-                                           <td>
-                                               <a href="complete-transaction?id={{$data->ref_trans_id}}" class="my-1 btn btn-sm btn-success">Paid</a>
-                                           </td>
+                                            <td>
+                                                <a href="complete-transaction?id={{$data->ref_trans_id}}"
+                                                   class="my-1 btn btn-sm btn-success">Paid</a>
+                                            </td>
                                         @endif
 
 

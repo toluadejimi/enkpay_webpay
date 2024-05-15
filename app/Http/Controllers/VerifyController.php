@@ -169,13 +169,11 @@ class VerifyController extends Controller
         }
 
         $trx = Webtransfer::where('trans_id', $request->id)->first() ?? null;
-        if($trx == null){
-            return back()->with('error', 'Transaction Not Found');
-        }
+//        if($trx == null){
+//            return back()->with('error', 'Transaction Not Found');
+//        }
 
-        if($trx->status == 2){
-            return back()->with('error', 'Transaction has been completed');
-        }
+
 
         if($trx->status == 0){
 

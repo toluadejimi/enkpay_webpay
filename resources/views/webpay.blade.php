@@ -533,7 +533,7 @@
                                                                                 <div class="line line2"></div>
                                                                             </div>
 
-                                                                            <div class="loader-text-palmpay">
+                                                                            <div class="loader-text">
                                                                                 <p class="text-center mb-4"
                                                                                    style="color:rrgb(11, 1, 63)"
                                                                                    id="messagepalmpay"></p>
@@ -842,10 +842,10 @@
                                                                                 <div class="line line2"></div>
                                                                             </div>
 
-                                                                            <div class="loader-text-palmpay">
+                                                                            <div class="loader-text-kuda">
                                                                                 <p class="text-center mb-4"
                                                                                    style="color:rrgb(11, 1, 63)"
-                                                                                   id="messagepalmpay"></p>
+                                                                                   id="messagekuda"></p>
                                                                             </div>
 
                                                                         </div>

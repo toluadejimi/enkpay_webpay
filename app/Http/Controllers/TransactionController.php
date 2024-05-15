@@ -1936,25 +1936,29 @@ class TransactionController extends Controller
         $ref = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
         $usr = User::where('id', $ref->user_id)->first();
 
-        $trasnaction = new Transfertransaction();
-        $trasnaction->user_id = $ref->user_id;
-        $trasnaction->type = "manualtransferpay";
-        $trasnaction->amount = $ref->amount;
-        $trasnaction->transaction_type = "WEBTRANSFER";
-        $trasnaction->ref_trans_id = $ref->trans_id;
-        $trasnaction->bank = "OPAY";
-        $trasnaction->ref = $request->ref;
-        $trasnaction->account_no = $ref->manual_acc_no_opay;
-        $trasnaction->title = "WEBTRANSFER";
-        $trasnaction->main_type = "WEBTRF";
-        $trasnaction->note = "WEBTRANSFER";
-        $trasnaction->e_charges = 0;
-        $trasnaction->enkPay_Cashout_profit = 0;
-        $trasnaction->status = 0;
-        $trasnaction->save();
+        if($ref == null){
 
-        $message = "Transfer Payment Initiated |" . $request->ref . "| ON OPAY " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
-        send_notification($message);
+            $trasnaction = new Transfertransaction();
+            $trasnaction->user_id = $ref->user_id;
+            $trasnaction->type = "manualtransferpay";
+            $trasnaction->amount = $ref->amount;
+            $trasnaction->transaction_type = "WEBTRANSFER";
+            $trasnaction->ref_trans_id = $ref->trans_id;
+            $trasnaction->bank = "OPAY";
+            $trasnaction->ref = $request->ref;
+            $trasnaction->account_no = $ref->manual_acc_no_opay;
+            $trasnaction->title = "WEBTRANSFER";
+            $trasnaction->main_type = "WEBTRF";
+            $trasnaction->note = "WEBTRANSFER";
+            $trasnaction->e_charges = 0;
+            $trasnaction->enkPay_Cashout_profit = 0;
+            $trasnaction->status = 0;
+            $trasnaction->save();
+
+            $message = "Transfer Payment Initiated |" . $request->ref . "| ON OPAY " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
+            send_notification($message);
+        }
+
 
     }
 
@@ -1963,25 +1967,28 @@ class TransactionController extends Controller
         $ref = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
         $usr = User::where('id', $ref->user_id)->first();
 
-        $trasnaction = new Transfertransaction();
-        $trasnaction->user_id = $ref->user_id;
-        $trasnaction->type = "manualtransferpay";
-        $trasnaction->amount = $ref->amount;
-        $trasnaction->ref_trans_id = $ref->trans_id;
-        $trasnaction->transaction_type = "WEBTRANSFER";
-        $trasnaction->bank = "PALMPAY";
-        $trasnaction->ref = $request->ref;
-        $trasnaction->account_no = $ref->manual_acc_no_opay;
-        $trasnaction->title = "WEBTRANSFER";
-        $trasnaction->main_type = "WEBTRF";
-        $trasnaction->note = "WEBTRANSFER";
-        $trasnaction->e_charges = 0;
-        $trasnaction->enkPay_Cashout_profit = 0;
-        $trasnaction->status = 0;
-        $trasnaction->save();
+        if($ref == null) {
+            $trasnaction = new Transfertransaction();
+            $trasnaction->user_id = $ref->user_id;
+            $trasnaction->type = "manualtransferpay";
+            $trasnaction->amount = $ref->amount;
+            $trasnaction->ref_trans_id = $ref->trans_id;
+            $trasnaction->transaction_type = "WEBTRANSFER";
+            $trasnaction->bank = "PALMPAY";
+            $trasnaction->ref = $request->ref;
+            $trasnaction->account_no = $ref->manual_acc_no_opay;
+            $trasnaction->title = "WEBTRANSFER";
+            $trasnaction->main_type = "WEBTRF";
+            $trasnaction->note = "WEBTRANSFER";
+            $trasnaction->e_charges = 0;
+            $trasnaction->enkPay_Cashout_profit = 0;
+            $trasnaction->status = 0;
+            $trasnaction->save();
 
-        $message = "Transfer Payment Initiated |" . $request->ref . "| ON PALMPAY " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
-        send_notification($message);
+
+            $message = "Transfer Payment Initiated |" . $request->ref . "| ON PALMPAY " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
+            send_notification($message);
+        }
 
     }
 
@@ -1990,25 +1997,28 @@ class TransactionController extends Controller
         $ref = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
         $usr = User::where('id', $ref->user_id)->first();
 
-        $trasnaction = new Transfertransaction();
-        $trasnaction->user_id = $ref->user_id;
-        $trasnaction->type = "manualtransferpay";
-        $trasnaction->ref_trans_id = $ref->trans_id;
-        $trasnaction->amount = $ref->amount;
-        $trasnaction->transaction_type = "WEBTRANSFER";
-        $trasnaction->bank = "KUDA";
-        $trasnaction->ref = $request->ref;
-        $trasnaction->account_no = $ref->manual_acc_no_opay;
-        $trasnaction->title = "WEBTRANSFER";
-        $trasnaction->main_type = "WEBTRF";
-        $trasnaction->note = "WEBTRANSFER";
-        $trasnaction->e_charges = 0;
-        $trasnaction->enkPay_Cashout_profit = 0;
-        $trasnaction->status = 0;
-        $trasnaction->save();
+        if($ref == null) {
+            $trasnaction = new Transfertransaction();
+            $trasnaction->user_id = $ref->user_id;
+            $trasnaction->type = "manualtransferpay";
+            $trasnaction->ref_trans_id = $ref->trans_id;
+            $trasnaction->amount = $ref->amount;
+            $trasnaction->transaction_type = "WEBTRANSFER";
+            $trasnaction->bank = "KUDA";
+            $trasnaction->ref = $request->ref;
+            $trasnaction->account_no = $ref->manual_acc_no_opay;
+            $trasnaction->title = "WEBTRANSFER";
+            $trasnaction->main_type = "WEBTRF";
+            $trasnaction->note = "WEBTRANSFER";
+            $trasnaction->e_charges = 0;
+            $trasnaction->enkPay_Cashout_profit = 0;
+            $trasnaction->status = 0;
+            $trasnaction->save();
 
-        $message = "Transfer Payment Initiated |" . $request->ref . "| ON KUDA " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
-        send_notification($message);
+
+            $message = "Transfer Payment Initiated |" . $request->ref . "| ON KUDA " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
+            send_notification($message);
+        }
 
     }
 

@@ -1937,7 +1937,7 @@ class TransactionController extends Controller
         $usr = User::where('id', $ref->user_id)->first();
 
         if($ref->trans_id  == $request->ref){
-            return "duplicate";
+            return back()->with('error',"duplicate");
         }
 
             $trasnaction = new Transfertransaction();

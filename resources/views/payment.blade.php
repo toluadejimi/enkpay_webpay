@@ -232,7 +232,7 @@
 
                                 @forelse($transactions as $data)
                                     <tr>
-                                        <td> {{$data->ref_trans_id}} </td>
+                                        <td> {{\Carbon\Carbon::parse($data->created_at)->format('h:i A')}} </td>
                                         <td> {{$data->bank}} </td>
                                         <td> {{$data->ref}} </td>
                                         <td> {{number_format($data->amount, 2)}} </td>
@@ -245,11 +245,11 @@
                                         @if($data->status == 0)
                                             <td>
                                                 <a href="complete-transaction?id={{$data->ref_trans_id}}"
-                                                   class="my-1 btn btn-sm btn-success">Paid</a>
+                                                   class="my-3 btn btn-sm btn-success">Paid</a>
                                             </td>
                                             <td>
                                                 <a href="delete-transaction?id={{$data->ref_trans_id}}"
-                                                   class="my-1 btn btn-sm btn-danger">Remove Transaction</a>
+                                                   class="my-3 btn btn-sm btn-danger">Remove Transaction</a>
                                             </td>
                                         @endif
 

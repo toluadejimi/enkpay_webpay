@@ -336,7 +336,7 @@
                                             const webhook = document.getElementById('webHook').value;
                                             const amount = document.getElementById('Amount').value;
 
-                                            window.location.href = "{{ url('') }}/success?trans_id=" + trx;
+                                            window.location.href = "{{ url('') }}/success?trans_id=" + trx_id;
 
                                             repeatRequestopay = false;
                                         }

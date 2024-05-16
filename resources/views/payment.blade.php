@@ -102,7 +102,7 @@
                                         ON KUDA
                                     </a>
                                 @endif
-                            @else
+                            @endif
 
 
                                 @if(Auth::user()->bank_operator == "pamlpay" && $status == 0)
@@ -134,7 +134,7 @@
 
 
 
-                            @endif
+
 
 
                         </div>

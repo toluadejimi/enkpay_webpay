@@ -487,7 +487,7 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <h6 style="font-size: 32px" class="text-center my-1 text-danger">{{ $transref ?? "Not Available"}}</h6>
-                                                    <input hidden value="{{ $transref }}" id="trfpalmpay">
+                                                    <input hidden value="{{ $trans_id }}" id="trfpalmpay">
 
                                                 </div>
 

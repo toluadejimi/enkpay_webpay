@@ -1164,6 +1164,7 @@ class TransactionController extends Controller
 
                 if ($trx->status == 1) {
                     Transaction::where('ref_trans_id', $ref)->update(['resolve' => 1]);
+                    Transfertransaction::where('ref_trans_id', $ref)->update(['resolve' => 1]);
                     return response()->json([
                         'status' => true,
                         'detail' => 'success',

@@ -126,6 +126,7 @@ class VerifyController extends Controller
             //update Transactions
             $trasnaction = new Transaction();
             $trasnaction->user_id = $trx->user_id;
+            $trasnaction->e_ref = $trx->manual_acc_ref;
             $trasnaction->ref_trans_id = $request->id;
             $trasnaction->type = "webpay";
             $trasnaction->transaction_type = "VirtualFundWallet";

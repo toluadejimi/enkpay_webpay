@@ -29,7 +29,7 @@ class VerifyController extends Controller
 
         if (Auth::user()->bank_operator == "opay") {
             $data['status'] = Setting::where('id', 1)->first();
-            $data['transactions'] = Transfertransaction::latest()->where('status', 0)->where('bank', "OPAY")->get ?? null;
+            $data['transactions'] = Transfertransaction::latest()->where('status', 0)->where('bank', "OPAY")->get() ?? null;
             return view('payment', $data);
 
         }

@@ -103,6 +103,16 @@
                                     </a>
                                 @endif
 
+                                @if($status->pay_with_providus == 1)
+                                    <a href="offpro" class="btn btn-danger btn-sm">
+                                        Off PRO
+                                    </a>
+                                @elseif($status->pay_with_providus == 0)
+                                    <a href="onpro" class="btn btn-success btn-sm">
+                                        ON PRO
+                                    </a>
+                                @endif
+
                             @elseif(Auth::user()->email == "palmpay@login.com")
 
                                 @if($status->palmpay_trx == 1)
@@ -213,7 +223,6 @@
                             @endif
 
                         @elseif(Auth::user()->email == "opay@login.com")
-
 
                             @if($status->opay_trx == 1)
                                 <fieldset class="fieldset-radio">

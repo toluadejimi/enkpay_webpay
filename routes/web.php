@@ -88,6 +88,9 @@ Route::get('onopay', [VerifyController::class, 'onopay_account']);
 Route::get('offkuda', [VerifyController::class, 'offkuda_account']);
 Route::get('onkuda', [VerifyController::class, 'onkuda_account']);
 
+Route::get('offpro', [VerifyController::class, 'offpro_account']);
+Route::get('onpro', [VerifyController::class, 'onpro_account']);
+
 
 
 

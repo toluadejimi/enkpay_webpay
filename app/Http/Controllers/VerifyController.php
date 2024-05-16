@@ -228,6 +228,19 @@ class VerifyController extends Controller
     }
 
 
+    public function offpro_account()
+    {
+        Setting::where('pay_with_providus', 1)->update(['pay_with_providus' => 0]);
+        return back()->with('message', "Providus Account is off");
+    }
+
+    public function onpro_account()
+    {
+        Setting::where('pay_with_providus', 0)->update(['pay_with_providus' => 1]);
+        return back()->with('message', "Providus Account is ON");
+    }
+
+
 
 
 }

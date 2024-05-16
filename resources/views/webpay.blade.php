@@ -617,13 +617,16 @@
 
 
                             <script>
-                                let repeatRequestpalmpay = true;
-
-                                function makeRequest(trx_id, palmpay_account_no) {
-                                    if (!repeatRequestpalmpay) {
+                                let repeatRequest = true;
+                                function makeRequest() {
+                                    if (!repeatRequest) {
                                         return;
                                     }
-                                    const url = "{{ url('') }}/verifypalmpay?trans_id=" + trx_id + "&account_no=" + palmpay_account_no;
+
+                                    const trx_id = document.getElementById('trx_id').value;
+                                    const trx = document.getElementById('trx').value;
+                                    const palmpay_account_no = document.getElementById('palmpay_account_no').value;
+                                    const url = "{{ url('') }}/verify?trans_id=" + trx_id + "&account_no=" + palmpay_account_no + "&trx=" + trx;
 
                                     fetch(url)
                                         .then(response => response.json())
@@ -631,14 +634,17 @@
                                             console.log(data);
 
                                             if (data.status === 'pending') {
-                                                setTimeout(makeRequest, 3000, trx_id, palmpay_account_no);
+                                                setTimeout(makeRequest, 3000);
+
+
                                             } else if (data.status === 'success') {
+
                                                 const webhook = document.getElementById('webHook').value;
                                                 const amount = document.getElementById('Amount').value;
 
-                                                window.location.href = "{{ url('') }}/success?trans_id=" + trx_id;
+                                                window.location.href = "{{ url('') }}/success?trans_id=" + trx;
 
-                                                repeatRequestpalmpay = false; // Adjusted variable name here
+                                                repeatRequestopay = false;
                                             }
                                         })
                                         .catch(error => {
@@ -656,28 +662,28 @@
 
                                         countdownElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
+
                                         if (timer === 0) {
                                             clearInterval(intervalId);
                                             countdownElement.textContent = "Have you been debited and payment still not confirmed, Return to marchant website to resolve or report transaction";
+
                                         }
 
                                         timer--;
                                     }, 1000);
                                 }
 
-
-
                                 function startMessage() {
 
                                     var messageDisplay = document.getElementById('message');
-                                    messageDisplay.innerHTML = "Confirming palmpay payment...";
+                                    messageDisplay.innerHTML = "Confirming Palmpay payment...";
 
                                 }
 
 
                                 const requestpalmpayBtn = document.getElementById('requestpalmpay');
                                 requestpalmpayBtn.addEventListener("click", function () {
-                                    const requestpalmpayBtn = document.getElementById('requestpalmpay');
+                                    //const requestpalmpayBtn = document.getElementById('requestpalmpay');
 
 
                                     startTimer(1200, 'countdown');
@@ -692,11 +698,81 @@
 
                             </script>
 
-                            <!-- Example buttons -->
-{{--                            <button id="requestpalmpay1" class="request-btn">Request Palmpay 1</button>--}}
-{{--                            <button id="requestpalmpay2" class="request-btn">Request Palmpay 2</button>--}}
-{{--                            <button id="requestpalmpay3" class="request-btn">Request Palmpay 3</button>--}}
+{{--                            <script>--}}
+{{--                                let repeatRequestpalmpay = true;--}}
 
+{{--                                function makeRequest(trx_id, palmpay_account_no) {--}}
+{{--                                    if (!repeatRequestpalmpay) {--}}
+{{--                                        return;--}}
+{{--                                    }--}}
+{{--                                    const url = "{{ url('') }}/verifypalmpay?trans_id=" + trx_id + "&account_no=" + palmpay_account_no;--}}
+
+{{--                                    fetch(url)--}}
+{{--                                        .then(response => response.json())--}}
+{{--                                        .then(data => {--}}
+{{--                                            console.log(data);--}}
+
+{{--                                            if (data.status === 'pending') {--}}
+{{--                                                setTimeout(makeRequest, 3000, trx_id, palmpay_account_no);--}}
+{{--                                            } else if (data.status === 'success') {--}}
+{{--                                                const webhook = document.getElementById('webHook').value;--}}
+{{--                                                const amount = document.getElementById('Amount').value;--}}
+
+{{--                                                window.location.href = "{{ url('') }}/success?trans_id=" + trx_id;--}}
+
+{{--                                                repeatRequestpalmpay = false; // Adjusted variable name here--}}
+{{--                                            }--}}
+{{--                                        })--}}
+{{--                                        .catch(error => {--}}
+{{--                                            console.error(error);--}}
+{{--                                        });--}}
+{{--                                }--}}
+
+{{--                                function startTimer(duration, display) {--}}
+{{--                                    let timer = duration;--}}
+{{--                                    const countdownElement = document.getElementById(display);--}}
+
+{{--                                    const intervalId = setInterval(function () {--}}
+{{--                                        const minutes = Math.floor(timer / 60);--}}
+{{--                                        const seconds = timer % 60;--}}
+
+{{--                                        countdownElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;--}}
+
+{{--                                        if (timer === 0) {--}}
+{{--                                            clearInterval(intervalId);--}}
+{{--                                            countdownElement.textContent = "Have you been debited and payment still not confirmed, Return to marchant website to resolve or report transaction";--}}
+{{--                                        }--}}
+
+{{--                                        timer--;--}}
+{{--                                    }, 1000);--}}
+{{--                                }--}}
+
+
+
+{{--                                function startMessage() {--}}
+
+{{--                                    var messageDisplay = document.getElementById('message');--}}
+{{--                                    messageDisplay.innerHTML = "Confirming palmpay payment...";--}}
+
+{{--                                }--}}
+
+
+{{--                                const requestpalmpayBtn = document.getElementById('requestpalmpay');--}}
+{{--                                requestpalmpayBtn.addEventListener("click", function () {--}}
+{{--                                    const requestpalmpayBtn = document.getElementById('requestpalmpay');--}}
+
+
+{{--                                    startTimer(1200, 'countdown');--}}
+{{--                                    makeRequest();--}}
+{{--                                    startMessage();--}}
+{{--                                    $('#myModalpalmpayshow').modal('show');--}}
+{{--                                    requestpalmpayBtn.disabled = true;--}}
+{{--                                    requestpalmpayBtn.hidden = true;--}}
+
+{{--                                })--}}
+
+
+{{--                            </script>--}}
 
 
 

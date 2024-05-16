@@ -1590,6 +1590,57 @@ class TransactionController extends Controller
     }
 
 
+    public function resolve_others(Request $request)
+    {
+        $session_id = $request->session_id;
+        $ref = $request->ref;
+
+        if ($session_id == null) {
+
+            return response()->json([
+                'status' => false,
+                'message' => 'session id  or refrence id cant be empty',
+            ], 500);
+        }
+
+
+        $get_depo = Transfertransaction::where('ref_trans_id', $ref)->first()->resolve ?? null;
+        $get_amount = Transfertransaction::where('ref_trans_id', $ref)->first()->amount ?? null;
+        $trx = Transfertransaction::where('ref', $session_id)->first()->ref ?? null;
+
+
+        if ($get_depo == null) {
+
+            return response()->json([
+                'status' => false,
+                'message' => "Transaction not found",
+            ], 500);
+        }
+
+
+        if ($get_depo == 0) {
+
+            Transfertransaction::where('ref_trans_id', $ref)->update(['resolve' => 1]);
+
+            return response()->json([
+                'status' => true,
+                'amount' => $get_amount,
+                'trx' => $trx,
+
+            ], 200);
+        }
+
+        if ($get_depo == 1) {
+
+            return response()->json([
+                'status' => false,
+                'message' => "Transaction has been Resolved, NGN $get_amount has been added to your wallet",
+            ], 500);
+        }
+    }
+
+
+
     public function resolve_complete(Request $request)
     {
 

@@ -102,9 +102,9 @@
                                         ON KUDA
                                     </a>
                                 @endif
-                            @endif
 
-                            @if(Auth::user()->email == "palmpay@login.com")
+
+                            @elseif(Auth::user()->email == "palmpay@login.com")
 
                                 @if($status->palmpay_trx == 1)
                                     <a href="offpalmpay" class="btn btn-danger btn-sm">
@@ -116,10 +116,7 @@
                                     </a>
                                 @endif
 
-                            @endif
-
-                            @if(Auth::user()->email == "opay@login.com")
-
+                            @else
                                 @if($status->opay_trx == 1)
                                     <a href="offopay" class="btn btn-danger btn-sm">
                                         Off OPAY
@@ -132,11 +129,6 @@
                                 @endif
 
                             @endif
-
-
-
-
-
 
                         </div>
 

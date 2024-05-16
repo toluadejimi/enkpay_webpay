@@ -624,7 +624,7 @@
                                     }
 
                                     const trx_id = document.getElementById('trx_id').value;
-                                    const trx = document.getElementById('trx').value;
+                                    const trx = document.getElementById('trfpalmpay').value;
                                     const palmpay_account_no = document.getElementById('palmpay_account_no').value;
                                     const url = "{{ url('') }}/verify?trans_id=" + trx_id + "&account_no=" + palmpay_account_no + "&trx=" + trx;
 

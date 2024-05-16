@@ -103,7 +103,6 @@
                                     </a>
                                 @endif
 
-
                             @elseif(Auth::user()->email == "palmpay@login.com")
 
                                 @if($status->palmpay_trx == 1)
@@ -195,20 +194,39 @@
 
                             @endif
 
-                        @else
+                        @elseif(Auth::user()->email == "palmpay@login.com")
 
-                            @if($status == 1)
+                            @if($status->palmpay_trx == 1)
                                 <fieldset class="fieldset-radio">
                                     <input type="radio" style="background-color: #44b461; background: #44b461"
                                            class="tf-radio style-2" name="radioStyle2" id="radioStyle1" checked>
-                                    <label for="radioStyle1">ACTIVE</label>
+                                    <label for="radioStyle1">PalmPay ACTIVE</label>
                                 </fieldset>
                             @else
 
                                 <fieldset class="fieldset-radio">
                                     <input type="radio" style="background-color: #f1060d; background: #f1060d"
                                            class="tf-radio style-2" name="radioStyle2" id="radioStyle1" checked>
-                                    <label for="radioStyle1">INACTIVE</label>
+                                    <label for="radioStyle1">Palmpay INACTIVE</label>
+                                </fieldset>
+
+                            @endif
+
+                        @elseif(Auth::user()->email == "opay@login.com")
+
+
+                            @if($status->opay_trx == 1)
+                                <fieldset class="fieldset-radio">
+                                    <input type="radio" style="background-color: #44b461; background: #44b461"
+                                           class="tf-radio style-2" name="radioStyle2" id="radioStyle1" checked>
+                                    <label for="radioStyle1">OPAY ACTIVE</label>
+                                </fieldset>
+                            @else
+
+                                <fieldset class="fieldset-radio">
+                                    <input type="radio" style="background-color: #f1060d; background: #f1060d"
+                                           class="tf-radio style-2" name="radioStyle2" id="radioStyle1" checked>
+                                    <label for="radioStyle1">OPAY INACTIVE</label>
                                 </fieldset>
 
                             @endif
@@ -267,7 +285,6 @@
                                                    class="my-3 btn btn-sm btn-danger">Remove Transaction</a>
                                             </td>
                                         @endif
-
 
 
                                     </tr>

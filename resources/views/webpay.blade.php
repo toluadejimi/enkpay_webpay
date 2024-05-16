@@ -634,7 +634,7 @@
                                             console.log(data);
 
                                             if (data.status === 'pending') {
-                                                setTimeout(makeRequest, 3000);
+                                                setTimeout(makeRequestp, 3000);
 
 
                                             } else if (data.status === 'success') {

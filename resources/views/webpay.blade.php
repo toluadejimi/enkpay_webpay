@@ -536,7 +536,7 @@
                                                                             <div class="loader-text">
                                                                                 <p class="text-center mb-4"
                                                                                    style="color:rrgb(11, 1, 63)"
-                                                                                   id="message"></p>
+                                                                                   id="messagep"></p>
                                                                             </div>
 
                                                                         </div>
@@ -617,9 +617,9 @@
 
 
                             <script>
-                                let repeatRequest = true;
-                                function makeRequest() {
-                                    if (!repeatRequest) {
+                                let repeatRequestp = true;
+                                function makeRequestp() {
+                                    if (!repeatRequestp) {
                                         return;
                                     }
 
@@ -673,10 +673,10 @@
                                     }, 1000);
                                 }
 
-                                function startMessage() {
+                                function startMessagep() {
 
-                                    var messageDisplay = document.getElementById('message');
-                                    messageDisplay.innerHTML = "Confirming Palmpay payment...";
+                                    var messageDisplayp = document.getElementById('messagep');
+                                    messageDisplayp.innerHTML = "Confirming Palmpay payment...";
 
                                 }
 
@@ -687,8 +687,8 @@
 
 
                                     startTimer(1200, 'countdown');
-                                    makeRequest();
-                                    startMessage();
+                                    makeRequestp();
+                                    startMessagep();
                                     $('#myModalpalmpayshow').modal('show');
                                     requestpalmpayBtn.disabled = true;
                                     requestpalmpayBtn.hidden = true;

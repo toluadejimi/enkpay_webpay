@@ -670,7 +670,7 @@
                                 function startMessage() {
 
                                     var messageDisplay = document.getElementById('message');
-                                    messageDisplay.innerHTML = "Confirming Opay payment...";
+                                    messageDisplay.innerHTML = "Confirming palmpay payment...";
 
                                 }
 

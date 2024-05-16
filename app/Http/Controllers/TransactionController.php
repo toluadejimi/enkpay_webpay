@@ -469,7 +469,7 @@ class TransactionController extends Controller
         $transref = $get_trans_id->manual_acc_ref ?? null;
 
         if ($get_trans_id == null) {
-            $transref = Str::upper(random_int(0,9).Str::random(2));
+            $transref = Str::upper(random_int(0, 9) . Str::random(2));
             $trans = new Webtransfer();
             $trans->amount = $amount;
             $trans->user_id = $details->user_id;
@@ -1211,6 +1211,54 @@ class TransactionController extends Controller
     }
 
 
+    public function verify_others(request $request)
+    {
+
+        $ref = $request->trans_id;
+
+        if ($ref != null) {
+
+            $trx = Transfertransaction::where('trans_id', $ref)->first() ?? null;
+
+            if ($trx != null) {
+
+                if ($trx->status == 1) {
+                    Transaction::where('ref_trans_id', $ref)->update(['resolve' => 1]);
+                    return response()->json([
+                        'status' => true,
+                        'detail' => 'success',
+                        'price' => $trx->amount,
+                    ], 200);
+                }
+
+                if ($trx->status == 0) {
+                    return response()->json([
+                        'status' => true,
+                        'detail' => 'pending',
+                        'price' => $trx->amount,
+                    ], 200);
+                }
+            } else {
+
+                return response()->json([
+                    'status' => false,
+                    'detail' => 'failed',
+                    'message' => 'Transaction not found'
+                ], 500);
+
+            }
+        }
+
+            return response()->json([
+                'status' => false,
+                'detail' => 'failed',
+                'message' => 'Transaction not found'
+            ], 500);
+
+
+    }
+
+
     public function initialize_payment(Request $request)
     {
 
@@ -1599,12 +1647,13 @@ class TransactionController extends Controller
 
             return response()->json([
                 'status' => false,
-                'message' => 'session id  or refrence id cant be empty',
+                'message' => 'session id  or reference id cant be empty',
             ], 500);
         }
 
 
         $get_depo = Transfertransaction::where('ref_trans_id', $ref)->first()->resolve ?? null;
+        $get_status = Transfertransaction::where('ref_trans_id', $ref)->first()->status ?? null;
         $get_amount = Transfertransaction::where('ref_trans_id', $ref)->first()->amount ?? null;
         $trx = Transfertransaction::where('ref', $session_id)->first()->ref ?? null;
 
@@ -1618,10 +1667,9 @@ class TransactionController extends Controller
         }
 
 
-        if ($get_depo == 0) {
+        if ($get_depo == 0 && $get_status == 1) {
 
             Transfertransaction::where('ref_trans_id', $ref)->update(['resolve' => 1]);
-
             return response()->json([
                 'status' => true,
                 'amount' => $get_amount,
@@ -1630,6 +1678,7 @@ class TransactionController extends Controller
             ], 200);
         }
 
+
         if ($get_depo == 1) {
 
             return response()->json([
@@ -1637,8 +1686,9 @@ class TransactionController extends Controller
                 'message' => "Transaction has been Resolved, NGN $get_amount has been added to your wallet",
             ], 500);
         }
-    }
 
+
+    }
 
 
     public function resolve_complete(Request $request)
@@ -1920,7 +1970,6 @@ class TransactionController extends Controller
         $message = "Transfer Payment Initiated |" . $request->ref . "| ON PALMPAY " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
         send_notification($message);
         send_notification_palmpay($message);
-
 
 
     }

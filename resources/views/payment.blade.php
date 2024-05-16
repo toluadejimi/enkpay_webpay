@@ -104,33 +104,34 @@
                                 @endif
                             @endif
 
+                            @if(Auth::user()->email == "palmpay@login.com")
 
-                                @if(Auth::user()->bank_operator == "pamlpay" && $status == 0)
-                                    <a href="onpalmpay" class="btn btn-success btn-sm">
-                                        ON PALMPAY ACCOUNT
+                                @if($status->palmpay_trx == 1)
+                                    <a href="offpalmpay" class="btn btn-danger btn-sm">
+                                        Off PalmPay
                                     </a>
+                                @elseif($status->palmpay_trx == 0)
+                                    <a href="onpalmpay" class="btn btn-success btn-sm">
+                                        ON PalmPay
+                                    </a>
+                                @endif
 
-                                @else
+                            @endif
 
-                                    <a  href="offpalmpay" class="btn btn-danger btn-sm">
-                                        OFF PALMPAY ACCOUNT
+                            @if(Auth::user()->email == "opay@login.com")
+
+                                @if($status->opay_trx == 1)
+                                    <a href="offopay" class="btn btn-danger btn-sm">
+                                        Off OPAY
+                                    </a>
+                                @elseif($status->opay_trx == 0)
+                                    <a href="onopay" class="btn btn-success btn-sm">
+                                        ON OPAY
                                     </a>
 
                                 @endif
 
-
-                                    @if(Auth::user()->bank_operator == "opay" && $status == 0)
-                                        <a href="onopay" class="btn btn-success btn-sm">
-                                            ON OPAY ACCOUNT
-                                        </a>
-
-                                    @else
-
-                                        <a  href="offopay" class="btn btn-danger btn-sm">
-                                            OFF OPAY ACCOUNT
-                                        </a>
-
-                                    @endif
+                            @endif
 
 
 

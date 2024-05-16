@@ -104,11 +104,11 @@
                                 @endif
 
                                 @if($status->pay_with_providus == 1)
-                                    <a href="offpro" class="btn btn-danger btn-sm">
+                                    <a href="offpro" class="btn btn-danger btn-sm my-2">
                                         Off PRO
                                     </a>
                                 @elseif($status->pay_with_providus == 0)
-                                    <a href="onpro" class="btn btn-success btn-sm">
+                                    <a href="onpro" class="btn btn-success btn-sm my-2">
                                         ON PRO
                                     </a>
                                 @endif

@@ -154,7 +154,7 @@
                     <div id="opay" class="accordion-collapse collapse"
                          data-bs-parent="#accordionExample">
 
-
+                        <p class="text-danger my-3 text-center">Please don't forget to add payment reference in your narration/remarks</p>
                         <div class="tf-container my-2">
                             <a id="openModalBtnopay" class="tf-btn success large">Pay To Opay</a>
                         </div>
@@ -292,8 +292,6 @@
                                             </form>
 
                                         </div>
-
-
                                     </div>
 
                                 </div>
@@ -432,6 +430,7 @@
                              data-bs-parent="#accordionExample">
 
 
+                            <p class="text-danger my-3 text-center">Please don't forget to add payment reference in your narration/remarks</p>
                             <div class="tf-container my-2">
                                 <a id="openModalBtnpalmpay" class="tf-btn success large">Pay to Palmpay</a>
                             </div>
@@ -487,7 +486,7 @@
                                                     <h4 class="text-muted text-center my-2">REFERENCE</h4>
                                                 </div>
                                                 <div class="col-12">
-                                                    <h6 style="font-size: 25px" class="text-center my-1 text-danger">{{ $transref ?? "Not Available"}}</h6>
+                                                    <h6 style="font-size: 32px" class="text-center my-1 text-danger">{{ $transref ?? "Not Available"}}</h6>
                                                     <input hidden value="{{ $transref }}" id="trfpalmpay">
 
                                                 </div>

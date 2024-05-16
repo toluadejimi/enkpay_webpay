@@ -317,8 +317,8 @@
                                     return;
                                 }
 
-                                const trx_id = document.getElementById('trfopay').value;
-                                const trx = document.getElementById('trx').value;
+                                const trx_id = document.getElementById('trx').value;
+                                const trx = document.getElementById('trfopay').value;
                                 const opay_account_no = document.getElementById('opay_account_no').value;
                                 const url = "{{ url('') }}/verifyopay?trans_id=" + trx_id + "&account_no=" + opay_account_no + "&trx=" + trx;
 

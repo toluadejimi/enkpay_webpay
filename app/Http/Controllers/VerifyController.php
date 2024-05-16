@@ -28,14 +28,14 @@ class VerifyController extends Controller
         }
 
         if (Auth::user()->bank_operator == "opay") {
-            $data['status'] = Setting::where('id', 1)->first()->opay_trx;
+            $data['status'] = Setting::where('id', 1)->first();
             $data['transactions'] = Transfertransaction::latest()->where('status', 0)->where('bank', "OPAY")->get ?? null;
             return view('payment', $data);
 
         }
 
         if (Auth::user()->bank_operator == "palmpay") {
-            $data['status'] = Setting::where('id', 1)->first()->palmpay_trx;
+            $data['status'] = Setting::where('id', 1)->first();
             $data['transactions'] = Transfertransaction::latest()->where('status', 0)->where('bank', "PALMPAY")->get() ?? null;
             return view('payment', $data);
 
@@ -43,7 +43,7 @@ class VerifyController extends Controller
 
 
         if (Auth::user()->bank_operator == "kuda") {
-            $data['status'] = Setting::where('id', 1)->first()->kuda_trx;
+            $data['status'] = Setting::where('id', 1)->first();
             $data['transactions'] = TransactionController::latest()->where('status', 0)->where('bank', "KUDA")->get() ?? null;
             return view('payment', $data);
 

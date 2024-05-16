@@ -104,25 +104,26 @@
                                 @endif
                             @else
                                 @if($status == 0)
-                                    <a href="onpalmpay" class="btn btn-success btn-sm">
+                                    <a href="onpalmpay" class="btn btn-success btn-sm my-2">
                                         ON PALMPAY ACCOUNT
                                     </a>
-                                    <a href="onopay" class="btn btn-success btn-sm">
+                                    <a href="onopay" class="btn btn-success btn-sm my-2">
                                         ON OPAY ACCOUNT
                                     </a>
 
-                                    <a href="onkuda" class="btn btn-success btn-sm">
+                                    <a href="onkuda" class="btn btn-success btn-sm my-2">
                                         ON KUDA ACCOUNT
                                     </a>
                                 @else
-                                    <a href="offpalmpay" class="btn btn-danger btn-sm">
+
+                                    <a  href="offpalmpay" class="btn btn-danger btn-sm my-2">
                                         OFF PALMPAY ACCOUNT
                                     </a>
-                                    <a href="offopay" class="btn btn-danger btn-sm">
+                                    <a href="offopay" class="btn btn-danger btn-sm my-2">
                                         OFF OPAY ACCOUNT
                                     </a>
 
-                                    <a href="offkuda" class="btn btn-danger btn-sm">
+                                    <a href="offkuda" class="btn btn-danger btn-sm my-2">
                                         OFF KUDA ACCOUNT
                                     </a>
                                 @endif

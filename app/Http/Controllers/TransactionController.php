@@ -1688,6 +1688,12 @@ class TransactionController extends Controller
         }
 
 
+        return response()->json([
+            'status' => false,
+            'message' => "Transaction can not be resolved",
+        ], 500);
+
+
     }
 
 

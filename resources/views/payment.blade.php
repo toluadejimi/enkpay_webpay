@@ -149,96 +149,30 @@
 
             </div>
 
-            <div class="col-6">
+            <div class="col-12">
 
                 <div class="card">
 
                     <div class="card-body">
 
                         @if(Auth::user()->email == "toluadejimi@gmail.com")
-                            @if($status->opay_trx == 1)
-                                <fieldset class="fieldset-radio">
-                                    <input type="radio" style="background-color: #44b461; background: #44b461"
-                                           class="tf-radio style-2" name="radioStyle2" id="radioStyle1" checked>
-                                    <label for="radioStyle1">OPAY ACTIVE</label>
-                                </fieldset>
-                            @else
 
-                                <fieldset class="fieldset-radio">
-                                    <input type="radio" style="background-color: #f1060d; background: #f1060d"
-                                           class="tf-radio style-2" name="radioStyle2" id="radioStyle1" checked>
-                                    <label for="radioStyle1">OPAY INACTIVE</label>
-                                </fieldset>
+                            <div class="row">
 
-                            @endif
+                                <div class="col">
+                                    <h3>Opay Count</h3>
+                                    <h6>{{number_format($opay_count, 2)}}</h6>
+                                </div>
 
-                            @if($status->palmpay_trx == 1)
-                                <fieldset class="fieldset-radio">
-                                    <input type="radio" style="background-color: #44b461; background: #44b461"
-                                           class="tf-radio style-2" name="radioStyle2" id="radioStyle1" checked>
-                                    <label for="radioStyle1">PalmPay ACTIVE</label>
-                                </fieldset>
-                            @else
+                                <div class="col">
+                                    <h3>Palmpay Count</h3>
+                                    <h6>{{number_format($palmpay_count, 2)}}</h6>
+                                </div>
 
-                                <fieldset class="fieldset-radio">
-                                    <input type="radio" style="background-color: #f1060d; background: #f1060d"
-                                           class="tf-radio style-2" name="radioStyle2" id="radioStyle1" checked>
-                                    <label for="radioStyle1">Palmpay INACTIVE</label>
-                                </fieldset>
 
-                            @endif
+                            </div>
 
-                            @if($status->kuda_trx == 1)
-                                <fieldset class="fieldset-radio">
-                                    <input type="radio" style="background-color: #44b461; background: #44b461"
-                                           class="tf-radio style-2" name="radioStyle2" id="radioStyle1" checked>
-                                    <label for="radioStyle1">Kuda ACTIVE</label>
-                                </fieldset>
-                            @else
 
-                                <fieldset class="fieldset-radio">
-                                    <input type="radio" style="background-color: #f1060d; background: #f1060d"
-                                           class="tf-radio style-2" name="radioStyle2" id="radioStyle1" checked>
-                                    <label for="radioStyle1">Kuda INACTIVE</label>
-                                </fieldset>
-
-                            @endif
-
-                        @elseif(Auth::user()->email == "palmpay@login.com")
-
-                            @if($status->palmpay_trx == 1)
-                                <fieldset class="fieldset-radio">
-                                    <input type="radio" style="background-color: #44b461; background: #44b461"
-                                           class="tf-radio style-2" name="radioStyle2" id="radioStyle1" checked>
-                                    <label for="radioStyle1">PalmPay ACTIVE</label>
-                                </fieldset>
-                            @else
-
-                                <fieldset class="fieldset-radio">
-                                    <input type="radio" style="background-color: #f1060d; background: #f1060d"
-                                           class="tf-radio style-2" name="radioStyle2" id="radioStyle1" checked>
-                                    <label for="radioStyle1">Palmpay INACTIVE</label>
-                                </fieldset>
-
-                            @endif
-
-                        @elseif(Auth::user()->email == "opay@login.com")
-
-                            @if($status->opay_trx == 1)
-                                <fieldset class="fieldset-radio">
-                                    <input type="radio" style="background-color: #44b461; background: #44b461"
-                                           class="tf-radio style-2" name="radioStyle2" id="radioStyle1" checked>
-                                    <label for="radioStyle1">OPAY ACTIVE</label>
-                                </fieldset>
-                            @else
-
-                                <fieldset class="fieldset-radio">
-                                    <input type="radio" style="background-color: #f1060d; background: #f1060d"
-                                           class="tf-radio style-2" name="radioStyle2" id="radioStyle1" checked>
-                                    <label for="radioStyle1">OPAY INACTIVE</label>
-                                </fieldset>
-
-                            @endif
 
                         @endif
 

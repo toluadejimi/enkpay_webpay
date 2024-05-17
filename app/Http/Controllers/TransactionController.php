@@ -1219,7 +1219,7 @@ class TransactionController extends Controller
 
         if ($ref != null) {
 
-            $trx = Transfertransaction::where('trans_id', $ref)->first() ?? null;
+            $trx = Transfertransaction::where('ref_trans_id', $ref)->first() ?? null;
 
             if ($trx != null) {
 

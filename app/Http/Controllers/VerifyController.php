@@ -33,12 +33,12 @@ class VerifyController extends Controller
 
             $data['daily_opay_count'] = Transfertransaction::where([
                 'status' => 1,
-                'bank ' => "OPAY",
+                'bank' => "OPAY",
             ])->whereDate('created_at', $currentDate)->count();
 
             $data['daily_palmpay_count'] = Transfertransaction::where([
                 'status' => 1,
-                'bank ' => "PALMPAY",
+                'bank' => "PALMPAY",
             ])->whereDate('created_at', $currentDate)->count();
 
 

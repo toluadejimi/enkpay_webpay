@@ -1647,10 +1647,10 @@ class TransactionController extends Controller
         $ref = $request->ref;
 
 
-        $get_depo =  Transfertransaction::where('ref_trans_id', $ref)->first()->resolve ?? null;
-        $get_status = Transfertransaction::where('ref_trans_id', $ref)->first()->status ?? null;
-        $get_amount = Transfertransaction::where('ref_trans_id', $ref)->first()->amount ?? null;
-        $trx = Transfertransaction::where('ref_trans_id', $ref)->first()->ref ?? null;
+        $get_depo =  Transfertransaction::where('ref_trans_id', "$ref")->first()->resolve ?? null;
+        $get_status = Transfertransaction::where('ref_trans_id', "$ref")->first()->status ?? null;
+        $get_amount = Transfertransaction::where('ref_trans_id', "$ref")->first()->amount ?? null;
+        $trx = Transfertransaction::where('ref_trans_id', "$ref")->first()->ref ?? null;
 
         $getonw = Transfertransaction::where('status', 2)->first();
 

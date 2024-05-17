@@ -1650,14 +1650,10 @@ class TransactionController extends Controller
 //        $get_depo =  Transfertransaction::where('ref_trans_id', "$ref")->first()->resolve ?? null;
 //        $get_status = Transfertransaction::where('ref_trans_id', "$ref")->first()->status ?? null;
 //        $get_amount = Transfertransaction::where('ref_trans_id', "$ref")->first()->amount ?? null;
-        $trx = Transfertransaction::where('ref_trans_id', $request->ref)->first();
+        $trx = Transfertransaction::where('ref_trans_id', $request->ref)->first() ?? null;
 
 
-        dd($trx, $ref,);
-
-
-
-        if ($get_depo == null) {
+        if ($trx == null) {
 
             return response()->json([
                 'status' => false,
@@ -1666,12 +1662,12 @@ class TransactionController extends Controller
         }
 
 
-        if ($get_depo == 0 && $get_status == 1) {
+        if ($trx->status == 1) {
 
-            Transfertransaction::where('ref_trans_id', $ref)->update(['resolve' => 1]);
+            Transfertransaction::where('ref_trans_id', $request->ref)->update(['resolve' => 1]);
             return response()->json([
                 'status' => true,
-                'amount' => $get_amount,
+                'amount' => $trx->amount,
                 'trx' => $trx,
 
             ], 200);

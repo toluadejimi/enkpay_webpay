@@ -1651,6 +1651,7 @@ class TransactionController extends Controller
 //        $get_status = Transfertransaction::where('ref_trans_id', "$ref")->first()->status ?? null;
 //        $get_amount = Transfertransaction::where('ref_trans_id', "$ref")->first()->amount ?? null;
         $trx = Transfertransaction::where('ref_trans_id', $request->ref)->first() ?? null;
+        $amount = $trx->amount;
 
 
         if ($trx == null) {
@@ -1662,23 +1663,25 @@ class TransactionController extends Controller
         }
 
 
-        if ($trx->status == 1) {
+        if ($trx->status == 1 && $trx->reslove == 0) {
+
+
 
             Transfertransaction::where('ref_trans_id', $request->ref)->update(['resolve' => 1]);
             return response()->json([
                 'status' => true,
-                'amount' => $trx->amount,
+                'amount' => $amount,
                 'trx' => $trx,
 
             ], 200);
         }
 
 
-        if ($get_depo == 1) {
+        if ($trx->resolve == 1) {
 
             return response()->json([
                 'status' => false,
-                'message' => "Transaction has been Resolved, NGN $get_amount has been added to your wallet",
+                'message' => "Transaction has been Resolved, NGN $amount has been added to your wallet",
             ], 500);
         }
 

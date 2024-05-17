@@ -98,9 +98,9 @@
 
 
                 <h1>₦{{ number_format($payable_amount, 2) }}</h1>
-                <h4 class="secondary_color fw_4 mb-3">Make sure you send exact amount</h4>
+                <h4 class="secondary_color text-center fw_4 mb-3">Make sure you send exact amount</h4>
                 <hr>
-                <h4 class="text-danger fw_4 mb-3">DO NOT LEAVE, REFRESH OR MINIMIZE <br/>  PAYMENT MODAL TO AVOID FAILED PAYMENT</h4>
+                <h4 class="text-danger text-center fw_4 mb-3">DO NOT LEAVE, REFRESH OR MINIMIZE <br/>  PAYMENT MODAL TO AVOID FAILED PAYMENT</h4>
 
 
             </div>

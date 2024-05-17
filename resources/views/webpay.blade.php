@@ -246,6 +246,11 @@
                                                             <div class="modal-body p-5 my-4">
                                                                 <div class="tf-container p-5">
 
+
+
+                                                                    <h3 class="text-center text-danger">DO NOT LEAVE, REFRESH OR MINIMIZE
+                                                                    PAYMENT MODAL TO AVOID FAILED PAYMENT</h3>
+
                                                                     <div class="payment-loader mb-4">
 
                                                                         <div class="text-center">
@@ -268,7 +273,7 @@
                                                                         </div>
 
                                                                     </div>
-                                                                </div>
+                                                                </h3>
 
 
                                                             </div>

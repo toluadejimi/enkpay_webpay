@@ -1643,30 +1643,19 @@ class TransactionController extends Controller
     public function resolve_others(Request $request)
     {
 
-
-
-
         $session_id = $request->session_id;
         $ref = $request->ref;
 
 
-
-        if ($session_id == null) {
-
-            return response()->json([
-                'status' => false,
-                'message' => 'session id  or reference id cant be empty',
-            ], 500);
-        }
-
-
-        $get_depo = Transfertransaction::where('ref_trans_id', $ref)->first()->resolve ?? null;
+        $get_depo =  Transfertransaction::where('ref_trans_id', $ref)->first()->resolve ?? null;
         $get_status = Transfertransaction::where('ref_trans_id', $ref)->first()->status ?? null;
         $get_amount = Transfertransaction::where('ref_trans_id', $ref)->first()->amount ?? null;
         $trx = Transfertransaction::where('ref_trans_id', $ref)->first()->ref ?? null;
 
+        $getonw = Transfertransaction::where('status', 2)->first();
 
-        dd($get_depo, $get_status, $get_amount, $trx, $ref);
+
+        dd($get_depo, $get_status, $get_amount, $trx, $ref, $getonw);
 
 
 

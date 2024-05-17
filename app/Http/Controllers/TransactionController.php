@@ -1642,10 +1642,14 @@ class TransactionController extends Controller
 
     public function resolve_others(Request $request)
     {
+
+
+        dd($request->id());
+
         $session_id = $request->session_id;
         $ref = $request->ref;
 
-        dd($ref);
+
 
         if ($session_id == null) {
 

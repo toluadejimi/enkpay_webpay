@@ -45,7 +45,7 @@ class VerifyController extends Controller
 
 
              $data['totaldaily'] = $data['opay_count'] + $data['daily_palmpay_count'];
-            $data['all'] = $data['palmpay_count'] + $data['palmpay_count'];
+            $data['all'] = $data['palmpay_count'] + $data['palmpay_count'] - $data['miss_count'] ;
 
 
 

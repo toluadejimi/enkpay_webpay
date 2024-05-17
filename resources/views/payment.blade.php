@@ -160,41 +160,46 @@
                             <div class="row my-3">
 
                                 <div class="col">
-                                    <h3>Total Opay</h3>
+                                    <p>Total Opay</p>
                                     <h6>{{number_format($opay_count, 2)}}</h6>
                                 </div>
 
                                 <div class="col">
-                                    <h3>Total Palmpay</h3>
+                                    <p>Total Palmpay</p>
                                     <h6>{{number_format($palmpay_count, 2)}}</h6>
                                 </div>
 
                                 <div class="col">
-                                    <h3>Today Opay</h3>
+                                    <p>Today Opay</p>
                                     <h6>{{number_format($daily_opay_count, 2)}}</h6>
                                 </div>
 
                                 <div class="col">
-                                    <h3>Today Palmpay</h3>
+                                    <p>Today Palmpay</p>
                                     <h6>{{number_format($daily_palmpay_count, 2)}}</h6>
                                 </div>
 
                                 <div class="col">
-                                    <h3>Total Daily</h3>
+                                    <p>Total Daily</p>
                                     <h6>{{number_format($totaldaily, 2)}}</h6>
                                 </div>
 
+
+
+
                                 <div class="col">
-                                    <h3>Total All</h3>
+                                    <p>Not included</p>
+                                    <h6>{{number_format($miss_count, 2)}}</h6>
+                                </div>
+
+
+                                <div class="col">
+                                    <p>Total All</p>
                                     <h6>{{number_format($all, 2)}}</h6>
                                 </div>
 
 
 
-                                <div class="col">
-                                    <h3>Not included</h3>
-                                    <h6>{{number_format($miss_count, 2)}}</h6>
-                                </div>
 
                             </div>
 

@@ -42,6 +42,9 @@ class VerifyController extends Controller
             ])->whereDate('created_at', $currentDate)->count();
 
 
+             $data['totaldaily'] = $data['daily_opay_count'] + $data['daily_palmpay_count'];
+
+
             return view('payment', $data);
         }
 

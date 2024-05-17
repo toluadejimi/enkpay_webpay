@@ -149,7 +149,7 @@
 
             </div>
 
-            <div class="col-12">
+            <div class="col-12 my-2">
 
                 <div class="card">
 
@@ -177,6 +177,11 @@
                                 <div class="col">
                                     <h3>Daily Palmpay Count</h3>
                                     <h6>{{number_format($daily_palmpay_count, 2)}}</h6>
+                                </div>
+
+                                <div class="col">
+                                    <h3>Total Daily</h3>
+                                    <h6>{{number_format($totaldaily, 2)}}</h6>
                                 </div>
 
                             </div>

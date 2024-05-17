@@ -438,6 +438,7 @@ if (!function_exists('send_notification_opay')) {
         curl_close($curl);
 
         $var = json_decode($var);
+
     }
 
 

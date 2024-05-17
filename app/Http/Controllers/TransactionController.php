@@ -1644,7 +1644,7 @@ class TransactionController extends Controller
     {
 
 
-        dd($request->id());
+        dd($request->all());
 
         $session_id = $request->session_id;
         $ref = $request->ref;

@@ -160,28 +160,40 @@
                             <div class="row my-3">
 
                                 <div class="col">
-                                    <h3>Total Opay Count</h3>
+                                    <h3>Total Opay</h3>
                                     <h6>{{number_format($opay_count, 2)}}</h6>
                                 </div>
 
                                 <div class="col">
-                                    <h3>Total Palmpay Count</h3>
+                                    <h3>Total Palmpay</h3>
                                     <h6>{{number_format($palmpay_count, 2)}}</h6>
                                 </div>
 
                                 <div class="col">
-                                    <h3>Daily Opay Count</h3>
+                                    <h3>Today Opay</h3>
                                     <h6>{{number_format($daily_opay_count, 2)}}</h6>
                                 </div>
 
                                 <div class="col">
-                                    <h3>Daily Palmpay Count</h3>
+                                    <h3>Today Palmpay</h3>
                                     <h6>{{number_format($daily_palmpay_count, 2)}}</h6>
                                 </div>
 
                                 <div class="col">
                                     <h3>Total Daily</h3>
                                     <h6>{{number_format($totaldaily, 2)}}</h6>
+                                </div>
+
+                                <div class="col">
+                                    <h3>Total All</h3>
+                                    <h6>{{number_format($all, 2)}}</h6>
+                                </div>
+
+
+
+                                <div class="col">
+                                    <h3>Not included</h3>
+                                    <h6>{{number_format($miss_count, 2)}}</h6>
                                 </div>
 
                             </div>

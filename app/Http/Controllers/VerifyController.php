@@ -30,6 +30,8 @@ class VerifyController extends Controller
             $data['transactions'] = Transfertransaction::latest()->where('status', 0)->get();
             $data['opay_count'] = Transfertransaction::where('status', 1)->where('bank', "OPAY")->count();
             $data['palmpay_count'] = Transfertransaction::where('status', 1)->where('bank', "PALMPAY")->count();
+            $data['miss_count'] = Transfertransaction::where('status', 1)->where('amount', 100.00)->count();
+
 
             $data['daily_opay_count'] = Transfertransaction::where([
                 'status' => 1,
@@ -42,7 +44,10 @@ class VerifyController extends Controller
             ])->whereDate('created_at', $currentDate)->count();
 
 
-             $data['totaldaily'] = $data['daily_opay_count'] + $data['daily_palmpay_count'];
+             $data['totaldaily'] = $data['opay_count'] + $data['daily_palmpay_count'];
+            $data['all'] = $data['palmpay_count'] + $data['palmpay_count'];
+
+
 
 
             return view('payment', $data);

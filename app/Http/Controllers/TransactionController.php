@@ -1666,7 +1666,6 @@ class TransactionController extends Controller
         $trx = Transfertransaction::where('ref_trans_id', $ref)->first()->ref ?? null;
 
 
-        dd($get_depo, $get_status, $get_amount, $trx);
 
 
 

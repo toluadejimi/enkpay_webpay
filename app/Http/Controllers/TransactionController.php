@@ -1217,6 +1217,8 @@ class TransactionController extends Controller
 
         $ref = $request->trans_id;
 
+        dd($ref);
+
         if ($ref != null) {
 
             $trx = Transfertransaction::where('ref_trans_id', $ref)->first() ?? null;

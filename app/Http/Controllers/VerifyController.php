@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Webtransfer;
 use Hamcrest\Core\Set;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class VerifyController extends Controller
@@ -20,12 +21,27 @@ class VerifyController extends Controller
             return view('login');
         }
 
+        $currentDate = Carbon::today();
+
+
 
         if (Auth::user()->bank_operator == "all") {
             $data['status'] = Setting::where('id', 1)->first();
             $data['transactions'] = Transfertransaction::latest()->where('status', 0)->get();
             $data['opay_count'] = Transfertransaction::where('status', 1)->where('bank', "OPAY")->count();
             $data['palmpay_count'] = Transfertransaction::where('status', 1)->where('bank', "PALMPAY")->count();
+
+            $data['daily_opay_count'] = Transfertransaction::where([
+                'status' => 1,
+                'bank ' => "OPAY",
+            ])->whereDate('created_at', $currentDate)->count();
+
+            $data['palmpay_count'] = Transfertransaction::where([
+                'status' => 1,
+                'bank ' => "PALMPAY",
+            ])->whereDate('created_at', $currentDate)->count();
+
+
             return view('payment', $data);
         }
 

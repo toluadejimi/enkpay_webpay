@@ -157,18 +157,27 @@
 
                         @if(Auth::user()->email == "toluadejimi@gmail.com")
 
-                            <div class="row">
+                            <div class="row my-3">
 
                                 <div class="col">
-                                    <h3>Opay Count</h3>
+                                    <h3>Total Opay Count</h3>
                                     <h6>{{number_format($opay_count, 2)}}</h6>
                                 </div>
 
                                 <div class="col">
-                                    <h3>Palmpay Count</h3>
+                                    <h3>Total Palmpay Count</h3>
                                     <h6>{{number_format($palmpay_count, 2)}}</h6>
                                 </div>
 
+                                <div class="col">
+                                    <h3>Daily Opay Count</h3>
+                                    <h6>{{number_format($daily_opay_count, 2)}}</h6>
+                                </div>
+
+                                <div class="col">
+                                    <h3>Daily Palmpay Count</h3>
+                                    <h6>{{number_format($daily_palmpay_count, 2)}}</h6>
+                                </div>
 
                             </div>
 

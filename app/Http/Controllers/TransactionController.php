@@ -1165,6 +1165,7 @@ class TransactionController extends Controller
                 if ($trx->status == 1) {
                     Transaction::where('ref_trans_id', $ref)->update(['resolve' => 1]);
                     Transfertransaction::where('ref_trans_id', $ref)->update(['resolve' => 1]);
+
                     return response()->json([
                         'status' => true,
                         'detail' => 'success',
@@ -1217,11 +1218,9 @@ class TransactionController extends Controller
 
         $ref = $request->trans_id;
 
-        dd($ref);
-
         if ($ref != null) {
 
-            $trx = Transfertransaction::where('ref_trans_id', $ref)->first() ?? null;
+            $trx = Transfertransaction::where('trans_id', $ref)->first() ?? null;
 
             if ($trx != null) {
 
@@ -1645,6 +1644,8 @@ class TransactionController extends Controller
     {
         $session_id = $request->session_id;
         $ref = $request->ref;
+
+        dd($ref);
 
         if ($session_id == null) {
 

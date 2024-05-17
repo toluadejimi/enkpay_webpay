@@ -1644,7 +1644,7 @@ class TransactionController extends Controller
     {
 
 
-        dd($request->all());
+
 
         $session_id = $request->session_id;
         $ref = $request->ref;
@@ -1663,7 +1663,11 @@ class TransactionController extends Controller
         $get_depo = Transfertransaction::where('ref_trans_id', $ref)->first()->resolve ?? null;
         $get_status = Transfertransaction::where('ref_trans_id', $ref)->first()->status ?? null;
         $get_amount = Transfertransaction::where('ref_trans_id', $ref)->first()->amount ?? null;
-        $trx = Transfertransaction::where('ref', $session_id)->first()->ref ?? null;
+        $trx = Transfertransaction::where('ref_trans_id', $ref)->first()->ref ?? null;
+
+
+        dd($get_depo, $get_status, $get_amount, $trx);
+
 
 
         if ($get_depo == null) {

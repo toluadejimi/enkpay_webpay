@@ -148,7 +148,7 @@ class VerifyController extends Controller
 
 
 
-            credit_user_wallet($url, $user_email, $amount);
+//            credit_user_wallet($url, $user_email, $amount);
 
 
 

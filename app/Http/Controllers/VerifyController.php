@@ -131,8 +131,6 @@ class VerifyController extends Controller
 
         if($trx->status == 0){
 
-
-
             Webtransfer::where('trans_id', $request->id)->update(['status' => 1]);
             Transfertransaction::where('ref_trans_id', $request->id)->update(['status' => 1, 'approved_by'=>Auth::user()->first_name]);
 
@@ -147,6 +145,11 @@ class VerifyController extends Controller
             User::where('id', $trx->user_id)->increment('main_wallet', $f_amount);
             $balance = User::where('id', $trx->user_id)->first()->main_wallet;
             $user = User::where('id', $trx->user_id)->first();
+
+
+
+            credit_user_wallet($url, $user_email, $amount);
+
 
 
             //update Transactions

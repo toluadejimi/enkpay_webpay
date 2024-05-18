@@ -1665,3 +1665,59 @@ if (!function_exists('create_payment')) {
         return $data;
     }
 }
+
+
+if (!function_exists('credit_user_wallet')) {
+    function credit_user_wallet($url, $user_email, $amount)
+    {
+
+
+        $key = env("CRYPAPI");
+        $databody = array(
+
+            "price_amount" => $amount,
+            "price_currency" => "usd",
+
+
+        );
+
+
+        $post_data = json_encode($databody);
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.nowpayments.io/v1/payment',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $post_data,
+            CURLOPT_HTTPHEADER => array(
+                "x-api-key: $key",
+                'Content-Type: application/json'
+            ),
+        ));
+
+
+        $var = curl_exec($curl);
+        curl_close($curl);
+        $var = json_decode($var);
+
+        $data['payment_id'] = $var->payment_id;
+        $data['payment_status'] = $var->payment_status;
+        $data['pay_address'] = $var->pay_address;
+        $data['price_amount'] = $var->price_amount;
+        $data['pay_amount'] = $var->pay_amount;
+        $data['pay_currency'] = $var->pay_currency;
+        $data['order_id'] = $var->order_id;
+        $data['purchase_id'] = $var->purchase_id;
+        $data['valid_until'] = $var->valid_until;
+
+        return $data;
+    }
+}
+

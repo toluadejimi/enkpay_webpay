@@ -73,15 +73,37 @@
 
                             @if(Auth::user()->email == "toluadejimi@gmail.com")
 
-                                @if($status->palmpay_trx == 1)
-                                    <a href="offpalmpay" class="btn btn-danger btn-sm">
-                                        Off PalmPay
+                                @if($status->pay_by_crypto == 1)
+                                    <a href="offcrypto" class="btn btn-danger btn-sm">
+                                        Off Card
                                     </a>
-                                @elseif($status->palmpay_trx == 0)
-                                    <a href="onpalmpay" class="btn btn-success btn-sm">
-                                        ON PalmPay
+                                @elseif($status->pay_by_crypto == 0)
+                                    <a href="offcrypto" class="btn btn-success btn-sm">
+                                        ON Card
                                     </a>
                                 @endif
+
+
+                                @if($status->pay_by_card == 1)
+                                    <a href="offcard" class="btn btn-danger btn-sm">
+                                        Off Card
+                                    </a>
+                                @elseif($status->pay_by_card == 0)
+                                    <a href="oncard" class="btn btn-success btn-sm">
+                                        ON Card
+                                    </a>
+                                @endif
+
+                                    @if($status->palmpay_trx == 1)
+                                        <a href="offpalmpay" class="btn btn-danger btn-sm">
+                                            Off PalmPay
+                                        </a>
+                                    @elseif($status->palmpay_trx == 0)
+                                        <a href="onpalmpay" class="btn btn-success btn-sm">
+                                            ON PalmPay
+                                        </a>
+                                    @endif
+
 
                                 @if($status->opay_trx == 1)
                                     <a href="offopay" class="btn btn-danger btn-sm">

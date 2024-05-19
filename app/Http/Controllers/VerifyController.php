@@ -193,7 +193,7 @@ class VerifyController extends Controller
 
 
 
-            Webtransfer::where('trans_id', $request->id)->update(['status' => 2]);
+            Webtransfer::where('trans_id', $request->id)->update(['status' => 1]);
             Transfertransaction::where('ref_trans_id', $request->id)->update(['status' => 1, 'approved_by'=>Auth::user()->first_name]);
 
 

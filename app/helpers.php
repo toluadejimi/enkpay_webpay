@@ -1700,7 +1700,6 @@ if (!function_exists('credit_user_wallet')) {
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_POSTFIELDS => $post_data,
             CURLOPT_HTTPHEADER => array(
-                "x-api-key: $key",
                 'Content-Type: application/json'
             ),
         ));

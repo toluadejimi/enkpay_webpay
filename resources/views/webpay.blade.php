@@ -342,6 +342,11 @@
                                             window.location.href = "{{ url('') }}/success?trans_id=" + trx_id;
 
                                             repeatRequestopay = false;
+                                        }else if (data.status === 'paid') {
+
+                                            window.location.href = "{{ url('') }}/paid-success?trans_id=" + trx_id;
+
+                                            repeatRequestkuda = false; // Adjusted variable name here
                                         }
                                     })
                                     .catch(error => {
@@ -648,6 +653,11 @@
                                                 window.location.href = "{{ url('') }}/success?trans_id=" + trx;
 
                                                 repeatRequestopay = false;
+                                            }else if (data.status === 'paid') {
+
+                                                window.location.href = "{{ url('') }}/paid-success?trans_id=" + trx_id;
+
+                                                repeatRequestkuda = false; // Adjusted variable name here
                                             }
                                         })
                                         .catch(error => {
@@ -1033,6 +1043,11 @@
                                                 window.location.href = "{{ url('') }}/success?trans_id=" + trx_id;
 
                                                 repeatRequestkuda = false; // Adjusted variable name here
+                                            }else if (data.status === 'paid') {
+
+                                                window.location.href = "{{ url('') }}/paid-success?trans_id=" + trx_id;
+
+                                                repeatRequestkuda = false; // Adjusted variable name here
                                             }
                                         })
                                         .catch(error => {
@@ -1236,6 +1251,11 @@
                                                         window.location.href = "{{ url('') }}/success?trans_id=" + trx_id;
 
                                                         repeatRequestprovidus = false;
+                                                    }else if (data.status === 'paid') {
+
+                                                        window.location.href = "{{ url('') }}/paid-success?trans_id=" + trx_id;
+
+                                                        repeatRequestkuda = false; // Adjusted variable name here
                                                     }
                                                 })
                                                 .catch(error => {

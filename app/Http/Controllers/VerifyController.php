@@ -6,6 +6,7 @@ use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\Transfertransaction;
 use App\Models\User;
+use App\Models\Webkey;
 use App\Models\Webtransfer;
 use Hamcrest\Core\Set;
 use Illuminate\Http\Request;
@@ -131,8 +132,6 @@ class VerifyController extends Controller
 
         if($trx->status == 0){
 
-            Webtransfer::where('trans_id', $request->id)->update(['status' => 1]);
-            Transfertransaction::where('ref_trans_id', $request->id)->update(['status' => 1, 'approved_by'=>Auth::user()->first_name]);
 
             $charge = Setting::where('id', 1)->first()->webpay_transfer_charge;
 
@@ -148,8 +147,54 @@ class VerifyController extends Controller
 
 
 
-//            credit_user_wallet($url, $user_email, $amount);
+            $url = Webkey::where('user_id', $trx->user_id)->first()->url_fund ?? null;
+            $user_email =  $trx->email ?? null;
+            $amount =  $trx->payable_amount ?? null;
+            $order_id =  $trx->trans_id ?? null;
 
+
+
+            $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
+            if($fund == 2){
+
+                Webtransfer::where('trans_id', $request->id)->update(['status' => 4]);
+                Transfertransaction::where('ref_trans_id', $request->id)->update(['status' => 2, 'approved_by'=>Auth::user()->first_name]);
+
+
+                //update Transactions
+                $trasnaction = new Transaction();
+                $trasnaction->user_id = $trx->user_id;
+                $trasnaction->e_ref = $trx->manual_acc_ref;
+                $trasnaction->ref_trans_id = $request->id;
+                $trasnaction->type = "webpay";
+                $trasnaction->transaction_type = "VirtualFundWallet";
+                $trasnaction->title = "Wallet Funding";
+                $trasnaction->main_type = "Transfer";
+                $trasnaction->credit = $f_amount;
+                $trasnaction->note = "Transaction Successful | Web Pay ";
+                $trasnaction->fee = $charge ?? 0;
+                $trasnaction->amount = $trx->payable_amount;
+                $trasnaction->e_charges = 0;
+                $trasnaction->enkPay_Cashout_profit = 0;
+                $trasnaction->balance = $balance;
+                $trasnaction->status = 1;
+                $trasnaction->save();
+
+                $message = "Business funded | $trx->manual_acc_ref | $f_amount | $user->first_name " . " " . $user->last_name."\n\n Approved by ====>".Auth::user()->first_name;
+                send_notification($message);
+
+                $message = "$trx->manual_acc_ref | NGN  $trx->payable_amount | $trx->email " ;
+                send_notification($message);
+
+                return back()->with('message', 'Transaction successfully completed');
+
+
+            }
+
+
+
+            Webtransfer::where('trans_id', $request->id)->update(['status' => 2]);
+            Transfertransaction::where('ref_trans_id', $request->id)->update(['status' => 1, 'approved_by'=>Auth::user()->first_name]);
 
 
             //update Transactions
@@ -171,7 +216,7 @@ class VerifyController extends Controller
             $trasnaction->status = 1;
             $trasnaction->save();
 
-            $message = "Business funded | $f_amount | $user->first_name " . " " . $user->last_name."\n\n Approved by ====>".Auth::user()->first_name;
+            $message = "Business Funded | $trx->manual_acc_ref | Pending customer not funded | $f_amount | $user->first_name " . " " . $user->last_name."\n\n Approved by ====>".Auth::user()->first_name;
             send_notification($message);
 
             return back()->with('message', 'Transaction successfully completed');
@@ -188,6 +233,7 @@ class VerifyController extends Controller
 
 
     }
+
 
 
     public function delete_transaction(request $request)
@@ -219,6 +265,30 @@ class VerifyController extends Controller
 
 
     }
+
+    public function pend_transaction(request $request)
+    {
+
+        if($request->id == null){
+            return back()->with('error', 'Transaction ID missing');
+
+        }
+
+
+            Webtransfer::where('trans_id', $request->id)->update(['status' => 3]) ?? null;
+            Transfertransaction::where('ref_trans_id', $request->id)->update(['status' => 3]) ?? null;
+
+
+
+        $message = "Transaction | $request->id | added to pending ";
+        send_notification($message);
+
+        return back()->with('message', 'Transaction added to pending Successfully');
+
+
+
+    }
+
 
     public function offpalmpay_account()
     {

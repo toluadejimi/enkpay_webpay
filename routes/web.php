@@ -77,7 +77,7 @@ Route::post('login-now', [VerifyController::class, 'login_now']);
 
 Route::get('payment', [VerifyController::class, 'verify_view']);
 Route::get('complete-transaction', [VerifyController::class, 'complete_transaction']);
-
+Route::get('pend-transaction', [VerifyController::class, 'pend_transaction']);
 Route::get('delete-transaction', [VerifyController::class, 'delete_transaction']);
 
 
@@ -106,6 +106,8 @@ Route::get('invalid', [TransactionController::class, 'invalid']);
 
 
 Route::get('success', [TransactionController::class, 'success']);
+Route::get('paid-success', [TransactionController::class, 'paid_success']);
+
 
 
 

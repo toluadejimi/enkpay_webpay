@@ -274,11 +274,17 @@
                                         @if($data->status == 0)
                                             <td>
                                                 <a href="complete-transaction?id={{$data->ref_trans_id}}"
-                                                   class="my-3 btn btn-sm btn-success">Paid</a>
+                                                   class="my-3 me-2 btn btn-sm btn-success">Paid</a>
                                             </td>
+
+                                            <td>
+                                                <a href="pend-transaction?id={{$data->ref_trans_id}}"
+                                                   class="my-3 me-2 btn btn-sm btn-warning">Pend</a>
+                                            </td>
+
                                             <td>
                                                 <a href="delete-transaction?id={{$data->ref_trans_id}}"
-                                                   class="my-3 btn btn-sm btn-danger">Remove Transaction</a>
+                                                   class="my-3 me-2 btn btn-sm btn-danger">Remove</a>
                                             </td>
                                         @endif
 

@@ -1712,6 +1712,10 @@ if (!function_exists('credit_user_wallet')) {
         if($status == true){
             return 2;
         }else{
+
+            $message = json_encode($var);
+            send_notification($message);
+
             return 0;
         }
 

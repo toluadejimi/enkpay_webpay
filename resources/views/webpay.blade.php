@@ -346,7 +346,7 @@
 
                                             window.location.href = "{{ url('') }}/paid-success?trans_id=" + trx_id;
 
-                                            repeatRequestkuda = false; // Adjusted variable name here
+                                            repeatRequestopay = false; // Adjusted variable name here
                                         }
                                     })
                                     .catch(error => {
@@ -657,7 +657,7 @@
 
                                                 window.location.href = "{{ url('') }}/paid-success?trans_id=" + trx_id;
 
-                                                repeatRequestkuda = false; // Adjusted variable name here
+                                                repeatRequestopay = false; // Adjusted variable name here
                                             }
                                         })
                                         .catch(error => {
@@ -1255,7 +1255,7 @@
 
                                                         window.location.href = "{{ url('') }}/paid-success?trans_id=" + trx_id;
 
-                                                        repeatRequestkuda = false; // Adjusted variable name here
+                                                        repeatRequestprovidus = false; // Adjusted variable name here
                                                     }
                                                 })
                                                 .catch(error => {

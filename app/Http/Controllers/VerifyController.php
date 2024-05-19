@@ -151,6 +151,8 @@ class VerifyController extends Controller
             $user_email =  $trx->email ?? null;
             $amount =  $trx->payable_amount ?? null;
             $order_id =  $trx->trans_id ?? null;
+            $site_name =  Webkey::where('key', $trx->key)->first()->site_name ?? null;
+
 
 
 
@@ -184,7 +186,7 @@ class VerifyController extends Controller
                 $message = "Business funded | $trx->manual_acc_ref | $f_amount | $user->first_name " . " " . $user->last_name."\n\n Approved by ====>".Auth::user()->first_name;
                 send_notification($message);
 
-                $message = "$trx->manual_acc_ref | NGN  $trx->payable_amount | $trx->email " ;
+                $message = "$trx->manual_acc_ref | NGN  $trx->payable_amount | $trx->email  | $site_name" ;
                 send_notification($message);
 
                 return back()->with('message', 'Transaction successfully completed');

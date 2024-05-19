@@ -147,7 +147,7 @@ class VerifyController extends Controller
 
 
 
-            $url = Webkey::where('user_id', $trx->user_id)->first()->url_fund ?? null;
+            $url = Webkey::where('key', $trx->key)->first()->url_fund ?? null;
             $user_email =  $trx->email ?? null;
             $amount =  $trx->payable_amount ?? null;
             $order_id =  $trx->trans_id ?? null;
@@ -155,6 +155,7 @@ class VerifyController extends Controller
 
 
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
+
             if($fund == 2){
 
                 Webtransfer::where('trans_id', $request->id)->update(['status' => 4]);

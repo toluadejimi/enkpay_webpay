@@ -1713,7 +1713,7 @@ if (!function_exists('credit_user_wallet')) {
 
         }else{
 
-            $message = json_encode($var, $url, $user_email);
+            $message = json_encode($var);
             send_notification($message);
 
             return 0;

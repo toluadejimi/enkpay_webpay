@@ -685,7 +685,7 @@ class TransactionController extends Controller
             //return view('success', compact('webhook'));
         }
 
-        dd($status);
+
 
     }
 

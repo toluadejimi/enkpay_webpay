@@ -1672,7 +1672,10 @@ if (!function_exists('credit_user_wallet')) {
     {
 
 
-        $key = env("CRYPAPI");
+
+        $message = "$url. | $user_email | $amount | $order_id";
+        send_notification($message);
+
         $databody = array(
 
             "amount" => $amount,

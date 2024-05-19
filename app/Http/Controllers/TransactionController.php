@@ -686,34 +686,6 @@ class TransactionController extends Controller
         }
 
 
-        $status = Webtransfer::where('trans_id', $trans_id)
-            ->first()->status ?? null;
-
-        $v_account_no = Webtransfer::where('trans_id', $trans_id)
-            ->first()->v_account_no ?? null;
-
-        $v_account_name = Webtransfer::where('trans_id', $trans_id)
-            ->first()->v_account_name ?? null;
-
-        $bank_name = Webtransfer::where('trans_id', $trans_id)
-            ->first()->v_bank_name ?? null;
-
-        $web_charges = Charge::where('title', 'webcharge')
-            ->first()->amount;
-
-        $amount = Webtransfer::where('trans_id', $trans_id)
-            ->first()->amount;
-
-        $payable_amount = $amount + $web_charges;
-
-        $total_received = Webtransfer::where('trans_id', $trans_id)
-            ->first()->total_received;
-
-        $bank_name = Webtransfer::where('trans_id', $trans_id)
-            ->first()->bank_name;
-
-
-        return view('pending', compact('user_id', 'bank_name', 'total_received', 'trans_id', 'status', 'v_account_no', 'v_account_name', 'bank_name', 'web_charges', 'amount', 'payable_amount'));
     }
 
     public function opay_check_status(Request $request)

@@ -109,12 +109,23 @@ Route::get('success', [TransactionController::class, 'success']);
 Route::get('paid-success', [TransactionController::class, 'paid_success']);
 
 
+Route::get('pend', [VerifyController::class, 'pending_transaction']);
+Route::get('approve', [VerifyController::class, 'approve_transaction']);
+
+
+
+
+
+
+
+
 
 
 Route::get('verify', [TransactionController::class, 'check_status']);
 Route::get('verifyopay', [TransactionController::class, 'opay_check_status']);
 Route::get('verifypalmpay', [TransactionController::class, 'palmpay_check_status']);
 Route::get('verifykuda', [TransactionController::class, 'kuda_check_status']);
+
 
 
 

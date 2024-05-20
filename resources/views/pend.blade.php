@@ -73,8 +73,8 @@
 
                             @if(Auth::user()->email == "toluadejimi@gmail.com")
 
-                                <a href="pend" class="btn btn-warning w-100 btn-sm">
-                                    Pending
+                                <a href="approve" class="btn btn-warning w-100 btn-sm">
+                                    Approve
                                 </a>
 
                                 @if($status->pay_by_crypto == 1)
@@ -98,15 +98,15 @@
                                     </a>
                                 @endif
 
-                                    @if($status->palmpay_trx == 1)
-                                        <a href="offpalmpay" class="btn btn-danger btn-sm">
-                                            Off PalmPay
-                                        </a>
-                                    @elseif($status->palmpay_trx == 0)
-                                        <a href="onpalmpay" class="btn btn-success btn-sm">
-                                            ON PalmPay
-                                        </a>
-                                    @endif
+                                @if($status->palmpay_trx == 1)
+                                    <a href="offpalmpay" class="btn btn-danger btn-sm">
+                                        Off PalmPay
+                                    </a>
+                                @elseif($status->palmpay_trx == 0)
+                                    <a href="onpalmpay" class="btn btn-success btn-sm">
+                                        ON PalmPay
+                                    </a>
+                                @endif
 
 
                                 @if($status->opay_trx == 1)

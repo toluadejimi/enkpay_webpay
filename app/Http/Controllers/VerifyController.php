@@ -107,6 +107,16 @@ class VerifyController extends Controller
     }
 
 
+    public function pending_transaction(request $request)
+    {
+
+
+
+    }
+
+
+
+
     public function login(request $request)
     {
         return view('login');
@@ -278,8 +288,8 @@ class VerifyController extends Controller
         }
 
 
-            Webtransfer::where('trans_id', $request->id)->update(['status' => 3]) ?? null;
-            Transfertransaction::where('ref_trans_id', $request->id)->update(['status' => 3]) ?? null;
+        Webtransfer::where('trans_id', $request->id)->update(['status' => 3]) ?? null;
+        Transfertransaction::where('ref_trans_id', $request->id)->update(['status' => 3]) ?? null;
 
 
 

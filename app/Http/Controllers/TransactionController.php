@@ -469,7 +469,7 @@ class TransactionController extends Controller
         $transref = $get_trans_id->manual_acc_ref ?? null;
 
         if ($get_trans_id == null) {
-            $transref = Str::upper(random_int(0, 9) .date('his'). Str::random(2));
+            $transref = Str::upper(random_int(0, 9) .date('is'). Str::random(2));
             $trans = new Webtransfer();
             $trans->amount = $amount;
             $trans->user_id = $details->user_id;

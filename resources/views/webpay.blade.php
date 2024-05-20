@@ -209,7 +209,7 @@
                     <div id="opay" class="accordion-collapse collapse"
                          data-bs-parent="#accordionExample">
 
-                        <p class="text-danger my-3 text-center">Please don't forget to add payment reference in your narration/remarks</p>
+                        <p class="text-danger my-3 text-center">Please don't forget to add <strong>{{ $transref ?? "Not Available"}}</strong>  as your payment reference in  narration/remarks/notes</p>
 
                         <div class="tf-container my-2">
                             <input hidden class="" type="checkbox" id="agreeCheckbox">
@@ -237,7 +237,7 @@
                                     if (agreeCheckbox.checked) {
                                         modal.style.display = "block";
                                     } else {
-                                        alert("Please dont forget to  add 3 Digit Reference to your transaction narration / Remarks / Note.");
+                                        alert("Please dont forget to  add {{ $transref ?? "Not Available"}} as your  transaction narration / Remarks / Note.");
                                     }
                                 });
                             });

@@ -56,6 +56,58 @@
             cursor: pointer;
         }
 
+
+        @keyframes pulseAnim{
+            0%{
+                transform: scale(1);
+                opacity:0.7
+            }
+            50%{
+                transform: scale(1.2);
+                opacity:0.4
+            }
+            100%{
+                transform: scale(1);
+                opacity:0.7
+            }
+        }
+
+        .float{
+            position:fixed;
+            width:60px;
+            height:60px;
+            bottom:40px;
+            right:40px;
+            background-color:#6610f2;
+
+            color:#FFF;
+            border-radius:50px;
+            text-align:center;
+            font-size:30px;
+            /*  box-shadow: 2px 2px 3px #999; */
+            z-index:100;
+
+
+        }
+        .pulse{
+            z-index:0;
+            position:fixed;
+            content:'';
+            bottom:35px;
+            right:35px;
+            width:70px;
+            height:70px;
+            border-radius:100%;
+            background-color:#6610f2;
+            animation-name:pulseAnim;
+            animation-duration:3s;
+            animation-iteration-count:infinite;
+        }
+        .my-float{
+            margin-top:16px;
+
+        }
+
     </style>
 
 
@@ -145,7 +197,7 @@
                         </svg>
                         <div class="content">
                             <h4><a href="#" data-bs-toggle="collapse" data-bs-target="#opay"
-                                   aria-expanded="false" aria-controls="opay" class="fw_6">Pay To OPAY
+                                   aria-expanded="false" aria-controls="opay" class="fw_6">Click here to get account details
                                     </a>
                             </h4>
                             <p>40 seconds confirmation (recommended)</p>
@@ -158,9 +210,45 @@
                          data-bs-parent="#accordionExample">
 
                         <p class="text-danger my-3 text-center">Please don't forget to add payment reference in your narration/remarks</p>
+
                         <div class="tf-container my-2">
-                            <a id="openModalBtnopay" class="tf-btn success large">Pay To Opay</a>
+                            <input hidden class="" type="checkbox" id="agreeCheckbox">
+                            <a id="openModalBtnopay" class="tf-btn success large" disabled>Continue to make payment</a>
                         </div>
+
+                        <script>
+
+                            document.addEventListener('DOMContentLoaded', function() {
+                                var agreeCheckbox = document.getElementById('agreeCheckbox');
+                                var payButton = document.getElementById('openModalBtnopay');
+                                var modal = document.getElementById('myModal');
+                                var closeModal = document.getElementsByClassName('close')[0];
+
+                                // Disable button by default
+                                payButton.disabled = true;
+
+                                // Enable button when checkbox is clicked
+                                agreeCheckbox.addEventListener('change', function() {
+                                    payButton.disabled = !this.checked;
+                                });
+
+                                // Open modal when button is clicked and checkbox is checked
+                                payButton.addEventListener('click', function() {
+                                    if (agreeCheckbox.checked) {
+                                        modal.style.display = "block";
+                                    } else {
+                                        alert("Please dont forget to  add 3 Digit Reference to your transaction narration / Remarks / Note.");
+                                    }
+                                });
+                            });
+
+
+                        </script>
+
+
+{{--                        <div class="tf-container my-2">--}}
+{{--                            <a id="openModalBtnopay" class="tf-btn success large">Pay To Opay</a>--}}
+{{--                        </div>--}}
 
                         <div id="myModalopay" class="modal">
                             <div class="modal-content">
@@ -306,10 +394,17 @@
                             document.getElementById("myModalopay").style.display = "block";
                         };
 
+                        // Function to close the modal when the close button is clicked
                         document.getElementsByClassName("close")[0].onclick = function() {
                             document.getElementById("myModalopay").style.display = "none";
                         };
 
+                        // Function to close the modal when the user clicks outside of it
+                        window.onclick = function(event) {
+                            if (event.target == document.getElementById("myModalopay")) {
+                                document.getElementById("myModalopay").style.display = "none";
+                            }
+                        };
 
                     </script>
 
@@ -1483,21 +1578,15 @@
     window.onload = startCustomTimer;
 </script>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-        s1.async=true;
-        s1.src='https://embed.tawk.to/6346d5b854f06e12d899cdc8/1gf6b5nf1';
-        s1.charset='UTF-8';
-        s1.setAttribute('crossorigin','*');
-        s0.parentNode.insertBefore(s1,s0);
-    })();
-</script>
-<!--End of Tawk.to Script-->
+<a href="https://api.whatsapp.com/send?phone=2348105317336&text=Hello there." class="float" target="_blank">
+    <i class="fa fa-whatsapp my-float"></i>
+</a>
+<div class="pulse"></div>
+
+
 
 
 <script type="text/javascript" src="{{url('')}}/public/assets/assets/javascript/jquery.min.js"></script>

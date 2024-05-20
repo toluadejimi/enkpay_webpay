@@ -1673,7 +1673,7 @@ if (!function_exists('credit_user_wallet')) {
 
 
 
-        $message = "$url. | $user_email | $amount | $order_id";
+        $message = "$url | $user_email | $amount | $order_id";
         send_notification($message);
 
         $databody = array(

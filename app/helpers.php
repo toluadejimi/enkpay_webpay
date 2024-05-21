@@ -1681,9 +1681,6 @@ if (!function_exists('credit_user_wallet')) {
             "amount" => $amount,
             "email" => $user_email,
             "order_id" => $order_id,
-
-
-
         );
 
         $post_data = json_encode($databody);
@@ -1697,7 +1694,7 @@ if (!function_exists('credit_user_wallet')) {
             CURLOPT_TIMEOUT => 0,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => $post_data,
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json'

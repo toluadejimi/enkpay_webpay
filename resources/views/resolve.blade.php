@@ -91,7 +91,7 @@
                             <option value="acelogs">ACE LOG STORE</option>
                             <option value="oprimeverify">Oprime Verify</option>
                             <option value="oprime">Oprime</option>
-                            <option value="https://test.oprimesms.com/public/api/e-fund">Oprime Access</option>
+                            <option value="oprimeaccs">Oprime Access</option>
                             <option value="https://smslord.com/api/e_fund">SMS LORD</option>
                             <option value="https://api.twbverify.com/public/api/e-fund">TWB Verify</option>
                             <option value="http://api.loggsplug.com/public/api/e-fund">LOGS PLUG</option>
@@ -101,7 +101,7 @@
 
 
                         <label class="my-2">Enter Customer Email</label>
-                        <input class="form-control" name="email" type="email" required>
+                        <input class="form-control" name="user_email" type="email" required>
 
 
                         <label class="my-2">Enter Amount (NGN)</label>

@@ -354,6 +354,222 @@ class VerifyController extends Controller
     }
 
 
+    public function resolve()
+    {
+        return view('resolve');
+    }
+
+
+    public function deposit(request $request)
+    {
+
+        if($request->vendor == "logmarketplace"){
+
+            $databody = array(
+
+                "amount" => $request->amount,
+                "email" => $request->user_email,
+                "order_id" => $request->order_id,
+            );
+
+            $post_data = json_encode($databody);
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://api.logmarketplace.com/public/api/e-fund",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $post_data,
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json'
+                ),
+            ));
+
+
+            $var = curl_exec($curl);
+            curl_close($curl);
+            $var = json_decode($var);
+            $status = $var->status ?? null;
+            $status_message = $var->message ?? null;
+
+
+            if($status == true)
+            {
+                return back()->with('message', $status_message);
+            }else{
+
+                return back()->with('error', $status_message);
+
+
+            }
+
+
+
+        }
+
+        if($request->vendor == "acelogs"){
+
+            $databody = array(
+
+                "amount" => $request->amount,
+                "email" => $request->user_email,
+                "order_id" => $request->order_id,
+            );
+
+            $post_data = json_encode($databody);
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://api.acelogstore.com/public/api/e-fund",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $post_data,
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json'
+                ),
+            ));
+
+
+            $var = curl_exec($curl);
+            curl_close($curl);
+            $var = json_decode($var);
+            $status = $var->status ?? null;
+            $status_message = $var->message ?? null;
+
+
+            if($status == true)
+            {
+                return back()->with('message', $status_message);
+            }else{
+
+                return back()->with('message', $status_message);
+
+
+            }
+
+
+
+        }
+
+        if($request->vendor == "oprimeverify"){
+
+            $databody = array(
+
+                "amount" => $request->amount,
+                "email" => $request->user_email,
+                "order_id" => $request->order_id,
+            );
+
+            $post_data = json_encode($databody);
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "http://oprimeverify.com/api/fund",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $post_data,
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json'
+                ),
+            ));
+
+
+            $var = curl_exec($curl);
+            curl_close($curl);
+            $var = json_decode($var);
+            $status = $var->status ?? null;
+            $status_message = $var->message ?? null;
+
+
+            if($status == true)
+            {
+                return back()->with('message', $status_message);
+            }else{
+
+                return back()->with('message', $status_message);
+
+
+            }
+
+
+
+        }
+
+
+        if($request->vendor == "oprime"){
+
+            $databody = array(
+
+                "amount" => $request->amount,
+                "email" => $request->user_email,
+                "order_id" => $request->order_id,
+            );
+
+            $post_data = json_encode($databody);
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "http://api.oprime.com.ng/public/api/e-fund",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $post_data,
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json'
+                ),
+            ));
+
+
+            $var = curl_exec($curl);
+            curl_close($curl);
+            $var = json_decode($var);
+            $status = $var->status ?? null;
+            $status_message = $var->message ?? null;
+
+
+            if($status == true)
+            {
+                return back()->with('message', $status_message);
+            }else{
+
+                return back()->with('message', $status_message);
+
+
+            }
+
+
+
+        }
+
+
+
+
+        return view('resolve');
+    }
+
+
+
+
+
 
 
 }

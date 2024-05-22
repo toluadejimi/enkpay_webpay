@@ -268,6 +268,11 @@
                                 @forelse($transactions as $data)
                                     <tr>
                                         <td> {{\Carbon\Carbon::parse($data->created_at)->format('h:i A')}} </td>
+
+                                        @if(Auth::user()->email == "toluadejimi@gmail.com")
+                                            <td> {{$data->bank}} </td>
+                                        @endif
+
                                         <td> {{$data->bank}} </td>
                                         <td> {{$data->ref}} </td>
                                         <td> {{number_format($data->amount, 2)}} </td>
@@ -276,6 +281,8 @@
                                         @elseif($data->status == 2)
                                             <td class="text-success">Completed</td>
                                         @endif
+
+
 
                                         @if($data->status == 0)
                                             <td>

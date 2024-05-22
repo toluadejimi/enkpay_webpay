@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\SendCron::class,
     ];
-     
+
     /**
      * Define the application's command schedule.
      *
@@ -24,10 +24,25 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+
+        // $schedule->command('app:auto-birth-day-wish')
+        // ->dailyAt('12:00');
+
+
         $schedule->command('send:cron')
-                 ->everyMinute();
+            ->everyFiveMinutes();
+
+
+//        $schedule->command('app:solve-credit')
+//            ->dailyAt('5:00');
+//
+//        $schedule->command('send:endmonth')
+//            ->monthlyOn(1, '00:00');
+
+
+
     }
-     
+
     /**
      * Register the commands for the application.
      *
@@ -36,7 +51,7 @@ class Kernel extends ConsoleKernel
     protected function commands()
     {
         $this->load(__DIR__.'/Commands');
-     
+
         require base_path('routes/console.php');
     }
 }

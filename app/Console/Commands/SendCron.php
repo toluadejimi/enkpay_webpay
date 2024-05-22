@@ -6,6 +6,7 @@ use App\Models\Charge;
 use App\Models\PendingTransaction;
 use App\Models\Transaction;
 use App\Models\Transfer;
+use App\Models\Transfertransaction;
 use App\Models\User;
 use App\Models\Webtransfer;
 use Carbon\Carbon;
@@ -37,7 +38,10 @@ class SendCron extends Command
 
         Webtransfer::where('status', 0)->where('created_at', '<', Carbon::now()->subMinutes(5))->delete();
 
-        // $message = "Web Transfer Records Deleted";
-        // send_notification($message);
+        Transfertransaction::where('status', 0)->where('created_at', '<', Carbon::now()->subMinutes(30))->delete();
+
+
+        $message = "Web Transfer Records Deleted";
+        send_notification($message);
     }
 }

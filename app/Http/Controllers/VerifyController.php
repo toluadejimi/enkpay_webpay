@@ -609,14 +609,10 @@ class VerifyController extends Controller
 
         }
 
-
-
-
-
-
-
         return view('resolve');
     }
+
+
 
 
 

@@ -521,8 +521,9 @@
 
                             <div class="content">
                                 <h4><a href="#" data-bs-toggle="collapse" data-bs-target="#palmpay"
-                                       aria-expanded="false" aria-controls="opay" class="fw_6">Pay To Palmpay
-                                        </a></h4>
+                                       aria-expanded="false" aria-controls="palmpay" class="fw_6">Click here to get account details
+                                    </a>
+                                </h4>
                                 <p>40 seconds confirmation (recommended)</p>
                             </div>
                         </div>
@@ -532,11 +533,45 @@
                         <div id="palmpay" class="accordion-collapse collapse"
                              data-bs-parent="#accordionExample">
 
+                            <p class="text-danger my-3 text-center">Please don't forget to add <strong>{{ $transref ?? "Not Available"}}</strong>  as your payment reference in  narration/remarks/notes</p>
 
-                            <p class="text-danger my-3 text-center">Please don't forget to add payment reference in your narration/remarks</p>
+
+
                             <div class="tf-container my-2">
-                                <a id="openModalBtnpalmpay" class="tf-btn success large">Pay to Palmpay</a>
+                                <input hidden class="" type="checkbox" id="agreeCheckboxpalmpay">
+                                <a id="openModalBtnpalmpay" class="tf-btn success large" disabled>Continue to make payment</a>
                             </div>
+
+                            <script>
+
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    var agreeCheckbox = document.getElementById('agreeCheckboxpalmpay');
+                                    var payButton = document.getElementById('openModalBtnpalmpay');
+                                    var modal = document.getElementById('modalpalm');
+                                    var closeModal = document.getElementsByClassName('close')[0];
+
+                                    // Disable button by default
+                                    payButton.disabled = true;
+
+                                    // Enable button when checkbox is clicked
+                                    agreeCheckbox.addEventListener('change', function() {
+                                        payButton.disabled = !this.checked;
+                                    });
+
+                                    // Open modal when button is clicked and checkbox is checked
+                                    payButton.addEventListener('click', function() {
+                                        if (agreeCheckbox.checked) {
+                                            modal.style.display = "block";
+                                        } else {
+                                            alert("Please dont forget to  add {{ $transref ?? "Not Available"}} as your  transaction narration / Remarks / Note.");
+                                        }
+                                    });
+                                });
+
+
+                            </script>
+
+
 
                             <div id="myModalpalmpay" class="modal">
                                 <div class="modal-content">

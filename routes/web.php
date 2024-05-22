@@ -113,7 +113,7 @@ Route::get('pend', [VerifyController::class, 'pending_transaction']);
 Route::get('approve', [VerifyController::class, 'approve_transaction']);
 
 
-Route::post('resolve', [VerifyController::class, 'resolve']);
+Route::get('resolve', [VerifyController::class, 'resolve']);
 Route::post('deposit-now', [VerifyController::class, 'deposit']);
 
 

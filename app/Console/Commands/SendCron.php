@@ -36,9 +36,9 @@ class SendCron extends Command
     {
 
 
-        Webtransfer::where('status', 0)->where('created_at', '<', Carbon::now()->subMinutes(5))->delete();
+      //  Webtransfer::where('status', 0)->where('created_at', '<', Carbon::now()->subMinutes(5))->delete();
 
-        Transfertransaction::where('status', 0)->where('created_at', '<', Carbon::now()->subMinutes(30))->update(['status'=> 4]);
+       // Transfertransaction::where('status', 0)->where('created_at', '<', Carbon::now()->subMinutes(30))->update(['status'=> 4]);
 
 
         $message = "Web Transfer Records updated";

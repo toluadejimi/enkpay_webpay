@@ -269,9 +269,9 @@
                                     <tr>
                                         <td> {{\Carbon\Carbon::parse($data->created_at)->format('h:i A')}} </td>
 
-                                        @if(Auth::user()->email == "toluadejimi@gmail.com")
-                                            <td> {{$data->bank}} </td>
-                                        @endif
+{{--                                        @if(Auth::user()->email == "toluadejimi@gmail.com")--}}
+{{--                                            <td> {{$data->bank}} </td>--}}
+{{--                                        @endif--}}
 
                                         <td> {{$data->bank}} </td>
                                         <td> {{$data->ref}} </td>

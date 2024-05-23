@@ -165,7 +165,6 @@ class VerifyController extends Controller
 
 
 
-
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
 
             if($fund == 2){
@@ -235,11 +234,7 @@ class VerifyController extends Controller
             return back()->with('message', 'Transaction successfully completed');
 
 
-
-
         }
-
-
 
 
         return view('login');

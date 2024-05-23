@@ -286,43 +286,152 @@
                                                     </defs>
                                                 </svg>
                                             </div>
-                                            <div class="col-12">
-                                                <h4 class="text-muted text-center my-2">BANK</h4>
+
+
+                                            <div class="row">
+
+                                                <div class="col-12">
+                                                    <h4 class="text-muted text-center my-2"></h4>
+                                                    <hr>
+                                                </div>
+
+
+                                                <div class="col">
+                                                    <div class="d-flex justify-content-start
+                                                     p-1">
+                                                        <h5 class="text-start text-muted">
+                                                            ACCT NO
+                                                        </h5>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col">
+                                                    <div class="d-flex justify-content-end
+                                                    p-1">
+
+                                                        <h5 style="border-right: 4px; font-size: 15px;" id="text_element">{{ $opay_acct->account_no ?? "Not Available"}}</h5>
+                                                        <input hidden value="{{ $opay_acct->account_no }}" id="opayaccountno">
+
+
+                                                        <i style="font-size: 1em; margin-left: 4px" class="fa fa-copy" onclick="copyToClipboard('text_element')">
+
+                                                        </i>
+
+                                                        <script>
+                                                            function copyToClipboard(elementId) {
+                                                                var aux = document.createElement("input");
+                                                                aux.setAttribute("value", document.getElementById(elementId).innerHTML);
+                                                                document.body.appendChild(aux);
+                                                                aux.select();
+                                                                document.execCommand("copy");
+                                                                document.body.removeChild(aux);}
+                                                            function log() {
+                                                                console.log('---')
+                                                            }
+                                                        </script>
+
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-12">
+
+                                            <div class="row">
+
+                                                <div class="col-12">
+                                                    <h4 class="text-muted text-center my-2"></h4>
+                                                    <hr>
+                                                </div>
 
 
-                                                <h6 class="text-center my-1">OPAY DIGITAL BANK</h6>
+                                                <div class="col">
+                                                    <div class="d-flex justify-content-start
+                                                     p-1">
+                                                        <h5 class="text-start text-muted">
+                                                            ACCT NAME
+                                                        </h5>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="col">
+                                                    <div class="d-flex justify-content-end
+                                                    p-1">
+
+                                                        <h5 style="font-size: 15px;" id="text_element">{{ $opay_acct->account_name ?? "Not Available"}}</h5>
+                                                        </i>
+
+                                                        <script>
+                                                            function copyToClipboard(elementId) {
+                                                                var aux = document.createElement("input");
+                                                                aux.setAttribute("value", document.getElementById(elementId).innerHTML);
+                                                                document.body.appendChild(aux);
+                                                                aux.select();
+                                                                document.execCommand("copy");
+                                                                document.body.removeChild(aux);}
+                                                            function log() {
+                                                                console.log('---')
+                                                            }
+                                                        </script>
+
+                                                    </div>
+                                                </div>
+
+
                                             </div>
-                                            <div class="col-12">
-                                                <h4 class="text-muted text-center my-2">ACCOUNT NO</h4>
+
+
+                                            <div class="row">
+
+                                                <div class="col-12">
+                                                    <h4 class="text-muted text-center my-2"></h4>
+                                                    <hr>
+                                                </div>
+
+
+                                                <div class="col">
+                                                    <div class="d-flex justify-content-start
+                                                     p-1">
+                                                        <h5 class="text-start text-muted">
+                                                            REFERENCE
+                                                        </h5>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="col">
+                                                    <div class="d-flex justify-content-end
+                                                    p-1">
+
+                                                        <h3 style="border-right: 4px; font-size: 15px; color: darkred" id="text_element1">{{ $transref ?? "Not Available" ?? "Not Available"}}</h3>
+                                                        <input hidden value="{{ $transref }}" id="trfopay">
+
+
+
+                                                        <i style="font-size: 1em; margin-left: 4px" class="fa fa-copy" onclick="copyToClipboard('text_element1')">
+                                                        </i>
+
+                                                        <script>
+                                                            function copyToClipboard(elementId) {
+                                                                var aux = document.createElement("input");
+                                                                aux.setAttribute("value", document.getElementById(elementId).innerHTML);
+                                                                document.body.appendChild(aux);
+                                                                aux.select();
+                                                                document.execCommand("copy");
+                                                                document.body.removeChild(aux);}
+                                                            function log() {
+                                                                console.log('---')
+                                                            }
+                                                        </script>
+
+                                                    </div>
+                                                </div>
+                                                <hr class="my-1">
+
                                             </div>
-                                            <div class="col-12">
-                                                <h6 class="text-center my-1">{{$opay_acct->account_no ?? "Not Available"  }}</h6>
-                                            </div>
-                                            <input hidden value="{{ $opay_acct->account_no }}" id="opayaccountno">
 
 
-                                            <div class="col-12">
-                                                <h4 class="text-muted text-center my-2">ACCOUNT NAME</h4>
-                                            </div>
-                                            <div class="col-12">
-                                                <h6 class="text-center my-1">{{ $opay_acct->account_name ?? "Not Available"}}</h6>
-
-                                            </div>
-
-
-                                            <div class="col-12">
-                                                <h4 class="text-muted text-center my-2">REFERENCE</h4>
-                                            </div>
-                                            <div class="col-12">
-                                                <h6 style="font-size: 25px"
-                                                    class="text-center my-1 text-danger">{{ $transref ?? "Not Available"}}</h6>
-                                                <input hidden value="{{ $transref }}" id="trfopay">
-
-                                            </div>
-
-                                            <small style="font-size: 10px" class="text-danger text-center my-2">Please
+                                            <small style="font-size: 12px" class="text-danger text-center my-2">Please
                                                 add Reference to your transaction narration to avoide delay in
                                                 confirmation</small>
 

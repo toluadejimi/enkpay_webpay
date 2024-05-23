@@ -626,36 +626,7 @@
                                             </div>
 
 
-                                            <div class="row">
 
-                                                <div class="col-12">
-                                                    <h4 class="text-muted text-center my-2"></h4>
-                                                    <hr>
-                                                </div>
-
-
-                                                <div class="col">
-                                                    <div class="d-flex justify-content-start
-                                                     p-1">
-                                                        <h4 class="text-start text-muted">
-                                                            BANK
-                                                        </h4>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col">
-                                                    <div class="d-flex justify-content-end
-                                                    p-1">
-
-
-                                                        <h4 class="text-start">
-                                                            PALMPAY
-                                                        </h4>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
 
                                             <div class="row">
 
@@ -668,9 +639,9 @@
                                                 <div class="col">
                                                     <div class="d-flex justify-content-start
                                                      p-1">
-                                                        <h4 class="text-start text-muted">
-                                                            ACCOUNT NO
-                                                        </h4>
+                                                        <h5 class="text-start text-muted">
+                                                            ACCT NO
+                                                        </h5>
                                                     </div>
                                                 </div>
 
@@ -678,10 +649,11 @@
                                                     <div class="d-flex justify-content-end
                                                     p-1">
 
-                                                        <h3 style="border-right: 4px" id="text_element">{{ $palmpay_acct->account_no ?? "Not Available"}}</h3>
+                                                        <h5 style="border-right: 4px; font-size: 15px;" id="text_element">{{ $palmpay_acct->account_no ?? "Not Available"}}</h5>
                                                         <input hidden value="{{ $palmpay_acct->account_no }}" id="palmpay_account_no">
 
-                                                        <i class="fa fa-copy" onclick="copyToClipboard('text_element')">
+                                                         <i style="font-size: 1em; margin-left: 4px" class="fa fa-copy" onclick="copyToClipboard('text_element')">
+
                                                         </i>
 
                                                         <script>
@@ -712,9 +684,9 @@
                                                 <div class="col">
                                                     <div class="d-flex justify-content-start
                                                      p-1">
-                                                        <h4 class="text-start text-muted">
+                                                        <h5 class="text-start text-muted">
                                                             ACCT NAME
-                                                        </h4>
+                                                        </h5>
                                                     </div>
                                                 </div>
 
@@ -724,7 +696,7 @@
                                                     <div class="d-flex justify-content-end
                                                     p-1">
 
-                                                        <h3 style="" id="text_element">{{ $palmpay_acct->account_name ?? "Not Available"}}</h3>
+                                                        <h5 style="font-size: 15px;" id="text_element">{{ $palmpay_acct->account_name ?? "Not Available"}}</h5>
                                                         </i>
 
                                                         <script>
@@ -758,9 +730,9 @@
                                                 <div class="col">
                                                     <div class="d-flex justify-content-start
                                                      p-1">
-                                                        <h4 class="text-start text-muted">
+                                                        <h5 class="text-start text-muted">
                                                             REFERENCE
-                                                        </h4>
+                                                        </h5>
                                                     </div>
                                                 </div>
 
@@ -770,10 +742,10 @@
                                                     <div class="d-flex justify-content-end
                                                     p-1">
 
-                                                        <h3 style="border-right: 4px; font-size: 20px; color: darkred" id="text_element1">{{ $transref ?? "Not Available" ?? "Not Available"}}</h3>
+                                                        <h3 style="border-right: 4px; font-size: 15px; color: darkred" id="text_element1">{{ $transref ?? "Not Available" ?? "Not Available"}}</h3>
                                                         <input hidden value="{{ $trans_id }}" id="trfpalmpay">
 
-                                                        <i class="fa fa-copy" onclick="copyToClipboard('text_element1')">
+                                                        <i style="font-size: 1em; margin-left: 4px" class="fa fa-copy" onclick="copyToClipboard('text_element1')">
                                                         </i>
 
                                                         <script>

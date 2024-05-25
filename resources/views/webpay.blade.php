@@ -1944,11 +1944,11 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-<script>
-    $(document).ready(function () {
-        $("#warning").modal('show');
-    });
-</script>
+{{--<script>--}}
+{{--    $(document).ready(function () {--}}
+{{--        $("#warning").modal('show');--}}
+{{--    });--}}
+{{--</script>--}}
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 

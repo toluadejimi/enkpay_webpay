@@ -126,6 +126,55 @@
 <!-- /preload -->
 
 
+<div class="modal fade" id="warning" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="heading">
+                <h2 class="text-center text-danger my-2">Terms and Conditions</h2>
+                <h6 class="text-muted text-center mb-3">Please read carefully</h6>
+
+                <div class="card border-0 my-2 mt-4 shadow-lg p-3 mb-5 bg-body rounded">
+                    <div class="card-body border-0">
+                        <p class="text-danger ">
+                            Make sure you add the valid reference generated for the payment to your transaction Remarks
+                            / Narration / Reference / Note
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="card border-0 mb-4 my-2 mt-4 shadow-lg p-3 mb-5 bg-body rounded">
+                    <div class="card-body border-0">
+                        <p class="text-danger ">
+                            Do every add BTC, LTC, BITCOIN or any related CRYPTO to your narration.
+                        </p>
+                    </div>
+                </div>
+
+
+
+                <p class="text-dark text-center my-3 mb-4">
+                    Failure to follow instructions, consider your money lost and don't ever message support.
+                </p>
+
+
+
+                <div class="group-cb mt-3 align-items-center">
+                    <div class="cb">
+                        <input type="checkbox" class="tf-checkbox st1" checked>
+                    </div>
+                    <span class="fw_3 mb-4">I agree to the Term of sevice and conditions</span>
+                </div>
+
+            </div>
+            <div class="bottom mt-5">
+                <a href="#" class="tf-btn accent large" data-bs-dismiss="modal">I Accept</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="app-header st1">
     <div class="tf-container">
         <div class="tf-topbar d-flex justify-content-center align-items-center">
@@ -217,7 +266,7 @@
 
                         <p class="text-danger my-3 text-center">Please don't forget to add
                             <strong>{{ $transref ?? "Not Available"}}</strong> as your payment reference in
-                            narration/remarks/notes</p>
+                            narration/remarks/notes to avoid loosing your funds</p>
 
                         <div class="tf-container my-2">
                             <input hidden class="" type="checkbox" id="agreeCheckbox">
@@ -309,11 +358,14 @@
                                                     <div class="d-flex justify-content-end
                                                     p-1">
 
-                                                        <h5 style="border-right: 4px; font-size: 15px;" id="text_element">{{ $opay_acct->account_no ?? "Not Available"}}</h5>
-                                                        <input hidden value="{{ $opay_acct->account_no }}" id="opayaccountno">
+                                                        <h5 style="border-right: 4px; font-size: 15px;"
+                                                            id="text_element">{{ $opay_acct->account_no ?? "Not Available"}}</h5>
+                                                        <input hidden value="{{ $opay_acct->account_no }}"
+                                                               id="opayaccountno">
 
 
-                                                        <i style="font-size: 1em; margin-left: 4px" class="fa fa-copy" onclick="copyToClipboard('text_element')">
+                                                        <i style="font-size: 1em; margin-left: 4px" class="fa fa-copy"
+                                                           onclick="copyToClipboard('text_element')">
 
                                                         </i>
 
@@ -324,7 +376,9 @@
                                                                 document.body.appendChild(aux);
                                                                 aux.select();
                                                                 document.execCommand("copy");
-                                                                document.body.removeChild(aux);}
+                                                                document.body.removeChild(aux);
+                                                            }
+
                                                             function log() {
                                                                 console.log('---')
                                                             }
@@ -352,12 +406,12 @@
                                                 </div>
 
 
-
                                                 <div class="col">
                                                     <div class="d-flex justify-content-end
                                                     p-1">
 
-                                                        <h5 style="font-size: 15px;" id="text_element">{{ $opay_acct->account_name ?? "Not Available"}}</h5>
+                                                        <h5 style="font-size: 15px;"
+                                                            id="text_element">{{ $opay_acct->account_name ?? "Not Available"}}</h5>
                                                         </i>
 
                                                         <script>
@@ -367,7 +421,9 @@
                                                                 document.body.appendChild(aux);
                                                                 aux.select();
                                                                 document.execCommand("copy");
-                                                                document.body.removeChild(aux);}
+                                                                document.body.removeChild(aux);
+                                                            }
+
                                                             function log() {
                                                                 console.log('---')
                                                             }
@@ -398,17 +454,17 @@
                                                 </div>
 
 
-
                                                 <div class="col">
                                                     <div class="d-flex justify-content-end
                                                     p-1">
 
-                                                        <h3 style="border-right: 4px; font-size: 15px; color: darkred" id="text_element1">{{ $transref ?? "Not Available" ?? "Not Available"}}</h3>
+                                                        <h3 style="border-right: 4px; font-size: 15px; color: darkred"
+                                                            id="text_element1">{{ $transref ?? "Not Available" ?? "Not Available"}}</h3>
                                                         <input hidden value="{{ $transref }}" id="trfopay">
 
 
-
-                                                        <i style="font-size: 1em; margin-left: 4px" class="fa fa-copy" onclick="copyToClipboard('text_element1')">
+                                                        <i style="font-size: 1em; margin-left: 4px" class="fa fa-copy"
+                                                           onclick="copyToClipboard('text_element1')">
                                                         </i>
 
                                                         <script>
@@ -418,7 +474,9 @@
                                                                 document.body.appendChild(aux);
                                                                 aux.select();
                                                                 document.execCommand("copy");
-                                                                document.body.removeChild(aux);}
+                                                                document.body.removeChild(aux);
+                                                            }
+
                                                             function log() {
                                                                 console.log('---')
                                                             }
@@ -433,7 +491,7 @@
 
                                             <small style="font-size: 12px" class="text-danger text-center my-2">Please
                                                 add Reference to your transaction narration to avoide delay in
-                                                confirmation</small>
+                                                confirmation and loosing your funds</small>
 
 
                                             <form onsubmit="event.preventDefault()">
@@ -735,8 +793,6 @@
                                             </div>
 
 
-
-
                                             <div class="row">
 
                                                 <div class="col-12">
@@ -758,10 +814,13 @@
                                                     <div class="d-flex justify-content-end
                                                     p-1">
 
-                                                        <h5 style="border-right: 4px; font-size: 15px;" id="text_element">{{ $palmpay_acct->account_no ?? "Not Available"}}</h5>
-                                                        <input hidden value="{{ $palmpay_acct->account_no }}" id="palmpay_account_no">
+                                                        <h5 style="border-right: 4px; font-size: 15px;"
+                                                            id="text_element">{{ $palmpay_acct->account_no ?? "Not Available"}}</h5>
+                                                        <input hidden value="{{ $palmpay_acct->account_no }}"
+                                                               id="palmpay_account_no">
 
-                                                         <i style="font-size: 1em; margin-left: 4px" class="fa fa-copy" onclick="copyToClipboard('text_element')">
+                                                        <i style="font-size: 1em; margin-left: 4px" class="fa fa-copy"
+                                                           onclick="copyToClipboard('text_element')">
 
                                                         </i>
 
@@ -772,7 +831,9 @@
                                                                 document.body.appendChild(aux);
                                                                 aux.select();
                                                                 document.execCommand("copy");
-                                                                document.body.removeChild(aux);}
+                                                                document.body.removeChild(aux);
+                                                            }
+
                                                             function log() {
                                                                 console.log('---')
                                                             }
@@ -800,12 +861,12 @@
                                                 </div>
 
 
-
                                                 <div class="col">
                                                     <div class="d-flex justify-content-end
                                                     p-1">
 
-                                                        <h5 style="font-size: 15px;" id="text_element">{{ $palmpay_acct->account_name ?? "Not Available"}}</h5>
+                                                        <h5 style="font-size: 15px;"
+                                                            id="text_element">{{ $palmpay_acct->account_name ?? "Not Available"}}</h5>
                                                         </i>
 
                                                         <script>
@@ -815,7 +876,9 @@
                                                                 document.body.appendChild(aux);
                                                                 aux.select();
                                                                 document.execCommand("copy");
-                                                                document.body.removeChild(aux);}
+                                                                document.body.removeChild(aux);
+                                                            }
+
                                                             function log() {
                                                                 console.log('---')
                                                             }
@@ -846,15 +909,16 @@
                                                 </div>
 
 
-
                                                 <div class="col">
                                                     <div class="d-flex justify-content-end
                                                     p-1">
 
-                                                        <h3 style="border-right: 4px; font-size: 15px; color: darkred" id="text_element1">{{ $transref ?? "Not Available" ?? "Not Available"}}</h3>
+                                                        <h3 style="border-right: 4px; font-size: 15px; color: darkred"
+                                                            id="text_element1">{{ $transref ?? "Not Available" ?? "Not Available"}}</h3>
                                                         <input hidden value="{{ $trans_id }}" id="trfpalmpay">
 
-                                                        <i style="font-size: 1em; margin-left: 4px" class="fa fa-copy" onclick="copyToClipboard('text_element1')">
+                                                        <i style="font-size: 1em; margin-left: 4px" class="fa fa-copy"
+                                                           onclick="copyToClipboard('text_element1')">
                                                         </i>
 
                                                         <script>
@@ -864,7 +928,9 @@
                                                                 document.body.appendChild(aux);
                                                                 aux.select();
                                                                 document.execCommand("copy");
-                                                                document.body.removeChild(aux);}
+                                                                document.body.removeChild(aux);
+                                                            }
+
                                                             function log() {
                                                                 console.log('---')
                                                             }
@@ -875,9 +941,6 @@
                                                 <hr class="my-1">
 
                                             </div>
-
-
-
 
 
                                             <small style="font-size: 13px" class="text-danger text-center my-2">Please
@@ -1863,6 +1926,17 @@
 
 
     window.onload = startCustomTimer;
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $("#warning").modal('show');
+    });
 </script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">

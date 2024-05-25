@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="eb481102-bdbd-4de2-9fe6-19ebbd8459cb" name="Changes" comment="adjusted">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/assets/styles/bootstrap.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/assets/styles/bootstrap.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/webpay.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/webpay.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -257,23 +256,7 @@
       <workItem from="1716049102208" duration="19279000" />
       <workItem from="1716354109567" duration="14937000" />
       <workItem from="1716510566358" duration="1725000" />
-      <workItem from="1716648824381" duration="2288000" />
-    </task>
-    <task id="LOCAL-00065" summary="adjusted">
-      <option name="closed" value="true" />
-      <created>1715955461300</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1715955461300</updated>
-    </task>
-    <task id="LOCAL-00066" summary="adjusted">
-      <option name="closed" value="true" />
-      <created>1715955701984</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1715955701984</updated>
+      <workItem from="1716648824381" duration="2898000" />
     </task>
     <task id="LOCAL-00067" summary="adjusted">
       <option name="closed" value="true" />
@@ -651,7 +634,23 @@
       <option name="project" value="LOCAL" />
       <updated>1716491916365</updated>
     </task>
-    <option name="localTasksCounter" value="114" />
+    <task id="LOCAL-00114" summary="adjusted">
+      <option name="closed" value="true" />
+      <created>1716651370014</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1716651370015</updated>
+    </task>
+    <task id="LOCAL-00115" summary="adjusted">
+      <option name="closed" value="true" />
+      <created>1716652047595</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1716652047596</updated>
+    </task>
+    <option name="localTasksCounter" value="116" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -706,7 +705,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/resources/views/webpay.blade.php</url>
-          <line>174</line>
+          <line>185</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php-line-method">

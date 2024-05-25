@@ -152,6 +152,17 @@
                 </div>
 
 
+                <div class="card border-0 mb-4 my-2 mt-4 shadow-lg p-3 mb-5 bg-body rounded">
+                    <div class="card-body border-0">
+                        <p class="text-danger ">
+                            Account details might change from time to time , do not save the details. </p>
+                            <hr>
+                           <p class="text-danger "> Money sent to our account is non-refundable. </p>
+
+                    </div>
+                </div>
+
+
 
                 <p class="text-dark text-center my-3 mb-4">
                     Failure to follow instructions, consider your money lost and don't ever message support.

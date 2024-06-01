@@ -196,7 +196,7 @@ class VerifyController extends Controller
                 send_notification($message);
 
                 $date = date('d M Y H:i:s');
-                $message = "$trx->manual_acc_ref | NGN  $trx->payable_amount | $trx->email  | $site_name | $date" ;
+                $message = "$trx->manual_acc_ref | NGN  $trx->payable_amount | $trx->email  | $site_name | $date | has been funded" ;
                 send_notification($message);
                 send_notification2($message);
 

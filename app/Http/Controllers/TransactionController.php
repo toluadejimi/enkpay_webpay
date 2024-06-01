@@ -1957,6 +1957,7 @@ class TransactionController extends Controller
         $message = "Transfer Payment Initiated |" . $request->ref . "| ON OPAY " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
         send_notification($message);
         send_notification_opay($message);
+        send_notification2($message);
 
 
     }
@@ -1992,6 +1993,8 @@ class TransactionController extends Controller
         $message = "Transfer Payment Initiated |" . $request->ref . "| ON PALMPAY " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
         send_notification($message);
         send_notification_palmpay($message);
+        send_notification2($message);
+
 
 
     }

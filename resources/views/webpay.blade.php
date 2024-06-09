@@ -211,8 +211,8 @@
                 <h1>₦{{ number_format($payable_amount, 2) }}</h1>
                 <h4 class="secondary_color text-center fw_4 mb-3">Make sure you send exact amount</h4>
                 <hr>
-                <h4 class="text-danger text-center fw_4 mb-3">PLEASE ALWAYS ADD REFERENCE GENERATED <br/> TO YOUR
-                    PAYMENT NARRATION / NOTE / REFERENCE BEFORE MAKING TRANSFER</h4>
+                <h4 class="text-danger text-center fw_4 mb-3">PLEASE ALWAYS ADD REFERENCE</h4>
+                <a class="d-flex justify-content-center btn btn-primary w-100" href="https://www.youtube.com/shorts/Zn_dALbDhSI">Watch how to make payment</a>
 
 
             </div>

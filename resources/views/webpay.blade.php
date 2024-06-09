@@ -212,7 +212,7 @@
                 <h4 class="secondary_color text-center fw_4 mb-3">Make sure you send exact amount</h4>
                 <hr>
                 <h4 class="text-danger text-center fw_4 mb-3">PLEASE ALWAYS ADD REFERENCE</h4>
-                <a class="d-flex justify-content-center btn btn-primary my-3" href="https://www.youtube.com/shorts/Zn_dALbDhSI">Watch how to make payment</a>
+                <a class="d-flex justify-content-center btn btn-primary my-3" href="https://www.youtube.com/shorts/Zn_dALbDhSI" target="_blank">Watch how to make payment</a>
 
 
             </div>
@@ -273,9 +273,7 @@
                     <div id="opay" class="accordion-collapse collapse"
                          data-bs-parent="#accordionExample">
 
-                        <p class="text-danger my-3 text-center">Please don't forget to add
-                            <strong>{{ $transref ?? "Not Available"}}</strong> as your payment reference in
-                            narration/remarks/notes to avoid loosing your funds</p>
+                        <p class="text-danger my-3 text-center">Please don't forget to add your payment reference in narration/remarks/notes to avoid loosing your funds</p>
 
                         <div class="tf-container my-2">
                             <input hidden class="" type="checkbox" id="agreeCheckbox">
@@ -303,7 +301,7 @@
                                     if (agreeCheckbox.checked) {
                                         modal.style.display = "block";
                                     } else {
-                                        alert("Please dont forget to  add {{ $transref ?? "Not Available"}} as your  transaction narration / Remarks / Note.");
+                                        alert("Please dont forget to  add referencee to your  transaction narration / Remarks / Note.");
                                     }
                                 });
                             });
@@ -730,9 +728,7 @@
                     <div id="palmpay" class="accordion-collapse collapse"
                          data-bs-parent="#accordionExample">
 
-                        <p class="text-danger my-3 text-center">Please don't forget to add
-                            <strong>{{ $transref ?? "Not Available"}}</strong> as your payment reference in
-                            narration/remarks/notes</p>
+                        <p class="text-danger my-3 text-center">Please don't forget to add your payment reference in narration/remarks/notes</p>
 
 
                         <div class="tf-container my-2">
@@ -762,7 +758,7 @@
                                     if (agreeCheckbox.checked) {
                                         modal.style.display = "block";
                                     } else {
-                                        alert("Please dont forget to  add {{ $transref ?? "Not Available"}} as your  transaction narration / Remarks / Note.");
+                                        alert("Please dont forget to  add generated reference  to your  transaction narration / Remarks / Note.");
                                     }
                                 });
                             });

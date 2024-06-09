@@ -2050,6 +2050,13 @@
 <div class="pulse"></div>
 
 
+
+<script type="text/javascript">
+    window.onbeforeunload = function() {
+        return "Are you sure you want to leave this page?";
+    };
+</script>
+
 <script type="text/javascript" src="{{url('')}}/public/assets/assets/javascript/jquery.min.js"></script>
 <script type="text/javascript" src="{{url('')}}/public/assets/assets/javascript/bootstrap.min.js"></script>
 <script type="text/javascript" src="{{url('')}}/public/assets/assets/javascript/main.js"></script>

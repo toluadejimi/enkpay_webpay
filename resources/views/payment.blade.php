@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="refresh" content="20">
+    <meta http-equiv="refresh" content="30">
 
     <!-- Mobile Specific Metas -->
     <meta name="viewport"

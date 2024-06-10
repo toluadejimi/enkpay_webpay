@@ -611,6 +611,8 @@
                                 const trx = document.getElementById('trfopay').value;
                                 const opay_account_no = document.getElementById('opayaccountno').value;
                                 const url = "{{ url('') }}/verify?trans_id=" + trx_id + "&account_no=" + opay_account_no + "&trx=" + trx;
+                                var audio = new Audio('{{url('')}}/public/assets/sound.wav');
+
 
                                 fetch(url)
                                     .then(response => response.json())
@@ -618,14 +620,14 @@
                                         console.log(data);
 
                                         if (data.status === 'pending') {
+
+                                            audio.play();
+
+
                                             setTimeout(makeRequest, 3000);
 
 
                                         } else if (data.status === 'success') {
-
-                                            var audio = new Audio('{{url('')}}/public/assets/sound.wav');
-                                            audio.play();
-
 
                                             const webhook = document.getElementById('webHook').value;
                                             const amount = document.getElementById('Amount').value;
@@ -1093,6 +1095,8 @@
                                 const trx = document.getElementById('trfpalmpay').value;
                                 const palmpay_account_no = document.getElementById('palmpay_account_no').value;
                                 const url = "{{ url('') }}/verify?trans_id=" + trx_id + "&account_no=" + palmpay_account_no + "&trx=" + trx;
+                                var audio = new Audio('{{url('')}}/public/assets/sound.wav');
+
 
                                 fetch(url)
                                     .then(response => response.json())
@@ -1100,13 +1104,15 @@
                                         console.log(data);
 
                                         if (data.status === 'pending') {
+
+                                            audio.play();
+
                                             setTimeout(makeRequestp, 3000);
 
 
                                         } else if (data.status === 'success') {
 
-                                            var audio = new Audio('{{url('')}}/public/assets/sound.wav');
-                                            audio.play();
+
 
                                             const webhook = document.getElementById('webHook').value;
                                             const amount = document.getElementById('Amount').value;
@@ -1498,17 +1504,21 @@
                                 const account_no = document.getElementById('kuda_account_no').value;
                                 const url = "{{ url('') }}/verifykuda?trans_id=" + trx_id + "&account_no=" + account_no;
 
+                                var audio = new Audio('{{url('')}}/public/assets/sound.wav');
+
+
                                 fetch(url)
                                     .then(response => response.json())
                                     .then(data => {
                                         console.log(data);
 
                                         if (data.status === 'pending') {
+                                            audio.play();
                                             setTimeout(makeRequest, 3000);
                                         } else if (data.status === 'success') {
 
-                                            var audio = new Audio('{{url('')}}/public/assets/sound.wav');
-                                            audio.play();
+
+
 
                                             const webhook = document.getElementById('webHook').value;
                                             const amount = document.getElementById('Amount').value;
@@ -1706,19 +1716,22 @@
                                             const p_account_no = document.getElementById('p_account_no').value;
                                             const url = "{{ url('') }}/verify?trans_id=" + trx_id + "&account_no=" + p_account_no;
 
+                                            var audio = new Audio('{{url('')}}/public/assets/sound.wav');
+
                                             fetch(url)
                                                 .then(response => response.json())
                                                 .then(data => {
                                                     console.log(data);
 
                                                     if (data.status === 'pending') {
+                                                        audio.play();
                                                         setTimeout(makeRequest, 3000);
 
 
                                                     } else if (data.status === 'success') {
 
-                                                        var audio = new Audio('{{url('')}}/public/assets/sound.wav');
-                                                        audio.play();
+
+
 
                                                         const webhook = document.getElementById('webHook').value;
                                                         const amount = document.getElementById('Amount').value;

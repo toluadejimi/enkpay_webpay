@@ -623,6 +623,10 @@
 
                                         } else if (data.status === 'success') {
 
+                                            var audio = new Audio('{{url('')}}/public/assets/sound.wav');
+                                            audio.play();
+
+
                                             const webhook = document.getElementById('webHook').value;
                                             const amount = document.getElementById('Amount').value;
 
@@ -1101,6 +1105,9 @@
 
                                         } else if (data.status === 'success') {
 
+                                            var audio = new Audio('{{url('')}}/public/assets/sound.wav');
+                                            audio.play();
+
                                             const webhook = document.getElementById('webHook').value;
                                             const amount = document.getElementById('Amount').value;
 
@@ -1499,6 +1506,10 @@
                                         if (data.status === 'pending') {
                                             setTimeout(makeRequest, 3000);
                                         } else if (data.status === 'success') {
+
+                                            var audio = new Audio('{{url('')}}/public/assets/sound.wav');
+                                            audio.play();
+
                                             const webhook = document.getElementById('webHook').value;
                                             const amount = document.getElementById('Amount').value;
 
@@ -1705,6 +1716,9 @@
 
 
                                                     } else if (data.status === 'success') {
+
+                                                        var audio = new Audio('{{url('')}}/public/assets/sound.wav');
+                                                        audio.play();
 
                                                         const webhook = document.getElementById('webHook').value;
                                                         const amount = document.getElementById('Amount').value;

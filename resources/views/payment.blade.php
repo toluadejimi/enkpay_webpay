@@ -251,8 +251,8 @@
                                 <tr>
                                     <th>ORDER ID</th>
                                     <th>BANK</th>
-                                    <th>TRS REF</th>
                                     <th>Amount</th>
+                                    <th>Time</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>

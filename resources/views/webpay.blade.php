@@ -621,9 +621,6 @@
 
                                         if (data.status === 'pending') {
 
-                                            audio.play();
-
-
                                             setTimeout(makeRequest, 3000);
 
 
@@ -1104,16 +1101,13 @@
                                         console.log(data);
 
                                         if (data.status === 'pending') {
-
-                                            audio.play();
-
                                             setTimeout(makeRequestp, 3000);
 
 
                                         } else if (data.status === 'success') {
 
 
-
+                                            audio.play();
                                             const webhook = document.getElementById('webHook').value;
                                             const amount = document.getElementById('Amount').value;
 
@@ -1122,6 +1116,7 @@
                                             repeatRequestopay = false;
                                         } else if (data.status === 'paid') {
 
+                                            audio.play();
                                             window.location.href = "{{ url('') }}/paid-success?trans_id=" + trx_id;
 
                                             repeatRequestopay = false; // Adjusted variable name here
@@ -1513,12 +1508,10 @@
                                         console.log(data);
 
                                         if (data.status === 'pending') {
-                                            audio.play();
                                             setTimeout(makeRequest, 3000);
                                         } else if (data.status === 'success') {
 
-
-
+                                            audio.play();
 
                                             const webhook = document.getElementById('webHook').value;
                                             const amount = document.getElementById('Amount').value;
@@ -1527,7 +1520,7 @@
 
                                             repeatRequestkuda = false; // Adjusted variable name here
                                         } else if (data.status === 'paid') {
-
+                                            audio.play();
                                             window.location.href = "{{ url('') }}/paid-success?trans_id=" + trx_id;
 
                                             repeatRequestkuda = false; // Adjusted variable name here
@@ -1724,22 +1717,21 @@
                                                     console.log(data);
 
                                                     if (data.status === 'pending') {
-                                                        audio.play();
+
                                                         setTimeout(makeRequest, 3000);
 
 
                                                     } else if (data.status === 'success') {
 
-
-
-
                                                         const webhook = document.getElementById('webHook').value;
                                                         const amount = document.getElementById('Amount').value;
+                                                        audio.play();
 
                                                         window.location.href = "{{ url('') }}/success?trans_id=" + trx_id;
 
                                                         repeatRequestprovidus = false;
                                                     } else if (data.status === 'paid') {
+                                                        audio.play();
 
                                                         window.location.href = "{{ url('') }}/paid-success?trans_id=" + trx_id;
 

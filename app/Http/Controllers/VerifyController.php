@@ -151,9 +151,9 @@ class VerifyController extends Controller
             return back()->with('error', 'Transaction has been completed');
         }
 
+
+
         if($trx->status == 0){
-
-
             $charge = Setting::where('id', 1)->first()->webpay_transfer_charge;
 
             if($trx->payable_amount <= 100){

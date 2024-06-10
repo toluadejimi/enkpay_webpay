@@ -115,10 +115,12 @@
                                         @endif
 
                                         @if($data->status == 0)
+
                                             <td>
-                                                <a href="complete-transaction?id={{$data->ref_trans_id}}"
+                                                <a onclick="hideButton(this)" href="complete-transaction?id={{$data->ref_trans_id}}"
                                                    class="my-3 me-2 btn btn-sm btn-success">Paid</a>
                                             </td>
+
 
                                             <td>
                                                 <a href="delete-transaction?id={{$data->ref_trans_id}}"
@@ -152,6 +154,18 @@
                     $(document).ready(function () {
                         $('#example').DataTable();
                     });
+                </script>
+
+
+                <script>
+                    function hideButton(link) {
+                        // Hide the clicked link
+                        link.style.display = 'none';
+
+                        setTimeout(function () {
+                            link.style.display = 'inline'; // or 'block' depending on your layout
+                        }, 5000); // 5 seconds
+                    }
                 </script>
 
 

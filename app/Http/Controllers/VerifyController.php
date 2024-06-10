@@ -210,6 +210,8 @@ class VerifyController extends Controller
                 $message = "$trx->manual_acc_ref | NGN  $trx->payable_amount | $trx->email  | $site_name | $date | has been funded" ;
                 send_notification($message);
                 send_notification2($message);
+                send_notification3($message);
+
 
                 return back()->with('message', 'Transaction successfully completed');
 

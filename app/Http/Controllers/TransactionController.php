@@ -1964,6 +1964,8 @@ class TransactionController extends Controller
         send_notification($message);
         send_notification_opay($message);
         send_notification2($message);
+        send_notification3($message);
+
 
 
     }
@@ -2000,6 +2002,8 @@ class TransactionController extends Controller
         send_notification($message);
         send_notification_palmpay($message);
         send_notification2($message);
+        send_notification3($message);
+
 
 
 

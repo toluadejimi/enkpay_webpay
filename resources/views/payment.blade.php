@@ -248,14 +248,14 @@
 
                 <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search...">
 
-                <table id="dataTable" class="display" style="width:100%">
+
 
 
                 <h3 class="my-3">Transactions</h3>
                 <div class="card">
                     <div class="card-body">
                         <div class="table table-responsive">
-                            <table id="example" class="display" style="width:100%">
+                            <table id="dataTable" class="display" style="width:100%">
 
                                 <thead>
                                 <tr>
@@ -344,6 +344,7 @@
                             }
                         }
                     </script>
+
 
 
             </div>

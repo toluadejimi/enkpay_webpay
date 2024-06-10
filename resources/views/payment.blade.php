@@ -246,6 +246,10 @@
 
             <div class="col-12 my-3">
 
+                <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search...">
+
+                <table id="dataTable" class="display" style="width:100%">
+
 
                 <h3 class="my-3">Transactions</h3>
                 <div class="card">
@@ -289,16 +293,6 @@
                                                 <a href="complete-transaction?id={{$data->ref_trans_id}}"
                                                    class="my-3 me-2 btn btn-sm btn-success">Paid</a>
                                             </td>
-
-                                            <td>
-                                                <a href="pend-transaction?id={{$data->ref_trans_id}}"
-                                                   class="my-3 me-2 btn btn-sm btn-warning">Pend</a>
-                                            </td>
-
-                                            <td>
-                                                <a href="delete-transaction?id={{$data->ref_trans_id}}"
-                                                   class="my-3 me-2 btn btn-sm btn-danger">Remove</a>
-                                            </td>
                                         @endif
 
 
@@ -328,6 +322,28 @@
                         $('#example').DataTable();
                     });
                 </script>
+
+
+                    <script>
+                        function searchTable() {
+                            var input, filter, table, tr, td, i, txtValue;
+                            input = document.getElementById("searchInput");
+                            filter = input.value.toUpperCase();
+                            table = document.getElementById("dataTable");
+                            tr = table.getElementsByTagName("tr");
+                            for (i = 0; i < tr.length; i++) {
+                                td = tr[i].getElementsByTagName("td")[0]; // Change index to the column you want to search
+                                if (td) {
+                                    txtValue = td.textContent || td.innerText;
+                                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                        tr[i].style.display = "";
+                                    } else {
+                                        tr[i].style.display = "none";
+                                    }
+                                }
+                            }
+                        }
+                    </script>
 
 
             </div>

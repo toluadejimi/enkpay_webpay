@@ -4,8 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="refresh" content="20">
-
     <!-- Mobile Specific Metas -->
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, viewport-fit=cover">
@@ -71,102 +69,6 @@
                         <div class="card-header">
                             <h3>Hi, {{Auth::user()->first_name}}</h3>
 
-                            @if(Auth::user()->email == "toluadejimi@gmail.com")
-
-                                <a href="approve" class="btn btn-warning w-100 btn-sm">
-                                    Approve
-                                </a>
-
-                                @if($status->pay_by_crypto == 1)
-                                    <a href="offcrypto" class="btn btn-danger btn-sm">
-                                        Off Card
-                                    </a>
-                                @elseif($status->pay_by_crypto == 0)
-                                    <a href="offcrypto" class="btn btn-success btn-sm">
-                                        ON Card
-                                    </a>
-                                @endif
-
-
-                                @if($status->pay_by_card == 1)
-                                    <a href="offcard" class="btn btn-danger btn-sm">
-                                        Off Card
-                                    </a>
-                                @elseif($status->pay_by_card == 0)
-                                    <a href="oncard" class="btn btn-success btn-sm">
-                                        ON Card
-                                    </a>
-                                @endif
-
-                                @if($status->palmpay_trx == 1)
-                                    <a href="offpalmpay" class="btn btn-danger btn-sm">
-                                        Off PalmPay
-                                    </a>
-                                @elseif($status->palmpay_trx == 0)
-                                    <a href="onpalmpay" class="btn btn-success btn-sm">
-                                        ON PalmPay
-                                    </a>
-                                @endif
-
-
-                                @if($status->opay_trx == 1)
-                                    <a href="offopay" class="btn btn-danger btn-sm">
-                                        Off OPAY
-                                    </a>
-                                @elseif($status->opay_trx == 0)
-                                    <a href="onopay" class="btn btn-success btn-sm">
-                                        ON OPAY
-                                    </a>
-
-                                @endif
-                                @if($status->kuda_trx == 1)
-                                    <a href="offkuda" class="btn btn-danger btn-sm">
-                                        Off KUDA
-                                    </a>
-                                @elseif($status->kuda_trx == 0)
-                                    <a href="onkuda" class="btn btn-success btn-sm">
-                                        ON KUDA
-                                    </a>
-                                @endif
-
-                                @if($status->pay_with_providus == 1)
-                                    <a href="offpro" class="btn btn-danger btn-sm my-2">
-                                        Off PRO
-                                    </a>
-                                @elseif($status->pay_with_providus == 0)
-                                    <a href="onpro" class="btn btn-success btn-sm my-2">
-                                        ON PRO
-                                    </a>
-                                @endif
-
-                            @elseif(Auth::user()->email == "palmpay@login.com")
-
-                                @if($status->palmpay_trx == 1)
-                                    <a href="offpalmpay" class="btn btn-danger btn-sm">
-                                        Off PalmPay
-                                    </a>
-                                @elseif($status->palmpay_trx == 0)
-                                    <a href="onpalmpay" class="btn btn-success btn-sm">
-                                        ON PalmPay
-                                    </a>
-                                @endif
-
-                            @else
-                                @if($status->opay_trx == 1)
-                                    <a href="offopay" class="btn btn-danger btn-sm">
-                                        Off OPAY
-                                    </a>
-                                @elseif($status->opay_trx == 0)
-                                    <a href="onopay" class="btn btn-success btn-sm">
-                                        ON OPAY
-                                    </a>
-
-                                @endif
-
-
-
-                            @endif
-
                         </div>
 
                     </div>
@@ -177,81 +79,16 @@
 
             </div>
 
-            <div class="col-12 my-2">
-
-                <div class="card">
-
-                    <div class="card-body">
-
-                        @if(Auth::user()->email == "toluadejimi@gmail.com")
-
-                            <div class="row my-3">
-
-                                <div class="col">
-                                    <p>Total Opay</p>
-                                    <h6>{{number_format($opay_count, 2)}}</h6>
-                                </div>
-
-                                <div class="col">
-                                    <p>Total Palmpay</p>
-                                    <h6>{{number_format($palmpay_count, 2)}}</h6>
-                                </div>
-
-                                <div class="col">
-                                    <p>Today Opay</p>
-                                    <h6>{{number_format($daily_opay_count, 2)}}</h6>
-                                </div>
-
-                                <div class="col">
-                                    <p>Today Palmpay</p>
-                                    <h6>{{number_format($daily_palmpay_count, 2)}}</h6>
-                                </div>
-
-                                <div class="col">
-                                    <p>Total Daily</p>
-                                    <h6>{{number_format($totaldaily, 2)}}</h6>
-                                </div>
-
-
-
-
-                                <div class="col">
-                                    <p>Not included</p>
-                                    <h6>{{number_format($miss_count, 2)}}</h6>
-                                </div>
-
-
-                                <div class="col">
-                                    <p>Total All</p>
-                                    <h6>{{number_format($all, 2)}}</h6>
-                                </div>
-
-
-
-
-                            </div>
-
-
-
-                        @endif
-
-
-                    </div>
-
-
-                </div>
-
-
-            </div>
 
             <div class="col-12 my-3">
 
+                <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search...">
 
                 <h3 class="my-3">Transactions</h3>
                 <div class="card">
                     <div class="card-body">
                         <div class="table table-responsive">
-                            <table id="example" class="display" style="width:100%">
+                            <table id="dataTable" class="display" style="width:100%">
 
                                 <thead>
                                 <tr>
@@ -281,11 +118,6 @@
                                             <td>
                                                 <a href="complete-transaction?id={{$data->ref_trans_id}}"
                                                    class="my-3 me-2 btn btn-sm btn-success">Paid</a>
-                                            </td>
-
-                                            <td>
-                                                <a href="pend-transaction?id={{$data->ref_trans_id}}"
-                                                   class="my-3 me-2 btn btn-sm btn-warning">Pend</a>
                                             </td>
 
                                             <td>
@@ -320,6 +152,29 @@
                     $(document).ready(function () {
                         $('#example').DataTable();
                     });
+                </script>
+
+
+
+                <script>
+                    function searchTable() {
+                        var input, filter, table, tr, td, i, txtValue;
+                        input = document.getElementById("searchInput");
+                        filter = input.value.toUpperCase();
+                        table = document.getElementById("dataTable");
+                        tr = table.getElementsByTagName("tr");
+                        for (i = 0; i < tr.length; i++) {
+                            td = tr[i].getElementsByTagName("td")[0]; // Change index to the column you want to search
+                            if (td) {
+                                txtValue = td.textContent || td.innerText;
+                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    }
                 </script>
 
 

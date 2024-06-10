@@ -111,6 +111,17 @@ class VerifyController extends Controller
     {
 
 
+        if (Auth::check() == false) {
+            return view('login');
+        }
+
+        $currentDate = Carbon::today();
+
+
+
+        $data['transactions'] = Transfertransaction::latest()->where('status', 0)->get();
+
+        return view('pend', $data);
 
     }
 

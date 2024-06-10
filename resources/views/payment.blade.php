@@ -98,15 +98,15 @@
                                     </a>
                                 @endif
 
-                                    @if($status->palmpay_trx == 1)
-                                        <a href="offpalmpay" class="btn btn-danger btn-sm">
-                                            Off PalmPay
-                                        </a>
-                                    @elseif($status->palmpay_trx == 0)
-                                        <a href="onpalmpay" class="btn btn-success btn-sm">
-                                            ON PalmPay
-                                        </a>
-                                    @endif
+                                @if($status->palmpay_trx == 1)
+                                    <a href="offpalmpay" class="btn btn-danger btn-sm">
+                                        Off PalmPay
+                                    </a>
+                                @elseif($status->palmpay_trx == 0)
+                                    <a href="onpalmpay" class="btn btn-success btn-sm">
+                                        ON PalmPay
+                                    </a>
+                                @endif
 
 
                                 @if($status->opay_trx == 1)
@@ -163,8 +163,6 @@
 
                                 @endif
 
-
-
                             @endif
 
                         </div>
@@ -213,8 +211,6 @@
                                 </div>
 
 
-
-
                                 <div class="col">
                                     <p>Not included</p>
                                     <h6>{{number_format($miss_count, 2)}}</h6>
@@ -227,11 +223,7 @@
                                 </div>
 
 
-
-
                             </div>
-
-
 
                         @endif
 
@@ -247,8 +239,6 @@
             <div class="col-12 my-3">
 
                 <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search...">
-
-
 
 
                 <h3 class="my-3">Transactions</h3>
@@ -271,15 +261,10 @@
 
                                 @forelse($transactions as $data)
                                     <tr>
-                                        <td> {{\Carbon\Carbon::parse($data->created_at)->format('h:i A')}} </td>
-
-{{--                                        @if(Auth::user()->email == "toluadejimi@gmail.com")--}}
-{{--                                            <td> {{$data->bank}} </td>--}}
-{{--                                        @endif--}}
-
-                                        <td> {{$data->bank}} </td>
                                         <td> {{$data->ref}} </td>
+                                        <td> {{$data->bank}} </td>
                                         <td> {{number_format($data->amount, 2)}} </td>
+                                        <td> {{\Carbon\Carbon::parse($data->created_at)->format('h:i A')}} </td>
                                         @if($data->status == 0)
                                             <td class="text-warning">Pending</td>
                                         @elseif($data->status == 2)
@@ -324,27 +309,26 @@
                 </script>
 
 
-                    <script>
-                        function searchTable() {
-                            var input, filter, table, tr, td, i, txtValue;
-                            input = document.getElementById("searchInput");
-                            filter = input.value.toUpperCase();
-                            table = document.getElementById("dataTable");
-                            tr = table.getElementsByTagName("tr");
-                            for (i = 0; i < tr.length; i++) {
-                                td = tr[i].getElementsByTagName("td")[0]; // Change index to the column you want to search
-                                if (td) {
-                                    txtValue = td.textContent || td.innerText;
-                                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                        tr[i].style.display = "";
-                                    } else {
-                                        tr[i].style.display = "none";
-                                    }
+                <script>
+                    function searchTable() {
+                        var input, filter, table, tr, td, i, txtValue;
+                        input = document.getElementById("searchInput");
+                        filter = input.value.toUpperCase();
+                        table = document.getElementById("dataTable");
+                        tr = table.getElementsByTagName("tr");
+                        for (i = 0; i < tr.length; i++) {
+                            td = tr[i].getElementsByTagName("td")[0]; // Change index to the column you want to search
+                            if (td) {
+                                txtValue = td.textContent || td.innerText;
+                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
                                 }
                             }
                         }
-                    </script>
-
+                    }
+                </script>
 
 
             </div>

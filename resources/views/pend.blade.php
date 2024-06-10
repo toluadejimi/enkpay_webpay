@@ -104,10 +104,10 @@
 
                                 @forelse($transactions as $data)
                                     <tr>
-                                        <td> {{\Carbon\Carbon::parse($data->created_at)->format('h:i A')}} </td>
-                                        <td> {{$data->bank}} </td>
                                         <td> {{$data->ref}} </td>
+                                        <td> {{$data->bank}} </td>
                                         <td> {{number_format($data->amount, 2)}} </td>
+                                        <td> {{\Carbon\Carbon::parse($data->created_at)->format('h:i A')}} </td>
                                         @if($data->status == 0)
                                             <td class="text-warning">Pending</td>
                                         @elseif($data->status == 2)

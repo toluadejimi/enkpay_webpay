@@ -114,7 +114,7 @@
                                             <td class="text-success">Completed</td>
                                         @endif
 
-                                        @if($data->status == 0)
+                                        @if($data->status == 0 || $data->status == 3 )
 
                                             <td>
                                                 <a onclick="hideButton(this)" href="complete-transaction?id={{$data->ref_trans_id}}"

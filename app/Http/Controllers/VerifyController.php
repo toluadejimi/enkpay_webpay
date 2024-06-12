@@ -119,7 +119,7 @@ class VerifyController extends Controller
 
 
 
-        $data['transactions'] = Transfertransaction::latest()->where('status', 0)->get();
+        $data['transactions'] = Transfertransaction::latest()->where('status', 0)->where('status', 3)->get();
 
         return view('pend', $data);
 

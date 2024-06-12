@@ -40,7 +40,7 @@ class SendCron extends Command
 
        Transfertransaction::where('status', 0)->where('created_at', '<', Carbon::now()->subHour())->update(['status'=> 3]);
 
-        $message = "Web Transfer Records updated";
-        send_notification($message);
+        //$message = "Web Transfer Records updated";
+        //send_notification($message);
     }
 }

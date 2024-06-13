@@ -2,13 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Charge;
 use App\Models\PendingTransaction;
-use App\Models\Transaction;
-use App\Models\Transfer;
 use App\Models\Transfertransaction;
-use App\Models\User;
-use App\Models\Webtransfer;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Log;
@@ -38,7 +33,11 @@ class SendCron extends Command
 
         //Webtransfer::where('status', 0)->where('created_at', '<', Carbon::now()->subHour())->delete();
 
-       Transfertransaction::where('status', 0)->where('created_at', '<', Carbon::now()->subHour())->update(['status'=> 3]);
+        Transfertransaction::where('status', 0)->where('created_at', '<', Carbon::now()->subHour())->update(['status' => 3]);
+
+        Transfertransaction::where('status', 3)
+            ->whereBetween('created_at', [Carbon::yesterday()->startOfDay(), Carbon::yesterday()->endOfDay()])
+            ->delete();
 
         //$message = "Web Transfer Records updated";
         //send_notification($message);

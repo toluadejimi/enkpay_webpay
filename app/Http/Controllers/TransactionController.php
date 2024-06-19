@@ -512,11 +512,13 @@ class TransactionController extends Controller
         $crypto = $set->pay_by_crypto;
 
         $support_channel = Webkey::where('key', $request->key)->first()->support ?? null;
-        $support_number = Support::where('status', 1)->get()  ?? null;
+        $support_number = Support::where('status', 1)->first()->number  ?? null;
+        $support = $support_number."?id=$user_id" ?? null;
 
 
 
-        return view('webpay', compact('support_number','opay_transfer','support_channel', 'kuda_transfer', 'palmpay_transfer', 'transref', 'opay_acct', 'kuda_acct', 'palmpay_acct', 'opay_acct', 'ref', 'iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name', 'p_bank_name', 'total_received'));
+
+        return view('webpay', compact('support','support_number','opay_transfer','support_channel', 'kuda_transfer', 'palmpay_transfer', 'transref', 'opay_acct', 'kuda_acct', 'palmpay_acct', 'opay_acct', 'ref', 'iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name', 'p_bank_name', 'total_received'));
     }
 
 

@@ -2008,8 +2008,6 @@
                 </div>
 
 
-                @if($support_number != null )
-                    @foreach($support_number as $data)
                         <div class="card border-0">
 
                             <div class="card-body">
@@ -2034,7 +2032,7 @@
 
                                             <div class="content">
                                                 <h4>
-                                                    <a href="{{$data->number}}"
+                                                    <a href="{{$support}}"
                                                        class="fw_6"> Instant Payment
                                                         Issues only
                                                     </a>
@@ -2047,8 +2045,6 @@
 
                             </div>
                         </div>
-                    @endforeach
-                @endif
 
 
             </div>

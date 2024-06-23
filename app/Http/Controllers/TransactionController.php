@@ -512,8 +512,10 @@ class TransactionController extends Controller
         $crypto = $set->pay_by_crypto;
 
         $support_channel = Webkey::where('key', $request->key)->first()->support ?? null;
-        $support_number = Support::where('status', 1)->first()->number  ?? null;
-        $support = $support_number."?id=$user_id" ?? null;
+        $support_number = Webkey::where('key', $request->key)->first()->support_number ?? null;
+
+        //$support_number = Support::where('user_id', 1)->first()->number  ?? null;
+        $support = $support_number;
 
 
 

@@ -39,202 +39,32 @@
 <div class="mt-7 login-section">
     <div class="container">
 
-        @if ($errors->any())
-            <div class="alert alert-danger my-4">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        @if (session()->has('message'))
-            <div class="alert alert-success">
-                {{ session()->get('message') }}
-            </div>
-        @endif
-        @if (session()->has('error'))
-            <div class="alert alert-danger mt-2">
-                {{ session()->get('error') }}
-            </div>
-        @endif
+
 
 
         <div class="row">
 
-            <div class="col-6">
-
-                <div class="card">
-
-                    <div class="card-body">
-
-                        <div class="card-header">
-                            <h3>Hi, {{Auth::user()->first_name}}</h3>
-
-                            @if(Auth::user()->email == "toluadejimi@gmail.com")
-
-                                <a href="pend" class="btn btn-warning w-100 btn-sm">
-                                    Pending
-                                </a>
-
-                                @if($status->pay_by_crypto == 1)
-                                    <a href="offcrypto" class="btn btn-danger btn-sm">
-                                        Off Card
-                                    </a>
-                                @elseif($status->pay_by_crypto == 0)
-                                    <a href="offcrypto" class="btn btn-success btn-sm">
-                                        ON Card
-                                    </a>
-                                @endif
-
-
-                                @if($status->pay_by_card == 1)
-                                    <a href="offcard" class="btn btn-danger btn-sm">
-                                        Off Card
-                                    </a>
-                                @elseif($status->pay_by_card == 0)
-                                    <a href="oncard" class="btn btn-success btn-sm">
-                                        ON Card
-                                    </a>
-                                @endif
-
-                                @if($status->palmpay_trx == 1)
-                                    <a href="offpalmpay" class="btn btn-danger btn-sm">
-                                        Off PalmPay
-                                    </a>
-                                @elseif($status->palmpay_trx == 0)
-                                    <a href="onpalmpay" class="btn btn-success btn-sm">
-                                        ON PalmPay
-                                    </a>
-                                @endif
-
-
-                                @if($status->opay_trx == 1)
-                                    <a href="offopay" class="btn btn-danger btn-sm">
-                                        Off OPAY
-                                    </a>
-                                @elseif($status->opay_trx == 0)
-                                    <a href="onopay" class="btn btn-success btn-sm">
-                                        ON OPAY
-                                    </a>
-
-                                @endif
-                                @if($status->kuda_trx == 1)
-                                    <a href="offkuda" class="btn btn-danger btn-sm">
-                                        Off KUDA
-                                    </a>
-                                @elseif($status->kuda_trx == 0)
-                                    <a href="onkuda" class="btn btn-success btn-sm">
-                                        ON KUDA
-                                    </a>
-                                @endif
-
-                                @if($status->pay_with_providus == 1)
-                                    <a href="offpro" class="btn btn-danger btn-sm my-2">
-                                        Off PRO
-                                    </a>
-                                @elseif($status->pay_with_providus == 0)
-                                    <a href="onpro" class="btn btn-success btn-sm my-2">
-                                        ON PRO
-                                    </a>
-                                @endif
-
-                            @elseif(Auth::user()->email == "palmpay@login.com")
-
-                                @if($status->palmpay_trx == 1)
-                                    <a href="offpalmpay" class="btn btn-danger btn-sm">
-                                        Off PalmPay
-                                    </a>
-                                @elseif($status->palmpay_trx == 0)
-                                    <a href="onpalmpay" class="btn btn-success btn-sm">
-                                        ON PalmPay
-                                    </a>
-                                @endif
-
-                            @else
-                                @if($status->opay_trx == 1)
-                                    <a href="offopay" class="btn btn-danger btn-sm">
-                                        Off OPAY
-                                    </a>
-                                @elseif($status->opay_trx == 0)
-                                    <a href="onopay" class="btn btn-success btn-sm">
-                                        ON OPAY
-                                    </a>
-
-                                @endif
-
-                            @endif
-
-                        </div>
-
-                    </div>
-
-
+            @if ($errors->any())
+                <div class="alert alert-danger my-4">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
-
-
-            </div>
-
-            <div class="col-12 my-2">
-
-                <div class="card">
-
-                    <div class="card-body">
-
-                        @if(Auth::user()->email == "toluadejimi@gmail.com")
-
-                            <div class="row my-3">
-
-                                <div class="col">
-                                    <p>Total Opay</p>
-                                    <h6>{{number_format($opay_count, 2)}}</h6>
-                                </div>
-
-                                <div class="col">
-                                    <p>Total Palmpay</p>
-                                    <h6>{{number_format($palmpay_count, 2)}}</h6>
-                                </div>
-
-                                <div class="col">
-                                    <p>Today Opay</p>
-                                    <h6>{{number_format($daily_opay_count, 2)}}</h6>
-                                </div>
-
-                                <div class="col">
-                                    <p>Today Palmpay</p>
-                                    <h6>{{number_format($daily_palmpay_count, 2)}}</h6>
-                                </div>
-
-                                <div class="col">
-                                    <p>Total Daily</p>
-                                    <h6>{{number_format($totaldaily, 2)}}</h6>
-                                </div>
-
-
-                                <div class="col">
-                                    <p>Not included</p>
-                                    <h6>{{number_format($miss_count, 2)}}</h6>
-                                </div>
-
-
-                                <div class="col">
-                                    <p>Total All</p>
-                                    <h6>{{number_format($all, 2)}}</h6>
-                                </div>
-
-
-                            </div>
-
-                        @endif
-
-
-                    </div>
-
-
+            @endif
+            @if (session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
                 </div>
+            @endif
+            @if (session()->has('error'))
+                <div class="alert alert-danger mt-2">
+                    {{ session()->get('error') }}
+                </div>
+            @endif
 
 
-            </div>
 
             <div class="col-12 my-3">
 
@@ -344,6 +174,184 @@
 
 
             </div>
+
+
+                <div class="col-6">
+
+                    <div class="card">
+
+                        <div class="card-body">
+
+                            <div class="card-header">
+                                <h3>Hi, {{Auth::user()->first_name}}</h3>
+
+                                @if(Auth::user()->email == "toluadejimi@gmail.com")
+
+                                    <a href="pend" class="btn btn-warning w-100 btn-sm">
+                                        Pending
+                                    </a>
+
+                                    @if($status->pay_by_crypto == 1)
+                                        <a href="offcrypto" class="btn btn-danger btn-sm">
+                                            Off Card
+                                        </a>
+                                    @elseif($status->pay_by_crypto == 0)
+                                        <a href="offcrypto" class="btn btn-success btn-sm">
+                                            ON Card
+                                        </a>
+                                    @endif
+
+
+                                    @if($status->pay_by_card == 1)
+                                        <a href="offcard" class="btn btn-danger btn-sm">
+                                            Off Card
+                                        </a>
+                                    @elseif($status->pay_by_card == 0)
+                                        <a href="oncard" class="btn btn-success btn-sm">
+                                            ON Card
+                                        </a>
+                                    @endif
+
+                                    @if($status->palmpay_trx == 1)
+                                        <a href="offpalmpay" class="btn btn-danger btn-sm">
+                                            Off PalmPay
+                                        </a>
+                                    @elseif($status->palmpay_trx == 0)
+                                        <a href="onpalmpay" class="btn btn-success btn-sm">
+                                            ON PalmPay
+                                        </a>
+                                    @endif
+
+
+                                    @if($status->opay_trx == 1)
+                                        <a href="offopay" class="btn btn-danger btn-sm">
+                                            Off OPAY
+                                        </a>
+                                    @elseif($status->opay_trx == 0)
+                                        <a href="onopay" class="btn btn-success btn-sm">
+                                            ON OPAY
+                                        </a>
+
+                                    @endif
+                                    @if($status->kuda_trx == 1)
+                                        <a href="offkuda" class="btn btn-danger btn-sm">
+                                            Off KUDA
+                                        </a>
+                                    @elseif($status->kuda_trx == 0)
+                                        <a href="onkuda" class="btn btn-success btn-sm">
+                                            ON KUDA
+                                        </a>
+                                    @endif
+
+                                    @if($status->pay_with_providus == 1)
+                                        <a href="offpro" class="btn btn-danger btn-sm my-2">
+                                            Off PRO
+                                        </a>
+                                    @elseif($status->pay_with_providus == 0)
+                                        <a href="onpro" class="btn btn-success btn-sm my-2">
+                                            ON PRO
+                                        </a>
+                                    @endif
+
+                                @elseif(Auth::user()->email == "palmpay@login.com")
+
+                                    @if($status->palmpay_trx == 1)
+                                        <a href="offpalmpay" class="btn btn-danger btn-sm">
+                                            Off PalmPay
+                                        </a>
+                                    @elseif($status->palmpay_trx == 0)
+                                        <a href="onpalmpay" class="btn btn-success btn-sm">
+                                            ON PalmPay
+                                        </a>
+                                    @endif
+
+                                @else
+                                    @if($status->opay_trx == 1)
+                                        <a href="offopay" class="btn btn-danger btn-sm">
+                                            Off OPAY
+                                        </a>
+                                    @elseif($status->opay_trx == 0)
+                                        <a href="onopay" class="btn btn-success btn-sm">
+                                            ON OPAY
+                                        </a>
+
+                                    @endif
+
+                                @endif
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+                <div class="col-12 my-2">
+
+                    <div class="card">
+
+                        <div class="card-body">
+
+                            @if(Auth::user()->email == "toluadejimi@gmail.com")
+
+                                <div class="row my-3">
+
+                                    <div class="col">
+                                        <p>Total Opay</p>
+                                        <h6>{{number_format($opay_count, 2)}}</h6>
+                                    </div>
+
+                                    <div class="col">
+                                        <p>Total Palmpay</p>
+                                        <h6>{{number_format($palmpay_count, 2)}}</h6>
+                                    </div>
+
+                                    <div class="col">
+                                        <p>Today Opay</p>
+                                        <h6>{{number_format($daily_opay_count, 2)}}</h6>
+                                    </div>
+
+                                    <div class="col">
+                                        <p>Today Palmpay</p>
+                                        <h6>{{number_format($daily_palmpay_count, 2)}}</h6>
+                                    </div>
+
+                                    <div class="col">
+                                        <p>Total Daily</p>
+                                        <h6>{{number_format($totaldaily, 2)}}</h6>
+                                    </div>
+
+
+                                    <div class="col">
+                                        <p>Not included</p>
+                                        <h6>{{number_format($miss_count, 2)}}</h6>
+                                    </div>
+
+
+                                    <div class="col">
+                                        <p>Total All</p>
+                                        <h6>{{number_format($all, 2)}}</h6>
+                                    </div>
+
+
+                                </div>
+
+                            @endif
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
 
         </div>
 

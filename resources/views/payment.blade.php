@@ -67,10 +67,6 @@
 
 
             <div class="col-12 my-3">
-
-                <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search...">
-
-
                 <h3 class="my-3">Transactions</h3>
                 <div class="card">
                     <div class="card-body">
@@ -174,6 +170,10 @@
 
 
             </div>
+
+
+
+                <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search...">
 
 
                 <div class="col-6">
@@ -349,6 +349,7 @@
 
 
                 </div>
+
 
 
 

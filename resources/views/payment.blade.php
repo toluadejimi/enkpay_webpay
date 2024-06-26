@@ -297,44 +297,22 @@
 
                             @if(Auth::user()->email == "toluadejimi@gmail.com")
 
+
+
                                 <div class="row my-3">
 
-                                    <div class="col">
-                                        <p>Total Opay</p>
-                                        <h6>{{number_format($opay_count, 2)}}</h6>
-                                    </div>
-
-                                    <div class="col">
-                                        <p>Total Palmpay</p>
-                                        <h6>{{number_format($palmpay_count, 2)}}</h6>
-                                    </div>
-
-                                    <div class="col">
-                                        <p>Today Opay</p>
-                                        <h6>{{number_format($daily_opay_count, 2)}}</h6>
-                                    </div>
-
-                                    <div class="col">
-                                        <p>Today Palmpay</p>
-                                        <h6>{{number_format($daily_palmpay_count, 2)}}</h6>
-                                    </div>
-
-                                    <div class="col">
-                                        <p>Total Daily</p>
-                                        <h6>{{number_format($totaldaily, 2)}}</h6>
-                                    </div>
+                                    @if($support->status == 1)
+                                        <a href="offpalmpay" class="btn btn-danger btn-sm">
+                                            Off PalmPay
+                                        </a>
+                                    @elseif($status->palmpay_trx == 0)
+                                        <a href="onpalmpay" class="btn btn-success btn-sm">
+                                            ON PalmPay
+                                        </a>
+                                    @endif
 
 
-                                    <div class="col">
-                                        <p>Not included</p>
-                                        <h6>{{number_format($miss_count, 2)}}</h6>
-                                    </div>
 
-
-                                    <div class="col">
-                                        <p>Total All</p>
-                                        <h6>{{number_format($all, 2)}}</h6>
-                                    </div>
 
 
                                 </div>

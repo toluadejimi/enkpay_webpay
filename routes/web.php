@@ -92,6 +92,7 @@ Route::get('offpro', [VerifyController::class, 'offpro_account']);
 Route::get('onpro', [VerifyController::class, 'onpro_account']);
 
 
+Route::post('change-support', [VerifyController::class, 'change_support']);
 
 
 

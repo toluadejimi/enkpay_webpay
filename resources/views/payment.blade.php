@@ -40,8 +40,6 @@
     <div class="container">
 
 
-
-
         <div class="row">
 
             @if ($errors->any())
@@ -63,7 +61,6 @@
                     {{ session()->get('error') }}
                 </div>
             @endif
-
 
 
             <div class="col-12 my-3">
@@ -101,7 +98,8 @@
 
                                         @if($data->status == 0)
                                             <td>
-                                                <a onclick="hideButton(this)" href="complete-transaction?id={{$data->ref_trans_id}}"
+                                                <a onclick="hideButton(this)"
+                                                   href="complete-transaction?id={{$data->ref_trans_id}}"
                                                    class="my-3 me-2 btn btn-sm btn-success">Paid</a>
                                             </td>
                                         @endif
@@ -172,155 +170,199 @@
             </div>
 
 
-
-                <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search...">
-
-
-                <div class="col-6">
-
-                    <div class="card">
-
-                        <div class="card-body">
-
-                            <div class="card-header">
-                                <h3>Hi, {{Auth::user()->first_name}}</h3>
-
-                                @if(Auth::user()->email == "toluadejimi@gmail.com")
-
-                                    <a href="pend" class="btn btn-warning w-100 btn-sm">
-                                        Pending
-                                    </a>
-
-                                    @if($status->pay_by_crypto == 1)
-                                        <a href="offcrypto" class="btn btn-danger btn-sm">
-                                            Off Card
-                                        </a>
-                                    @elseif($status->pay_by_crypto == 0)
-                                        <a href="offcrypto" class="btn btn-success btn-sm">
-                                            ON Card
-                                        </a>
-                                    @endif
+            <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search...">
 
 
-                                    @if($status->pay_by_card == 1)
-                                        <a href="offcard" class="btn btn-danger btn-sm">
-                                            Off Card
-                                        </a>
-                                    @elseif($status->pay_by_card == 0)
-                                        <a href="oncard" class="btn btn-success btn-sm">
-                                            ON Card
-                                        </a>
-                                    @endif
+            <div class="col-6">
 
-                                    @if($status->palmpay_trx == 1)
-                                        <a href="offpalmpay" class="btn btn-danger btn-sm">
-                                            Off PalmPay
-                                        </a>
-                                    @elseif($status->palmpay_trx == 0)
-                                        <a href="onpalmpay" class="btn btn-success btn-sm">
-                                            ON PalmPay
-                                        </a>
-                                    @endif
+                <div class="card">
 
+                    <div class="card-body">
 
-                                    @if($status->opay_trx == 1)
-                                        <a href="offopay" class="btn btn-danger btn-sm">
-                                            Off OPAY
-                                        </a>
-                                    @elseif($status->opay_trx == 0)
-                                        <a href="onopay" class="btn btn-success btn-sm">
-                                            ON OPAY
-                                        </a>
-
-                                    @endif
-                                    @if($status->kuda_trx == 1)
-                                        <a href="offkuda" class="btn btn-danger btn-sm">
-                                            Off KUDA
-                                        </a>
-                                    @elseif($status->kuda_trx == 0)
-                                        <a href="onkuda" class="btn btn-success btn-sm">
-                                            ON KUDA
-                                        </a>
-                                    @endif
-
-                                    @if($status->pay_with_providus == 1)
-                                        <a href="offpro" class="btn btn-danger btn-sm my-2">
-                                            Off PRO
-                                        </a>
-                                    @elseif($status->pay_with_providus == 0)
-                                        <a href="onpro" class="btn btn-success btn-sm my-2">
-                                            ON PRO
-                                        </a>
-                                    @endif
-
-                                @elseif(Auth::user()->email == "palmpay@login.com")
-
-                                    @if($status->palmpay_trx == 1)
-                                        <a href="offpalmpay" class="btn btn-danger btn-sm">
-                                            Off PalmPay
-                                        </a>
-                                    @elseif($status->palmpay_trx == 0)
-                                        <a href="onpalmpay" class="btn btn-success btn-sm">
-                                            ON PalmPay
-                                        </a>
-                                    @endif
-
-                                @else
-                                    @if($status->opay_trx == 1)
-                                        <a href="offopay" class="btn btn-danger btn-sm">
-                                            Off OPAY
-                                        </a>
-                                    @elseif($status->opay_trx == 0)
-                                        <a href="onopay" class="btn btn-success btn-sm">
-                                            ON OPAY
-                                        </a>
-
-                                    @endif
-
-                                @endif
-
-                            </div>
-
-                        </div>
-
-
-                    </div>
-
-
-                </div>
-
-                <div class="col-12 my-2">
-
-                    <div class="card">
-
-                        <div class="card-body">
+                        <div class="card-header">
+                            <h3>Hi, {{Auth::user()->first_name}}</h3>
 
                             @if(Auth::user()->email == "toluadejimi@gmail.com")
 
+                                <a href="pend" class="btn btn-warning w-100 btn-sm">
+                                    Pending
+                                </a>
+
+                                @if($status->pay_by_crypto == 1)
+                                    <a href="offcrypto" class="btn btn-danger btn-sm">
+                                        Off Card
+                                    </a>
+                                @elseif($status->pay_by_crypto == 0)
+                                    <a href="offcrypto" class="btn btn-success btn-sm">
+                                        ON Card
+                                    </a>
+                                @endif
 
 
-                                <div class="row my-3">
+                                @if($status->pay_by_card == 1)
+                                    <a href="offcard" class="btn btn-danger btn-sm">
+                                        Off Card
+                                    </a>
+                                @elseif($status->pay_by_card == 0)
+                                    <a href="oncard" class="btn btn-success btn-sm">
+                                        ON Card
+                                    </a>
+                                @endif
 
-                                    @if($support->status == 1)
-                                        <a href="offpalmpay" class="btn btn-danger btn-sm">
-                                            Off PalmPay
+                                @if($status->palmpay_trx == 1)
+                                    <a href="offpalmpay" class="btn btn-danger btn-sm">
+                                        Off PalmPay
+                                    </a>
+                                @elseif($status->palmpay_trx == 0)
+                                    <a href="onpalmpay" class="btn btn-success btn-sm">
+                                        ON PalmPay
+                                    </a>
+                                @endif
+
+
+                                @if($status->opay_trx == 1)
+                                    <a href="offopay" class="btn btn-danger btn-sm">
+                                        Off OPAY
+                                    </a>
+                                @elseif($status->opay_trx == 0)
+                                    <a href="onopay" class="btn btn-success btn-sm">
+                                        ON OPAY
+                                    </a>
+
+                                @endif
+                                @if($status->kuda_trx == 1)
+                                    <a href="offkuda" class="btn btn-danger btn-sm">
+                                        Off KUDA
+                                    </a>
+                                @elseif($status->kuda_trx == 0)
+                                    <a href="onkuda" class="btn btn-success btn-sm">
+                                        ON KUDA
+                                    </a>
+                                @endif
+
+                                @if($status->pay_with_providus == 1)
+                                    <a href="offpro" class="btn btn-danger btn-sm my-2">
+                                        Off PRO
+                                    </a>
+                                @elseif($status->pay_with_providus == 0)
+                                    <a href="onpro" class="btn btn-success btn-sm my-2">
+                                        ON PRO
+                                    </a>
+                                @endif
+
+                            @elseif(Auth::user()->email == "palmpay@login.com")
+
+                                @if($status->palmpay_trx == 1)
+                                    <a href="offpalmpay" class="btn btn-danger btn-sm">
+                                        Off PalmPay
+                                    </a>
+                                @elseif($status->palmpay_trx == 0)
+                                    <a href="onpalmpay" class="btn btn-success btn-sm">
+                                        ON PalmPay
+                                    </a>
+                                @endif
+
+                            @else
+                                @if($status->opay_trx == 1)
+                                    <a href="offopay" class="btn btn-danger btn-sm">
+                                        Off OPAY
+                                    </a>
+                                @elseif($status->opay_trx == 0)
+                                    <a href="onopay" class="btn btn-success btn-sm">
+                                        ON OPAY
+                                    </a>
+
+                                @endif
+
+                            @endif
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+            <div class="col-12 my-2">
+
+                <div class="card">
+
+                    <div class="card-body">
+
+
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalCenterTitle"
+                             aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Support Channel</h5>
+
+                                    </div>
+                                    <div class="modal-body border-0">
+
+
+                                        <div class="card border-0">
+
+                                            <div class="card-body">
+
+                                                <form action="change-support" method="POST">
+                                                    @csrf
+
+
+                                                    <select class="form-control" name="support">
+                                                        <option value="">Select Support</option>
+                                                        <option
+                                                            value="https://api.whatsapp.com/send?phone=2349138653644&text=Hi%2C%20Please%20i%20need%20your%20support%20">
+                                                            Divine
+                                                        </option>
+                                                        <option
+                                                            value="https://api.whatsapp.com/send?phone=2347042653595&text=Hi%2C%20Please%20i%20need%20your%20support%20">
+                                                            Vera
+                                                        </option>
+
+                                                    </select>
+
+                                                </form>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @if(Auth::user()->email == "toluadejimi@gmail.com")
+
+                            <div class="row my-3">
+
+                                @if($support != null)
+
+                                    @if($support == "https://api.whatsapp.com/send?phone=2349138653644&text=Hi%2C%20Please%20i%20need%20your%20support%20")
+                                        <a href="#" data-toggle="modal" data-target="#exampleModalCenter"
+                                           class="btn btn-success btn-sm">
+                                            Divine Active
                                         </a>
-                                    @elseif($status->palmpay_trx == 0)
-                                        <a href="onpalmpay" class="btn btn-success btn-sm">
-                                            ON PalmPay
+                                    @elseif($support == "https://api.whatsapp.com/send?phone=2347042653595&text=Hi%2C%20Please%20i%20need%20your%20support%20")
+                                        <a href="#" data-toggle="modal" data-target="#exampleModalCenter"
+                                           class="btn btn-success btn-sm">
+                                            Vera
                                         </a>
                                     @endif
 
 
+                            </div>
 
-
-
-                                </div>
-
-                            @endif
-
-
-                        </div>
+                        @endif
 
 
                     </div>
@@ -329,7 +371,7 @@
                 </div>
 
 
-
+            </div>
 
 
         </div>

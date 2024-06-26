@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Setting;
+use App\Models\Support;
 use App\Models\Transaction;
 use App\Models\Transfertransaction;
 use App\Models\User;
@@ -48,6 +49,7 @@ class VerifyController extends Controller
              $data['totaldaily'] = $data['opay_count'] + $data['daily_palmpay_count'];
             $data['all'] = $data['palmpay_count'] + $data['palmpay_count'] - $data['miss_count'] ;
 
+            $data['support'] = Support::where('id', 1)->first()->support;
 
 
 
@@ -80,6 +82,13 @@ class VerifyController extends Controller
         return back()->with('error', "You dont have any business here");
 
 
+
+    }
+
+    public function change_support(request $request)
+    {
+        Support::where('id', 1)->update(['number' => $request->support]);
+        return back()->with('message', "Support Has been updated");
 
     }
 

@@ -8,6 +8,7 @@ use App\Models\Transaction;
 use App\Models\Transfertransaction;
 use App\Models\User;
 use App\Models\Webkey;
+use App\Models\ResolveOrder;
 use App\Models\Webtransfer;
 use Hamcrest\Core\Set;
 use Illuminate\Http\Request;
@@ -634,6 +635,52 @@ class VerifyController extends Controller
 
 
 
+    public function track_request_view(request $request)
+    {
+        $data['orders'] = ResolveOrder::where('email', $request->email)->count();
+        $data['tickets'] = ResolveOrder::where('email', $request->email)->get();
+
+
+        return view('track-request', $data);
+    }
+
+
+    public function request_order(request $request)
+    {
+        $data['orders'] = ResolveOrder::where('email', $request->email)->count();
+        $data['tickets'] = ResolveOrder::where('email', $request->email)->get();
+
+
+
+        if( $data['orders'] == 0){
+            return back()->with('error', "No resolve founnd with email $request->email");
+        }
+
+        return view('track-request', $data);
+
+    }
+
+
+
+    public function submit_resolve(request $request)
+    {
+
+
+
+
+
+        $tk = new ResolveOrder();
+        $tk->email = $request->email;
+        $tk->subject = $request->subject;
+        $tk->ref = $request->ref;
+        $tk->d_amount = $request->d_amount;
+        $tk->r_amount = $request->r_amount;
+
+        $tk->recepit = $request->recepit;
+        $tk->email = $request->email;
+
+
+    }
 
 
 

@@ -32,10 +32,12 @@
     <div class="tf-container">
         <div class="tf-topbar d-flex justify-content-center align-items-center">
             <a href="29_topup.html#" class="back-btn"><i class="icon-left white_color"></i></a>
-            <h3 class="white_color">Resolve Transaction</h3>
+            <h3 class="white_color">Track Request</h3>
         </div>
     </div>
 </div>
+
+
 
 
 <div class="card-secton topup-content">
@@ -44,53 +46,41 @@
 
 
 
-            <form action="submit-resolve" method="POST">
+            <form action="request-order" method="POST">
                 @csrf
-
-
-                <label>Select Subject</label>
-                <select class="form-control" name="subject" required>
-
-                    <option value=""> Select Subject </option>
-                    <option value="1"> I Didn't Add Refrence </option>
-                    <option value="2"> I entered wrong amount </option>
-                    <option value="3"> I added valid Refrence but not processed </option>
-
-                </select>
-
-
-                <hr>
 
                 <label>Enter valid Email from site</label>
                 <input name="email" type="email" class="form-control" placeholder="jack@gmail.com">
 
-                <hr>
-
-                <label>Enter Refrence (optional)</label>
-                <input name="ref" type="text" class="form-control" placeholder="24557758BS">
-
-                <hr>
-
-                <label>Enter Deposit Amount</label>
-                <input name="d_amount" type="number" class="form-control" placeholder="1000" required>
-
-                <hr>
-
-                <label>Enter Receipt Amount</label>
-                <input name="r_amount" type="number" class="form-control" placeholder="1000" required>
-
-                <hr>
-
-                <label>Upload Bank Receipt</label>
-                <input name="recepit" type="file" class="form-control" placeholder="add recepit" required>
-
-
-                <button type="submit" id="btn-popup-up" class="tf-btn accent large my-3">Resolve now</button>
+                <button type="submit" id="btn-popup-up" class="tf-btn accent large my-3">Track now</button>
 
             </form>
 
-<hr>
-            <a href="track-request" class="d-flex justify-content-center tf-btn accent large my-3"> Track Previous Request</a>
+            <hr>
+
+
+
+            @if ($errors->any())
+                <div class="alert alert-danger my-4">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            @if (session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
+                </div>
+            @endif
+            @if (session()->has('error'))
+                <div class="alert alert-danger mt-2">
+                    {{ session()->get('error') }}
+                </div>
+            @endif
+
+
 
 
         </div>
@@ -98,6 +88,26 @@
     </div>
 
 </div>
+
+
+@if($orders > 0)
+
+<div class="card-secton topup-content my-5">
+    <div class="tf-container">
+        <div class="tf-balance-box">
+
+
+
+
+
+
+        </div>
+
+    </div>
+
+</div>
+@endif
+
 
 
 

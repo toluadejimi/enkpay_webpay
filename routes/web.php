@@ -118,6 +118,14 @@ Route::get('resolve', [VerifyController::class, 'resolve']);
 Route::post('deposit-now', [VerifyController::class, 'deposit']);
 
 
+Route::any('submit-resolve', [VerifyController::class, 'submit_resolve']);
+Route::any('track-request', [VerifyController::class, 'track_request_view']);
+Route::any('request-order', [VerifyController::class, 'request_order']);
+
+
+
+
+
 
 
 

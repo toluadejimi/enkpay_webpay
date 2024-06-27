@@ -126,6 +126,37 @@
 <!-- /preload -->
 
 
+<div class="modal fade" id="warning7">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="heading">
+                <h2>Privacy</h2>
+                <p class="mt-1 fw_3">
+                    A mobile app privacy policy is a legal statement that must be clear, conspicuous, and consented to by all users. It must disclose how a mobile app gathers, stores, and uses the personally identifiable information it collects from its users.
+                    A mobile privacy app is developed and presented to users so that mobile app developers stay compliant with state, federal, and international laws. As a result, they fulfill the legal requirement to safeguard user privacy while protecting the company itself from legal challenges.
+
+                </p>
+                <h2 class="mt-3">Authorized Users</h2>
+                <p class="fw-3">
+                    A mobile app privacy policy is a legal statement that must be clear, conspicuous, and consented to by all users. It must disclose how a mobile app gathers, stores, and uses the personally identifiable information it collects from its users.
+                </p>
+                <div class="group-cb mt-3 align-items-center">
+                    <div class="cb">
+                        <input type="checkbox" class="tf-checkbox st1" checked>
+                    </div>
+                    <span class="fw_3">I agree to the Term of sevice and Privacy policyy</span>
+                </div>
+
+            </div>
+            <div class="bottom mt-5">
+                <a href="home.html#" class="tf-btn accent large" data-bs-dismiss="modal">I Accept</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div class="modal fade" id="warning" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -135,40 +166,18 @@
 
                 <div class="card border-0 my-2 mt-4 shadow-lg p-3 mb-5 bg-body rounded">
                     <div class="card-body border-0">
-                        <p class="text-danger ">
-                            Make sure you add the valid reference generated for the payment to your transaction Remarks
-                            / Narration / Reference / Note
-                        </p>
+                        <h4 class="text-danger text-center">
+                            Add valid Reference to payment,<br> or you will loose your money
+                        </h4>
                     </div>
                 </div>
 
-
-                <div class="card border-0 mb-4 my-2 mt-4 shadow-lg p-3 mb-5 bg-body rounded">
-                    <div class="card-body border-0">
-                        <p class="text-danger ">
-                            Do ever add BTC, LTC, BITCOIN or any related CRYPTO to your narration.
-                        </p>
-                    </div>
+                <div class="d-flex justify-content-center mb-3">
+                    <a href="https://www.youtube.com/shorts/Zn_dALbDhSI" target="_blank" class="btn btn-danger"> <i class="fa fa-play"> </i>  Watch how to add refrence to payment</a>
                 </div>
 
 
-                <div class="card border-0 mb-4 my-2 mt-4 shadow-lg p-3 mb-5 bg-body rounded">
-                    <div class="card-body border-0">
-                        <p class="text-danger ">
-                            Account details might change from time to time , do not save the details. </p>
-                        <hr>
-                        <p class="text-danger "> Money sent to our account is non-refundable. </p>
-
-                    </div>
-                </div>
-
-
-                <p class="text-dark text-center my-3 mb-4">
-                    Failure to follow instructions, consider your money lost and don't ever message support.
-                </p>
-
-
-                <div class="group-cb mt-3 align-items-center">
+                <div class="group-cb mt-3 d-flex justify-content-center">
                     <div class="cb">
                         <input type="checkbox" class="tf-checkbox st1" checked>
                     </div>
@@ -1958,11 +1967,11 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-{{--<script>--}}
-{{--    $(document).ready(function () {--}}
-{{--        $("#warning").modal('show');--}}
-{{--    });--}}
-{{--</script>--}}
+<script>
+    $(document).ready(function () {
+        $("#warning").modal('show');
+    });
+</script>
 
 
 

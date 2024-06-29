@@ -99,7 +99,7 @@
             <h3 class="fw_6">Action</h3>
             <div class="tf-spacing-12"></div>
 
-                <div class="row">
+                <div class="row my-3">
                     <div class="col">
                         <a href="deposit-approve?id={{$ticket->id}}" class="btn btn-success">Approve Transaction</a>  </li>
                     </div>

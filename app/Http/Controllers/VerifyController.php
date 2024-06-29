@@ -469,7 +469,7 @@ class VerifyController extends Controller
             send_notification($message);
 
             $date = date('d M Y H:i:s');
-            $message = "$reff | $order->ref | NGN  $f_amount | $order->email  | $site_name | $date | has been funded";
+            $message = "$reff | $order->ref | NGN  $order->r_amount | $order->email  | $site_name | $date | has been funded";
             send_notification($message);
             send_notification2($message);
             send_notification3($message);
@@ -597,6 +597,15 @@ class VerifyController extends Controller
         }
 
 
+        if ($request->r_amount == null) {
+            return back()->with('error', "Please enter the amount on your receipt");
+        }
+
+        if ($request->d_amount == null) {
+            return back()->with('error', "Please enter the amount you deposited on the site");
+        }
+
+
         if ($request->receipt != null) {
 
 
@@ -643,6 +652,7 @@ class VerifyController extends Controller
 
         $message = "You have new message on support by $request->email";
         send_notification($message);
+        send_notification_opay($message);
 
         return view('success-ticket');
 

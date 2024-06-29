@@ -35,6 +35,21 @@
         <div class="tf-topbar d-flex justify-content-center align-items-center">
             <a href="29_topup.html#" class="back-btn"><i class="icon-left white_color"></i></a>
             <h3 class="white_color">{{$title}}</h3>
+            <div class="row my-3">
+                <div class="col">
+                    <a href="/all-issues" class="btn btn-secondary">All Issues</a>
+                </div>
+                <div class="col">
+                    <a href="/no-ref" class="btn btn-secondary" >No Refrence</a>
+                </div>
+                <div class="col">
+                    <a href="/ref-no-credit" class="btn btn-secondary" >Ref but no credit</a>
+                </div>
+
+                <div class="col">
+                    <a href="/wrong-amount" class="btn btn-secondary" >Wrong Amount</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

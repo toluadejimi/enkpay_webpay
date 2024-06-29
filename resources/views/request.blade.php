@@ -57,7 +57,7 @@
                         <form class="form-control" action="search" method="POST">
                             @csrf
                             <input class="form-control" name="email" placeholder="Enter Email">
-                            <button class="btn btn-primary" type="submit">Continue</button>
+                            <button class="btn btn-primary" type="submit">Search</button>
 
                         </form>
                     </div>

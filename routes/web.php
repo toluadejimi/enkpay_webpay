@@ -132,6 +132,8 @@ Route::get('no-ref', [VerifyController::class, 'noref_request_view']);
 Route::get('ref-no-credit', [VerifyController::class, 'no_credit_view']);
 Route::get('wrong-amount', [VerifyController::class, 'wrong_amount_view']);
 Route::get('approved', [VerifyController::class, 'approved']);
+Route::get('search', [VerifyController::class, 'search']);
+
 
 
 

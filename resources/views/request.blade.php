@@ -42,21 +42,25 @@
 
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    <a href="/all-issues" class="btn btn-primary btn-md center-block" >All Issues</a>
-                    <a href="/no-ref" class="btn btn-primary btn-md center-block" >No Refrence</a>
-                    <a href="/ref-no-credit" class="btn btn-secondary" >Ref but no credit</a>
-                    <a href="/wrong-amount" class="btn btn-secondary" >Wrong Amount</a>
+                    <a href="/all-issues" class="btn btn-primary btn-md center-block">All Issues</a>
+                    <a href="/no-ref" class="btn btn-primary btn-md center-block">No Refrence</a>
+                    <a href="/ref-no-credit" class="btn btn-secondary">Ref but no credit</a>
+                    <a href="/wrong-amount" class="btn btn-secondary">Wrong Amount</a>
                     <a href="/approved" class="btn btn-success">Approved</a>
 
                 </div>
 
-                @if($title == "Approved")
-                <form class="form-control" action="search" method="POST">
-                    @csrf
-                    <input class="form-control" name="email" placeholder="Enter Email">
-                    <button class="btn btn-primary" type="submit">Continue</button>
 
-                </form>
+                @if($title == "Approved")
+                    <div class="col-sm-12 text-center">
+
+                        <form class="form-control" action="search" method="POST">
+                            @csrf
+                            <input class="form-control" name="email" placeholder="Enter Email">
+                            <button class="btn btn-primary" type="submit">Continue</button>
+
+                        </form>
+                    </div>
                 @endif
 
             </div>
@@ -76,7 +80,8 @@
                     <div class="inner d-flex align-items-center">
 
                         <div class="content">
-                            <h4><a href="open-ticket?id={{$data->id}}" class="fw_6">NGN {{number_format($data->d_amount, 2)}}</a></h4>
+                            <h4><a href="open-ticket?id={{$data->id}}"
+                                   class="fw_6">NGN {{number_format($data->d_amount, 2)}}</a></h4>
                             @if($data->subject == 1)
                                 <p> I didnt add refrence</p>
                             @elseif($data->subject == 2)
@@ -102,11 +107,7 @@
 
                 </div>
 
-
-
-
             @endforeach
-
 
 
         </div>
@@ -116,13 +117,10 @@
 </div>
 
 
+<div class="card-secton topup-content my-5">
 
 
-    <div class="card-secton topup-content my-5">
-
-
-    </div>
-
+</div>
 
 
 <script type="text/javascript" src="{{url('')}}/public/assets/assets/javascript/jquery.min.js"></script>

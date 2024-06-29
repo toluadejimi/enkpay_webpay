@@ -42,8 +42,8 @@
 
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    <a href="/all-issues" class="btn btn-primary btn-md center-block" Style="width: 100px;" >All Issues</a>
-                    <a href="/no-ref" class="btn btn-primary btn-md center-block" Style="width: 100px;" >No Refrence</a>
+                    <a href="/all-issues" class="btn btn-primary btn-md center-block" >All Issues</a>
+                    <a href="/no-ref" class="btn btn-primary btn-md center-block" >No Refrence</a>
                 </div>
             </div>
 

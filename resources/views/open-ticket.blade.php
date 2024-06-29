@@ -82,7 +82,7 @@
                     <li>Status<span><a href="#" class="btn btn-warning">Pending</a></span> </li>
                 @elseif($ticket->status == 3)
                     <li>Status<span><a href="#" class="btn btn-danger">Rejected</a></span> </li>
-                @elseif($data->status ==4)
+                @elseif($ticket->status ==4)
                     <li>Status<span><a href="#" class="btn btn-success">Already Funded</a></span> </li>
                 @else
                     <li>Status<span><a href="#" class="btn btn-success">Completed</a></span> </li>

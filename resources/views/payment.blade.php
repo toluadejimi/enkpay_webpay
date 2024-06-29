@@ -68,22 +68,7 @@
 
                 @if(Auth::user()->email == "toluadejimi@gmail.com")
 
-                    <div class="row my-3">
 
-                        @if($support == "https://api.whatsapp.com/send?phone=2349138653644&text=Hi%2C%20Please%20i%20need%20your%20support%20")
-                            <a href="#" data-toggle="modal" data-target="#exampleModalCenter"
-                               class="btn btn-success btn-sm">
-                                Divine Active
-                            </a>
-                        @elseif($support == "https://api.whatsapp.com/send?phone=2347042653595&text=Hi%2C%20Please%20i%20need%20your%20support%20")
-                            <a href="#" data-toggle="modal" data-target="#exampleModalCenter"
-                               class="btn btn-success btn-sm">
-                                Vera
-                            </a>
-                        @endif
-
-
-                    </div>
 
                 @endif
 

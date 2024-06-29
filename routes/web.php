@@ -118,6 +118,8 @@ Route::get('resolve', [VerifyController::class, 'resolve']);
 
 Route::any('deposit-approve', [VerifyController::class, 'deposit_approve']);
 Route::any('deposit-decline', [VerifyController::class, 'decline_approve']);
+Route::any('deposit-funded', [VerifyController::class, 'deposit_funded']);
+
 
 
 
@@ -127,6 +129,7 @@ Route::get('all-issues', [VerifyController::class, 'all_request_view']);
 Route::get('no-ref', [VerifyController::class, 'noref_request_view']);
 Route::get('ref-no-credit', [VerifyController::class, 'no_credit_view']);
 Route::get('wrong-amount', [VerifyController::class, 'wrong_amount_view']);
+
 
 
 

@@ -82,6 +82,8 @@
                     <li>Status<span><a href="#" class="btn btn-warning">Pending</a></span> </li>
                 @elseif($ticket->status == 3)
                     <li>Status<span><a href="#" class="btn btn-danger">Rejected</a></span> </li>
+                @elseif($data->status ==4)
+                    <li>Status<span><a href="#" class="btn btn-sucess">Already Funded</a></span> </li>
                 @else
                     <li>Status<span><a href="#" class="btn btn-success">Completed</a></span> </li>
 
@@ -99,6 +101,9 @@
             <ul class="list-card-info">
                 <li><a href="deposit-approve?id={{$ticket->id}}" class="btn btn-success">Approve Transaction</a>  </li>
                 <li><a href="deposit-decline?id={{$ticket->id}}" class="btn btn-danger">Decline Transaction</a>  </li>
+                <li><a href="deposit-funded?id={{$ticket->id}}" class="btn btn-secondary">Funded Already</a>  </li>
+
+
             </ul>
         </div>
     </div>

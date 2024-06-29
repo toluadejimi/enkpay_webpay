@@ -542,6 +542,15 @@ class VerifyController extends Controller
 
 
     public
+    function deposit_funded(request $request)
+    {
+        $order = ResolveOrder::where('id', $request->id)->first() ?? null;
+        ResolveOrder::where('id', $order->id)->update(['status' => 4]);
+        return back()->with('message', 'Transaction funded');
+    }
+
+
+    public
     function track_request_view(request $request)
     {
         $data['orders'] = ResolveOrder::where('email', $request->email)->count();

@@ -496,6 +496,7 @@ class VerifyController extends Controller
         if (Auth::check()) {
             return view('payment');
         }
+        $data['title'] = "All Issues";
         $data['tickets'] = ResolveOrder::where('status', 0)->get();
         return view('request', $data);
     }

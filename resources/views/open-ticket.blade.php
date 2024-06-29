@@ -83,7 +83,7 @@
                 @elseif($ticket->status == 3)
                     <li>Status<span><a href="#" class="btn btn-danger">Rejected</a></span> </li>
                 @elseif($data->status ==4)
-                    <li>Status<span><a href="#" class="btn btn-sucess">Already Funded</a></span> </li>
+                    <li>Status<span><a href="#" class="btn btn-success">Already Funded</a></span> </li>
                 @else
                     <li>Status<span><a href="#" class="btn btn-success">Completed</a></span> </li>
 

@@ -52,7 +52,7 @@
 
 
                 @if($title == "Approved")
-                    <div class="col-sm-12 text-center">
+                    <div class="col-sm-12 text-center my-3">
 
                         <form class="form-control" action="search" method="POST">
                             @csrf

@@ -46,7 +46,6 @@
                     <a href="/no-ref" class="btn btn-primary btn-md center-block" >No Refrence</a>
                     <a href="/ref-no-credit" class="btn btn-secondary" >Ref but no credit</a>
                     <a href="/wrong-amount" class="btn btn-secondary" >Wrong Amount</a>
-                    <a href="/approved" class="btn btn-success">Approved</a>
 
                 </div>
             </div>
@@ -101,6 +100,8 @@
 
         </div>
 
+        {{$tickets->links()}}
+
     </div>
 
 </div>
@@ -108,10 +109,10 @@
 
 
 
-    <div class="card-secton topup-content my-5">
+<div class="card-secton topup-content my-5">
 
 
-    </div>
+</div>
 
 
 

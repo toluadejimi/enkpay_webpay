@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="eb481102-bdbd-4de2-9fe6-19ebbd8459cb" name="Changes" comment="adjustedssdd">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VerifyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VerifyController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/success-ticket.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/success-ticket.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -273,15 +271,7 @@
       <workItem from="1719241307684" duration="8000" />
       <workItem from="1719253076564" duration="814000" />
       <workItem from="1719308550684" duration="7482000" />
-      <workItem from="1719435206051" duration="20874000" />
-    </task>
-    <task id="LOCAL-00105" summary="adjusted">
-      <option name="closed" value="true" />
-      <created>1716416063800</created>
-      <option name="number" value="00105" />
-      <option name="presentableId" value="LOCAL-00105" />
-      <option name="project" value="LOCAL" />
-      <updated>1716416063800</updated>
+      <workItem from="1719435206051" duration="21476000" />
     </task>
     <task id="LOCAL-00106" summary="adjusted">
       <option name="closed" value="true" />
@@ -667,7 +657,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719635490429</updated>
     </task>
-    <option name="localTasksCounter" value="154" />
+    <task id="LOCAL-00154" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1719639583065</created>
+      <option name="number" value="00154" />
+      <option name="presentableId" value="LOCAL-00154" />
+      <option name="project" value="LOCAL" />
+      <updated>1719639583065</updated>
+    </task>
+    <option name="localTasksCounter" value="155" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -690,7 +688,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Webpay null access token removed" />
     <MESSAGE value="adjusted" />
-    <option name="LAST_COMMIT_MESSAGE" value="adjusted" />
+    <MESSAGE value="adjustedssdd" />
+    <option name="LAST_COMMIT_MESSAGE" value="adjustedssdd" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

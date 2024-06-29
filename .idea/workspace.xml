@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb481102-bdbd-4de2-9fe6-19ebbd8459cb" name="Changes" comment="adjusted">
+    <list default="true" id="eb481102-bdbd-4de2-9fe6-19ebbd8459cb" name="Changes" comment="adjustedssdd">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/resolve.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/resolve.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/webpay.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/webpay.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VerifyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VerifyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/success-ticket.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/success-ticket.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -273,22 +273,7 @@
       <workItem from="1719241307684" duration="8000" />
       <workItem from="1719253076564" duration="814000" />
       <workItem from="1719308550684" duration="7482000" />
-    </task>
-    <task id="LOCAL-00103" summary="adjusted">
-      <option name="closed" value="true" />
-      <created>1716355530449</created>
-      <option name="number" value="00103" />
-      <option name="presentableId" value="LOCAL-00103" />
-      <option name="project" value="LOCAL" />
-      <updated>1716355530449</updated>
-    </task>
-    <task id="LOCAL-00104" summary="adjusted">
-      <option name="closed" value="true" />
-      <created>1716415943458</created>
-      <option name="number" value="00104" />
-      <option name="presentableId" value="LOCAL-00104" />
-      <option name="project" value="LOCAL" />
-      <updated>1716415943458</updated>
+      <workItem from="1719435206051" duration="20874000" />
     </task>
     <task id="LOCAL-00105" summary="adjusted">
       <option name="closed" value="true" />
@@ -666,7 +651,23 @@
       <option name="project" value="LOCAL" />
       <updated>1719432622360</updated>
     </task>
-    <option name="localTasksCounter" value="152" />
+    <task id="LOCAL-00152" summary="adjusted">
+      <option name="closed" value="true" />
+      <created>1719469973095</created>
+      <option name="number" value="00152" />
+      <option name="presentableId" value="LOCAL-00152" />
+      <option name="project" value="LOCAL" />
+      <updated>1719469973095</updated>
+    </task>
+    <task id="LOCAL-00153" summary="adjusted">
+      <option name="closed" value="true" />
+      <created>1719635490429</created>
+      <option name="number" value="00153" />
+      <option name="presentableId" value="LOCAL-00153" />
+      <option name="project" value="LOCAL" />
+      <updated>1719635490429</updated>
+    </task>
+    <option name="localTasksCounter" value="154" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -706,7 +707,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/TransactionController.php</url>
-          <line>1254</line>
+          <line>1265</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
@@ -721,7 +722,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/resources/views/webpay.blade.php</url>
-          <line>214</line>
+          <line>192</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
@@ -731,7 +732,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php-line-method">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/TransactionController.php</url>
-          <line>1938</line>
+          <line>1949</line>
           <properties>
             <option name="className" value="\App\Http\Controllers\TransactionController" />
             <option name="methodName" value="opay_transfer_transaction" />
@@ -740,12 +741,30 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php-line-method">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/TransactionController.php</url>
-          <line>2013</line>
+          <line>2024</line>
           <properties>
             <option name="className" value="\App\Http\Controllers\TransactionController" />
             <option name="methodName" value="kuda_transfer_transaction" />
           </properties>
           <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php-line-method">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/VerifyController.php</url>
+          <line>84</line>
+          <properties>
+            <option name="className" value="\App\Http\Controllers\VerifyController" />
+            <option name="methodName" value="change_support" />
+          </properties>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php-line-method">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/VerifyController.php</url>
+          <line>371</line>
+          <properties>
+            <option name="className" value="\App\Http\Controllers\VerifyController" />
+            <option name="methodName" value="deposit_approve" />
+          </properties>
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

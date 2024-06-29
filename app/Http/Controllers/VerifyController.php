@@ -595,6 +595,8 @@ class VerifyController extends Controller
         $message = "You have new message on support by $request->email";
         send_notification($message);
 
+        return view('success-ticket');
+
     }
 
     public

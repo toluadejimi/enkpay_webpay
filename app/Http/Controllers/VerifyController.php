@@ -493,8 +493,8 @@ class VerifyController extends Controller
     public
     function all_request_view(request $request)
     {
-        if (Auth::check()) {
-            return view('payment');
+        if (Auth::check() == false) {
+            return view('login');
         }
         $data['title'] = "All Issues";
         $data['tickets'] = ResolveOrder::latest()->where('status', 0)->get();
@@ -508,8 +508,8 @@ class VerifyController extends Controller
     public
     function noref_request_view(request $request)
     {
-        if (Auth::check()) {
-            return view('payment');
+        if (Auth::check() == false) {
+            return view('login');
         }
         $data['title'] = "No Refrence";
         $data['tickets'] = ResolveOrder::latest()->where('status', 0)->where('subject', 1)->get();
@@ -519,8 +519,8 @@ class VerifyController extends Controller
     public
     function no_credit_view(request $request)
     {
-        if (Auth::check()) {
-            return view('payment');
+        if (Auth::check() == false) {
+            return view('login');
         }
 
         $data['title'] = "Refrence but not processed";
@@ -531,8 +531,8 @@ class VerifyController extends Controller
     public
     function wrong_amount_view(request $request)
     {
-        if (Auth::check()) {
-            return view('payment');
+        if (Auth::check() == false) {
+            return view('login');
         }
 
         $data['title'] = "Wrong Amount";

@@ -39,12 +39,14 @@
         </div>
 
         <div class="row my-3 p-2">
-            <div class="col-4">
-                <a href="/all-issues" class="btn btn-secondary">All Issues</a>
+
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <a href="/all-issues" class="btn btn-primary btn-md center-block" Style="width: 100px;" >All Issues</a>
+                    <a href="/no-ref" class="btn btn-primary btn-md center-block" Style="width: 100px;" >No Refrence</a>
+                </div>
             </div>
-            <div class="col-4">
-                <a href="/no-ref" class="btn btn-secondary" >No Refrence</a>
-            </div>
+
             <div class="col-4">
                 <a href="/ref-no-credit" class="btn btn-secondary" >Ref but no credit</a>
             </div>

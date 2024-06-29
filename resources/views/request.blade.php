@@ -44,16 +44,11 @@
                 <div class="col-sm-12 text-center">
                     <a href="/all-issues" class="btn btn-primary btn-md center-block" >All Issues</a>
                     <a href="/no-ref" class="btn btn-primary btn-md center-block" >No Refrence</a>
+                    <a href="/ref-no-credit" class="btn btn-secondary" >Ref but no credit</a>
+                    <a href="/wrong-amount" class="btn btn-secondary" >Wrong Amount</a>
                 </div>
             </div>
 
-            <div class="col-4">
-                <a href="/ref-no-credit" class="btn btn-secondary" >Ref but no credit</a>
-            </div>
-
-            <div class="col-4">
-                <a href="/wrong-amount" class="btn btn-secondary" >Wrong Amount</a>
-            </div>
         </div>
     </div>
 </div>

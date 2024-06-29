@@ -39,17 +39,17 @@
         </div>
 
         <div class="row my-3">
-            <div class="col">
+            <div class="col-4">
                 <a href="/all-issues" class="btn btn-secondary">All Issues</a>
             </div>
-            <div class="col">
+            <div class="col-4">
                 <a href="/no-ref" class="btn btn-secondary" >No Refrence</a>
             </div>
-            <div class="col">
+            <div class="col-4">
                 <a href="/ref-no-credit" class="btn btn-secondary" >Ref but no credit</a>
             </div>
 
-            <div class="col">
+            <div class="col-4">
                 <a href="/wrong-amount" class="btn btn-secondary" >Wrong Amount</a>
             </div>
         </div>

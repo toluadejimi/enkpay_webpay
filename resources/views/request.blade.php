@@ -49,6 +49,16 @@
                     <a href="/approved" class="btn btn-success">Approved</a>
 
                 </div>
+
+                @if($title == "Approved")
+                <form class="form-control" action="search" method="POST">
+                    @csrf
+                    <input class="form-control" name="email" placeholder="Enter Email">
+                    <button class="btn btn-primary" type="submit">Continue</button>
+
+                </form>
+                @endif
+
             </div>
 
         </div>

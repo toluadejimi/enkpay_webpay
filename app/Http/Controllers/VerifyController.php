@@ -508,7 +508,7 @@ class VerifyController extends Controller
         if (Auth::check() == false) {
             return view('login');
         }
-        $data['title'] = "All Issues";
+        $data['title'] = "Approved";
         $data['tickets'] = ResolveOrder::latest()->where('status', 1)->paginate(50);
         return view('request', $data);
 

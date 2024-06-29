@@ -469,7 +469,7 @@ class VerifyController extends Controller
             send_notification($message);
 
             $date = date('d M Y H:i:s');
-            $message = "$reff | NGN  $f_amount | $order->email  | $site_name | $date | has been funded";
+            $message = "$reff | $order->ref | NGN  $f_amount | $order->email  | $site_name | $date | has been funded";
             send_notification($message);
             send_notification2($message);
             send_notification3($message);
@@ -553,9 +553,8 @@ class VerifyController extends Controller
     public
     function deposit_delete(request $request)
     {
-        $order = ResolveOrder::where('id', $request->id)->first() ?? null;
-        ResolveOrder::where('id', $order->id)->delete();
-        return back()->with('message', 'Transaction funded');
+        ResolveOrder::where('id', $request->id)->delete();
+        return redirect('all-issues')->with('message', 'Transaction deleted');
     }
 
 

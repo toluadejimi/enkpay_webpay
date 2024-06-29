@@ -496,9 +496,12 @@ class VerifyController extends Controller
         if (Auth::check()) {
             return view('payment');
         }
-        $data['tickets'] = ResolveOrder::where('status', 0)->where('subject', 1)->get();
+        $data['tickets'] = ResolveOrder::where('status', 0)->get();
         return view('request', $data);
     }
+
+
+
 
 
     public
@@ -507,7 +510,32 @@ class VerifyController extends Controller
         if (Auth::check()) {
             return view('payment');
         }
+        $data['title'] = "No Refrence";
         $data['tickets'] = ResolveOrder::latest()->where('status', 0)->where('subject', 1)->get();
+        return view('request', $data);
+    }
+
+    public
+    function no_credit_view(request $request)
+    {
+        if (Auth::check()) {
+            return view('payment');
+        }
+
+        $data['title'] = "Refrence but not processed";
+        $data['tickets'] = ResolveOrder::latest()->where('status', 0)->where('subject', 3)->get();
+        return view('request', $data);
+    }
+
+    public
+    function wrong_amount_view(request $request)
+    {
+        if (Auth::check()) {
+            return view('payment');
+        }
+
+        $data['title'] = "Wrong Amount";
+        $data['tickets'] = ResolveOrder::latest()->where('status', 0)->where('subject', 2)->get();
         return view('request', $data);
     }
 

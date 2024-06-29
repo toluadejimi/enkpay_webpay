@@ -123,8 +123,11 @@ Route::any('deposit-decline', [VerifyController::class, 'decline_approve']);
 
 
 
-Route::get('all-request', [VerifyController::class, 'all_request_view']);
+Route::get('all-issues', [VerifyController::class, 'all_request_view']);
 Route::get('no-ref', [VerifyController::class, 'noref_request_view']);
+Route::get('ref-no-credit', [VerifyController::class, 'no_credit_view']);
+Route::get('wrong-amount', [VerifyController::class, 'wrong_amount_view']);
+
 
 
 Route::get('open-ticket', [VerifyController::class, 'open_ticket']);

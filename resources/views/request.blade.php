@@ -34,7 +34,7 @@
     <div class="tf-container">
         <div class="tf-topbar d-flex justify-content-center align-items-center">
             <a href="29_topup.html#" class="back-btn"><i class="icon-left white_color"></i></a>
-            <h3 class="white_color">No Refrence Request</h3>
+            <h3 class="white_color">{{$title}}</h3>
         </div>
     </div>
 </div>

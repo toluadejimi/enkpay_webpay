@@ -119,6 +119,8 @@ Route::get('resolve', [VerifyController::class, 'resolve']);
 Route::any('deposit-approve', [VerifyController::class, 'deposit_approve']);
 Route::any('deposit-decline', [VerifyController::class, 'decline_approve']);
 Route::any('deposit-funded', [VerifyController::class, 'deposit_funded']);
+Route::any('deposit-delete', [VerifyController::class, 'deposit_delete']);
+
 
 
 

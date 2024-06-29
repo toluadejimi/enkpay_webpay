@@ -551,6 +551,18 @@ class VerifyController extends Controller
 
 
     public
+    function deposit_delete(request $request)
+    {
+        $order = ResolveOrder::where('id', $request->id)->first() ?? null;
+        ResolveOrder::where('id', $order->id)->delete();
+        return back()->with('message', 'Transaction funded');
+    }
+
+
+
+
+
+    public
     function track_request_view(request $request)
     {
         $data['orders'] = ResolveOrder::where('email', $request->email)->count();

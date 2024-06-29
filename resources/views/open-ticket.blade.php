@@ -98,13 +98,28 @@
         <div class="tf-container">
             <h3 class="fw_6">Action</h3>
             <div class="tf-spacing-12"></div>
-            <ul class="list-card-info">
-                <li><a href="deposit-approve?id={{$ticket->id}}" class="btn btn-success">Approve Transaction</a>  </li>
-                <li><a href="deposit-decline?id={{$ticket->id}}" class="btn btn-danger">Decline Transaction</a>  </li>
-                <li><a href="deposit-funded?id={{$ticket->id}}" class="btn btn-secondary">Funded Already</a>  </li>
+
+                <div class="row">
+                    <div class="col">
+                        <a href="deposit-approve?id={{$ticket->id}}" class="btn btn-success">Approve Transaction</a>  </li>
+                    </div>
+                    <div class="col">
+                        <a href="deposit-decline?id={{$ticket->id}}" class="btn btn-danger">Decline Transaction</a>
+                    </div>
+                </div>
 
 
-            </ul>
+
+
+            <div class="row">
+                <div class="col">
+                    <a href="deposit-funded?id={{$ticket->id}}" class="btn btn-secondary">Funded Already</a>
+                </div>
+                <div class="col">
+                    <a href="deposit-delete?id={{$ticket->id}}" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+
         </div>
     </div>
 @else

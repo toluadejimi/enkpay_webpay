@@ -115,7 +115,23 @@ Route::get('approve', [VerifyController::class, 'approve_transaction']);
 
 
 Route::get('resolve', [VerifyController::class, 'resolve']);
-Route::post('deposit-now', [VerifyController::class, 'deposit']);
+
+Route::any('deposit-approve', [VerifyController::class, 'deposit_approve']);
+Route::any('deposit-decline', [VerifyController::class, 'decline_approve']);
+
+
+
+
+
+Route::get('all-request', [VerifyController::class, 'all_request_view']);
+Route::get('no-ref', [VerifyController::class, 'noref_request_view']);
+
+
+Route::get('open-ticket', [VerifyController::class, 'open_ticket']);
+
+
+
+
 
 
 Route::any('submit-resolve', [VerifyController::class, 'submit_resolve']);

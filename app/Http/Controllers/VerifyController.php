@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ResolveOrder;
 use App\Models\Setting;
 use App\Models\Support;
 use App\Models\Transaction;
 use App\Models\Transfertransaction;
 use App\Models\User;
 use App\Models\Webkey;
-use App\Models\ResolveOrder;
 use App\Models\Webtransfer;
-use Hamcrest\Core\Set;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +24,6 @@ class VerifyController extends Controller
         }
 
         $currentDate = Carbon::today();
-
 
 
         if (Auth::user()->bank_operator == "all") {
@@ -47,11 +45,10 @@ class VerifyController extends Controller
             ])->whereDate('created_at', $currentDate)->count();
 
 
-             $data['totaldaily'] = $data['opay_count'] + $data['daily_palmpay_count'];
-            $data['all'] = $data['palmpay_count'] + $data['palmpay_count'] - $data['miss_count'] ;
+            $data['totaldaily'] = $data['opay_count'] + $data['daily_palmpay_count'];
+            $data['all'] = $data['palmpay_count'] + $data['palmpay_count'] - $data['miss_count'];
 
             $data['support'] = Support::where('id', 1)->first()->support;
-
 
 
             return view('payment', $data);
@@ -81,7 +78,6 @@ class VerifyController extends Controller
 
 
         return back()->with('error', "You dont have any business here");
-
 
 
     }
@@ -128,14 +124,11 @@ class VerifyController extends Controller
         $currentDate = Carbon::today();
 
 
-
         $data['transactions'] = Transfertransaction::latest()->where('status', 0)->orwhere('status', 3)->get();
 
         return view('pend', $data);
 
     }
-
-
 
 
     public function login(request $request)
@@ -144,31 +137,31 @@ class VerifyController extends Controller
 
 
     }
+
     public function complete_transaction(request $request)
     {
 
-        if($request->id == null){
+        if ($request->id == null) {
             return back()->with('error', 'Transaction ID missing');
 
         }
 
         $trx = Webtransfer::where('trans_id', $request->id)->first() ?? null;
-        if($trx == null){
+        if ($trx == null) {
             return back()->with('error', 'Transaction Not Found');
         }
 
-        if($trx->status == 2){
+        if ($trx->status == 2) {
             return back()->with('error', 'Transaction has been completed');
         }
 
 
-
-        if($trx->status == 0){
+        if ($trx->status == 0) {
             $charge = Setting::where('id', 1)->first()->webpay_transfer_charge;
 
-            if($trx->payable_amount <= 100){
+            if ($trx->payable_amount <= 100) {
                 $f_amount = $trx->payable_amount;
-            }else{
+            } else {
                 $f_amount = $trx->payable_amount - $charge;
             }
 
@@ -177,21 +170,19 @@ class VerifyController extends Controller
             $user = User::where('id', $trx->user_id)->first();
 
 
-
             $url = Webkey::where('key', $trx->key)->first()->url_fund ?? null;
-            $user_email =  $trx->email ?? null;
-            $amount =  $trx->payable_amount ?? null;
-            $order_id =  $trx->trans_id ?? null;
-            $site_name =  Webkey::where('key', $trx->key)->first()->site_name ?? null;
-
+            $user_email = $trx->email ?? null;
+            $amount = $trx->payable_amount ?? null;
+            $order_id = $trx->trans_id ?? null;
+            $site_name = Webkey::where('key', $trx->key)->first()->site_name ?? null;
 
 
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
 
-            if($fund == 2){
+            if ($fund == 2) {
 
                 Webtransfer::where('trans_id', $request->id)->update(['status' => 4]);
-                Transfertransaction::where('ref_trans_id', $request->id)->update(['status' => 2, 'approved_by'=>Auth::user()->first_name]);
+                Transfertransaction::where('ref_trans_id', $request->id)->update(['status' => 2, 'approved_by' => Auth::user()->first_name]);
 
 
                 //update Transactions
@@ -213,11 +204,11 @@ class VerifyController extends Controller
                 $trasnaction->status = 1;
                 $trasnaction->save();
 
-                $message = "Business funded | $trx->manual_acc_ref | $f_amount | $user->first_name " . " " . $user->last_name."\n\n Approved by ====>".Auth::user()->first_name;
+                $message = "Business funded | $trx->manual_acc_ref | $f_amount | $user->first_name " . " " . $user->last_name . "\n\n Approved by ====>" . Auth::user()->first_name;
                 send_notification($message);
 
                 $date = date('d M Y H:i:s');
-                $message = "$trx->manual_acc_ref | NGN  $trx->payable_amount | $trx->email  | $site_name | $date | has been funded" ;
+                $message = "$trx->manual_acc_ref | NGN  $trx->payable_amount | $trx->email  | $site_name | $date | has been funded";
                 send_notification($message);
                 send_notification2($message);
                 send_notification3($message);
@@ -229,9 +220,8 @@ class VerifyController extends Controller
             }
 
 
-
             Webtransfer::where('trans_id', $request->id)->update(['status' => 1]);
-            Transfertransaction::where('ref_trans_id', $request->id)->update(['status' => 1, 'approved_by'=>Auth::user()->first_name]);
+            Transfertransaction::where('ref_trans_id', $request->id)->update(['status' => 1, 'approved_by' => Auth::user()->first_name]);
 
 
             //update Transactions
@@ -253,7 +243,7 @@ class VerifyController extends Controller
             $trasnaction->status = 1;
             $trasnaction->save();
 
-            $message = "Business Funded | $trx->manual_acc_ref | Pending customer not funded | $f_amount | $user->first_name " . " " . $user->last_name."\n\n Approved by ====>".Auth::user()->first_name;
+            $message = "Business Funded | $trx->manual_acc_ref | Pending customer not funded | $f_amount | $user->first_name " . " " . $user->last_name . "\n\n Approved by ====>" . Auth::user()->first_name;
             send_notification($message);
 
             return back()->with('message', 'Transaction successfully completed');
@@ -268,33 +258,23 @@ class VerifyController extends Controller
     }
 
 
-
     public function delete_transaction(request $request)
     {
 
-        if($request->id == null){
+        if ($request->id == null) {
             return back()->with('error', 'Transaction ID missing');
 
         }
-
 
 
             Webtransfer::where('trans_id', $request->id)->delete() ?? null;
             Transfertransaction::where('ref_trans_id', $request->id)->delete() ?? null;
 
 
-            $message = "Transaction | $request->id | Deleted ";
-            send_notification($message);
+        $message = "Transaction | $request->id | Deleted ";
+        send_notification($message);
 
-            return back()->with('message', 'Transaction Deleted Successfully');
-
-
-
-
-
-
-
-
+        return back()->with('message', 'Transaction Deleted Successfully');
 
 
     }
@@ -302,22 +282,20 @@ class VerifyController extends Controller
     public function pend_transaction(request $request)
     {
 
-        if($request->id == null){
+        if ($request->id == null) {
             return back()->with('error', 'Transaction ID missing');
 
         }
 
 
-        Webtransfer::where('trans_id', $request->id)->update(['status' => 3]) ?? null;
-        Transfertransaction::where('ref_trans_id', $request->id)->update(['status' => 3]) ?? null;
-
+            Webtransfer::where('trans_id', $request->id)->update(['status' => 3]) ?? null;
+            Transfertransaction::where('ref_trans_id', $request->id)->update(['status' => 3]) ?? null;
 
 
         $message = "Transaction | $request->id | added to pending ";
         send_notification($message);
 
         return back()->with('message', 'Transaction added to pending Successfully');
-
 
 
     }
@@ -374,268 +352,168 @@ class VerifyController extends Controller
     }
 
 
-    public function resolve()
+    public function resolve(request $request)
     {
-        return view('resolve');
+        $data['user_id'] = $request->user_id;
+        $data['check_url'] = $request->check_url;
+        return view('resolve', $data);
     }
 
 
-    public function deposit(request $request)
+    public function decline_approve(request $request)
     {
+        $order = ResolveOrder::where('id', $request->id)->first() ?? null;
 
-        if($request->vendor == "logmarketplace"){
-
-            $databody = array(
-
-                "amount" => $request->amount,
-                "email" => $request->user_email,
-                "order_id" => $request->order_id,
-            );
-
-            $post_data = json_encode($databody);
-            $curl = curl_init();
-
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://api.logmarketplace.com/public/api/e-fund",
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => $post_data,
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/json'
-                ),
-            ));
-
-
-            $var = curl_exec($curl);
-            curl_close($curl);
-            $var = json_decode($var);
-            $status = $var->status ?? null;
-            $status_message = $var->message ?? null;
-
-
-            if($status == true)
-            {
-                return back()->with('message', $status_message);
-            }else{
-
-                return back()->with('error', $status_message);
-
-
-            }
-
-
-
-        }
-
-        if($request->vendor == "acelogs"){
-
-            $databody = array(
-
-                "amount" => $request->amount,
-                "email" => $request->user_email,
-                "order_id" => $request->order_id,
-            );
-
-            $post_data = json_encode($databody);
-            $curl = curl_init();
-
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://api.acelogstore.com/public/api/e-fund",
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => $post_data,
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/json'
-                ),
-            ));
-
-
-            $var = curl_exec($curl);
-            curl_close($curl);
-            $var = json_decode($var);
-            $status = $var->status ?? null;
-            $status_message = $var->message ?? null;
-
-
-            if($status == true)
-            {
-                return back()->with('message', $status_message);
-            }else{
-
-                return back()->with('message', $status_message);
-
-
-            }
-
-
-
-        }
-
-        if($request->vendor == "oprimeverify"){
-
-            $databody = array(
-
-                "amount" => $request->amount,
-                "email" => $request->user_email,
-                "order_id" => $request->order_id,
-            );
-
-            $post_data = json_encode($databody);
-            $curl = curl_init();
-
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => "http://oprimeverify.com/api/fund",
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => $post_data,
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/json'
-                ),
-            ));
-
-
-            $var = curl_exec($curl);
-            curl_close($curl);
-            $var = json_decode($var);
-            $status = $var->status ?? null;
-            $status_message = $var->message ?? null;
-
-
-            if($status == true)
-            {
-                return back()->with('message', $status_message);
-            }else{
-
-                return back()->with('message', $status_message);
-
-
-            }
-
-
-
-        }
-
-
-        if($request->vendor == "oprime"){
-
-            $databody = array(
-
-                "amount" => $request->amount,
-                "email" => $request->user_email,
-                "order_id" => $request->order_id,
-            );
-
-            $post_data = json_encode($databody);
-            $curl = curl_init();
-
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => "http://api.oprime.com.ng/public/api/e-fund",
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => $post_data,
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/json'
-                ),
-            ));
-
-
-            $var = curl_exec($curl);
-            curl_close($curl);
-            $var = json_decode($var);
-            $status = $var->status ?? null;
-            $status_message = $var->message ?? null;
-
-
-            if($status == true)
-            {
-                return back()->with('message', $status_message);
-            }else{
-
-                return back()->with('message', $status_message);
-
-
-            }
-
-
-
-        }
-
-        if($request->vendor == "oprimeaccs"){
-
-            $databody = array(
-
-                "amount" => $request->amount,
-                "email" => $request->user_email,
-                "order_id" => $request->order_id,
-            );
-
-            $post_data = json_encode($databody);
-            $curl = curl_init();
-
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://test.oprimesms.com/public/api/e-fund",
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => $post_data,
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/json'
-                ),
-            ));
-
-
-            $var = curl_exec($curl);
-            curl_close($curl);
-            $var = json_decode($var);
-            $status = $var->status ?? null;
-            $status_message = $var->message ?? null;
-
-
-            if($status == true)
-            {
-                return back()->with('message', $status_message);
-            }else{
-
-                return back()->with('message', $status_message);
-
-
-            }
-
-
-
-        }
-
-        return view('resolve');
+        ResolveOrder::where('id', $order->id)->update(['status' => 3]);
+        return back()->with('error', "Ticket has been declined");
     }
 
 
+    public function deposit_approve(request $request)
+    {
+
+        $order = ResolveOrder::where('id', $request->id)->first() ?? null;
+
+        if ($order == null) {
+            return back()->with('error', 'User Api Url not found');
+        }
+
+        $vendor_url = Webkey::where('key', $order->user_id)->first()->url_fund ?? null;
+        $user_id = Webkey::where('key', $order->user_id)->first()->user_id ?? null;
+        $user = User::where('id', $user_id)->first() ?? null;
 
 
-    public function track_request_view(request $request)
+        $site_name = Webkey::where('key', $order->user_id)->first()->site_name ?? null;
+
+
+
+        if ($vendor_url == null) {
+            return back()->with('error', 'User Api Url not found');
+        }
+
+        $reff = date('ymdhms') . "APIFUND";
+
+        $databody = array(
+
+            "amount" => $order->r_amount,
+            "email" => $order->email,
+            "order_id" => $reff,
+        );
+
+
+        $post_data = json_encode($databody);
+
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "$vendor_url",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $post_data,
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json'
+            ),
+        ));
+
+
+        $var = curl_exec($curl);
+        curl_close($curl);
+        $var = json_decode($var);
+        $status = $var->status ?? null;
+        $status_message = $var->message ?? null;
+
+
+        if ($status == true) {
+
+
+            $charge = Setting::where('id', 1)->first()->webpay_transfer_charge;
+
+            if ($order->r_amount <= 100) {
+                $f_amount = $order->r_amount;
+            } else {
+                $f_amount = $order->r_amount - $charge;
+            }
+
+            User::where('id', $user_id)->increment('main_wallet', $f_amount);
+            $balance = User::where('id', $user_id)->first()->main_wallet;
+            $user = User::where('id', $user_id)->first();
+
+            //update Transactions
+            $trasnaction = new Transaction();
+            $trasnaction->user_id = $user_id;
+            $trasnaction->e_ref = $reff;
+            $trasnaction->ref_trans_id = $reff;
+            $trasnaction->type = "webpay";
+            $trasnaction->transaction_type = "VirtualFundWallet";
+            $trasnaction->title = "Wallet Funding";
+            $trasnaction->main_type = "Transfer";
+            $trasnaction->credit = $f_amount;
+            $trasnaction->note = "Transaction Successful | Web Pay ";
+            $trasnaction->fee = $charge ?? 0;
+            $trasnaction->amount = $order->r_amount;
+            $trasnaction->e_charges = 0;
+            $trasnaction->enkPay_Cashout_profit = 0;
+            $trasnaction->balance = $balance;
+            $trasnaction->status = 1;
+            $trasnaction->save();
+
+
+
+            $message = "Business funded | $reff | $f_amount | $user->first_name " . " " . $user->last_name;
+            send_notification($message);
+
+            $date = date('d M Y H:i:s');
+            $message = "$reff | NGN  $f_amount | $order->email  | $site_name | $date | has been funded";
+            send_notification($message);
+            send_notification2($message);
+            send_notification3($message);
+
+            $order = ResolveOrder::where('id', $request->id)->first() ?? null;
+
+            ResolveOrder::where('id', $order->id)->update(['status' => 1]);
+
+
+            return back()->with('message', 'Transaction successfully completed');
+
+
+        } else {
+
+            return back()->with('error', $status_message);
+        }
+
+    }
+
+
+    public
+    function all_request_view(request $request)
+    {
+        if (Auth::check()) {
+            return view('payment');
+        }
+        $data['tickets'] = ResolveOrder::where('status', 0)->where('subject', 1)->get();
+        return view('request', $data);
+    }
+
+
+    public
+    function noref_request_view(request $request)
+    {
+        if (Auth::check()) {
+            return view('payment');
+        }
+        $data['tickets'] = ResolveOrder::latest()->where('status', 0)->where('subject', 1)->get();
+        return view('request', $data);
+    }
+
+
+    public
+    function track_request_view(request $request)
     {
         $data['orders'] = ResolveOrder::where('email', $request->email)->count();
         $data['tickets'] = ResolveOrder::where('email', $request->email)->get();
@@ -645,14 +523,14 @@ class VerifyController extends Controller
     }
 
 
-    public function request_order(request $request)
+    public
+    function request_order(request $request)
     {
         $data['orders'] = ResolveOrder::where('email', $request->email)->count();
         $data['tickets'] = ResolveOrder::where('email', $request->email)->get();
 
 
-
-        if( $data['orders'] == 0){
+        if ($data['orders'] == 0) {
             return back()->with('error', "No resolve founnd with email $request->email");
         }
 
@@ -661,29 +539,73 @@ class VerifyController extends Controller
     }
 
 
-
-    public function submit_resolve(request $request)
+    public
+    function submit_resolve(request $request)
     {
 
+        if ($request->username == "Not Found, Pleas try again") {
+            return back()->with('error', "Please verify your email before your proceed");
+        }
 
 
+        if ($request->receipt != null) {
 
 
-        $tk = new ResolveOrder();
-        $tk->email = $request->email;
-        $tk->subject = $request->subject;
-        $tk->ref = $request->ref;
-        $tk->d_amount = $request->d_amount;
-        $tk->r_amount = $request->r_amount;
+            $file = $request->file('receipt');
 
-        $tk->recepit = $request->recepit;
-        $tk->email = $request->email;
+            $fileName = $file->getClientOriginalName();
+            $destinationPath = public_path() . 'upload/receipt';
+            $request->receipt->move(public_path('upload/receipt'), $fileName);
+            $file_url = url('') . "/public/upload/receipt/$fileName";
 
+
+            $tk = new ResolveOrder();
+            $tk->email = $request->email;
+            $tk->subject = $request->subject;
+            $tk->ref = $request->ref;
+            $tk->d_amount = $request->d_amount;
+            $tk->r_amount = $request->r_amount;
+            $tk->recepit = $file_url;
+            $tk->n_time = $request->n_time;
+            $tk->session = $request->t_session;
+            $tk->r_phone = $request->r_phone;
+            $tk->user_id = $request->user_id;
+            $tk->username = $request->username;
+
+
+            $tk->save();
+
+
+        } else {
+
+            $tk = new ResolveOrder();
+            $tk->email = $request->email;
+            $tk->subject = $request->subject;
+            $tk->ref = $request->ref;
+            $tk->d_amount = $request->d_amount;
+            $tk->r_amount = $request->r_amount;
+            $tk->n_time = $request->n_time;
+            $tk->session = $request->t_session;
+            $tk->r_phone = $request->r_phone;
+            $tk->save();
+
+        }
+
+
+        $message = "You have new message on support by $request->email";
+        send_notification($message);
 
     }
 
+    public
+    function open_ticket(request $request)
+    {
+
+        $data['ticket'] = ResolveOrder::where('id', $request->id)->first() ?? null;
+        return view('open-ticket', $data);
 
 
+    }
 
 
 }

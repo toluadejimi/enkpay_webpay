@@ -372,6 +372,15 @@ class TransactionController extends Controller
         $business_id = VirtualAccount::where('user_id', $details->user_id)->first()->business_id ?? null;
 
 
+
+        if($key == "1401464177866544"){
+
+
+        }
+
+
+
+
         if ($business_id != null) {
 
             if ($email == null) {
@@ -404,6 +413,8 @@ class TransactionController extends Controller
         $p_account_no = $acc->v_account_no ?? null;
         $p_account_name = $acc->v_account_name ?? null;
         $p_bank_name = $acc->v_bank_name ?? null;
+
+
 
 
         $web_commission = Charge::where('title', 'bwebpay')->first()->amount;

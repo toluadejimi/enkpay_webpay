@@ -497,7 +497,7 @@ class VerifyController extends Controller
             return view('payment');
         }
         $data['title'] = "All Issues";
-        $data['tickets'] = ResolveOrder::where('status', 0)->get();
+        $data['tickets'] = ResolveOrder::latest()->where('status', 0)->get();
         return view('request', $data);
     }
 

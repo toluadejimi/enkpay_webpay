@@ -38,7 +38,7 @@
 
         </div>
 
-        <div class="row my-3">
+        <div class="row my-3 p-2">
             <div class="col-4">
                 <a href="/all-issues" class="btn btn-secondary">All Issues</a>
             </div>

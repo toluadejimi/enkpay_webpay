@@ -77,8 +77,8 @@
                 <p class="fw_4">Sorry for any inconveniences we are processing your transaction</p>
             </div>
 
-            <a href="track-request" class="d-flex justify-content-center tf-btn accent large my-3"> Track Previous
-                Request</a>
+            <a href="track-request" class="d-flex justify-content-center tf-btn accent large my-3"> Track your
+                Resolve</a>
 
 
 

@@ -378,6 +378,9 @@ class VerifyController extends Controller
             return back()->with('error', 'User Api Url not found');
         }
 
+
+
+
         $vendor_url = Webkey::where('key', $order->user_id)->first()->url_fund ?? null;
         $user_id = Webkey::where('key', $order->user_id)->first()->user_id ?? null;
         $user = User::where('id', $user_id)->first() ?? null;
@@ -403,6 +406,7 @@ class VerifyController extends Controller
 
         $post_data = json_encode($databody);
 
+        ResolveOrder::where('id', $order->id)->update(['status' => 1]);
 
         $curl = curl_init();
 
@@ -427,7 +431,6 @@ class VerifyController extends Controller
         $var = json_decode($var);
         $status = $var->status ?? null;
         $status_message = $var->message ?? null;
-
 
         if ($status == true) {
 
@@ -475,7 +478,6 @@ class VerifyController extends Controller
             send_notification3($message);
 
             $order = ResolveOrder::where('id', $request->id)->first() ?? null;
-
             ResolveOrder::where('id', $order->id)->update(['status' => 1]);
 
 

@@ -373,12 +373,6 @@ class TransactionController extends Controller
 
 
 
-        if($key == "1401464177866544"){
-
-
-        }
-
-
 
 
         if ($business_id != null) {

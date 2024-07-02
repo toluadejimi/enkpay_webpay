@@ -35,8 +35,9 @@
         <div class="tf-topbar d-flex justify-content-center align-items-center">
             <a href="29_topup.html#" class="back-btn"><i class="icon-left white_color"></i></a>
             <h3 class="white_color">{{$title}}</h3>
-
         </div>
+
+
 
         <div class="row my-3 p-2">
 

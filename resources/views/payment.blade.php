@@ -73,7 +73,8 @@
                 @endif
 
 
-            <div class="col-12 my-3">
+
+                <div class="col-12 my-3">
                 <h3 class="my-3">Transactions</h3>
                 <div class="card">
                     <div class="card-body">
@@ -296,7 +297,10 @@
 
             </div>
 
-            <div class="col-12 my-2">
+                <a href="/all-issues" class="btn btn-primary btn-md center-block">All Issues</a>
+
+
+                <div class="col-12 my-2">
 
                 <div class="card">
 

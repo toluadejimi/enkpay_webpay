@@ -28,6 +28,12 @@ class TransactionController extends Controller
 {
 
 
+    public function e_payment(Request $request)
+    {
+        $message = $request->all();
+        send_notification($message);
+    }
+
     public function send_money(Request $request)
     {
 

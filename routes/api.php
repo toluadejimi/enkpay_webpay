@@ -22,6 +22,10 @@ use App\Http\Controllers\VirtualAccount\VirtualController;
 */
 
 Route::post('notify', [TransactionController::class, 'notify_webhook']);
+Route::post('e-payment', [TransactionController::class, 'e_payment']);
+
+
+
 
 Route::post('card-transaction', [TransactionController::class, 'card_transaction']);
 

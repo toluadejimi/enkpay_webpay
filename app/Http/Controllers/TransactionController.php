@@ -2300,8 +2300,8 @@ class TransactionController extends Controller
             $trasnaction->transaction_type = "WEBTRANSFER";
             $trasnaction->bank = "9PSB";
             $trasnaction->ref = $request->ref;
-            $trasnaction->account_no = $request->v_account_no;
-            $trasnaction->account_name = $request->v_account_name;
+            $trasnaction->account_no = $request->accountNo;
+            $trasnaction->account_name = $request->accountName;
             $trasnaction->title = "WEBTRANSFER";
             $trasnaction->main_type = "WEBTRF";
             $trasnaction->note = "WEBTRANSFER";
@@ -2316,7 +2316,9 @@ class TransactionController extends Controller
             return response()->json([
                 'status'=>true,
                 'message'=>"Successful",
-                'ref' => $request->ref
+                'ref' => $request->ref,
+                'account'=> $request->account_no,
+                'name'=>$request->account_name
             ]);
 
         }else{

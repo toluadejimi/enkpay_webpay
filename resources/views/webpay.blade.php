@@ -2407,6 +2407,9 @@
                                                                             },
                                                                             body: JSON.stringify({
                                                                                 ref: '{{ $transref }}',
+                                                                                accountNo: accountNo,
+                                                                                name:accountName
+
 
                                                                             }) // Replace with actual data to send
                                                                         })

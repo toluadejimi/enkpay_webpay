@@ -33,6 +33,11 @@ Route::post('opay-transfer-transaction', [TransactionController::class, 'opay_tr
 Route::post('palmpay-transfer-transaction', [TransactionController::class, 'palmpay_transfer_transaction']);
 Route::post('kuda-transfer-transaction', [TransactionController::class, 'kuda_transfer_transaction']);
 
+Route::post('ninepsb-transfer-transaction', [TransactionController::class, 'ninepsb_transaction']);
+
+
+
+
 
 Route::post('send-money', [TransactionController::class, 'send_money']);
 
@@ -73,7 +78,6 @@ Route::post('verify-others',[TransactionController::class, 'verify_others']);
 
 
 
-
 Route::post('pay',[TransactionController::class, 'initialize_payment']);
 Route::post('resolve',[TransactionController::class, 'resolve_deposit']);
 Route::post('resolve-others',[TransactionController::class, 'resolve_others']);
@@ -86,15 +90,7 @@ Route::post('resolve-complete',[TransactionController::class, 'resolve_complete'
 
 
 
-
-
-
-
-
-
-
-
-Route::post('create-dynamic-account',[VirtualController::class, 'create_dynamic_account']);
+Route::post('get-account',[TransactionController::class, 'get_account']);
 
 
 

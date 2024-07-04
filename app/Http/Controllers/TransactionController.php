@@ -15,10 +15,12 @@ use App\Models\Transfertransaction;
 use App\Models\Ttmfb;
 use App\Models\User;
 use App\Models\VirtualAccount;
+use App\Models\Webaccount;
 use App\Models\Webkey;
 use App\Models\Webtransfer;
 use Faker\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
@@ -28,16 +30,162 @@ class TransactionController extends Controller
 {
 
 
+    public function get_account(Request $request)
+    {
+        $get_bank = Webaccount::where('v_bank_name', '9PSB')->where('state', 0)->first();
+        $result['account_name'] = $get_bank->v_account_name;
+        $result['account_no'] = $get_bank->v_account_no;
+
+        return response()->json([
+            'result' => $result
+        ]);
+
+    }
+
+
+
     public function e_payment(Request $request)
     {
 
-        $parametersJson = json_encode($request->all());
+        $trx = Transfertransaction::where('account_no', $request->receiver_account_number)
+            ->where([
+                'amount' => $request->amount,
+                'status' => 0
+            ])->first() ?? null;
 
-        $result = $parametersJson;
-        send_notification($result);
+        if ($trx != null) {
+            if ($trx->ststus == 0) {
+                    Transfertransaction::where('account_no', $request->receiver_account_number)
+                        ->where([
+                            'amount' => $request->amount,
+                            'status' => 0
+                        ])->update(['status' => 5, 'session_id'=>$request->session_id]) ?? null;
+
+                //fund Vendor
+                $trx = Transfertransaction::where('account_no', $request->receiver_account_number)->first();
+                $charge = Setting::where('id', 1)->first()->webpay_transfer_charge;
+                if ($trx->amount <= 100) {
+                    $f_amount = $trx->amount;
+                } else {
+                    $f_amount = $trx->amountt - $charge;
+                }
+
+
+
+                User::where('id', $trx->user_id)->increment('main_wallet', $f_amount);
+                $balance = User::where('id', $trx->user_id)->first()->main_wallet;
+                $user = User::where('id', $trx->user_id)->first();
+
+
+                $url = Webkey::where('key', $trx->key)->first()->url_fund ?? null;
+                $user_email = $trx->email ?? null;
+                $amount = $trx->payable_amount ?? null;
+                $order_id = $trx->trans_id ?? null;
+                $site_name = Webkey::where('key', $trx->key)->first()->site_name ?? null;
+
+
+                //fund user
+                $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
+
+                if ($fund == 2) {
+                    Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 4]);
+                    Transfertransaction::where('ref_trans_id', $trx->trans_id)->update(['status' => 4, 'resolve'=> 1]);
+                    Webaccount::where('v_account_no', $request->receiver_account_number)->update(['state'=> 0]);
+
+
+                    $url = Webkey::where('key', $trx->key)->first()->url_fund ?? null;
+                    $user_email = $trx->email ?? null;
+                    $amount = $trx->payable_amount ?? null;
+                    $order_id = $trx->trans_id ?? null;
+                    $site_name = Webkey::where('key', $trx->key)->first()->site_name ?? null;
+
+
+
+                    //update Transactions
+                    $trasnaction = new Transaction();
+                    $trasnaction->user_id = $trx->user_id;
+                    $trasnaction->e_ref = $trx->manual_acc_ref;
+                    $trasnaction->ref_trans_id = $request->id;
+                    $trasnaction->type = "webpay";
+                    $trasnaction->transaction_type = "VirtualFundWallet";
+                    $trasnaction->title = "Wallet Funding";
+                    $trasnaction->main_type = "Transfer";
+                    $trasnaction->credit = $f_amount;
+                    $trasnaction->note = "Transaction Successful | Web Pay ";
+                    $trasnaction->fee = $charge ?? 0;
+                    $trasnaction->amount = $trx->payable_amount;
+                    $trasnaction->e_charges = 0;
+                    $trasnaction->enkPay_Cashout_profit = 0;
+                    $trasnaction->balance = $balance;
+                    $trasnaction->status = 1;
+                    $trasnaction->save();
+
+                    $message = "Business funded | $trx->manual_acc_ref | $f_amount | $user->first_name " . " " . $user->last_name;
+                    send_notification($message);
+
+                    $date = date('d M Y H:i:s');
+                    $message = "$trx->manual_acc_ref | NGN  $trx->payable_amount | $trx->email  | $site_name | $date | has been funded";
+                    send_notification($message);
+                    send_notification2($message);
+                    send_notification3($message);
+
+
+                    return back()->with('message', 'Transaction successfully completed');
+
+
+                }
+
+
+
+                $url = Webkey::where('key', $trx->key)->first()->url_fund ?? null;
+                $user_email = $trx->email ?? null;
+                $amount = $trx->payable_amount ?? null;
+                $order_id = $trx->trans_id ?? null;
+                $site_name = Webkey::where('key', $trx->key)->first()->site_name ?? null;
+
+
+                Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 1]);
+                Transfertransaction::where('ref_trans_id', $trx->trans_id)->update(['status' => 2, 'resolve'=> 1]);
+                Webaccount::where('v_account_no', $request->receiver_account_number)->update(['state'=>0]);
+
+
+                //update Transactions
+                $trasnaction = new Transaction();
+                $trasnaction->user_id = $trx->user_id;
+                $trasnaction->e_ref = $trx->manual_acc_ref;
+                $trasnaction->ref_trans_id = $trx->manual_acc_ref;
+                $trasnaction->type = "webpay";
+                $trasnaction->transaction_type = "VirtualFundWallet";
+                $trasnaction->title = "Wallet Funding";
+                $trasnaction->main_type = "Transfer";
+                $trasnaction->credit = $f_amount;
+                $trasnaction->note = "Transaction Successful | Web Pay ";
+                $trasnaction->fee = $charge ?? 0;
+                $trasnaction->amount = $trx->amount;
+                $trasnaction->e_charges = 0;
+                $trasnaction->enkPay_Cashout_profit = 0;
+                $trasnaction->balance = $balance;
+                $trasnaction->status = 1;
+                $trasnaction->save();
+
+                $message = "Business Funded | $trx->manual_acc_ref | Pending customer not funded | $f_amount | $user->first_name " . " " . $user->last_name;
+                send_notification($message);
+
+                return back()->with('message', 'Transaction successfully completed');
+            }
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => "Account Not found"
+        ]);
     }
 
-    public function send_money(Request $request)
+
+
+
+    public
+    function send_money(Request $request)
     {
 
 
@@ -279,7 +427,8 @@ class TransactionController extends Controller
     }
 
 
-    public function get_account_details(Request $request)
+    public
+    function get_account_details(Request $request)
     {
 
 
@@ -365,7 +514,8 @@ class TransactionController extends Controller
     }
 
 
-    public function webpay_view(Request $request)
+    public
+    function webpay_view(Request $request)
     {
 
         $key = $request->key;
@@ -379,9 +529,6 @@ class TransactionController extends Controller
         $details = Webkey::where('key', $request->key)->first() ?? null;
         $user_id = $details->user_id;
         $business_id = VirtualAccount::where('user_id', $details->user_id)->first()->business_id ?? null;
-
-
-
 
 
         if ($business_id != null) {
@@ -416,8 +563,6 @@ class TransactionController extends Controller
         $p_account_no = $acc->v_account_no ?? null;
         $p_account_name = $acc->v_account_name ?? null;
         $p_bank_name = $acc->v_bank_name ?? null;
-
-
 
 
         $web_commission = Charge::where('title', 'bwebpay')->first()->amount;
@@ -471,9 +616,23 @@ class TransactionController extends Controller
         }
 
 
+        if($set->ninepsb == 1){
+
+            $set_boomzy = 1;
+            $set_ninepsb = 1;
+
+
+
+        }
+
+
         $opay_acct = ManualAccount::where('status', 1)->where('type', "opay")->first() ?? null;
         $palmpay_acct = ManualAccount::where('status', 1)->where('type', "palmpay")->first() ?? null;
         $kuda_acct = ManualAccount::where('status', 1)->where('type', "kuda")->first() ?? null;
+        $ninepsb_acct = ManualAccount::where('status', 1)->where('type', "ninepsb")->first() ?? null;
+
+
+
 
 
         $opay_acct_no = $opay_acct->account_no;
@@ -484,7 +643,7 @@ class TransactionController extends Controller
         $transref = $get_trans_id->manual_acc_ref ?? null;
 
         if ($get_trans_id == null) {
-            $transref = date('ymdhis').Str::upper(random_int(00, 99) . Str::random(2));
+            $transref = date('ymdhis') . Str::upper(random_int(00, 99) . Str::random(2));
             $trans = new Webtransfer();
             $trans->amount = $amount;
             $trans->user_id = $details->user_id;
@@ -524,23 +683,28 @@ class TransactionController extends Controller
         $transfer = $set->pay_by_trx;
         $bank = $set->pay_with_providus;
         $crypto = $set->pay_by_crypto;
+        $ninepsb = $set->ninepsb;
 
         $support_channel = Webkey::where('key', $request->key)->first()->support ?? null;
-
         $support_number = Webkey::where('key', $request->key)->first()->support_number ?? null;
+        $boomzy = $set_boomzy;
 
-        if($support_number == null){
+
+
+
+        if ($support_number == null) {
             $support = Support::where('id', 1)->first()->number ?? null;
-        }else{
+        } else {
             $support = $support_number;
         }
 
 
-        return view('webpay', compact('support','support_number','opay_transfer','support_channel', 'kuda_transfer', 'palmpay_transfer', 'transref', 'opay_acct', 'kuda_acct', 'palmpay_acct', 'opay_acct', 'ref', 'iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name', 'p_bank_name', 'total_received'));
+        return view('webpay', compact('support', 'boomzy','ninepsb', 'ninepsb_acct', 'support_number', 'opay_transfer', 'support_channel', 'kuda_transfer', 'palmpay_transfer', 'transref', 'opay_acct', 'kuda_acct', 'palmpay_acct', 'opay_acct', 'ref', 'iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name', 'p_bank_name', 'total_received'));
     }
 
 
-    public function card_webhook(Request $request)
+    public
+    function card_webhook(Request $request)
     {
 
         if ($request->paymentReference == null) {
@@ -634,7 +798,8 @@ class TransactionController extends Controller
     }
 
 
-    public function decline(Request $request)
+    public
+    function decline(Request $request)
     {
 
         $amount = $request->amount;
@@ -652,7 +817,8 @@ class TransactionController extends Controller
     }
 
 
-    public function check_status(Request $request)
+    public
+    function check_status(Request $request)
     {
 
 
@@ -702,7 +868,6 @@ class TransactionController extends Controller
         }
 
 
-
         if ($status == 4) {
             return response()->json([
                 'status' => 'paid'
@@ -712,10 +877,10 @@ class TransactionController extends Controller
         }
 
 
-
     }
 
-    public function opay_check_status(Request $request)
+    public
+    function opay_check_status(Request $request)
     {
 
         $trans_id = $request->trans_id;
@@ -802,7 +967,8 @@ class TransactionController extends Controller
         return view('pending', compact('user_id', 'bank_name', 'total_received', 'trans_id', 'status', 'v_account_no', 'v_account_name', 'bank_name', 'web_charges', 'amount', 'payable_amount'));
     }
 
-    public function palmpay_check_status(Request $request)
+    public
+    function palmpay_check_status(Request $request)
     {
 
 
@@ -891,7 +1057,8 @@ class TransactionController extends Controller
     }
 
 
-    public function kuda_check_status(Request $request)
+    public
+    function kuda_check_status(Request $request)
     {
 
 
@@ -980,7 +1147,56 @@ class TransactionController extends Controller
     }
 
 
-    public function success(Request $request)
+    public
+    function ninepsb_check_status(Request $request)
+    {
+
+
+        $trans_id = $request->ref;
+        $account_no = $request->account_no;
+
+
+        $status = Transfertransaction::where('ref', $trans_id)
+            ->where('account_no', $account_no)
+            ->first()->status ?? null;
+
+
+        if ($status == 0) {
+
+            return response()->json([
+
+                'status' => 'pending'
+
+
+            ], 200);
+
+        }
+
+
+        if ($status == 2) {
+
+            return response()->json([
+
+                'status' => 'success'
+
+
+            ], 200);
+
+        }
+
+        if ($status == 4) {
+            return response()->json([
+                'status' => 'paid'
+            ], 200);
+
+            //return view('success', compact('webhook'));
+        }
+
+    }
+
+
+    public
+    function success(Request $request)
     {
 
 
@@ -1028,9 +1244,8 @@ class TransactionController extends Controller
     }
 
 
-
-
-    public function paid_success(Request $request)
+    public
+    function paid_success(Request $request)
     {
 
 
@@ -1073,42 +1288,43 @@ class TransactionController extends Controller
 
         //
 
-        return view('paid-success', compact('webhook','url_page', 'marchant_url', 'amount', 'trans_id', 'wc_order', 'client_id', 'wc', 'recepit'));
+        return view('paid-success', compact('webhook', 'url_page', 'marchant_url', 'amount', 'trans_id', 'wc_order', 'client_id', 'wc', 'recepit'));
     }
 
 
-    //     $status = Webtransfer::where('trans_id', $trans_id)
-    //         ->first()->status ?? null;
+//     $status = Webtransfer::where('trans_id', $trans_id)
+//         ->first()->status ?? null;
 
-    //     $v_account_no = Webtransfer::where('trans_id', $trans_id)
-    //         ->first()->v_account_no ?? null;
+//     $v_account_no = Webtransfer::where('trans_id', $trans_id)
+//         ->first()->v_account_no ?? null;
 
-    //     $v_account_name = Webtransfer::where('trans_id', $trans_id)
-    //         ->first()->v_account_name ?? null;
+//     $v_account_name = Webtransfer::where('trans_id', $trans_id)
+//         ->first()->v_account_name ?? null;
 
-    //     $bank_name = Webtransfer::where('trans_id', $trans_id)
-    //         ->first()->v_bank_name ?? null;
+//     $bank_name = Webtransfer::where('trans_id', $trans_id)
+//         ->first()->v_bank_name ?? null;
 
-    //     $web_charges = Charge::where('title', 'webcharge')
-    //         ->first()->amount;
+//     $web_charges = Charge::where('title', 'webcharge')
+//         ->first()->amount;
 
-    //     $amount = Webtransfer::where('trans_id', $trans_id)
-    //         ->first()->amount;
+//     $amount = Webtransfer::where('trans_id', $trans_id)
+//         ->first()->amount;
 
-    //     $payable_amount = $amount + $web_charges;
+//     $payable_amount = $amount + $web_charges;
 
-    //     $total_received = Webtransfer::where('trans_id', $trans_id)
-    //         ->first()->total_received;
+//     $total_received = Webtransfer::where('trans_id', $trans_id)
+//         ->first()->total_received;
 
-    //     $bank_name = Webtransfer::where('trans_id', $trans_id)
-    //         ->first()->bank_name;
-
-
-    //     return view('pending', compact('user_id', 'bank_name', 'total_received', 'trans_id', 'status', 'v_account_no', 'v_account_name', 'bank_name', 'web_charges', 'amount', 'payable_amount'));
-    // }
+//     $bank_name = Webtransfer::where('trans_id', $trans_id)
+//         ->first()->bank_name;
 
 
-    public function get_banks()
+//     return view('pending', compact('user_id', 'bank_name', 'total_received', 'trans_id', 'status', 'v_account_no', 'v_account_name', 'bank_name', 'web_charges', 'amount', 'payable_amount'));
+// }
+
+
+    public
+    function get_banks()
     {
 
         try {
@@ -1125,7 +1341,8 @@ class TransactionController extends Controller
     }
 
 
-    public function resolve_providus_bank(request $request)
+    public
+    function resolve_providus_bank(request $request)
     {
 
 
@@ -1191,14 +1408,16 @@ class TransactionController extends Controller
     }
 
 
-    public function processing()
+    public
+    function processing()
     {
 
         return view('processing');
     }
 
 
-    public function verify_woo(request $request)
+    public
+    function verify_woo(request $request)
     {
 
         $ref = $request->trans_id;
@@ -1261,7 +1480,8 @@ class TransactionController extends Controller
     }
 
 
-    public function verify_others(request $request)
+    public
+    function verify_others(request $request)
     {
 
         $ref = $request->trans_id;
@@ -1299,17 +1519,18 @@ class TransactionController extends Controller
             }
         }
 
-            return response()->json([
-                'status' => false,
-                'detail' => 'failed',
-                'message' => 'Transaction not found'
-            ], 500);
+        return response()->json([
+            'status' => false,
+            'detail' => 'failed',
+            'message' => 'Transaction not found'
+        ], 500);
 
 
     }
 
 
-    public function initialize_payment(Request $request)
+    public
+    function initialize_payment(Request $request)
     {
 
 
@@ -1444,7 +1665,8 @@ class TransactionController extends Controller
     }
 
 
-    public function custom_pay(Request $request)
+    public
+    function custom_pay(Request $request)
     {
 
         if ($request->trans_id == null) {
@@ -1483,7 +1705,8 @@ class TransactionController extends Controller
     }
 
 
-    public function custom_pay_now(Request $request)
+    public
+    function custom_pay_now(Request $request)
     {
 
 
@@ -1619,7 +1842,8 @@ class TransactionController extends Controller
     }
 
 
-    public function receipt(Request $request)
+    public
+    function receipt(Request $request)
     {
 
         $data['trans_id'] = $request->trans_id ?? "ENKPAY";
@@ -1629,7 +1853,8 @@ class TransactionController extends Controller
         return view('receipt-view', $data);
     }
 
-    public function resolve_deposit(Request $request)
+    public
+    function resolve_deposit(Request $request)
     {
 
 
@@ -1688,7 +1913,8 @@ class TransactionController extends Controller
     }
 
 
-    public function resolve_others(Request $request)
+    public
+    function resolve_others(Request $request)
     {
 
         $session_id = $request->session_id;
@@ -1708,7 +1934,6 @@ class TransactionController extends Controller
 
 
         if ($trx->status == 1 && $trx->reslove == 0) {
-
 
 
             Transfertransaction::where('ref_trans_id', $request->ref)->update(['resolve' => 1]);
@@ -1739,7 +1964,8 @@ class TransactionController extends Controller
     }
 
 
-    public function resolve_complete(Request $request)
+    public
+    function resolve_complete(Request $request)
     {
 
         $order_id = $request->order_id;
@@ -1762,7 +1988,8 @@ class TransactionController extends Controller
     }
 
 
-    public function resolve_bank(request $request)
+    public
+    function resolve_bank(request $request)
     {
 
         try {
@@ -1783,7 +2010,8 @@ class TransactionController extends Controller
     }
 
 
-    public function notify_webhook(request $request)
+    public
+    function notify_webhook(request $request)
     {
         $message = "Card Webhook | " . json_encode($request->all());
         send_notification($message);
@@ -1922,14 +2150,16 @@ class TransactionController extends Controller
     }
 
 
-    public function change_state(request $request)
+    public
+    function change_state(request $request)
     {
         $state = VirtualAccount::where('v_account_no', $request->account_no)->update(['state' => 1]);
         return $state;
     }
 
 
-    public function card_transaction(request $request)
+    public
+    function card_transaction(request $request)
     {
 
         $ref = Webtransfer::where('ref', $request->ref)->first() ?? null;
@@ -1954,7 +2184,8 @@ class TransactionController extends Controller
     }
 
 
-    public function opay_transfer_transaction(Request $request)
+    public
+    function opay_transfer_transaction(Request $request)
     {
         $ref = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
         $usr = User::where('id', $ref->user_id)->first();
@@ -1987,10 +2218,10 @@ class TransactionController extends Controller
         send_notification3($message);
 
 
-
     }
 
-    public function palmpay_transfer_transaction(Request $request)
+    public
+    function palmpay_transfer_transaction(Request $request)
     {
         $ref = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
         $usr = User::where('id', $ref->user_id)->first();
@@ -2025,11 +2256,10 @@ class TransactionController extends Controller
         send_notification3($message);
 
 
-
-
     }
 
-    public function kuda_transfer_transaction(Request $request)
+    public
+    function kuda_transfer_transaction(Request $request)
     {
         $ref = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
         $usr = User::where('id', $ref->user_id)->first();
@@ -2059,5 +2289,84 @@ class TransactionController extends Controller
 
     }
 
+    public
+    function ninepsb_transaction(Request $request)
+    {
+        $ref = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
+        //$acc = VirtualAccount::where('bank', "9PSB")->where('status', 0)->first() ?? null;
+        $usr = User::where('id', $ref->user_id)->first();
+
+        if ($ref == null) {
+            $trasnaction = new Transfertransaction();
+            $trasnaction->user_id = $ref->user_id;
+            $trasnaction->type = "manualtransferpay";
+            $trasnaction->key = $ref->key;
+            $trasnaction->email = $ref->email;
+            $trasnaction->ref_trans_id = $ref->trans_id;
+            $trasnaction->amount = $ref->amount;
+            $trasnaction->transaction_type = "WEBTRANSFER";
+            $trasnaction->bank = "9PSB";
+            $trasnaction->ref = $request->ref;
+            $trasnaction->account_no = $request->v_account_no;
+            $trasnaction->account_name = $request->v_account_name;
+            $trasnaction->title = "WEBTRANSFER";
+            $trasnaction->main_type = "WEBTRF";
+            $trasnaction->note = "WEBTRANSFER";
+            $trasnaction->e_charges = 0;
+            $trasnaction->enkPay_Cashout_profit = 0;
+            $trasnaction->status = 0;
+            $trasnaction->save();
+
+
+            $message = "Transfer Payment Initiated |" . $request->ref . "| ON 9PSB " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
+            send_notification($message);
+        }
+
+    }
+
+
+    public function verifypsb(Request $request)
+    {
+
+        $ref = Webtransfer::where('trans_id', $request->trx_id)->first() ?? null;
+        $tref = Transfertransaction::where('ref_trans_id', $request->trx_id)->where('account_no', $request->account_no)->first() ?? null;
+
+        Webaccount::where('v_account_no', $request->account_no)->update(['state'=>1]);
+
+        $usr = User::where('id', $ref->user_id)->first();
+        if ($tref == null) {
+            $trasnaction = new Transfertransaction();
+            $trasnaction->user_id = $ref->user_id;
+            $trasnaction->type = "manualtransferpay";
+            $trasnaction->key = $ref->key;
+            $trasnaction->email = $ref->email;
+            $trasnaction->ref_trans_id = $ref->trans_id;
+            $trasnaction->amount = $ref->amount;
+            $trasnaction->transaction_type = "WEBTRANSFER";
+            $trasnaction->bank = "9PSB";
+            $trasnaction->ref = $ref->manual_acc_ref;
+            $trasnaction->account_no = $request->account_no;
+            $trasnaction->title = "WEBTRANSFER";
+            $trasnaction->main_type = "WEBTRF";
+            $trasnaction->note = "WEBTRANSFER";
+            $trasnaction->e_charges = 0;
+            $trasnaction->enkPay_Cashout_profit = 0;
+            $trasnaction->status = 0;
+            $trasnaction->save();
+
+
+            $message = "Transfer Payment Initiated |" . $request->ref . "| ON 9PSB " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
+            send_notification($message);
+
+            $data['ref'] = $ref->manual_acc_ref;
+            $data['account_no'] = $request->account_no;
+            $data['amount'] = $ref->amount;
+            $data['title'] = "Payment Confirmation";
+
+            return view('waiting', $data);
+
+
+        }
+    }
 
 }

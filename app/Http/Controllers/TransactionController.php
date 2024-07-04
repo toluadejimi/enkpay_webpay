@@ -2316,7 +2316,8 @@ class TransactionController extends Controller
 
         return response()->json([
             'status'=>false,
-            'message'=>"REF NOT FOUND"
+            'message'=>"REF NOT FOUND",
+            'ref' => $request->ref
         ]);
 
     }

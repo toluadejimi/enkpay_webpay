@@ -2082,8 +2082,9 @@ if (!function_exists('credit_user_wallet')) {
         $var = json_decode($var);
         $status = $var->status ?? null;
 
-
         if($status == true){
+
+
             return 2;
 
         }else{

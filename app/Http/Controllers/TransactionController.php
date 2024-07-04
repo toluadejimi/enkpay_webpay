@@ -59,7 +59,7 @@ class TransactionController extends Controller
                         ->where([
                             'amount' => $request->amount,
                             'status' => 0
-                        ])->update(['status' => 5, 'session_id'=>$request->session_id]) ?? null;
+                        ])->update(['status' => 5, 'session_id'=>$request->sessionid]) ?? null;
 
                 //fund Vendor
                 $trx = Transfertransaction::where('account_no', $request->receiver_account_number)->first();
@@ -79,8 +79,8 @@ class TransactionController extends Controller
 
                 $url = Webkey::where('key', $trx->key)->first()->url_fund ?? null;
                 $user_email = $trx->email ?? null;
-                $amount = $trx->payable_amount ?? null;
-                $order_id = $trx->trans_id ?? null;
+                $amount = $trx->amount ?? null;
+                $order_id = $trx->ref_trans_id ?? null;
                 $site_name = Webkey::where('key', $trx->key)->first()->site_name ?? null;
 
 
@@ -89,14 +89,8 @@ class TransactionController extends Controller
 
                 if ($fund == 2) {
                     Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 4]);
-                    Transfertransaction::where('ref_trans_id', $trx->trans_id)->update(['status' => 4, 'resolve'=> 1]);
-                    Webaccount::where('v_account_no', $request->receiver_account_number)->update(['state'=> 0]);
+                    Transfertransaction::where('account_no', $request->receiver_account_number)->update(['status' => 4, 'resolve'=> 1]);
 
-
-                    $url = Webkey::where('key', $trx->key)->first()->url_fund ?? null;
-                    $user_email = $trx->email ?? null;
-                    $amount = $trx->payable_amount ?? null;
-                    $order_id = $trx->trans_id ?? null;
                     $site_name = Webkey::where('key', $trx->key)->first()->site_name ?? null;
 
 
@@ -124,7 +118,7 @@ class TransactionController extends Controller
                     send_notification($message);
 
                     $date = date('d M Y H:i:s');
-                    $message = "$trx->manual_acc_ref | NGN  $trx->payable_amount | $trx->email  | $site_name | $date | has been funded";
+                    $message = "$trx->manual_acc_ref | NGN  $trx->amount | $trx->email  | $site_name | $date | has been funded";
                     send_notification($message);
                     send_notification2($message);
                     send_notification3($message);
@@ -137,16 +131,8 @@ class TransactionController extends Controller
 
 
 
-                $url = Webkey::where('key', $trx->key)->first()->url_fund ?? null;
-                $user_email = $trx->email ?? null;
-                $amount = $trx->payable_amount ?? null;
-                $order_id = $trx->trans_id ?? null;
-                $site_name = Webkey::where('key', $trx->key)->first()->site_name ?? null;
-
-
                 Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 1]);
-                Transfertransaction::where('ref_trans_id', $trx->trans_id)->update(['status' => 2, 'resolve'=> 1]);
-                Webaccount::where('v_account_no', $request->receiver_account_number)->update(['state'=>0]);
+                Transfertransaction::where('account_no', $request->receiver_account_number)->update(['status' => 2, 'resolve'=> 1]);
 
 
                 //update Transactions
@@ -168,7 +154,7 @@ class TransactionController extends Controller
                 $trasnaction->status = 1;
                 $trasnaction->save();
 
-                $message = "Business Funded | $trx->manual_acc_ref | Pending customer not funded | $f_amount | $user->first_name " . " " . $user->last_name;
+                $message = "Business Funded | $trx->ref | Pending customer not funded | $f_amount | $user->first_name " . " " . $user->last_name;
                 send_notification($message);
 
                 return back()->with('message', 'Transaction successfully completed');

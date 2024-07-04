@@ -2286,7 +2286,6 @@ class TransactionController extends Controller
     function ninepsb_transaction(Request $request)
     {
         $ref = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
-        //$acc = VirtualAccount::where('bank', "9PSB")->where('status', 0)->first() ?? null;
         $usr = User::where('id', $ref->user_id)->first();
 
         if ($ref == null) {
@@ -2311,7 +2310,7 @@ class TransactionController extends Controller
             $trasnaction->save();
 
 
-            $message = "Transfer Payment Initiated |" . $request->ref . "| ON 9PSB " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
+            $message = "Transfer Payment Initiated |" . $ref->ref . "| ON 9PSB " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
             send_notification($message);
         }
 

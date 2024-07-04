@@ -1240,7 +1240,10 @@ class TransactionController extends Controller
     {
 
 
-        $trans_id = $request->trans_id;
+        $get_tramn_id = Transfertransaction::where('ref', $request->trans_id)->first()->ref_trans_id;
+        $trans_id = $get_tramn_id;
+
+
         $user_id = Webtransfer::where('trans_id', $trans_id)
             ->first()->user_id ?? null;
 

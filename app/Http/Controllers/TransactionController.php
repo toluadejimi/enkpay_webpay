@@ -621,8 +621,9 @@ class TransactionController extends Controller
             $set_boomzy = 1;
             $set_ninepsb = 1;
 
-
-
+        }else{
+            $set_boomzy = 0;
+            $set_ninepsb = 0;
         }
 
 

@@ -286,7 +286,7 @@
                      class="accordion border-0 tf-card-block d-flex align-items-center justify-content-between">
                     <div class="accordion-item border-0">
                         <div class="inner d-flex align-items-center">
-                            <svg width="238" height="102" viewBox="0 0 238 102" fill="none"
+                            <svg width="140" height="51" viewBox="0 0 238 102" fill="none"
                                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <rect width="238" height="102" fill="url(#pattern0_441_411)"/>
                                 <defs>
@@ -2239,7 +2239,7 @@
                          class="accordion border-0 tf-card-block d-flex align-items-center justify-content-between">
                         <div class="accordion-item border-0">
                             <div class="inner d-flex align-items-center">
-                                <svg width="238" height="102" viewBox="0 0 238 102" fill="none"
+                                <svg width="140" height="51" viewBox="0 0 238 102" fill="none"
                                      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                     <rect width="238" height="102" fill="url(#pattern0_441_411)"/>
                                     <defs>

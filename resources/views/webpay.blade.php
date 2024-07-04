@@ -2400,6 +2400,7 @@
                                                                         const accountName = data.result.account_name;
 
 
+
                                                                         fetch('{{ url('') }}/api/ninepsb-transfer-transaction', {
                                                                             method: 'POST',
                                                                             headers: {
@@ -2407,8 +2408,8 @@
                                                                             },
                                                                             body: JSON.stringify({
                                                                                 ref: '{{ $transref }}',
-                                                                                accountNo: accountNo,
-                                                                                name:accountName
+                                                                                accountNo: '${accountNo}',
+                                                                                name:'${accountName}'
 
 
                                                                             }) // Replace with actual data to send

@@ -83,7 +83,7 @@
 
                     <script>
                         // Set the countdown time (in seconds)
-                        let countdownTime = 10; // 3 minutes
+                        let countdownTime = 180; // 3 minutes
 
                         // Get DOM elements
                         const countdownDisplay = document.getElementById('countdown');
@@ -157,16 +157,6 @@
 </div>
 
 
-<div class="card-secton topup-content my-5">
-    <div class="tf-container">
-        <div class="tf-balance-box">
-
-
-        </div>
-
-    </div>
-
-</div>
 
 
 <script>

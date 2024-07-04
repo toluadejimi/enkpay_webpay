@@ -1152,6 +1152,18 @@ class TransactionController extends Controller
         }
 
 
+        if ($status == 5) {
+
+            return response()->json([
+
+                'status' => 'pending'
+
+
+            ], 200);
+
+        }
+
+
         if ($status == 2) {
 
             return response()->json([

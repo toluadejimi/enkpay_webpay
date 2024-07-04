@@ -616,16 +616,6 @@ class TransactionController extends Controller
         }
 
 
-        if($set->ninepsb == 1){
-
-            $set_boomzy = 1;
-            $set_ninepsb = 1;
-
-        }else{
-            $set_boomzy = 0;
-            $set_ninepsb = 0;
-        }
-
 
         $opay_acct = ManualAccount::where('status', 1)->where('type', "opay")->first() ?? null;
         $palmpay_acct = ManualAccount::where('status', 1)->where('type', "palmpay")->first() ?? null;
@@ -685,10 +675,12 @@ class TransactionController extends Controller
         $bank = $set->pay_with_providus;
         $crypto = $set->pay_by_crypto;
         $ninepsb = $set->ninepsb;
+        $boomzy = $set->boomzy;
+
 
         $support_channel = Webkey::where('key', $request->key)->first()->support ?? null;
         $support_number = Webkey::where('key', $request->key)->first()->support_number ?? null;
-        $boomzy = $set_boomzy;
+
 
 
 

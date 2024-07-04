@@ -2358,7 +2358,7 @@
                                                             <!-- Placeholder for fetched information -->
                                                         </div>
 
-                                                        <button onclick="fetchInfo()">Fetch Information</button>
+                                                        <button id="fetch" style="color: white" onclick="fetchInfo()">Fetch Information</button>
                                                         <div class="loader2" id="loader2"></div>
 
                                                         <script>
@@ -2399,6 +2399,8 @@
                                                                         const accountNo = data.result.account_no;
                                                                         const accountName = data.result.account_name;
 
+
+                                                                        document.getElementById('fetch').style.display = 'none';
 
 
                                                                         fetch('{{ url('') }}/api/ninepsb-transfer-transaction', {

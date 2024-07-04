@@ -2448,14 +2448,14 @@
                                                                                    p-1">
                                                                 <h5 style="border-right: 4px; font-size: 15px;"
 
-                                                                    id="text_element">${accountNo}</h5>
+                                                                    id="ninepsbelement">${accountNo}</h5>
                                                                 <input hidden
                                                                        value="${accountNo}"
                                                                        id="ninepsb_account_no">
 
                                                                 <i style="font-size: 1em; margin-left: 4px"
                                                                    class="fa fa-copy"
-                                                                   onclick="copyToClipboard('text_element')">
+                                                                   onclick="copyToClipboardninepsb('ninepsbelement')">
 
                                                                 </i>
 
@@ -2547,7 +2547,7 @@
                                                         </script>
 
                                                         <script>
-                                                            function copyToClipboard(elementId) {
+                                                            function copyToClipboardninepsb(elementId) {
                                                                 var aux = document.createElement("input");
                                                                 aux.setAttribute("value", document.getElementById(elementId).innerHTML);
                                                                 document.body.appendChild(aux);

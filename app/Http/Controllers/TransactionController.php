@@ -2286,18 +2286,17 @@ class TransactionController extends Controller
     function ninepsb_transaction(Request $request)
     {
 
-        $ref = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
+        $trx = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
 
-        dd($ref);
-        $usr = User::where('id', $ref->user_id)->first();
-        if ($ref == null) {
+        $usr = User::where('id', $trx->user_id)->first();
+        if ($trx != null) {
             $trasnaction = new Transfertransaction();
-            $trasnaction->user_id = $ref->user_id;
+            $trasnaction->user_id = $trx->user_id;
             $trasnaction->type = "manualtransferpay";
-            $trasnaction->key = $ref->key;
-            $trasnaction->email = $ref->email;
-            $trasnaction->ref_trans_id = $ref->trans_id;
-            $trasnaction->amount = $ref->amount;
+            $trasnaction->key = $trx->key;
+            $trasnaction->email = $trx->email;
+            $trasnaction->ref_trans_id = $trx->trans_id;
+            $trasnaction->amount = $trx->amount;
             $trasnaction->transaction_type = "WEBTRANSFER";
             $trasnaction->bank = "9PSB";
             $trasnaction->ref = $request->ref;
@@ -2311,7 +2310,7 @@ class TransactionController extends Controller
             $trasnaction->status = 0;
             $trasnaction->save();
 
-            $message = "Transfer Payment Initiated |" . $ref->ref . "| ON 9PSB " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
+            $message = "Transfer Payment Initiated |" . $trx->ref . "| ON 9PSB " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
             send_notification($message);
         }
 

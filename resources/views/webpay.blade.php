@@ -2358,7 +2358,7 @@
                                                             <!-- Placeholder for fetched information -->
                                                         </div>
 
-                                                        <button id="fetch" style="color: white" onclick="fetchInfo()">Fetch Information</button>
+                                                        <button id="fetch" style="color: #03103a" onclick="fetchInfo()">Fetch Information</button>
                                                         <div class="loader2" id="loader2"></div>
 
                                                         <script>

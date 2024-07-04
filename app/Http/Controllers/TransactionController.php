@@ -2287,8 +2287,9 @@ class TransactionController extends Controller
     {
 
         $ref = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
-        $usr = User::where('id', $ref->user_id)->first();
 
+        dd($ref);
+        $usr = User::where('id', $ref->user_id)->first();
         if ($ref == null) {
             $trasnaction = new Transfertransaction();
             $trasnaction->user_id = $ref->user_id;

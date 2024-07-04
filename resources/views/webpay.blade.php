@@ -2408,10 +2408,8 @@
                                                                             },
                                                                             body: JSON.stringify({
                                                                                 ref: '{{ $transref }}',
-                                                                                accountNo: '${accountNo}',
-                                                                                name:'${accountName}'
-
-
+                                                                                accountNo: data.result.account_no,
+                                                                                name: data.result.account_name
                                                                             }) // Replace with actual data to send
                                                                         })
                                                                             .then(response => {

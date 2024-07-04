@@ -2312,13 +2312,22 @@ class TransactionController extends Controller
 
             $message = "Transfer Payment Initiated |" . $request->ref . "| ON 9PSB " . "For " . $usr->last_name . " | " . number_format($trx->payable_amount, 2);
             send_notification($message);
+
+            return response()->json([
+                'status'=>true,
+                'message'=>"Successful",
+                'ref' => $request->ref
+            ]);
+
+        }else{
+            return response()->json([
+                'status'=>false,
+                'message'=>"REF NOT FOUND",
+                'ref' => $request->ref
+            ]);
         }
 
-        return response()->json([
-            'status'=>false,
-            'message'=>"REF NOT FOUND",
-            'ref' => $request->ref
-        ]);
+
 
     }
 

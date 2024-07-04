@@ -2339,43 +2339,21 @@ class TransactionController extends Controller
 
         $ref = Webtransfer::where('trans_id', $request->trx_id)->first() ?? null;
         $tref = Transfertransaction::where('ref_trans_id', $request->trx_id)->where('account_no', $request->account_no)->first() ?? null;
-
-        Webaccount::where('v_account_no', $request->account_no)->update(['state'=>1]);
-
         $usr = User::where('id', $ref->user_id)->first();
-        if ($tref == null) {
-            $trasnaction = new Transfertransaction();
-            $trasnaction->user_id = $ref->user_id;
-            $trasnaction->type = "manualtransferpay";
-            $trasnaction->key = $ref->key;
-            $trasnaction->email = $ref->email;
-            $trasnaction->ref_trans_id = $ref->trans_id;
-            $trasnaction->amount = $ref->amount;
-            $trasnaction->transaction_type = "WEBTRANSFER";
-            $trasnaction->bank = "9PSB";
-            $trasnaction->ref = $ref->manual_acc_ref;
-            $trasnaction->account_no = $request->account_no;
-            $trasnaction->title = "WEBTRANSFER";
-            $trasnaction->main_type = "WEBTRF";
-            $trasnaction->note = "WEBTRANSFER";
-            $trasnaction->e_charges = 0;
-            $trasnaction->enkPay_Cashout_profit = 0;
-            $trasnaction->status = 0;
-            $trasnaction->save();
 
 
-            $message = "Transfer Payment Initiated |" . $request->ref . "| ON 9PSB " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
-            send_notification($message);
+        $message = "Transfer Payment Initiated |" . $request->trx_id . "| ON 9PSB " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
+        send_notification($message);
 
-            $data['ref'] = $ref->manual_acc_ref;
-            $data['account_no'] = $request->account_no;
-            $data['amount'] = $ref->amount;
-            $data['title'] = "Payment Confirmation";
+        $data['ref'] = $ref->manual_acc_ref;
+        $data['account_no'] = $request->account_no;
+        $data['amount'] = $ref->amount;
+        $data['title'] = "Payment Confirmation";
 
-            return view('waiting', $data);
+        return view('waiting', $data);
 
 
-        }
+
     }
 
 }

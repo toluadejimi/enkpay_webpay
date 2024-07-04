@@ -67,7 +67,7 @@ class TransactionController extends Controller
                 if ($trx->amount <= 100) {
                     $f_amount = $trx->amount;
                 } else {
-                    $f_amount = $trx->amountt - $charge;
+                    $f_amount = $trx->amount - $charge;
                 }
 
 
@@ -1248,8 +1248,6 @@ class TransactionController extends Controller
             $trans_id = $get_tramn_id;
 
         }
-
-
 
 
         $user_id = Webtransfer::where('trans_id', $trans_id)

@@ -107,7 +107,7 @@ class TransactionController extends Controller
                     $trasnaction->credit = $f_amount;
                     $trasnaction->note = "Transaction Successful | Web Pay ";
                     $trasnaction->fee = $charge ?? 0;
-                    $trasnaction->amount = $trx->payable_amount;
+                    $trasnaction->amount = $trx->amount;
                     $trasnaction->e_charges = 0;
                     $trasnaction->enkPay_Cashout_profit = 0;
                     $trasnaction->balance = $balance;

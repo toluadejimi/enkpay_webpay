@@ -2372,14 +2372,14 @@
                                                                 clearTimeout(fetchTimeout);
 
                                                                 // Simulating a POST request (replace with actual API call)
-                                                                fetch('{{url('')}}/api/get-account', {
-                                                                    //  fetch('http://127.0.0.1:8001/api/create-account-dymamic', {
+                                                                {{--fetch('{{url('')}}/api/get-account', {--}}
+                                                                    fetch('https://etopagency.com/api/create-account-dymamic', {
                                                                     method: 'POST',
                                                                     headers: {
                                                                         'Content-Type': 'application/json'
                                                                     },
                                                                     body: JSON.stringify({
-                                                                        userId: 95,
+                                                                        user_id: 95,
                                                                         description: "Payment",
                                                                         name: "CHECKOUT",
                                                                         amount: {{$payable_amount}}

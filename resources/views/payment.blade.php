@@ -193,7 +193,7 @@
                         <div class="card-header">
                             <h3>Hi, {{Auth::user()->first_name}}</h3>
 
-                            @if(Auth::user()->email == "toluadejimi@gmail.com")
+                            @if(Auth::user()->email == "toluadejimi2@gmail.com")
 
                                 <a href="pend" class="btn btn-warning w-100 btn-sm">
                                     Pending
@@ -263,29 +263,6 @@
 
                             @elseif(Auth::user()->email == "palmpay@login.com")
 
-                                @if($status->palmpay_trx == 1)
-                                    <a href="offpalmpay" class="btn btn-danger btn-sm">
-                                        Off PalmPay
-                                    </a>
-                                @elseif($status->palmpay_trx == 0)
-                                    <a href="onpalmpay" class="btn btn-success btn-sm">
-                                        ON PalmPay
-                                    </a>
-                                @endif
-
-                            @else
-                                @if($status->opay_trx == 1)
-                                    <a href="offopay" class="btn btn-danger btn-sm">
-                                        Off OPAY
-                                    </a>
-                                @elseif($status->opay_trx == 0)
-                                    <a href="onopay" class="btn btn-success btn-sm">
-                                        ON OPAY
-                                    </a>
-
-                                @endif
-
-                            @endif
 
                         </div>
 

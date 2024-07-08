@@ -505,6 +505,20 @@ class VerifyController extends Controller
 
 
     public
+    function hold(request $request)
+    {
+        if (Auth::check() == false) {
+            return view('login');
+        }
+        $data['title'] = "Hold";
+        $data['tickets'] = ResolveOrder::latest()->where('status', 5)->get();
+        return view('request', $data);
+    }
+
+
+
+
+    public
     function approved(request $request){
 
         if (Auth::check() == false) {
@@ -573,6 +587,14 @@ class VerifyController extends Controller
         return back()->with('message', 'Transaction funded');
     }
 
+    public
+    function hold_ticket(request $request)
+    {
+        $order = ResolveOrder::where('id', $request->id)->first() ?? null;
+        ResolveOrder::where('id', $order->id)->update(['status' => 5]);
+        return back()->with('message', 'Transaction Moveed');
+    }
+
 
     public
     function deposit_delete(request $request)
@@ -580,6 +602,8 @@ class VerifyController extends Controller
         ResolveOrder::where('id', $request->id)->delete();
         return redirect('all-issues')->with('message', 'Transaction deleted');
     }
+
+
 
 
 
@@ -687,7 +711,45 @@ class VerifyController extends Controller
     {
 
         $data['ticket'] = ResolveOrder::where('id', $request->id)->first() ?? null;
+        $email = ResolveOrder::where('id', $request->id)->first() ?? null;
+
+        if($email != null){
+            $data['similar'] = ResolveOrder::where('email', $email->email)->get() ?? null;
+        }
+
         return view('open-ticket', $data);
+
+    }
+
+
+
+    public
+    function edit_ticket(request $request)
+    {
+
+        $data['ticket'] = ResolveOrder::where('id', $request->id)->first() ?? null;
+
+        return view('edit-ticket', $data);
+
+    }
+
+
+    public
+    function edit_now (request $request)
+    {
+
+        ResolveOrder::where('id', $request->id)->update([
+
+            'email' => $request->email,
+            'd_amount' => $request->d_amount,
+            'r_amount' => $request->r_amount,
+            'status' => $request->status
+
+        ]);
+
+
+        return back()->with('message','Ticket Updated successfully');
+
 
 
     }

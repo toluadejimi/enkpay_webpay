@@ -47,12 +47,13 @@
                     <a href="/no-ref" class="btn btn-primary btn-md center-block">No Refrence</a>
                     <a href="/ref-no-credit" class="btn btn-secondary">Ref but no credit</a>
                     <a href="/wrong-amount" class="btn btn-secondary">Wrong Amount</a>
+                    <a href="/hold" class="btn btn-warning">Hold</a>
                     <a href="/approved" class="btn btn-success">Approved</a>
+
 
                 </div>
 
 
-                @if($title == "Approved")
                     <div class="col-sm-12 text-center my-3">
 
                         <form class="form-control" action="search" method="POST">
@@ -62,7 +63,6 @@
 
                         </form>
                     </div>
-                @endif
 
             </div>
 
@@ -81,6 +81,7 @@
                     <div class="inner d-flex align-items-center">
 
                         <div class="content">
+                            <p>Resolve ID - {{$data->id}}</p>
                             <h4><a href="open-ticket?id={{$data->id}}"
                                    class="fw_6">NGN {{number_format($data->d_amount, 2)}}</a></h4>
                             @if($data->subject == 1)
@@ -100,6 +101,10 @@
                         <a href="#" class="btn btn-warning">Pending</a>
                     @elseif($data->status == 3)
                         <a href="#" class="btn btn-danger">Rejected</a>
+                    @elseif($data->status == 4)
+                        <a href="#" class="btn btn-success">Already Funded</a>
+                    @elseif($data->status == 5)
+                        <a href="#" class="btn btn-danger">Ticket on Hold</a>
                     @else
                         <a href="#" class="btn btn-success">Completed</a>
 
@@ -109,8 +114,6 @@
                 </div>
 
             @endforeach
-
-
         </div>
 
     </div>

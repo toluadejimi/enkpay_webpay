@@ -43,8 +43,6 @@
         <div class="row">
 
 
-
-
             @if ($errors->any())
                 <div class="alert alert-danger my-4">
                     <ul>
@@ -66,15 +64,14 @@
             @endif
 
 
-                @if(Auth::user()->email == "toluadejimi@gmail.com")
+            @if(Auth::user()->email == "toluadejimi@gmail.com")
 
 
 
-                @endif
+            @endif
 
 
-
-                <div class="col-12 my-3">
+            <div class="col-12 my-3">
                 <h3 class="my-3">Transactions</h3>
                 <div class="card">
                     <div class="card-body">
@@ -260,9 +257,7 @@
                                         ON PRO
                                     </a>
                                 @endif
-
-                            @elseif(Auth::user()->email == "palmpay@login.com")
-
+                            @endif
 
                         </div>
 
@@ -274,75 +269,7 @@
 
             </div>
 
-                <a href="/all-issues" class="btn btn-primary btn-md center-block">All Issues</a>
-
-
-                <div class="col-12 my-2">
-
-                <div class="card">
-
-                    <div class="card-body">
-
-
-                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalCenterTitle"
-                             aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Support Channel</h5>
-
-                                    </div>
-                                    <div class="modal-body border-0">
-
-
-                                        <div class="card border-0">
-
-                                            <div class="card-body">
-
-                                                <form action="change-support" method="POST">
-                                                    @csrf
-
-
-                                                    <select class="form-control" name="support">
-                                                        <option value="">Select Support</option>
-                                                        <option
-                                                            value="https://api.whatsapp.com/send?phone=2349138653644&text=Hi%2C%20Please%20i%20need%20your%20support%20">
-                                                            Divine
-                                                        </option>
-                                                        <option
-                                                            value="https://api.whatsapp.com/send?phone=2347042653595&text=Hi%2C%20Please%20i%20need%20your%20support%20">
-                                                            Vera
-                                                        </option>
-
-                                                    </select>
-
-                                                </form>
-
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-
-                    </div>
-
-
-                </div>
-
-
-            </div>
-
+            <a href="/all-issues" class="btn btn-primary btn-md center-block">All Issues</a>
 
         </div>
 

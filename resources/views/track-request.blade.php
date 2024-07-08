@@ -96,7 +96,8 @@
                     <div class="tf-card-block d-flex align-items-center justify-content-between my-3">
                         <div class="inner d-flex align-items-center">
                             <div class="content">
-                                <h4><a href="48_payment-source.html#" class="fw_6">NGN {{number_format($data->d_amount, 2)}}</a></h4>
+                                <p>Resolve ID - {{$data->id}}</p>
+                                <h4><a href="#" class="fw_6">NGN {{number_format($data->d_amount, 2)}}</a></h4>
                                 @if($data->subject == 1)
                                     <p> I didnt add refrence</p>
                                 @elseif($data->subject == 2)
@@ -115,8 +116,10 @@
                             <a href="#" class="btn btn-warning">Pending</a>
                         @elseif($data->status == 3)
                             <a href="#" class="btn btn-danger">Rejected</a>
-                        @elseif($data->status ==4)
-                            <a href="#" class="btn btn-danger">Already Funded</a>
+                        @elseif($data->status == 4)
+                            <a href="#" class="btn btn-success">Already Funded</a>
+                        @elseif($data->status == 5)
+                            <a href="#" class="btn btn-danger">Ticket on Hold</a>
                         @else
                             <a href="#" class="btn btn-success">Completed</a>
 

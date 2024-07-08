@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb481102-bdbd-4de2-9fe6-19ebbd8459cb" name="Changes" comment="adjustedssdd">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/edit-ticket.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/VerifyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/VerifyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/open-ticket.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/open-ticket.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/payment.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/payment.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/request.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/request.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/track-request.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/track-request.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -272,14 +278,7 @@
       <workItem from="1719253076564" duration="814000" />
       <workItem from="1719308550684" duration="7482000" />
       <workItem from="1719435206051" duration="22605000" />
-    </task>
-    <task id="LOCAL-00111" summary="adjusted">
-      <option name="closed" value="true" />
-      <created>1716442023820</created>
-      <option name="number" value="00111" />
-      <option name="presentableId" value="LOCAL-00111" />
-      <option name="project" value="LOCAL" />
-      <updated>1716442023821</updated>
+      <workItem from="1720343575291" duration="9182000" />
     </task>
     <task id="LOCAL-00112" summary="adjusted">
       <option name="closed" value="true" />
@@ -665,7 +664,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719641335765</updated>
     </task>
-    <option name="localTasksCounter" value="160" />
+    <task id="LOCAL-00160" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1720348424786</created>
+      <option name="number" value="00160" />
+      <option name="presentableId" value="LOCAL-00160" />
+      <option name="project" value="LOCAL" />
+      <updated>1720348424786</updated>
+    </task>
+    <option name="localTasksCounter" value="161" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -764,6 +771,15 @@
             <option name="methodName" value="deposit_approve" />
           </properties>
           <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php-line-method">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/VerifyController.php</url>
+          <line>568</line>
+          <properties>
+            <option name="className" value="\App\Http\Controllers\VerifyController" />
+            <option name="methodName" value="deposit_funded" />
+          </properties>
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

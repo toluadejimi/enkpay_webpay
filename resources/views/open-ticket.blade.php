@@ -141,8 +141,6 @@
                         <p>I entered wrong amount</p>
                     @elseif($data->subject == 3)
                         <p>I entered valid refrence but transaction not processed</p>
-                    @elseif($data->status == 5)
-                        <a href="#" class="btn btn-danger">Ticket on Hold</a>
                     @else
 
                     @endif
@@ -156,6 +154,8 @@
                 <a href="#" class="btn btn-danger">Rejected</a>
             @elseif($data->status == 4)
                 <a href="#" class="btn btn-warning">Hold</a>
+            @elseif($data->status == 5)
+                <a href="#" class="btn btn-danger">Ticket on Hold</a>
             @else
                 <a href="#" class="btn btn-success">Completed</a>
 

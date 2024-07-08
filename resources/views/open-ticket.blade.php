@@ -152,10 +152,8 @@
                 <a href="#" class="btn btn-warning">Pending</a>
             @elseif($data->status == 3)
                 <a href="#" class="btn btn-danger">Rejected</a>
-            @elseif($data->status == 4)
-                <a href="#" class="btn btn-warning">Hold</a>
             @elseif($data->status == 5)
-                <a href="#" class="btn btn-danger">Ticket on Hold</a>
+                <a href="#" class="btn btn-warning">Ticket on Hold</a>
             @else
                 <a href="#" class="btn btn-success">Completed</a>
 

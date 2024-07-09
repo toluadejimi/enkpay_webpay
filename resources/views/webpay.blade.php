@@ -2324,9 +2324,9 @@
 
                                                 @php
                                                     if($payable_amount > 15000){
-                                                        $f_amount = $payable_amount + 300;
+                                                        $f_amount = $payable_amount + $psb_cap;
                                                     }else{
-                                                      $f_amount = $payable_amount + 200;
+                                                      $f_amount = $payable_amount + $psb_charge;
                                                     }
 
                                                 @endphp

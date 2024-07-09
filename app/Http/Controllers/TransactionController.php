@@ -677,6 +677,9 @@ class TransactionController extends Controller
         $crypto = $set->pay_by_crypto;
         $ninepsb = $set->ninepsb;
         $boomzy = $set->boomzy;
+        $psb_cap= $set->psb_cap;
+        $psb_charge = $set->psb_charge;
+
 
 
         $support_channel = Webkey::where('key', $request->key)->first()->support ?? null;
@@ -693,7 +696,7 @@ class TransactionController extends Controller
         }
 
 
-        return view('webpay', compact('support','account_name', 'boomzy','ninepsb', 'ninepsb_acct', 'support_number', 'opay_transfer', 'support_channel', 'kuda_transfer', 'palmpay_transfer', 'transref', 'opay_acct', 'kuda_acct', 'palmpay_acct', 'opay_acct', 'ref', 'iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name', 'p_bank_name', 'total_received'));
+        return view('webpay', compact('support','psb_cap','psb_charge','account_name', 'boomzy','ninepsb', 'ninepsb_acct', 'support_number', 'opay_transfer', 'support_channel', 'kuda_transfer', 'palmpay_transfer', 'transref', 'opay_acct', 'kuda_acct', 'palmpay_acct', 'opay_acct', 'ref', 'iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name', 'p_bank_name', 'total_received'));
     }
 
 

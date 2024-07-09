@@ -109,7 +109,7 @@ class TransactionController extends Controller
                     $trasnaction = new Transaction();
                     $trasnaction->user_id = $trx->user_id;
                     $trasnaction->e_ref = $request->sessionid;
-                    $trasnaction->ref_trans_id = $trx->manual_acc_ref;
+                    $trasnaction->ref_trans_id = $request->sessionid;
                     $trasnaction->type = "webpay";
                     $trasnaction->transaction_type = "VirtualFundWallet";
                     $trasnaction->title = "Wallet Funding";
@@ -150,7 +150,7 @@ class TransactionController extends Controller
                 $trasnaction = new Transaction();
                 $trasnaction->user_id = $trx->user_id;
                 $trasnaction->e_ref = $request->sessionid;
-                $trasnaction->ref_trans_id = $trx->manual_acc_ref;
+                $trasnaction->ref_trans_id = $request->sessionid;
                 $trasnaction->type = "webpay";
                 $trasnaction->transaction_type = "VirtualFundWallet";
                 $trasnaction->title = "Wallet Funding";

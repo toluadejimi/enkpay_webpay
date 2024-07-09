@@ -47,11 +47,12 @@ class TransactionController extends Controller
     public function e_payment(Request $request)
     {
 
+        $set = Setting::where('id', 1)->first();
 
         if($request->amount > 15000){
-            $p_amount = $request->amount - 300;
+            $p_amount = $request->amount - $set->psb_cap;
         }else{
-            $p_amount =$request->amount - 200;
+            $p_amount =$request->amount - $set->psb_charge;
         }
 
         $trx = Transfertransaction::where('account_no', $request->receiver_account_number)

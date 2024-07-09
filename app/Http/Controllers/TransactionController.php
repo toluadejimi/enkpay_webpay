@@ -47,9 +47,16 @@ class TransactionController extends Controller
     public function e_payment(Request $request)
     {
 
+
+        if($request->amount > 15000){
+            $p_amount = $request->amount - 300;
+        }else{
+            $p_amount =$request->amount - 200;
+        }
+
         $trx = Transfertransaction::where('account_no', $request->receiver_account_number)
             ->where([
-                'amount' => $request->amount,
+                'amount' => $p_amount,
                 'status' => 0
             ])->first() ?? null;
 
@@ -57,7 +64,7 @@ class TransactionController extends Controller
             if ($trx->ststus == 0) {
                     Transfertransaction::where('account_no', $request->receiver_account_number)
                         ->where([
-                            'amount' => $request->amount,
+                            'amount' => $p_amount,
                             'status' => 0
                         ])->update(['status' => 5, 'session_id'=>$request->sessionid]) ?? null;
 
@@ -516,6 +523,14 @@ class TransactionController extends Controller
         $user_id = $details->user_id;
         $business_id = VirtualAccount::where('user_id', $details->user_id)->first()->business_id ?? null;
 
+        $text = ["KEM GLOBAL", "VIVID ENT", "ROYAL LTD", "LOGI ENT", "KABS LTD", "KENS ENT"];
+        $random_index = array_rand($text);
+        $account_name = $text[$random_index];
+
+
+
+
+
 
         if ($business_id != null) {
 
@@ -678,7 +693,7 @@ class TransactionController extends Controller
         }
 
 
-        return view('webpay', compact('support', 'boomzy','ninepsb', 'ninepsb_acct', 'support_number', 'opay_transfer', 'support_channel', 'kuda_transfer', 'palmpay_transfer', 'transref', 'opay_acct', 'kuda_acct', 'palmpay_acct', 'opay_acct', 'ref', 'iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name', 'p_bank_name', 'total_received'));
+        return view('webpay', compact('support','account_name', 'boomzy','ninepsb', 'ninepsb_acct', 'support_number', 'opay_transfer', 'support_channel', 'kuda_transfer', 'palmpay_transfer', 'transref', 'opay_acct', 'kuda_acct', 'palmpay_acct', 'opay_acct', 'ref', 'iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name', 'p_bank_name', 'total_received'));
     }
 
 
@@ -2308,7 +2323,7 @@ class TransactionController extends Controller
             $trasnaction->bank = "9PSB";
             $trasnaction->ref = $request->ref;
             $trasnaction->account_no = $request->accountNo;
-            $trasnaction->account_name = $request->accountName;
+            $trasnaction->v_account_name = $request->accountName;
             $trasnaction->title = "WEBTRANSFER";
             $trasnaction->main_type = "WEBTRF";
             $trasnaction->note = "WEBTRANSFER";

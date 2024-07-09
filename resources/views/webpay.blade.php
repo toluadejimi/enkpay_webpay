@@ -2459,7 +2459,7 @@
                                                                     'Content-Type': 'application/json'
                                                                 },
                                                                 body: JSON.stringify({
-                                                                    userId: 95,
+                                                                    user_id: 95,
                                                                     description: "Payment",
                                                                     name: "{{$account_name}}",
                                                                     amount: {{$f_amount}}

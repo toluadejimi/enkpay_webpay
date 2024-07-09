@@ -99,6 +99,8 @@ class TransactionController extends Controller
                     Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 4]);
                     Transfertransaction::where('account_no', $request->receiver_account_number)->update(['status' => 4, 'resolve'=> 1]);
 
+                    $trx = Transfertransaction::where('account_no', $request->receiver_account_number)->first();
+
                     $site_name = Webkey::where('key', $trx->key)->first()->site_name ?? null;
 
 
@@ -106,8 +108,8 @@ class TransactionController extends Controller
                     //update Transactions
                     $trasnaction = new Transaction();
                     $trasnaction->user_id = $trx->user_id;
-                    $trasnaction->e_ref = $trx->manual_acc_ref;
-                    $trasnaction->ref_trans_id = $request->id;
+                    $trasnaction->e_ref = $request->sessionid;
+                    $trasnaction->ref_trans_id = $trx->manual_acc_ref;
                     $trasnaction->type = "webpay";
                     $trasnaction->transaction_type = "VirtualFundWallet";
                     $trasnaction->title = "Wallet Funding";
@@ -141,12 +143,13 @@ class TransactionController extends Controller
 
                 Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 1]);
                 Transfertransaction::where('account_no', $request->receiver_account_number)->update(['status' => 2, 'resolve'=> 1]);
+                $trx = Transfertransaction::where('account_no', $request->receiver_account_number)->first();
 
 
                 //update Transactions
                 $trasnaction = new Transaction();
                 $trasnaction->user_id = $trx->user_id;
-                $trasnaction->e_ref = $trx->manual_acc_ref;
+                $trasnaction->e_ref = $request->sessionid;
                 $trasnaction->ref_trans_id = $trx->manual_acc_ref;
                 $trasnaction->type = "webpay";
                 $trasnaction->transaction_type = "VirtualFundWallet";

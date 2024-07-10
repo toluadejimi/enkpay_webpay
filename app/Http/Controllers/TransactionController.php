@@ -59,10 +59,7 @@ class TransactionController extends Controller
             ])->first() ?? null;
 
 
-        $cktrx = Transfertransaction::where('account_no', $request->receiver_account_number)
-            ->where([
-                'status' => 1
-            ])->first() ?? null;
+        $cktrx = Transfertransaction::where('account_no', $request->receiver_account_number)->first() ?? null;
 
         $data['acc_no'] = $request->receiver_account_number;
         $data['amount'] = $request->amount;
@@ -79,7 +76,7 @@ class TransactionController extends Controller
         }
 
 
-        if ($cktrx == 4) {
+        if ($cktrx->status == 4) {
             return response()->json([
                 'status' => false,
                 'message' => "Transaction has already been funded",

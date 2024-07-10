@@ -79,7 +79,7 @@ class TransactionController extends Controller
         }
 
 
-        if ($cktrx == 1) {
+        if ($cktrx == 4) {
 
             return response()->json([
                 'status' => false,

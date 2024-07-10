@@ -58,9 +58,8 @@ class TransactionController extends Controller
             $p_amount = $request->amount - $set->psb_charge;
         }
 
-        $cktrx = Transfertransaction::where('account_no', $request->receiver_account_number)->first() ?? null;
-
-        if ($cktrx->status == 4) {
+        $status = Transfertransaction::where('account_no', $request->receiver_account_number)->first()->status ?? null;
+        if ($status == 4) {
             return response()->json([
                 'status' => false,
                 'message' => "Transaction has already been funded",

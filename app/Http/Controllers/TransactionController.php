@@ -57,15 +57,26 @@ class TransactionController extends Controller
 
         $trx = Transfertransaction::where('account_no', $request->receiver_account_number)
             ->where([
-                'amount' => $p_amount,
                 'status' => 0
             ])->first() ?? null;
+
+
+        if($trx == null){
+
+            return response()->json([
+                'status' => false,
+                'message' => "Account Not found in our database"
+            ]);
+
+        }
+
+
+
 
         if ($trx != null) {
             if ($trx->ststus == 0) {
                     Transfertransaction::where('account_no', $request->receiver_account_number)
                         ->where([
-                            'amount' => $p_amount,
                             'status' => 0
                         ])->update(['status' => 5, 'session_id'=>$request->sessionid]) ?? null;
 
@@ -172,9 +183,11 @@ class TransactionController extends Controller
             }
         }
 
+
+
         return response()->json([
             'status' => false,
-            'message' => "Account Not found"
+            'message' => "No transaction made"
         ]);
     }
 

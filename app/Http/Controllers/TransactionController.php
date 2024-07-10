@@ -20,7 +20,6 @@ use App\Models\Webkey;
 use App\Models\Webtransfer;
 use Faker\Factory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
@@ -43,16 +42,15 @@ class TransactionController extends Controller
     }
 
 
-
     public function e_payment(Request $request)
     {
 
         $set = Setting::where('id', 1)->first();
 
-        if($request->amount > 15000){
+        if ($request->amount > 15000) {
             $p_amount = $request->amount - $set->psb_cap;
-        }else{
-            $p_amount =$request->amount - $set->psb_charge;
+        } else {
+            $p_amount = $request->amount - $set->psb_charge;
         }
 
         $trx = Transfertransaction::where('account_no', $request->receiver_account_number)
@@ -66,27 +64,31 @@ class TransactionController extends Controller
                 'status' => 1
             ])->first() ?? null;
 
+        $data['acc_no'] = $request->receiver_account_number;
+        $data['amount'] = $request->amount;
 
-        if($trx == null){
+
+        if ($trx == null) {
 
             return response()->json([
                 'status' => false,
-                'message' => "Account Not found in our database"
+                'message' => "Account Not found in our database",
+                'data' => $data
             ]);
 
         }
 
 
-        if($cktrx == 1){
+        if ($cktrx == 1) {
 
             return response()->json([
                 'status' => false,
-                'message' => "Transaction has already been funded"
+                'message' => "Transaction has already been funded",
+                'data' => $data
+
             ]);
 
         }
-
-
 
 
         if ($trx != null) {
@@ -94,7 +96,7 @@ class TransactionController extends Controller
                     Transfertransaction::where('account_no', $request->receiver_account_number)
                         ->where([
                             'status' => 0
-                        ])->update(['status' => 5, 'session_id'=>$request->sessionid]) ?? null;
+                        ])->update(['status' => 5, 'session_id' => $request->sessionid]) ?? null;
 
                 //fund Vendor
                 $trx = Transfertransaction::where('account_no', $request->receiver_account_number)->first();
@@ -104,7 +106,6 @@ class TransactionController extends Controller
                 } else {
                     $f_amount = $trx->amount - $charge;
                 }
-
 
 
                 User::where('id', $trx->user_id)->increment('main_wallet', $f_amount);
@@ -124,12 +125,11 @@ class TransactionController extends Controller
 
                 if ($fund == 2) {
                     Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 4]);
-                    Transfertransaction::where('account_no', $request->receiver_account_number)->update(['status' => 4, 'resolve'=> 1]);
+                    Transfertransaction::where('account_no', $request->receiver_account_number)->update(['status' => 4, 'resolve' => 1]);
 
                     $trx = Transfertransaction::where('account_no', $request->receiver_account_number)->first();
 
                     $site_name = Webkey::where('key', $trx->key)->first()->site_name ?? null;
-
 
 
                     //update Transactions
@@ -163,18 +163,16 @@ class TransactionController extends Controller
 
                     return response()->json([
                         'status' => true,
-                        'message' => "Transaction Funded to wallet"
+                        'message' => "Transaction Funded to wallet",
+
                     ]);
-
-
 
 
                 }
 
 
-
                 Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 1]);
-                Transfertransaction::where('account_no', $request->receiver_account_number)->update(['status' => 2, 'resolve'=> 1]);
+                Transfertransaction::where('account_no', $request->receiver_account_number)->update(['status' => 2, 'resolve' => 1]);
                 $trx = Transfertransaction::where('account_no', $request->receiver_account_number)->first();
 
 
@@ -209,14 +207,11 @@ class TransactionController extends Controller
         }
 
 
-
         return response()->json([
             'status' => false,
             'message' => "No transaction made"
         ]);
     }
-
-
 
 
     public
@@ -570,10 +565,6 @@ class TransactionController extends Controller
         $account_name = $text[$random_index];
 
 
-
-
-
-
         if ($business_id != null) {
 
             if ($email == null) {
@@ -659,14 +650,10 @@ class TransactionController extends Controller
         }
 
 
-
         $opay_acct = ManualAccount::where('status', 1)->where('type', "opay")->first() ?? null;
         $palmpay_acct = ManualAccount::where('status', 1)->where('type', "palmpay")->first() ?? null;
         $kuda_acct = ManualAccount::where('status', 1)->where('type', "kuda")->first() ?? null;
         $ninepsb_acct = ManualAccount::where('status', 1)->where('type', "ninepsb")->first() ?? null;
-
-
-
 
 
         $opay_acct_no = $opay_acct->account_no;
@@ -719,16 +706,12 @@ class TransactionController extends Controller
         $crypto = $set->pay_by_crypto;
         $ninepsb = $set->ninepsb;
         $boomzy = $set->boomzy;
-        $psb_cap= $set->psb_cap;
+        $psb_cap = $set->psb_cap;
         $psb_charge = $set->psb_charge;
-
 
 
         $support_channel = Webkey::where('key', $request->key)->first()->support ?? null;
         $support_number = Webkey::where('key', $request->key)->first()->support_number ?? null;
-
-
-
 
 
         if ($support_number == null) {
@@ -738,7 +721,7 @@ class TransactionController extends Controller
         }
 
 
-        return view('webpay', compact('support','psb_cap','psb_charge','account_name', 'boomzy','ninepsb', 'ninepsb_acct', 'support_number', 'opay_transfer', 'support_channel', 'kuda_transfer', 'palmpay_transfer', 'transref', 'opay_acct', 'kuda_acct', 'palmpay_acct', 'opay_acct', 'ref', 'iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name', 'p_bank_name', 'total_received'));
+        return view('webpay', compact('support', 'psb_cap', 'psb_charge', 'account_name', 'boomzy', 'ninepsb', 'ninepsb_acct', 'support_number', 'opay_transfer', 'support_channel', 'kuda_transfer', 'palmpay_transfer', 'transref', 'opay_acct', 'kuda_acct', 'palmpay_acct', 'opay_acct', 'ref', 'iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name', 'p_bank_name', 'total_received'));
     }
 
 
@@ -1302,9 +1285,9 @@ class TransactionController extends Controller
 
         $get_tramn_id = Transfertransaction::where('ref', $request->trans_id)->first()->ref_trans_id ?? null;
 
-        if($get_tramn_id == null){
-            $trans_id =  $request->trans_id;
-        }else{
+        if ($get_tramn_id == null) {
+            $trans_id = $request->trans_id;
+        } else {
             $trans_id = $get_tramn_id;
 
         }
@@ -2381,21 +2364,20 @@ class TransactionController extends Controller
             send_notification($message);
 
             return response()->json([
-                'status'=>true,
-                'message'=>"Successful",
+                'status' => true,
+                'message' => "Successful",
                 'ref' => $request->ref,
-                'account'=> $request->account_no,
-                'name'=>$request->account_name
+                'account' => $request->account_no,
+                'name' => $request->account_name
             ]);
 
-        }else{
+        } else {
             return response()->json([
-                'status'=>false,
-                'message'=>"REF NOT FOUND",
+                'status' => false,
+                'message' => "REF NOT FOUND",
                 'ref' => $request->ref
             ]);
         }
-
 
 
     }
@@ -2418,7 +2400,6 @@ class TransactionController extends Controller
         $data['title'] = "Payment Confirmation";
 
         return view('waiting', $data);
-
 
 
     }

@@ -61,11 +61,27 @@ class TransactionController extends Controller
             ])->first() ?? null;
 
 
+        $cktrx = Transfertransaction::where('account_no', $request->receiver_account_number)
+            ->where([
+                'status' => 1
+            ])->first() ?? null;
+
+
         if($trx == null){
 
             return response()->json([
                 'status' => false,
                 'message' => "Account Not found in our database"
+            ]);
+
+        }
+
+
+        if($cktrx == 1){
+
+            return response()->json([
+                'status' => false,
+                'message' => "Transaction has already been funded"
             ]);
 
         }
@@ -145,7 +161,12 @@ class TransactionController extends Controller
                     send_notification3($message);
 
 
-                    return back()->with('message', 'Transaction successfully completed');
+                    return response()->json([
+                        'status' => true,
+                        'message' => "Transaction Funded to wallet"
+                    ]);
+
+
 
 
                 }
@@ -179,7 +200,11 @@ class TransactionController extends Controller
                 $message = "Business Funded | $trx->ref | Pending customer not funded | $f_amount | $user->first_name " . " " . $user->last_name;
                 send_notification($message);
 
-                return back()->with('message', 'Transaction successfully completed');
+                return response()->json([
+                    'status' => true,
+                    'message' => "Transaction Funded with directly"
+                ]);
+
             }
         }
 

@@ -189,20 +189,16 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="heading">
-                <h2 class="text-center text-danger my-2">Terms and Conditions</h2>
+                <h2 class="text-center text-danger my-2">Update !!!!</h2>
                 <h6 class="text-muted text-center mb-3">Please read carefully</h6>
+
 
                 <div class="card border-0 my-2 mt-4 shadow-lg p-3 mb-5 bg-body rounded">
                     <div class="card-body border-0">
                         <h4 class="text-danger text-center">
-                            Add valid Reference to payment,<br> or you will loose your money
+                           New payment has been added<br> Payment does not require refrence...
                         </h4>
                     </div>
-                </div>
-
-                <div class="d-flex justify-content-center mb-3">
-                    <a href="https://www.youtube.com/shorts/Zn_dALbDhSI" target="_blank" class="btn btn-danger"> <i
-                                class="fa fa-play"> </i> Watch how to add refrence to payment</a>
                 </div>
 
 
@@ -210,7 +206,7 @@
                     <div class="cb">
                         <input type="checkbox" class="tf-checkbox st1" checked>
                     </div>
-                    <span class="fw_3 mb-4">I agree to the Term of sevice and conditions</span>
+                    <span class="fw_3 mb-4">I agree to the Term of service and conditions</span>
                 </div>
 
             </div>
@@ -225,11 +221,13 @@
 <div class="app-header st1">
     <div class="tf-container">
         <div class="tf-topbar d-flex justify-content-center align-items-center">
-            <a href="25_payment-source.html%3F.html#" class="back-btn"><i class="icon-left white_color"></i></a>
+            <a href="#" class="back-btn"><i class="icon-left white_color"></i></a>
             <h3 class="white_color">Amount to Pay</h3>
         </div>
     </div>
 </div>
+
+
 
 
 <div class="card-secton transfer-section">
@@ -249,9 +247,7 @@
                 <h1>₦{{ number_format($payable_amount, 2) }}</h1>
                 <h4 class="secondary_color text-center fw_4 mb-3">Make sure you send exact amount</h4>
                 <hr>
-                <h4 class="text-danger text-center fw_4 mb-3">PLEASE ALWAYS ADD REFERENCE</h4>
-                <a class="d-flex justify-content-center btn btn-primary my-3"
-                   href="https://www.youtube.com/shorts/Zn_dALbDhSI" target="_blank">Watch how to make payment</a>
+
 
 
             </div>
@@ -1039,7 +1035,7 @@
                                         details
                                     </a>
                                 </h4>
-                                <p>40 seconds confirmation (recommended)</p>
+                                <p>Refrence is required in note/remarks/refrence</p>
                             </div>
                         </div>
 
@@ -1049,6 +1045,10 @@
 
                             <p class="text-danger my-3 text-center">Please don't forget to add your payment reference in
                                 narration/remarks/notes to avoid loosing your funds</p>
+
+
+                            <a class="d-flex justify-content-center btn btn-primary my-3"
+                               href="https://www.youtube.com/shorts/Zn_dALbDhSI" target="_blank">Watch how to make payment</a>
 
                             <div class="tf-container my-2">
                                 <input hidden class="" type="checkbox" id="agreeCheckbox">
@@ -1503,7 +1503,7 @@
                                         details
                                     </a>
                                 </h4>
-                                <p>40 seconds confirmation (recommended)</p>
+                                <p>Refrence is required in note/remarks/refrence</p>
                             </div>
                         </div>
 
@@ -1513,6 +1513,10 @@
 
                             <p class="text-danger my-3 text-center">Please don't forget to add your payment reference in
                                 narration/remarks/notes</p>
+
+
+                            <a class="d-flex justify-content-center btn btn-primary my-3"
+                               href="https://www.youtube.com/shorts/Zn_dALbDhSI" target="_blank">Watch how to make payment</a>
 
 
                             <div class="tf-container my-2">
@@ -2298,7 +2302,7 @@
                                 <h4><a href="#" data-bs-toggle="collapse" data-bs-target="#ninepsb"
                                        aria-expanded="false" aria-controls="ninepsb" class="fw_6">Pay Using 9
                                         PaymentSB</a></h4>
-                                <p>40 seconds confirmation (recommended)</p>
+                                <p>No refrence required</p>
                             </div>
                         </div>
 

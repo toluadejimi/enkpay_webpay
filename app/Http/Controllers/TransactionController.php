@@ -80,12 +80,10 @@ class TransactionController extends Controller
 
 
         if ($cktrx == 4) {
-
             return response()->json([
                 'status' => false,
                 'message' => "Transaction has already been funded",
                 'data' => $data
-
             ]);
 
         }

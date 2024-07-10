@@ -45,6 +45,11 @@ class TransactionController extends Controller
     public function e_payment(Request $request)
     {
 
+
+        $data['acc_no'] = $request->receiver_account_number;
+        $data['amount'] = $request->amount;
+
+
         $set = Setting::where('id', 1)->first();
 
         if ($request->amount > 15000) {
@@ -53,16 +58,27 @@ class TransactionController extends Controller
             $p_amount = $request->amount - $set->psb_charge;
         }
 
+        $cktrx = Transfertransaction::where('account_no', $request->receiver_account_number)->first() ?? null;
+
+        if ($cktrx->status == 4) {
+            return response()->json([
+                'status' => false,
+                'message' => "Transaction has already been funded",
+                'data' => $data
+            ]);
+
+        }
+
+
+
         $trx = Transfertransaction::where('account_no', $request->receiver_account_number)
             ->where([
                 'status' => 0
             ])->first() ?? null;
 
 
-        $cktrx = Transfertransaction::where('account_no', $request->receiver_account_number)->first() ?? null;
 
-        $data['acc_no'] = $request->receiver_account_number;
-        $data['amount'] = $request->amount;
+
 
 
         if ($trx == null) {
@@ -76,14 +92,7 @@ class TransactionController extends Controller
         }
 
 
-        if ($cktrx->status == 4) {
-            return response()->json([
-                'status' => false,
-                'message' => "Transaction has already been funded",
-                'data' => $data
-            ]);
 
-        }
 
 
         if ($trx != null) {

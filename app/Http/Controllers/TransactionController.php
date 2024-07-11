@@ -78,8 +78,6 @@ class TransactionController extends Controller
 
 
 
-
-
         if ($trx == null) {
 
             return response()->json([

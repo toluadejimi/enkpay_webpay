@@ -535,7 +535,7 @@ class VerifyController extends Controller
     function search(request $request){
 
         $data['title'] = "Approved";
-        $data['tickets'] = ResolveOrder::latest()->where('email', $request->email)->where('status', 1)->paginate(50);
+        $data['tickets'] = ResolveOrder::latest()->where('email', $request->email)->paginate(50);
         return view('request', $data);
 
 

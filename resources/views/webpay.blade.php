@@ -2236,7 +2236,7 @@
                                         return;
                                     }
 
-                                    const trx_id = {{ $trans_id  }} //document.getElementById('trfninepsb').value;
+                                    const trx_id = '{{ $trans_id  }}' //document.getElementById('trfninepsb').value;
                                     const account_no = document.getElementById('ninepsb_account_no').value;
                                     const url = "{{ url('') }}/verifyninepsb?trans_id=" + trx_id + "&account_no=" + account_no;
 

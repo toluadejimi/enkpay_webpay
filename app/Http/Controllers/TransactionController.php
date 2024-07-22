@@ -666,6 +666,7 @@ class TransactionController extends Controller
 
         } else {
             $pre_link = "#";
+            $payment_ref = null;
         }
 
 

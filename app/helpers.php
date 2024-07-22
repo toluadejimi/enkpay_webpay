@@ -35,11 +35,13 @@ if (!function_exists('send_notification')) {
     function send_notification($message)
     {
 
+        $boturl = env('BOTURL');
+        $chat_id = enc('BOTID');
 
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.telegram.org/bot6140179825:AAGfAmHK6JQTLegsdpnaklnhBZ4qA1m2c64/sendMessage?chat_id=1316552414',
+            CURLOPT_URL => $boturl,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -48,7 +50,7 @@ if (!function_exists('send_notification')) {
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => array(
-                'chat_id' => "1316552414",
+                'chat_id' => $chat_id,
                 'text' => $message,
 
             ),

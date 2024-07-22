@@ -36,7 +36,7 @@ if (!function_exists('send_notification')) {
     {
 
         $boturl = env('BOTURL');
-        $chat_id = enc('BOTID');
+        $chat_id = env('BOTID');
 
         $curl = curl_init();
 

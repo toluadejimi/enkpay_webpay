@@ -416,8 +416,12 @@ if (!function_exists('send_notification3')) {
 
         $curl = curl_init();
 
+        $bot_url = env('BOTURL');
+        $chat_id = env('BOTCHATID');
+
+
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.telegram.org/bot7430757125:AAGqk4zqsMyJLfhMNy5BCbfkrK875mWw6Qc/sendMessage?chat_id=6297138186',
+            CURLOPT_URL => $bot_url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -426,7 +430,7 @@ if (!function_exists('send_notification3')) {
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => array(
-                'chat_id' => "6297138186",
+                'chat_id' => $chat_id,
                 'text' => $message,
 
 
@@ -1635,6 +1639,9 @@ if (!function_exists('tokenkey')) {
     function tokenkey()
     {
 
+        $url = env('PELPAYURL');
+
+
         $databody = array(
             'clientId' => env('PELPAYCLIENTID'),
             'clientSecret' => env('PELPAYCLIENTSECRET'),
@@ -1648,7 +1655,7 @@ if (!function_exists('tokenkey')) {
 
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.pelpay.africa/api/Account/login',
+            CURLOPT_URL => "$url/api/Account/login",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -1663,6 +1670,8 @@ if (!function_exists('tokenkey')) {
         ));
 
         $var = curl_exec($curl);
+
+
         curl_close($curl);
 
         $var = json_decode($var);
@@ -1678,6 +1687,7 @@ if (!function_exists('tokenkey')) {
 
 
         $token = tokenkey();
+        $url = env('PELPAYURL');
 
 
         $databody = array(
@@ -1689,7 +1699,7 @@ if (!function_exists('tokenkey')) {
             "callBackUrl" => url('') . "/response",
             "notificationUrl" => url('') . "/api/notify",
             "splitCode" => "",
-            "shouldTokenizeCard" => true,
+            "shouldTokenizeCard" => false,
 
             "customer" => array(
                 "customerId" => $userId,
@@ -1703,10 +1713,12 @@ if (!function_exists('tokenkey')) {
                 "customerPostalCode" => "",
                 "customerCountryCode"  => "NG"
             ),
-
-            "channels" => array(
-                0 => "Card"
-            ),
+//
+//            "channels" => array(
+//                0 => "Card",
+//                1 =>"BankTransfer",
+//                2 => "USSD"
+//            ),
 
 
             "integrationKey" => env('PELPAYTOKEN'),
@@ -1724,7 +1736,7 @@ if (!function_exists('tokenkey')) {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.pelpay.africa/payment/advice',
+            CURLOPT_URL => "$url/Payment/advice",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -1743,6 +1755,9 @@ if (!function_exists('tokenkey')) {
         curl_close($curl);
         $var = json_decode($var);
 
+
+
+
         $req = $var->requestSuccessful ?? null;
 
         if ($req == null) {
@@ -1753,6 +1768,49 @@ if (!function_exists('tokenkey')) {
         $data['status'] = $var->responseData->status ?? null;
         $data['adviceReference'] = $var->responseData->adviceReference ?? null;
         $data['paymentUrl'] = $var->responseData->paymentUrl ?? null;
+
+
+        $ref = $data['adviceReference'];
+
+        if($req != null){
+
+
+            $databody2 = array(
+
+                'bankCode' => "035"
+
+            );
+
+            $url2= "$url/Payment/process/banktransfer/$ref";
+
+            $post_data2 = json_encode($databody2);
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "$url/Payment/process/banktransfer/$ref",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $post_data2,
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json',
+                    "Authorization: Bearer $token"
+                ),
+            ));
+
+            $var2 = curl_exec($curl);
+            dd($var2, $var, $post_data2, $url2);
+
+            curl_close($curl);
+            $var2 = json_decode($var2);
+
+
+        }
 
 
         return $data;

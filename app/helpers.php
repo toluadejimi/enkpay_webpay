@@ -34,14 +34,11 @@ if (!function_exists('send_notification')) {
 
     function send_notification($message)
     {
+
         $curl = curl_init();
 
-        $bot_url = env('BOTURL');
-        $chat_id = env('BOTCHATID');
-
-
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $bot_url,
+            CURLOPT_URL => 'https://api.telegram.org/bot6140179825:AAGfAmHK6JQTLegsdpnaklnhBZ4qA1m2c64/sendMessage?chat_id=1316552414',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -50,9 +47,8 @@ if (!function_exists('send_notification')) {
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => array(
-                'chat_id' => $chat_id,
+                'chat_id' => "1316552414",
                 'text' => $message,
-
 
             ),
             CURLOPT_HTTPHEADER => array(),
@@ -418,11 +414,13 @@ if (!function_exists('send_notification3')) {
     function send_notification3($message)
     {
 
-        $curl = curl_init();
 
         $bot_url = env('BOTURL');
         $chat_id = env('BOTCHATID');
 
+
+
+        $curl = curl_init();
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => $bot_url,
@@ -436,7 +434,6 @@ if (!function_exists('send_notification3')) {
             CURLOPT_POSTFIELDS => array(
                 'chat_id' => $chat_id,
                 'text' => $message,
-
 
             ),
             CURLOPT_HTTPHEADER => array(),

@@ -651,6 +651,28 @@ class TransactionController extends Controller
         }
 
 
+        if ($set->wema_transfer == 1) {
+            $faker = Factory::create();
+            $amount = $request->amount;
+            $first_name = User::inRandomOrder()->first()->first_name;
+            $last_name = User::inRandomOrder()->first()->last_name;
+            $tremail = $faker->email;
+            $userId = Str::random(4); //$request->user_id;
+            $trans_id = $iref;
+            $ref = trx();
+            $pre = pre_pay($amount, $first_name, $last_name, $tremail, $ref, $userId, $trans_id, $key);
+            $payment_ref = $pre['adviceReference'] ?? null;
+
+            //dd($payment_ref);
+
+
+        } else {
+            $pre_link = "#";
+        }
+
+
+
+
         $opay_acct = ManualAccount::where('status', 1)->where('type', "opay")->first() ?? null;
         $palmpay_acct = ManualAccount::where('status', 1)->where('type', "palmpay")->first() ?? null;
         $kuda_acct = ManualAccount::where('status', 1)->where('type', "kuda")->first() ?? null;
@@ -709,6 +731,8 @@ class TransactionController extends Controller
         $boomzy = $set->boomzy;
         $psb_cap = $set->psb_cap;
         $psb_charge = $set->psb_charge;
+        $wema = $set->wema_transfer;
+
 
 
         $support_channel = Webkey::where('key', $request->key)->first()->support ?? null;
@@ -722,7 +746,7 @@ class TransactionController extends Controller
         }
 
 
-        return view('webpay', compact('support', 'psb_cap', 'psb_charge', 'account_name', 'boomzy', 'ninepsb', 'ninepsb_acct', 'support_number', 'opay_transfer', 'support_channel', 'kuda_transfer', 'palmpay_transfer', 'transref', 'opay_acct', 'kuda_acct', 'palmpay_acct', 'opay_acct', 'ref', 'iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name', 'p_bank_name', 'total_received'));
+        return view('webpay', compact('support','wema', 'payment_ref', 'psb_cap', 'psb_charge', 'account_name', 'boomzy', 'ninepsb', 'ninepsb_acct', 'support_number', 'opay_transfer', 'support_channel', 'kuda_transfer', 'palmpay_transfer', 'transref', 'opay_acct', 'kuda_acct', 'palmpay_acct', 'opay_acct', 'ref', 'iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name', 'p_bank_name', 'total_received'));
     }
 
 
@@ -2259,7 +2283,7 @@ class TransactionController extends Controller
         send_notification($message);
         send_notification_opay($message);
         send_notification2($message);
-        send_notification3($message);
+        //send_notification3($message);
 
 
     }
@@ -2297,7 +2321,7 @@ class TransactionController extends Controller
         send_notification($message);
         send_notification_palmpay($message);
         send_notification2($message);
-        send_notification3($message);
+        //send_notification3($message);
 
 
     }

@@ -34,6 +34,8 @@ Route::post('palmpay-transfer-transaction', [TransactionController::class, 'palm
 Route::post('kuda-transfer-transaction', [TransactionController::class, 'kuda_transfer_transaction']);
 
 Route::post('ninepsb-transfer-transaction', [TransactionController::class, 'ninepsb_transaction']);
+Route::post('wema-transfer-transaction', [TransactionController::class, 'wema_transaction']);
+
 
 
 

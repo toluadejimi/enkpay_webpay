@@ -663,8 +663,6 @@ class TransactionController extends Controller
             $pre = pre_pay($amount, $first_name, $last_name, $tremail, $ref, $userId, $trans_id, $key);
             $payment_ref = $pre['adviceReference'] ?? null;
 
-            //dd($payment_ref);
-
 
         } else {
             $pre_link = "#";

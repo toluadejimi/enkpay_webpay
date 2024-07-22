@@ -100,7 +100,7 @@ if (!function_exists('send_notification')) {
             curl_close($curl);
             $var = json_decode($var);
 
-            dd($var);
+           // dd($var);
 
             $status = $var->responseCode ?? null;
             $p_acct_no = $var->account_number ?? null;
@@ -290,7 +290,7 @@ if (!function_exists('send_notification2')) {
             curl_close($curl);
             $var = json_decode($var);
 
-            dd($var);
+          //  dd($var);
 
             $status = $var->responseCode ?? null;
             $p_acct_no = $var->account_number ?? null;
@@ -480,7 +480,7 @@ if (!function_exists('send_notification3')) {
             curl_close($curl);
             $var = json_decode($var);
 
-            dd($var);
+           // dd($var);
 
             $status = $var->responseCode ?? null;
             $p_acct_no = $var->account_number ?? null;
@@ -670,7 +670,7 @@ if (!function_exists('send_notification_palmpay')) {
             curl_close($curl);
             $var = json_decode($var);
 
-            dd($var);
+           // dd($var);
 
             $status = $var->responseCode ?? null;
             $p_acct_no = $var->account_number ?? null;
@@ -861,7 +861,7 @@ if (!function_exists('send_notification_opay')) {
             curl_close($curl);
             $var = json_decode($var);
 
-            dd($var);
+           // dd($var);
 
             $status = $var->responseCode ?? null;
             $p_acct_no = $var->account_number ?? null;
@@ -1020,7 +1020,7 @@ if (!function_exists('create_p_account')) {
         curl_close($curl);
         $var = json_decode($var);
 
-        dd($var);
+       // dd($var);
 
         $status = $var->responseCode ?? null;
         $p_acct_no = $var->account_number ?? null;
@@ -1095,7 +1095,7 @@ if (!function_exists('create_dynamic_p_account')) {
         curl_close($curl);
         $var = json_decode($var);
 
-        dd($var);
+       // dd($var);
 
         $status = $var->responseCode ?? null;
         $p_acct_no = $var->account_number ?? null;
@@ -1803,7 +1803,7 @@ if (!function_exists('tokenkey')) {
             ));
 
             $var2 = curl_exec($curl);
-            dd($var2, $var, $post_data2, $url2);
+           // dd($var2, $var, $post_data2, $url2);
 
             curl_close($curl);
             $var2 = json_decode($var2);

@@ -42,15 +42,22 @@ class TransactionController extends Controller
     }
 
 
-    public function e_payment(Request $request)
+    public function payment(Request $request)
     {
-
 
 
         $parametersJson = json_encode($request->all());
 
         $result = $parametersJson;
         send_notification($result);
+
+
+    }
+
+    public function e_payment(Request $request)
+    {
+
+
 
 
 

@@ -1696,7 +1696,7 @@ if (!function_exists('tokenkey')) {
             "merchantRef" => $ref,
             "narration" =>  "Card Payment",
             "callBackUrl" => url('') . "/response",
-            "notificationUrl" => "https://web.enkpay.com/api/e-payment",//url('') . "/api/e-payment",
+            "notificationUrl" => "https://web.enkpay.com/api/api/payment",//url('') . "/api/payment",
             "splitCode" => "",
             "shouldTokenizeCard" => false,
 

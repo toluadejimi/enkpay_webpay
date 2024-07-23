@@ -3136,11 +3136,11 @@
                                                     </div>
                                                 </div>
 
-                                                <div id="info-container">
+                                                <div id="info-containerwema">
                                                     <!-- Placeholder for fetched information -->
                                                 </div>
 
-                                                <button class="p-2" id="fetch" style="color: #03103a" onclick="fetchInfowema()">Get
+                                                <button class="p-2" id="fetchwema" style="color: #03103a" onclick="fetchInfowema()">Get
                                                     Account Details
                                                 </button>
                                                 <div class="loader2" id="loaderwema"></div>
@@ -3162,13 +3162,13 @@
 
                                                         // Simulating a POST request (replace with actual API call)
                                                         {{--fetch('{{url('')}}/api/get-account', {--}}
-                                                        fetch('https://api.pelpay.ng/Payment/process/banktransfer/{{$payment_ref}}', {
+                                                        fetch('{{env('PELPAYURL')}}/Payment/process/banktransfer/{{$payment_ref}}',{
                                                             method: 'POST',
                                                             headers: {
                                                                 'Content-Type': 'application/json'
                                                             },
                                                             body: JSON.stringify({
-                                                                bankCode: "058"
+                                                                bankCode: "035"
 
 
                                                             }) // Replace with actual data to send
@@ -3181,10 +3181,11 @@
                                                             })
 
                                                             .then(data => {
-                                                                console.log(data.result.account_name);
-                                                                console.log(data.result.account_no);
-                                                                const wemaaccountNo = data.result.account_no;
-                                                                const wemaaccountName = data.result.account_name;
+
+                                                                console.log(data);
+                                                                console.log(data.responseData.bankAccount);
+                                                                var wemaaccountNo = data.responseData.bankAccount;
+                                                                var wemaaccountName = data.responseData.bankName;
 
 
                                                                 document.getElementById('fetch').style.display = 'none';
@@ -3197,8 +3198,8 @@
                                                                     },
                                                                     body: JSON.stringify({
                                                                         ref: '{{ $transref }}',
-                                                                        accountNo: data.result.account_no,
-                                                                        name: data.result.account_name,
+                                                                        accountNo: wemaaccountNo,
+                                                                        name: 'WEMA BANK',
                                                                         amount: '{{$payable_amount}}'
 
                                                                     }) // Replace with actual data to send
@@ -3271,9 +3272,9 @@
                                                                                    p-1">
                                                                 <h5 style="border-right: 4px; font-size: 15px;"
 
-                                                                    id="wemaelement">${accountNo}</h5>
+                                                                    id="wemaelement">${wemaaccountNo}</h5>
                                                                 <input hidden
-                                                                       value="${accountNo}"
+                                                                       value="${wemaaccountNo}"
                                                                        id="wema_account_no">
 
                                                                 <i style="font-size: 1em; margin-left: 4px"
@@ -3303,9 +3304,9 @@
                                                                                    p-1">
                                                                 <h5 style="border-right: 4px; font-size: 15px;"
 
-                                                                    id="text_element">${accountName}</h5>
+                                                                    id="text_element">${wemaaccountName}</h5>
                                                                 <input hidden
-                                                                       value="${accountName}"
+                                                                       value="${wemaaccountName}"
                                                                        id="wema_account_name">
 
                                                                 <i style="font-size: 1em; margin-left: 4px"
@@ -3330,7 +3331,7 @@
 
                                                         <input type="text" id="Amount" hidden name="amount" value="{{ $amount }}">
 
-                                                        <input type="text" id="Amount" hidden name="wema_account_no" value="${accountNo}">
+                                                        <input type="text" id="Amount" hidden name="wema_account_no" value="${wemaaccountNo}">
 
                                                         <!-- Button trigger modal -->
 
@@ -3345,24 +3346,27 @@
 `;
 
                                                                 // Display fetched information in info-container
-                                                                const infoContainer = document.getElementById('info-container');
+                                                                const infoContainer = document.getElementById('info-containerwema');
                                                                 infoContainer.innerHTML = infoHTML;
 
                                                                 // Hide the loader after displaying information
                                                                 document.getElementById('loaderwema').style.display = 'none';
+                                                                document.getElementById('fetchwema').style.display = 'none';
+
                                                             })
                                                             .catch(error => {
                                                                 console.error('Error fetching data:', error);
-                                                                const infoContainer = document.getElementById('info-container');
+                                                                const infoContainer = document.getElementById('info-containerwema');
                                                                 infoContainer.innerHTML = '<p>Error fetching data. Please retry.</p>';
 
                                                                 // Hide the loader
                                                                 document.getElementById('loader2').style.display = 'none';
+
                                                             });
 
                                                         // Set timeout for retrying
                                                         fetchTimeout = setTimeout(() => {
-                                                            const infoContainer = document.getElementById('info-container');
+                                                            const infoContainer = document.getElementById('info-containerwema');
                                                             infoContainer.innerHTML = '<p>Request timed out. Please retry.</p>';
                                                             document.getElementById('loaderwema').style.display = 'none';
                                                         }, 30000000); // 30 seconds timeout

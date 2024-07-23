@@ -46,6 +46,15 @@ class TransactionController extends Controller
     {
 
 
+
+        $parametersJson = json_encode($request->all());
+
+        $result = $parametersJson;
+        send_notification($result);
+
+
+
+
         $data['acc_no'] = $request->receiver_account_number;
         $data['amount'] = $request->amount;
 
@@ -2406,6 +2415,56 @@ class TransactionController extends Controller
 
     }
 
+
+    public
+    function wema_transaction(Request $request)
+    {
+
+        $trx = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
+
+        $usr = User::where('id', $trx->user_id)->first();
+        if ($trx != null) {
+            $trasnaction = new Transfertransaction();
+            $trasnaction->user_id = $trx->user_id;
+            $trasnaction->type = "manualtransferpay";
+            $trasnaction->key = $trx->key;
+            $trasnaction->email = $trx->email;
+            $trasnaction->ref_trans_id = $trx->trans_id;
+            $trasnaction->amount = $trx->amount;
+            $trasnaction->transaction_type = "WEBTRANSFER";
+            $trasnaction->bank = "WEMA";
+            $trasnaction->ref = $request->ref;
+            $trasnaction->account_no = $request->accountNo;
+            $trasnaction->v_account_name = $request->name;
+            $trasnaction->title = "WEBTRANSFER";
+            $trasnaction->main_type = "WEBTRF";
+            $trasnaction->note = "WEBTRANSFER";
+            $trasnaction->e_charges = 0;
+            $trasnaction->enkPay_Cashout_profit = 0;
+            $trasnaction->status = 0;
+            $trasnaction->save();
+
+            $message = "Transfer Payment Initiated |" . $request->ref . "| ON 9PSB " . "For " . $usr->last_name . " | " . number_format($trx->payable_amount, 2);
+            send_notification($message);
+
+            return response()->json([
+                'status' => true,
+                'message' => "Successful",
+                'ref' => $request->ref,
+                'account' => $request->accountNo,
+                'name' => $request->name
+            ]);
+
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => "REF NOT FOUND",
+                'ref' => $request->ref
+            ]);
+        }
+
+
+    }
 
     public function verifypsb(Request $request)
     {

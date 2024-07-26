@@ -15,6 +15,7 @@
         "laravel/tinker": "^2.8",
         "lcobucci/jwt": "5.2.0",
         "opcodesio/log-viewer": "^3.10",
+        "rap2hpoutre/laravel-log-viewer": "^2.4",
         "simplesoftwareio/simple-qrcode": "^4.2"
     },
     "require-dev": {

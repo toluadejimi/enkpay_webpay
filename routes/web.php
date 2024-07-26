@@ -10,6 +10,7 @@ use App\Http\Controllers\CryptopayController;
 
 use App\Http\Controllers\CardPaymentController;
 use App\Http\Controllers\TransactionController;
+use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+});
+
+
+Route::get('/custom-log-viewer', [LogViewerController::class, 'index']);
 
 
 Route::post('verifypsb', [TransactionController::class, 'verifypsb']);

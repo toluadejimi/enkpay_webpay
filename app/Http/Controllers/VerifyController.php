@@ -13,6 +13,7 @@ use App\Models\Webtransfer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class VerifyController extends Controller
 {
@@ -205,13 +206,17 @@ class VerifyController extends Controller
                 $trasnaction->save();
 
                 $message = "Business funded | $trx->manual_acc_ref | $f_amount | $user->first_name " . " " . $user->last_name . "\n\n Approved by ====>" . Auth::user()->first_name;
-                send_notification($message);
+                Log::info('Business Funded', ['message' => $message]);
+
+                //send_notification($message);
 
                 $date = date('d M Y H:i:s');
                 $message = "$trx->manual_acc_ref | NGN  $trx->payable_amount | $trx->email  | $site_name | $date | has been funded";
-                send_notification($message);
-                send_notification2($message);
-                send_notification3($message);
+                Log::info('User Funded', ['message' => $message]);
+
+//                send_notification($message);
+//                send_notification2($message);
+//                send_notification3($message);
 
 
                 return back()->with('message', 'Transaction successfully completed');
@@ -244,7 +249,9 @@ class VerifyController extends Controller
             $trasnaction->save();
 
             $message = "Business Funded | $trx->manual_acc_ref | Pending customer not funded | $f_amount | $user->first_name " . " " . $user->last_name . "\n\n Approved by ====>" . Auth::user()->first_name;
-            send_notification($message);
+            Log::info('Business Funded', ['message' => $message]);
+
+            // send_notification($message);
 
             return back()->with('message', 'Transaction successfully completed');
 
@@ -272,7 +279,9 @@ class VerifyController extends Controller
 
 
         $message = "Transaction | $request->id | Deleted ";
-        send_notification($message);
+        Log::info('Notification', ['message' => $message]);
+
+        // send_notification($message);
 
         return back()->with('message', 'Transaction Deleted Successfully');
 
@@ -293,7 +302,9 @@ class VerifyController extends Controller
 
 
         $message = "Transaction | $request->id | added to pending ";
-        send_notification($message);
+        Log::info('Notification', ['message' => $message]);
+
+        //send_notification($message);
 
         return back()->with('message', 'Transaction added to pending Successfully');
 
@@ -469,13 +480,18 @@ class VerifyController extends Controller
 
 
             $message = "Business funded | $reff | $f_amount | $user->first_name " . " " . $user->last_name;
-            send_notification($message);
+            Log::info('Business Funded', ['message' => $message]);
+
+            //send_notification($message);
 
             $date = date('d M Y H:i:s');
             $message = "$reff | $order->ref | NGN  $order->r_amount | $order->email  | $site_name | $date | has been funded";
-            send_notification($message);
-            send_notification2($message);
-            send_notification3($message);
+            Log::info('Business Funded', ['message' => $message]);
+
+
+            //            send_notification($message);
+//            send_notification2($message);
+//            send_notification3($message);
 
             $order = ResolveOrder::where('id', $request->id)->first() ?? null;
             ResolveOrder::where('id', $order->id)->update(['status' => 1]);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Transfertransaction;
 use App\Models\User;
 use App\Models\Ttmfb;
 use App\Models\Setting;
@@ -1817,6 +1818,106 @@ if (!function_exists('tokenkey')) {
 }
 
 
+if (!function_exists('verifypelpay')) {
+
+    function verifypelpay($pref)
+    {
+
+        $token = tokenkey();
+        $url = env('PELPAYURL');
+
+        $curl = curl_init();
+
+        $url2= "$url/api/Transaction/bypaymentreference/$pref";
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url2,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                "Authorization: Bearer $token"
+            ),
+        ));
+
+        $var = curl_exec($curl);
+        curl_close($curl);
+        $var = json_decode($var);
+
+        if ($var->requestSuccessful == true) {
+
+
+            if($var->responseData->message == "Processing"){
+                return 0;
+            }
+
+            if($var->responseData->transactionStatus == "Successful" && $var->responseData->message == "Successful:Correct amount" ){
+
+                Transfertransaction::where('pay_ref', $pref)->update(['status' => 4]) ?? null;
+                $pay = Transfertransaction::where('pay_ref', $pref)->first() ?? null;
+
+
+
+                try {
+
+                    $curl = curl_init();
+                    $data = array(
+                        'receiver_account_number' => $pay->receiver_account_number,
+                        'amount' => $amount,
+
+                    );
+                    $post_data = json_encode($data);
+
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => 'https://web.enkpay.com/api/e-payment',
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'POST',
+                        CURLOPT_POSTFIELDS => $post_data,
+                        CURLOPT_HTTPHEADER => array(
+                            'Content-Type: application/json'
+                        ),
+                    ));
+
+                    $var = curl_exec($curl);
+                    curl_close($curl);
+
+
+                } catch (QueryException $e) {
+                    echo "$e";
+                }
+
+
+                $data['amount'] = $var->responseData->amountCollected;
+                $data['merchantReference'] = $var->responseData->merchantReference;
+                $data['code'] = 4;
+                return $data;
+            }
+
+
+
+
+        } else {
+
+            $message = "Fools trying to do stuffs";
+            send_notification($message);
+            return null;
+        }
+    }
+}
+
+
+
+
 if (!function_exists('verify_payment')) {
 
     function verify_payment($ref)
@@ -2103,8 +2204,6 @@ if (!function_exists('credit_user_wallet')) {
     function credit_user_wallet($url, $user_email, $amount, $order_id)
     {
 
-
-
         $message = "$url | $user_email | $amount | $order_id";
         send_notification($message);
 
@@ -2139,17 +2238,13 @@ if (!function_exists('credit_user_wallet')) {
         $var = json_decode($var);
         $status = $var->status ?? null;
 
+        dd($var);
+
         if($status == true){
-
-
             return 2;
-
         }else{
-
             $message = json_encode($var);
             send_notification($message);
-            send_notification2($message);
-
             return 0;
         }
 

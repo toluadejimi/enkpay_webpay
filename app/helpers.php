@@ -2234,11 +2234,12 @@ if (!function_exists('credit_user_wallet')) {
 
 
         $var = curl_exec($curl);
+        dd($var);
         curl_close($curl);
         $var = json_decode($var);
         $status = $var->status ?? null;
 
-        dd($var);
+
 
         if($status == true){
             return 2;

@@ -154,47 +154,46 @@
 
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let repeatRequestninepsb = true; // Define repeatRequestninepsb variable
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            let repeatRequestninepsb = true; // Define repeatRequestninepsb variable
-
-            function makeRequest() {
-                if (!repeatRequestninepsb) {
-                    return;
-                }
-
-                const url = "{{ url('') }}/verifyninepsb?account_no={{$account_no}}&amount={{$amount}}&ref={{$ref}}";
-
-                var audio = new Audio('{{url('')}}/public/assets/sound.wav');
-
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-
-                        if (data.status === 'pending') {
-                            setTimeout(makeRequest, 3000);
-                        } else if (data.status === 'success') {
-                            audio.play();
-
-                            window.location.href = "{{ url('') }}/success?trans_id={{$ref}}";
-
-                        } else if (data.status === 'paid') {
-                            audio.play();
-
-                            window.location.href = "{{ url('') }}/paid-success?trans_id={{$ref}}";
-                        }
-                    })
-                    .catch(error => {
-                        console.error(error);
-                    });
+        function makeRequest() {
+            if (!repeatRequestninepsb) {
+                return;
             }
 
-            // Call makeRequest() function immediately on page load
-            makeRequest();
-        });
-    </script>
+            const url = "{{ url('') }}/verifywema?account_no={{$account_no}}&amount={{$amount}}&ref={{$ref}}&pref={{$pref}}";
+
+            var audio = new Audio('{{url('')}}/public/assets/sound.wav');
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+
+                    if (data.status === 'pending') {
+                        setTimeout(makeRequest, 3000);
+                    } else if (data.status === 'success') {
+                        audio.play();
+
+                        window.location.href = "{{ url('') }}/success?trans_id={{$ref}}";
+
+                    } else if (data.status === 'paid') {
+                        audio.play();
+
+                        window.location.href = "{{ url('') }}/paid-success?trans_id={{$ref}}";
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+        // Call makeRequest() function immediately on page load
+        makeRequest();
+    });
+</script>
 
 
 

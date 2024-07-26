@@ -2592,7 +2592,7 @@ class TransactionController extends Controller
         $data['pref'] = $tref->pay_ref  ?? null;
         $data['title'] = "Payment Confirmation";
 
-        return view('waiting', $data);
+        return view('waitingwema', $data);
 
 
     }

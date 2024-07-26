@@ -208,16 +208,10 @@ class VerifyController extends Controller
                 $message = "Business funded | $trx->manual_acc_ref | $f_amount | $user->first_name " . " " . $user->last_name . "\n\n Approved by ====>" . Auth::user()->first_name;
                 Log::info('Business Funded', ['message' => $message]);
 
-                //send_notification($message);
 
                 $date = date('d M Y H:i:s');
                 $message = "$trx->manual_acc_ref | NGN  $trx->payable_amount | $trx->email  | $site_name | $date | has been funded";
                 Log::info('User Funded', ['message' => $message]);
-
-//                send_notification($message);
-//                send_notification2($message);
-//                send_notification3($message);
-
 
                 return back()->with('message', 'Transaction successfully completed');
 

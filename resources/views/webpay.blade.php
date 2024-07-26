@@ -3186,6 +3186,7 @@
                                                                 console.log(data.responseData.bankAccount);
                                                                 var wemaaccountNo = data.responseData.bankAccount;
                                                                 var wemaaccountName = data.responseData.bankName;
+                                                                var paym_ref = data.responseData.paymentReference;
 
 
                                                                 document.getElementById('fetch').style.display = 'none';
@@ -3200,9 +3201,11 @@
                                                                         ref: '{{ $transref }}',
                                                                         accountNo: wemaaccountNo,
                                                                         name: 'WEMA BANK',
+                                                                        pay_ref: paym_ref,
                                                                         amount: '{{$payable_amount}}'
 
-                                                                    }) // Replace with actual data to send
+
+                                                                    })
                                                                 })
                                                                     .then(response => {
                                                                         if (!response.ok) {
@@ -3322,7 +3325,7 @@
                                         </div>
 </div>
 
-                                                    <form action="/verifypsb" method="POST">
+                                                    <form action="/verifywema" method="POST">
                                                     @csrf
 
                                                                 <input type="text" id="trx_id" name="trx_id" hidden value="{{ $trans_id}}">
@@ -3332,6 +3335,10 @@
                                                         <input type="text" id="Amount" hidden name="amount" value="{{ $amount }}">
 
                                                         <input type="text" id="Amount" hidden name="wema_account_no" value="${wemaaccountNo}">
+                                                        <input type="text" id="pref" hidden name="pref" value="{{$payment_ref}}">
+
+
+
 
                                                         <!-- Button trigger modal -->
 

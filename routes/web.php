@@ -29,6 +29,8 @@ Route::get('/', function () {
 
 
 Route::post('verifypsb', [TransactionController::class, 'verifypsb']);
+Route::post('verifywema', [TransactionController::class, 'verifywema']);
+
 
 
 
@@ -179,6 +181,8 @@ Route::get('verifyopay', [TransactionController::class, 'opay_check_status']);
 Route::get('verifypalmpay', [TransactionController::class, 'palmpay_check_status']);
 Route::get('verifykuda', [TransactionController::class, 'kuda_check_status']);
 Route::get('verifyninepsb', [TransactionController::class, 'ninepsb_check_status']);
+Route::get('verifywema', [TransactionController::class, 'wema_check_status']);
+
 
 
 

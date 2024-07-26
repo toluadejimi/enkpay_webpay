@@ -113,10 +113,8 @@
                             }
                         }
 
-                        // Initial call to display countdown
                         updateCountdown();
 
-                        // Update countdown every second
                         const countdownInterval = setInterval(updateCountdown, 1000);
                     </script>
                 </div>
@@ -156,49 +154,94 @@
 
 </div>
 
+@if($pref != null)
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let repeatRequestninepsb = true; // Define repeatRequestninepsb variable
 
+            function makeRequest() {
+                if (!repeatRequestninepsb) {
+                    return;
+                }
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        let repeatRequestninepsb = true; // Define repeatRequestninepsb variable
+                const url = "{{ url('') }}/verifywema?account_no={{$account_no}}&amount={{$amount}}&ref={{$ref}}&pref={{$pref}}";
 
-        function makeRequest() {
-            if (!repeatRequestninepsb) {
-                return;
+                var audio = new Audio('{{url('')}}/public/assets/sound.wav');
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+
+                        if (data.status === 'pending') {
+                            setTimeout(makeRequest, 3000);
+                        } else if (data.status === 'success') {
+                            audio.play();
+
+                            window.location.href = "{{ url('') }}/success?trans_id={{$ref}}";
+
+                        } else if (data.status === 'paid') {
+                            audio.play();
+
+                            window.location.href = "{{ url('') }}/paid-success?trans_id={{$ref}}";
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
             }
 
-            const url = "{{ url('') }}/verifyninepsb?account_no={{$account_no}}&amount={{$amount}}&ref={{$ref}}";
+            // Call makeRequest() function immediately on page load
+            makeRequest();
+        });
+    </script>
 
-            var audio = new Audio('{{url('')}}/public/assets/sound.wav');
+@else
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let repeatRequestninepsb = true; // Define repeatRequestninepsb variable
 
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
+            function makeRequest() {
+                if (!repeatRequestninepsb) {
+                    return;
+                }
 
-                    if (data.status === 'pending') {
-                        setTimeout(makeRequest, 3000);
-                    } else if (data.status === 'success') {
-                        audio.play();
+                const url = "{{ url('') }}/verifyninepsb?account_no={{$account_no}}&amount={{$amount}}&ref={{$ref}}";
 
-                        window.location.href = "{{ url('') }}/success?trans_id={{$ref}}";
+                var audio = new Audio('{{url('')}}/public/assets/sound.wav');
 
-                    } else if (data.status === 'paid') {
-                        audio.play();
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
 
-                        window.location.href = "{{ url('') }}/paid-success?trans_id={{$ref}}";
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        }
+                        if (data.status === 'pending') {
+                            setTimeout(makeRequest, 3000);
+                        } else if (data.status === 'success') {
+                            audio.play();
 
-        // Call makeRequest() function immediately on page load
-        makeRequest();
-    });
-</script>
+                            window.location.href = "{{ url('') }}/success?trans_id={{$ref}}";
+
+                        } else if (data.status === 'paid') {
+                            audio.play();
+
+                            window.location.href = "{{ url('') }}/paid-success?trans_id={{$ref}}";
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+
+            // Call makeRequest() function immediately on page load
+            makeRequest();
+        });
+    </script>
+
+@endif
+
+
 
 
 <script type="text/javascript" src="{{url('')}}/public/assets/assets/javascript/jquery.min.js"></script>

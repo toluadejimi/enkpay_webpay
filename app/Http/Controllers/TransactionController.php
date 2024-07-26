@@ -23,6 +23,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 
 class TransactionController extends Controller
@@ -49,17 +50,15 @@ class TransactionController extends Controller
         $parametersJson = json_encode($request->all());
 
         $result = $parametersJson;
-        send_notification($result);
+        Log::info('Notification', ['message' => $result]);
+
+        // send_notification($result);
 
 
     }
 
     public function e_payment(Request $request)
     {
-
-
-
-
 
 
         $data['acc_no'] = $request->receiver_account_number;
@@ -169,11 +168,14 @@ class TransactionController extends Controller
                     $trasnaction->save();
 
                     $message = "Business funded | $trx->manual_acc_ref | $f_amount | $user->first_name " . " " . $user->last_name;
-                    send_notification($message);
+                    Log::info('Business Funded', ['message' => $message]);
+
+                    // send_notification($message);
 
                     $date = date('d M Y H:i:s');
                     $message = $request->receiver_account_number." | NGN  $trx->amount | $trx->email  | $site_name | $date | has been funded";
-                    send_notification($message);
+                    Log::info('User Funded', ['message' => $message]);
+                    //send_notification($message);
 //                    send_notification2($message);
 //                    send_notification3($message);
 
@@ -213,7 +215,9 @@ class TransactionController extends Controller
                 $trasnaction->save();
 
                 $message = "Business Funded | $trx->ref | Pending customer not funded | $f_amount | $user->first_name " . " " . $user->last_name;
-                send_notification($message);
+                Log::info('Business Funded', ['message' => $message]);
+
+                // send_notification($message);
 
                 return response()->json([
                     'status' => true,
@@ -669,7 +673,11 @@ class TransactionController extends Controller
 
         if ($set->wema_transfer == 1) {
             $faker = Factory::create();
-            $amount = $request->amount;
+            if($request->amount > 15000){
+                $amount = $request->amount + 300;
+            }else{
+                $amount = $request->amount + 100;
+            }
             $first_name = User::inRandomOrder()->first()->first_name;
             $last_name = User::inRandomOrder()->first()->last_name;
             $tremail = $faker->email;
@@ -729,6 +737,7 @@ class TransactionController extends Controller
             $trans->data = $data;
             $trans->adviceReference = $adviceReference ?? null;
             $trans->ref = $ref ?? null;
+            $trans->adviceReference =  $payment_ref ?? null;
             $trans->both_commmission = $both_commmission;
             $trans->save();
         }
@@ -1259,6 +1268,60 @@ class TransactionController extends Controller
         }
 
         if ($status == 4) {
+            return response()->json([
+                'status' => 'paid'
+            ], 200);
+
+            //return view('success', compact('webhook'));
+        }
+
+    }
+
+
+    public
+    function wema_check_status(Request $request)
+    {
+
+
+        $trans_id = $request->ref;
+        $pref = $request->pref;
+        $account_no = $request->account_no;
+
+
+
+
+        $p_ref = Transfertransaction::where('pay_ref', $pref)->first() ?? null;
+
+        if($p_ref == null){
+            return response()->json([
+                'status' => false,
+                'message' => "no transaction found"
+            ]);
+        }
+
+
+        $verify = verifypelpay($pref);
+
+        if($verify == 0){
+
+            return response()->json([
+                'status' => 'pending'
+            ], 200);
+
+        }
+
+
+
+        if ($verify['code'] == 2) {
+
+            return response()->json([
+
+                'status' => 'success'
+            ], 200);
+
+        }
+
+        if ($verify['code'] == 4) {
             return response()->json([
                 'status' => 'paid'
             ], 200);
@@ -2295,9 +2358,11 @@ class TransactionController extends Controller
         $trasnaction->save();
 
         $message = "Transfer Payment Initiated |" . $request->ref . "| ON OPAY " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
-        send_notification($message);
-        send_notification_opay($message);
-        send_notification2($message);
+         Log::info('Transfer Initiated', ['message' => $message]);
+
+//        send_notification($message);
+//        send_notification_opay($message);
+//        send_notification2($message);
         //send_notification3($message);
 
 
@@ -2333,9 +2398,13 @@ class TransactionController extends Controller
 
 
         $message = "Transfer Payment Initiated |" . $request->ref . "| ON PALMPAY " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
-        send_notification($message);
-        send_notification_palmpay($message);
-        send_notification2($message);
+        Log::info('Transfer Initiated', ['message' => $message]);
+
+        //        send_notification($message);
+
+
+//        send_notification_palmpay($message);
+//        send_notification2($message);
         //send_notification3($message);
 
 
@@ -2367,7 +2436,9 @@ class TransactionController extends Controller
 
 
             $message = "Transfer Payment Initiated |" . $request->ref . "| ON KUDA " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
-            send_notification($message);
+            Log::info('Transfer Initiated', ['message' => $message]);
+
+            //send_notification($message);
         }
 
     }
@@ -2401,7 +2472,9 @@ class TransactionController extends Controller
             $trasnaction->save();
 
             $message = "Transfer Payment Initiated |" . $request->ref . "| ON 9PSB " . "For " . $usr->last_name . " | " . number_format($trx->payable_amount, 2);
-            send_notification($message);
+            Log::info('Transfer Initiated', ['message' => $message]);
+
+            //send_notification($message);
 
             return response()->json([
                 'status' => true,
@@ -2448,11 +2521,14 @@ class TransactionController extends Controller
             $trasnaction->note = "WEBTRANSFER";
             $trasnaction->e_charges = 0;
             $trasnaction->enkPay_Cashout_profit = 0;
+            $trasnaction->pay_ref = $request->pay_ref;
             $trasnaction->status = 0;
             $trasnaction->save();
 
-            $message = "Transfer Payment Initiated |" . $request->ref . "| ON 9PSB " . "For " . $usr->last_name . " | " . number_format($trx->payable_amount, 2);
-            send_notification($message);
+            $message = "Transfer Payment Initiated |" . $request->pay_ref . "| ON WEMA " . "For " . $usr->last_name . " | " . number_format($trx->payable_amount, 2);
+            Log::info('Transfer Initiated', ['message' => $message]);
+
+            // send_notification($message);
 
             return response()->json([
                 'status' => true,
@@ -2482,11 +2558,38 @@ class TransactionController extends Controller
 
 
         $message = "Transfer Payment Initiated |" . $request->trx_id . "| ON 9PSB " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
-        send_notification($message);
+        Log::info('Transfer Initiated', ['message' => $message]);
+
+        // send_notification($message);
 
         $data['ref'] = $ref->manual_acc_ref;
         $data['account_no'] = $request->account_no;
         $data['amount'] = $ref->amount;
+        $data['title'] = "Payment Confirmation";
+
+        return view('waiting', $data);
+
+
+    }
+
+    public function verifywema(Request $request)
+    {
+
+        $ref = Webtransfer::where('trans_id', $request->trx_id)->first() ?? null;
+        $tref = Transfertransaction::where('ref_trans_id', $request->trx_id)->first() ?? null;
+        $usr = User::where('id', $ref->user_id)->first();
+
+
+        $message = "Transfer Payment Initiated |" . $request->trx_id . "| ON WEMA " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
+        Log::info('Transfer Initiated', ['message' => $message]);
+
+
+       // send_notification($message);
+
+        $data['ref'] = $ref->manual_acc_ref;
+        $data['account_no'] = $request->account_no;
+        $data['amount'] = $ref->amount;
+        $data['pref'] = $tref->pay_ref  ?? null;
         $data['title'] = "Payment Confirmation";
 
         return view('waiting', $data);

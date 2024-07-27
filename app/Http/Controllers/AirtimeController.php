@@ -469,31 +469,6 @@ class AirtimeController extends Controller
 
                         ]);
 
-                    if (!empty(user_email())) {
-                        //send email
-                        $data = array(
-                            'fromsender' => 'noreply@enkpay.com', 'EnkPay',
-                            'subject' => "Airtime Purchase",
-                            'toreceiver' => user_email(),
-                            'first_name' => first_name(),
-                            'amount' => $amount,
-                            'phone' => $phone,
-
-                        );
-
-                        Mail::send('emails.vas.airtime', ["data1" => $data], function ($message) use ($data) {
-                            $message->from($data['fromsender']);
-                            $message->to($data['toreceiver']);
-                            $message->subject($data['subject']);
-                        });
-
-                    }
-
-
-
-                    $name = Auth::user()->first_name." ".Auth::user()->last_name;
-                    $message = $name. " | NGN". $amount. " | " .$phone;
-                    send_error($message);
 
                     return response()->json([
 
@@ -505,7 +480,6 @@ class AirtimeController extends Controller
                 }
 
                 send_error($message);
-
                 User::where('id', Auth::id())->increment('main_wallet', $amount);
 
                 return response()->json([

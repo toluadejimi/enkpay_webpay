@@ -237,36 +237,20 @@ class DataController extends Controller
 
                     ]);
 
-                if (!empty(user_email())) {
-                    //send email
-                    $data = array(
-                        'fromsender' => 'noreply@enkpay.com', 'EnkPay',
-                        'subject' => "Airtime Purchase",
-                        'toreceiver' => user_email(),
-                        'first_name' => first_name(),
-                        'amount' => $amount,
-                        'phone' => $phone,
 
-                    );
-
-                    Mail::send('emails.vas.airtime', ["data1" => $data], function ($message) use ($data) {
-                        $message->from($data['fromsender']);
-                        $message->to($data['toreceiver']);
-                        $message->subject($data['subject']);
-                    });
-
-                }
 
                 return response()->json([
 
                     'status' => $this->success,
-                    'message' => 'Data Bundle Purchase Successfull',
+                    'message' => 'Data Bundle Purchase Successfully',
 
                 ], 200);
 
             }
 
-            send_error($message);
+            send_notification($message);
+
+
 
             return response()->json([
 

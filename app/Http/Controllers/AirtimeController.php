@@ -310,7 +310,10 @@ class AirtimeController extends Controller
                 $wallet = "main_account";
 
 
-                dd(Auth::id());
+                return response()->json([
+                    'status' => Auth::user()->first_name,
+                ], 500);
+
 
                 if ($wallet == 'main_account') {
                     $user_wallet_banlance = main_account();

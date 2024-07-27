@@ -53,6 +53,9 @@ Route::group(['middleware' => ['auth:api', 'acess']], function () {
 
 
     Route::post('buy-airtime',[AirtimeController::class, 'buy_airtime']);
+    Route::post('buy-ng-airtime',[AirtimeController::class, 'buy_ng_airtime']);
+
+
 
 
 });

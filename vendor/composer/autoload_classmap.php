@@ -63,6 +63,7 @@ return array(
     'App\\Providers\\EventServiceProvider' => $baseDir . '/app/Providers/EventServiceProvider.php',
     'App\\Providers\\HelperServiceProvider' => $baseDir . '/app/Providers/HelperServiceProvider.php',
     'App\\Providers\\RouteServiceProvider' => $baseDir . '/app/Providers/RouteServiceProvider.php',
+    'App\\Providers\\TelescopeServiceProvider' => $baseDir . '/app/Providers/TelescopeServiceProvider.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'BaconQrCode\\Common\\BitArray' => $vendorDir . '/bacon/bacon-qr-code/src/Common/BitArray.php',
     'BaconQrCode\\Common\\BitMatrix' => $vendorDir . '/bacon/bacon-qr-code/src/Common/BitMatrix.php',

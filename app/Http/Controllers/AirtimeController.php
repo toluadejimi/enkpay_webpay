@@ -310,18 +310,11 @@ class AirtimeController extends Controller
                 $wallet = "main_account";
 
 
-                return response()->json([
-                    'status' => Auth::user()->first_name,
-                ], 500);
-
-
                 if ($wallet == 'main_account') {
                     $user_wallet_banlance = main_account();
                 } else {
                     $user_wallet_banlance = bonus_account();
                 }
-
-                $user_pin = Auth()->user()->pin;
 
 
                 if ($amount < 100) {

@@ -251,7 +251,6 @@ class DataController extends Controller
             send_notification($message);
 
 
-
             return response()->json([
 
                 'status' => $this->failed,

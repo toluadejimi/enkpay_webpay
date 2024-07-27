@@ -54,6 +54,9 @@ Route::group(['middleware' => ['auth:api', 'acess']], function () {
 
     Route::post('buy-airtime',[AirtimeController::class, 'buy_airtime']);
     Route::post('buy-ng-airtime',[AirtimeController::class, 'buy_ng_airtime']);
+    Route::post('buy-data',[DataController::class, 'buy_data']);
+
+
 
 
 
@@ -74,8 +77,6 @@ Route::get('get-service-cost',[AirtimeController::class, 'get_service_cost']);
 
 
 Route::get('get-data',[DataController::class, 'get_data']);
-Route::post('buy-data',[DataController::class, 'buy_data']);
-
 
 
 

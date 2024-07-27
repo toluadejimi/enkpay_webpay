@@ -75,12 +75,7 @@ class DataController extends Controller
     {
 
 
-
-
-
         if (Auth::user()->status == 7) {
-
-
             return response()->json([
 
                 'status' => $this->failed,
@@ -104,41 +99,22 @@ class DataController extends Controller
 
 
 
-        return response()->json([
-
-            'status' => $this->failed,
-            'message' => 'Service unavailable at the moment!',
-
-        ], 500);
-
         try {
 
             $referenceCode = "ENK-" . random_int(1000000, 999999999);
-
             $auth = env('VTAUTH');
-
-
             $api_key = env('APIKEY');
             $po_key = env('PKKEY');
             $sk_key = env('SKKEY');
 
-
-
             $request_id = date('YmdHis') . Str::random(4);
 
             $serviceid = $request->service_id;
-
             $biller_code = preg_replace('/[^0-9]/', '', $request->phone);
-
             $phone = preg_replace('/[^0-9]/', '', $request->phone);
-
             $variation_code = $request->variation_code;
-
             $amount = round($request->variation_amount);
-
             $wallet = $request->wallet;
-
-            $pin = $request->pin;
 
 
             $user_blance = Auth::user()->main_wallet;
@@ -154,54 +130,14 @@ class DataController extends Controller
 
 
             if ($wallet == 'main_account') {
-                $user_wallet_banlance = main_account();
+                $user_wallet_banlance = Auth::user()->main_wallet;
             } else {
-                $user_wallet_banlance = bonus_account();
+                $user_wallet_banlance = Auth::user()->bonus_wallet;;
             }
 
-            $user_pin = Auth()->user()->pin;
 
-            if (Hash::check($pin, $user_pin) == false) {
-
-                return response()->json([
-
-                    'status' => $this->failed,
-                    'message' => 'Invalid Pin, Please try again',
-
-                ], 500);
-            }
-
-            if (Auth::user()->b_number == 6) {
-
-                return response()->json([
-
-                    'status' => $this->failed,
-                    'message' => 'You dont have the permission to make transfer',
-
-                ], 500);
-            }
 
             if ($amount > $user_wallet_banlance) {
-
-                if (!empty(user_email())) {
-
-                    $data = array(
-                        'fromsender' => 'noreply@enkpay.com', 'EnkPay',
-                        'subject' => "Low Balance",
-                        'toreceiver' => user_email(),
-                        'first_name' => first_name(),
-                        'amount' => $amount,
-                        'phone' => $phone,
-                        'balance' => $user_wallet_banlance,
-
-                    );
-
-                    Mail::send('emails.notify.lowbalalce', ["data1" => $data], function ($message) use ($data) {
-                        $message->from($data['fromsender']);
-                        $message->to($data['toreceiver']);
-                        $message->subject($data['subject']);
-                    });
-                }
 
                 return response()->json([
 
@@ -243,14 +179,12 @@ class DataController extends Controller
             curl_close($curl);
 
             $var = json_decode($var);
-
             $trx_id = $var->requestId ?? null;
-
             $get_message = $var->response_description ?? null;
-
-            $message = "Error Mesage from VAS DATA BUNDLE - $get_message";
-
+            $message = "Error Message from VAS DATA BUNDLE - $get_message";
             $status = $var->response_description ?? null;
+
+
 
             if ($status == 'TRANSACTION SUCCESSFUL') {
 
@@ -283,7 +217,7 @@ class DataController extends Controller
                 $transaction = new Transaction();
                 $transaction->user_id = Auth::id();
                 $transaction->ref_trans_id = $referenceCode;
-                $transaction->transaction_type = "VasData";
+                $transaction->transaction_type = "VasData API";
                 $transaction->type = "vas";
                 $transaction->balance = $balance;
                 $transaction->debit = $amount;
@@ -337,7 +271,7 @@ class DataController extends Controller
             return response()->json([
 
                 'status' => $this->failed,
-                'message' => 'Service unavilable please try again later',
+                'message' => 'Service unavailable please try again later',
 
             ], 500);
 

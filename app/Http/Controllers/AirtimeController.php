@@ -398,10 +398,6 @@ class AirtimeController extends Controller
                 }
 
 
-                $name = Auth::user()->first_name." ".Auth::user()->last_name;
-                $message = $name. " Wants to buy recharge card | NGN". $amount. " | " .$phone;
-                send_error($message);
-
 
 
 
@@ -431,6 +427,10 @@ class AirtimeController extends Controller
                 ));
 
                 $var = curl_exec($curl);
+
+
+                dd($var);
+
                 curl_close($curl);
 
                 $var = json_decode($var);

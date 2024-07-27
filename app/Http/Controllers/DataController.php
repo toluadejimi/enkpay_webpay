@@ -60,7 +60,7 @@ class DataController extends Controller
                 'mtn_data' => $get_mtn_network,
                 'glo_data' => $get_glo_network,
                 'airtel_data' => $get_airtel_network,
-                '9mobile_data' => $get_9mobile_network,
+                'ninemobile_data' => $get_9mobile_network,
                 'smile_data' => $get_smile_network,
                 'spectranet_data' => $get_spectranet_network,
             ], 200);

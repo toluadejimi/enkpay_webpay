@@ -429,7 +429,6 @@ class AirtimeController extends Controller
                 $var = curl_exec($curl);
 
 
-                dd($var);
 
                 curl_close($curl);
 

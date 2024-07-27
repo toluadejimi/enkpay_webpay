@@ -311,9 +311,9 @@ class AirtimeController extends Controller
 
 
                 if ($wallet == 'main_account') {
-                    $user_wallet_banlance = main_account();
+                    $user_wallet_banlance = Auth::user()->main_wallet;
                 } else {
-                    $user_wallet_banlance = bonus_account();
+                    $user_wallet_banlance = Auth::user()->bonus_wallet;;
                 }
 
 

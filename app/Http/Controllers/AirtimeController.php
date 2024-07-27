@@ -333,6 +333,7 @@ class AirtimeController extends Controller
                     return response()->json([
                         'status' => $this->failed,
                         'message' => 'Insufficient Funds, Fund your main wallet',
+                        'balance' => $user_blance
                     ], 500);
 
                 }

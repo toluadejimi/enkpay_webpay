@@ -113,7 +113,7 @@ class DataController extends Controller
             $biller_code = preg_replace('/[^0-9]/', '', $request->phone);
             $phone = preg_replace('/[^0-9]/', '', $request->phone);
             $variation_code = $request->variation_code;
-            $amount = round($request->variation_amount);
+            $amount = round($request->amount);
             $wallet = $request->wallet;
 
 
@@ -148,6 +148,19 @@ class DataController extends Controller
 
             }
 
+            $databody = array(
+                'request_id' => $request_id,
+                'variation_code' => $variation_code,
+                'variation_amount' => $amount,
+                'serviceID' => $serviceid,
+                'amount' => $amount,
+                'biller_code' => $biller_code,
+                'phone' => $phone,
+
+            );
+
+            $body = json_encode($databody);
+
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
@@ -159,15 +172,7 @@ class DataController extends Controller
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => array(
-                    'request_id' => $request_id,
-                    'variation_code' => $variation_code,
-                    'variation_amount' => $amount,
-                    'serviceID' => $serviceid,
-                    'amount' => $amount,
-                    'biller_code' => $biller_code,
-                    'phone' => $phone,
-                ),
+                CURLOPT_POSTFIELDS => $body,
                 CURLOPT_HTTPHEADER => array(
                     // "Authorization: Basic $auth=",
                     "api-key: $api_key",
@@ -178,7 +183,7 @@ class DataController extends Controller
 
             $var = curl_exec($curl);
 
-            dd($var);
+            dd($var, $body);
 
             curl_close($curl);
 

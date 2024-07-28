@@ -184,9 +184,6 @@ class DataController extends Controller
             ));
 
             $var = curl_exec($curl);
-
-            dd($var, $body);
-
             curl_close($curl);
 
             $var = json_decode($var);

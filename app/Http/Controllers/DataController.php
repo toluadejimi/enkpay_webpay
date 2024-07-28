@@ -117,6 +117,8 @@ class DataController extends Controller
             $wallet = $request->wallet;
 
 
+            dd($request->all());
+
             $user_blance = Auth::user()->main_wallet;
 
             if ($amount > $user_blance) {

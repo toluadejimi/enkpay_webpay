@@ -120,7 +120,6 @@ class DataController extends Controller
 
             $user_blance = Auth::user()->main_wallet;
 
-            dd(Auth::user()->main_wallet, $amount);
 
             if ($amount > $user_blance) {
                 return response()->json([
@@ -131,14 +130,7 @@ class DataController extends Controller
             }
 
 
-
-            if ($wallet == 'main_account') {
-                $user_wallet_banlance = Auth::user()->main_wallet;
-            } else {
-                $user_wallet_banlance = Auth::user()->bonus_wallet;;
-            }
-
-
+             $user_wallet_banlance = Auth::user()->main_wallet;
 
             if ($amount > $user_wallet_banlance) {
 

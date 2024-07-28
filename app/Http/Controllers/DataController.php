@@ -166,7 +166,15 @@ class DataController extends Controller
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => $body,
+                CURLOPT_POSTFIELDS => array(
+                    "request_id" => $request_id,
+                    "variation_code" => $variation_code,
+                    "variation_amount" => $amount,
+                    "serviceID" => $serviceid,
+                    "amount" => $amount,
+                    "biller_code" => $biller_code,
+                    "phone" => $phone,
+                ),
                 CURLOPT_HTTPHEADER => array(
                     // "Authorization: Basic $auth=",
                     "api-key: $api_key",

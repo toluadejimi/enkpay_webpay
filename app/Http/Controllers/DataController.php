@@ -108,7 +108,6 @@ class DataController extends Controller
             $sk_key = env('SKKEY');
 
             $request_id = date('YmdHis') . Str::random(4);
-
             $serviceid = $request->service_id;
             $biller_code = preg_replace('/[^0-9]/', '', $request->phone);
             $phone = preg_replace('/[^0-9]/', '', $request->phone);
@@ -144,13 +143,13 @@ class DataController extends Controller
             }
 
             $databody = array(
-                'request_id' => $request_id,
-                'variation_code' => $variation_code,
-                'variation_amount' => $amount,
-                'serviceID' => $serviceid,
-                'amount' => $amount,
-                'biller_code' => $biller_code,
-                'phone' => $phone,
+                "request_id" => $request_id,
+                "variation_code" => $variation_code,
+                "variation_amount" => $amount,
+                "serviceID" => $serviceid,
+                "amount" => $amount,
+                "biller_code" => $biller_code,
+                "phone" => $phone,
 
             );
 

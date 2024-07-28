@@ -113,7 +113,7 @@ class DataController extends Controller
             $biller_code = preg_replace('/[^0-9]/', '', $request->phone);
             $phone = preg_replace('/[^0-9]/', '', $request->phone);
             $variation_code = $request->variation_code;
-            $amount = round($request->amount);
+            $amount = $request->amount;
             $wallet = $request->wallet;
 
 

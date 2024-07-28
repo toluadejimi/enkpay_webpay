@@ -162,6 +162,7 @@ class DataController extends Controller
                 CURLOPT_POSTFIELDS => array(
                     'request_id' => $request_id,
                     'variation_code' => $variation_code,
+                    'variation_amount' => $amount,
                     'serviceID' => $serviceid,
                     'amount' => $amount,
                     'biller_code' => $biller_code,

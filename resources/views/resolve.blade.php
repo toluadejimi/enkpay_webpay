@@ -48,9 +48,6 @@
             <form action="submit-resolve" enctype="multipart/form-data" method="POST">
                 @csrf
 
-
-                <label>Reasons</label>
-
                 @if ($errors->any())
                     <div class="alert alert-danger my-4">
                         <ul>
@@ -71,14 +68,25 @@
                     </div>
                 @endif
 
-
+                <label>Reasons</label>
                 <select class="form-control" name="subject" required>
-
                     <option value=""> Select Reasons</option>
                     <option value="1"> I Didn't Add Refrence</option>
                     <option value="2"> I entered wrong amount</option>
                     <option value="3"> I added valid Refrence but not processed</option>
 
+                </select>
+
+                <hr>
+
+
+                <label>Select Bank Paid to</label>
+                <select class="form-control" name="pay_type" required>
+                    <option value=""> Select Bank </option>
+                    <option value="opay"> OPAY</option>
+                    <option value="palmpay">Palmpay</option>
+                    <option value="psb">9PSB</option>
+                    <option value="wema">9PSB</option>
                 </select>
 
 
@@ -162,7 +170,7 @@
 
                 <hr>
                 <label>Upload Bank Receipt</label>
-                <input name="receipt" type="file" class="form-control" placeholder="add recepit" required>
+                <input name="receipt" type="file" accept=".png, .jpeg, .jpg, .pdf" class="form-control" placeholder="add recepit" required>
 
 
                 <hr>

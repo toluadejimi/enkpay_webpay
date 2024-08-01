@@ -115,8 +115,6 @@ class DataController extends Controller
             $amount = $request->amount;
             $wallet = $request->wallet;
 
-
-
             $user_blance = Auth::user()->main_wallet;
 
 
@@ -278,6 +276,7 @@ class DataController extends Controller
         }
 
     }
+
 
 
 

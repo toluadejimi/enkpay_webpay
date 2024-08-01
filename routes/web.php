@@ -37,6 +37,10 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('/custom-log-viewer', [LogViewerController::class, 'index']);
 
 
+Route::post('session-check', [TransactionController::class, 'session_check']);
+
+
+
 Route::post('verifypsb', [TransactionController::class, 'verifypsb']);
 Route::post('verifywema', [TransactionController::class, 'verifywema']);
 

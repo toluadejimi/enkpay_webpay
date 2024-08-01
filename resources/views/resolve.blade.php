@@ -86,7 +86,7 @@
                     <option value="opay"> OPAY</option>
                     <option value="palmpay">Palmpay</option>
                     <option value="psb">9PSB</option>
-                    <option value="wema">9PSB</option>
+                    <option value="wema">Wema</option>
                 </select>
 
 

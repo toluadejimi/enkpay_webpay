@@ -665,10 +665,10 @@ class VerifyController extends Controller
 
 
         $request->validate([
-            'file' => 'required|file|mimes:png,jpeg,jpg,pdf|max:2048', // max size 2MB
+            'receipt' => 'required|file|mimes:png,jpeg,jpg,pdf|max:2048', // max size 2MB
         ], [
-            'file.mimes' => 'Only png, jpeg, jpg, and pdf files are allowed.',
-            'file.max' => 'The file size may not be greater than 2MB.',
+            'receipt.mimes' => 'Only png, jpeg, jpg, and pdf files are allowed.',
+            'receipt.max' => 'The file size may not be greater than 2MB.',
         ]);
 
 

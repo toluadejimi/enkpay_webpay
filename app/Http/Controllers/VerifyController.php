@@ -667,8 +667,6 @@ class VerifyController extends Controller
         if ($request->pay_type == "psb") {
             $status = Transfertransaction::where('session_id', $request->t_session)->first()->status ?? null;
 
-            dd($status);
-
             if ($status == 4) {
                 return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
             }
@@ -703,6 +701,8 @@ class VerifyController extends Controller
                     $var = curl_exec($curl);
                     curl_close($curl);
                     $var = json_decode($var);
+
+                    dd($var->amount);
 
                     $session_id = $var->session_id  ?? null;
                     $acct_no = $var->account_no ?? null;

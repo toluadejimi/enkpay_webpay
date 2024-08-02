@@ -732,7 +732,7 @@ class VerifyController extends Controller
 
 
 
-                        dd($urlkey);
+
 
                         $trx = new Transfertransaction();
                         $trx->amount = $amt;
@@ -754,6 +754,8 @@ class VerifyController extends Controller
                             $f_amount = $amt - $charge;
                         }
 
+
+                        dd($f_amount);
 
                         User::where('id', $urlkey)->increment('main_wallet', $f_amount);
                         $balance = User::where('id', $urlkey)->first()->main_wallet;

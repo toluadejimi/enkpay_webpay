@@ -754,6 +754,8 @@ class VerifyController extends Controller
 
 
 
+
+
                         User::where('id', $urlkey)->increment('main_wallet', $f_amount);
                         $balance = User::where('id', $urlkey)->first()->main_wallet;
                         $user = User::where('id', $urlkey)->first();
@@ -766,6 +768,7 @@ class VerifyController extends Controller
                         $site_name = Webkey::where('user_id', $urlkey)->first()->site_name ?? null;
 
 
+                        dd($url, $user_email, $amount, $order_id, $site_name);
 
                         //fund user
                         $fund = credit_user_wallet($url, $user_email, $amount, $order_id);

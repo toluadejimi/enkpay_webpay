@@ -704,6 +704,8 @@ class VerifyController extends Controller
                     $acct_no = $var->account_no ?? null;
                     $amt = $var->amount ?? null;
 
+                    dd($var);
+
 
                     if ($var == 0) {
                         return back()->with('error', 'Session Check failed, Kindly verify the sessionID  and try again');
@@ -725,6 +727,8 @@ class VerifyController extends Controller
 
 
                         $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
+
+
 
 
                         dd($urlkey);

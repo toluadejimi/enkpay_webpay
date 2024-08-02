@@ -730,20 +730,16 @@ class VerifyController extends Controller
                         $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
 
 
-
-
-
-
-                        $trx = new Transfertransaction();
-                        $trx->amount = $amt;
-                        $trx->account_no = $acct_no;
-                        $trx->amount = $amt;
-                        $trx->e_ref = $var->session_id;
-                        $trx->ref_trans_id = $session_id;
-                        $trx->session_id = $session_id;
-                        $trx->status = 4;
-                        $trx->user_id = $urlkey;
-                        $trx->save();
+//                        $trx = new Transfertransaction();
+//                        $trx->amount = $amt;
+//                        $trx->account_no = $acct_no;
+//                        $trx->amount = $amt;
+//                        $trx->e_ref = $var->session_id;
+//                        $trx->ref_trans_id = $session_id;
+//                        $trx->session_id = $session_id;
+//                        $trx->status = 4;
+//                        $trx->user_id = $urlkey;
+//                        $trx->save();
 
 
                         //fund Vendor
@@ -756,6 +752,7 @@ class VerifyController extends Controller
 
 
                         dd($f_amount);
+
 
                         User::where('id', $urlkey)->increment('main_wallet', $f_amount);
                         $balance = User::where('id', $urlkey)->first()->main_wallet;

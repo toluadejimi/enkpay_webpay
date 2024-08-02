@@ -699,8 +699,6 @@ class VerifyController extends Controller
                     $var = curl_exec($curl);
                     curl_close($curl);
 
-                    dd($var);
-
 
                     if ($var == 0) {
                         return back()->with('error', 'Session Check failed, Kindly verify the sessionID  and try again');
@@ -726,6 +724,9 @@ class VerifyController extends Controller
 
 
                         $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
+
+
+                        dd($urlkey);
 
                         $trx = new Transfertransaction();
                         $trx->amount = $var->amount;

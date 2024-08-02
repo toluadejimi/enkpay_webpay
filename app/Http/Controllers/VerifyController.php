@@ -702,7 +702,7 @@ class VerifyController extends Controller
                     curl_close($curl);
                     $var = json_decode($var);
 
-                    dd($var->amount);
+
 
                     $session_id = $var->session_id  ?? null;
                     $acct_no = $var->account_no ?? null;
@@ -715,6 +715,9 @@ class VerifyController extends Controller
                     if ($status == false) {
                         return back()->with('error', 'Session Check failed, Kindly verify the sessionID  and try again');
                     }
+
+
+                dd($var->amount);
 
                     if ($session_id == $request->t_session) {
 

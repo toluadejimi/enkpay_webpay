@@ -739,7 +739,7 @@ class VerifyController extends Controller
                         $trx->e_ref = $var->session_id;
                         $trx->ref_trans_id = $session_id;
                         $trx->session_id = $session_id;
-                        $trx->status = 4;
+                        //$trx->status = 4;
                         $trx->user_id = $urlkey;
                         $trx->save();
 

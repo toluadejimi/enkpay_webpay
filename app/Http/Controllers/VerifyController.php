@@ -730,16 +730,16 @@ class VerifyController extends Controller
                         $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
 
 
-//                        $trx = new Transfertransaction();
-//                        $trx->amount = $amt;
-//                        $trx->account_no = $acct_no;
-//                        $trx->amount = $amt;
-//                        $trx->e_ref = $var->session_id;
-//                        $trx->ref_trans_id = $session_id;
-//                        $trx->session_id = $session_id;
-//                        $trx->status = 4;
-//                        $trx->user_id = $urlkey;
-//                        $trx->save();
+                        $trx = new Transfertransaction();
+                        $trx->amount = $amt;
+                        $trx->account_no = $acct_no;
+                        $trx->amount = $amt;
+                        $trx->e_ref = $var->session_id;
+                        $trx->ref_trans_id = $session_id;
+                        $trx->session_id = $session_id;
+                        $trx->status = 4;
+                        $trx->user_id = $urlkey;
+                        $trx->save();
 
 
                         //fund Vendor
@@ -750,8 +750,6 @@ class VerifyController extends Controller
                             $f_amount = $amt - $charge;
                         }
 
-
-                        dd($f_amount);
 
 
                         User::where('id', $urlkey)->increment('main_wallet', $f_amount);
@@ -795,7 +793,7 @@ class VerifyController extends Controller
                             // send_notification($message);
 
                             $date = date('d M Y H:i:s');
-                            $message = $account_no . " | NGN  $amt | $request->email  | $site_name | $date | has been funded";
+                            $message = $acct_no . " | NGN  $amt | $request->email  | $site_name | $date | has been funded";
                             Log::info('User Funded', ['message' => $message]);
                             //send_notification($message);
 
@@ -821,10 +819,7 @@ class VerifyController extends Controller
 
             }
 
-
-
-
-
+            return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
 
 
         }

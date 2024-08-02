@@ -664,12 +664,162 @@ class VerifyController extends Controller
         }
 
 
-        $request->validate([
-            'receipt' => 'required|file|mimes:png,jpeg,jpg,pdf|max:2048', // max size 2MB
-        ], [
-            'receipt.mimes' => 'Only png, jpeg, jpg, and pdf files are allowed.',
-            'receipt.max' => 'The file size may not be greater than 2MB.',
-        ]);
+        if ($request->pay_type == "psb") {
+            $status = Transfertransaction::where('session_id', $request->t_session)->first()->status ?? null;
+
+
+            if ($status == null) {
+                return back()->with('error', 'Session Check failed, Kindly verify the sessionID  and try again');
+            }
+
+            if ($status == 4) {
+                return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
+            }
+
+
+            try {
+
+                $curl = curl_init();
+                $data = array(
+                    'session_id' => $request->t_session,
+                );
+                $post_data = json_encode($data);
+
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'https://etopagency.com/api/session-check',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => $post_data,
+                    CURLOPT_HTTPHEADER => array(
+                        'Content-Type: application/json'
+                    ),
+                ));
+
+                $var = curl_exec($curl);
+                curl_close($curl);
+
+
+                if ($var == 0) {
+                    return back()->with('error', 'Session Check failed, Kindly verify the sessionID  and try again');
+                }
+
+                if ($var->session_id == $request->t_session) {
+
+                    $acc_no = $var->account_no;
+                    $amount = $var->amount;
+
+                    $set = Setting::where('id', 1)->first();
+
+                    if ($var->amount > 15000) {
+                        $p_amount = $var->amount - $set->psb_cap;
+                    } else {
+                        $p_amount = $var->amount - $set->psb_charge;
+                    }
+
+                    $status = Transfertransaction::where('account_no', $var->account_no)->first()->status ?? null;
+                    if ($status == 4) {
+                        return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
+                    }
+
+
+                    $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
+
+                    $trx = new Transfertransaction();
+                    $trx->amount = $var->amount;
+                    $trx->account_no = $var->account_no;
+                    $trx->amount = $var->amount;
+                    $trx->amount = $var->amount;
+                    $trx->e_ref = $var->session_id;
+                    $trx->ref_trans_id = $var->session_id;
+                    $trx->session_id = $var->session_id;
+                    $trx->status = 4;
+                    $trx->user_id = $urlkey;
+                    $trx->save();
+
+
+                    //fund Vendor
+                    $charge = Setting::where('id', 1)->first()->webpay_transfer_charge;
+                    if ($var->amount <= 100) {
+                        $f_amount = $var->amount;
+                    } else {
+                        $f_amount = $var->amount - $charge;
+                    }
+
+
+                    User::where('id', $urlkey)->increment('main_wallet', $f_amount);
+                    $balance = User::where('id', $urlkey)->first()->main_wallet;
+                    $user = User::where('id', $urlkey)->first();
+
+
+                    $url = Webkey::where('user_id', $urlkey)->first()->url_fund ?? null;
+                    $user_email = $request->email ?? null;
+                    $amount = $var->amount ?? null;
+                    $order_id = $trx->ref_trans_id ?? null;
+                    $site_name = Webkey::where('user_id', $urlkey)->first()->site_name ?? null;
+
+
+                    //fund user
+                    $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
+                    if ($fund == 2) {
+
+                        //update Transactions
+                        $trasnaction = new Transaction();
+                        $trasnaction->user_id = $urlkey;
+                        $trasnaction->e_ref = $request->sessionid;
+                        $trasnaction->ref_trans_id = $request->sessionid;
+                        $trasnaction->type = "webpay";
+                        $trasnaction->transaction_type = "VirtualFundWallet";
+                        $trasnaction->title = "Wallet Funding";
+                        $trasnaction->main_type = "Transfer";
+                        $trasnaction->credit = $f_amount;
+                        $trasnaction->note = "Transaction Successful | Web Pay ";
+                        $trasnaction->fee = $charge ?? 0;
+                        $trasnaction->amount = $var->amount;
+                        $trasnaction->e_charges = 0;
+                        $trasnaction->enkPay_Cashout_profit = 0;
+                        $trasnaction->balance = $balance;
+                        $trasnaction->status = 1;
+                        $trasnaction->save();
+
+                        $message = "Business funded | $request->sessionid | $f_amount | $user->first_name " . " " . $user->last_name;
+                        Log::info('Business Funded', ['message' => $message]);
+
+                        // send_notification($message);
+
+                        $date = date('d M Y H:i:s');
+                        $message = $var->account_no . " | NGN  $var->amount | $request->email  | $site_name | $date | has been funded";
+                        Log::info('User Funded', ['message' => $message]);
+                        //send_notification($message);
+
+                        $data['trans'] = $request->sessionid;
+                        $data['wc']= "paymenty";
+                        $data['url']= $url;
+
+
+                        return view('success',$data);
+
+
+                    }
+
+
+
+
+                }
+
+
+            } catch(QueryException $e) {
+                echo "$e";
+            }
+
+
+        }
+
+
 
 
         if ($request->receipt != null) {
@@ -681,160 +831,7 @@ class VerifyController extends Controller
             $file_url = url('') . "/public/upload/receipt/$fileName";
 
 
-            if ($request->pay_type == "psb") {
-                $status = Transfertransaction::where('session_id', $request->t_session)->first()->status ?? null;
 
-
-                if ($status == null) {
-                    return back()->with('error', 'Session Check failed, Kindly verify the sessionID  and try again');
-                }
-
-                if ($status == 4) {
-                    return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
-                }
-
-
-                try {
-
-                    $curl = curl_init();
-                    $data = array(
-                        'session_id' => $request->t_session,
-                    );
-                    $post_data = json_encode($data);
-
-                    curl_setopt_array($curl, array(
-                        CURLOPT_URL => 'https://etopagency.com/api/session-check',
-                        CURLOPT_RETURNTRANSFER => true,
-                        CURLOPT_ENCODING => '',
-                        CURLOPT_MAXREDIRS => 10,
-                        CURLOPT_TIMEOUT => 0,
-                        CURLOPT_FOLLOWLOCATION => true,
-                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                        CURLOPT_CUSTOMREQUEST => 'POST',
-                        CURLOPT_POSTFIELDS => $post_data,
-                        CURLOPT_HTTPHEADER => array(
-                            'Content-Type: application/json'
-                        ),
-                    ));
-
-                    $var = curl_exec($curl);
-                    curl_close($curl);
-
-
-                    if ($var == 0) {
-                        return back()->with('error', 'Session Check failed, Kindly verify the sessionID  and try again');
-                    }
-
-                    if ($var->session_id == $request->t_session) {
-
-                        $acc_no = $var->account_no;
-                        $amount = $var->amount;
-
-                        $set = Setting::where('id', 1)->first();
-
-                        if ($var->amount > 15000) {
-                            $p_amount = $var->amount - $set->psb_cap;
-                        } else {
-                            $p_amount = $var->amount - $set->psb_charge;
-                        }
-
-                        $status = Transfertransaction::where('account_no', $var->account_no)->first()->status ?? null;
-                        if ($status == 4) {
-                            return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
-                        }
-
-
-                        $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
-
-                        $trx = new Transfertransaction();
-                        $trx->amount = $var->amount;
-                        $trx->account_no = $var->account_no;
-                        $trx->amount = $var->amount;
-                        $trx->amount = $var->amount;
-                        $trx->e_ref = $var->session_id;
-                        $trx->ref_trans_id = $var->session_id;
-                        $trx->session_id = $var->session_id;
-                        $trx->status = 4;
-                        $trx->user_id = $urlkey;
-                        $trx->save();
-
-
-                        //fund Vendor
-                        $charge = Setting::where('id', 1)->first()->webpay_transfer_charge;
-                        if ($var->amount <= 100) {
-                            $f_amount = $var->amount;
-                        } else {
-                            $f_amount = $var->amount - $charge;
-                        }
-
-
-                        User::where('id', $urlkey)->increment('main_wallet', $f_amount);
-                        $balance = User::where('id', $urlkey)->first()->main_wallet;
-                        $user = User::where('id', $urlkey)->first();
-
-
-                        $url = Webkey::where('user_id', $urlkey)->first()->url_fund ?? null;
-                        $user_email = $request->email ?? null;
-                        $amount = $var->amount ?? null;
-                        $order_id = $trx->ref_trans_id ?? null;
-                        $site_name = Webkey::where('user_id', $urlkey)->first()->site_name ?? null;
-
-
-                        //fund user
-                        $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
-                        if ($fund == 2) {
-
-                            //update Transactions
-                            $trasnaction = new Transaction();
-                            $trasnaction->user_id = $urlkey;
-                            $trasnaction->e_ref = $request->sessionid;
-                            $trasnaction->ref_trans_id = $request->sessionid;
-                            $trasnaction->type = "webpay";
-                            $trasnaction->transaction_type = "VirtualFundWallet";
-                            $trasnaction->title = "Wallet Funding";
-                            $trasnaction->main_type = "Transfer";
-                            $trasnaction->credit = $f_amount;
-                            $trasnaction->note = "Transaction Successful | Web Pay ";
-                            $trasnaction->fee = $charge ?? 0;
-                            $trasnaction->amount = $var->amount;
-                            $trasnaction->e_charges = 0;
-                            $trasnaction->enkPay_Cashout_profit = 0;
-                            $trasnaction->balance = $balance;
-                            $trasnaction->status = 1;
-                            $trasnaction->save();
-
-                            $message = "Business funded | $request->sessionid | $f_amount | $user->first_name " . " " . $user->last_name;
-                            Log::info('Business Funded', ['message' => $message]);
-
-                            // send_notification($message);
-
-                            $date = date('d M Y H:i:s');
-                            $message = $var->account_no . " | NGN  $var->amount | $request->email  | $site_name | $date | has been funded";
-                            Log::info('User Funded', ['message' => $message]);
-                            //send_notification($message);
-
-                            $data['trans'] = $request->sessionid;
-                            $data['wc']= "paymenty";
-                            $data['url']= $url;
-
-
-                            return view('success',$data);
-
-
-                        }
-
-
-
-
-                    }
-
-
-                } catch(QueryException $e) {
-                    echo "$e";
-                }
-
-
-            }
 
             $tk = new ResolveOrder();
             $tk->email = $request->email;

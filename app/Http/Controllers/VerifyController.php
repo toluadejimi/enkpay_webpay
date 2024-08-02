@@ -703,11 +703,12 @@ class VerifyController extends Controller
                     $session_id = $var->session_id  ?? null;
                     $acct_no = $var->account_no ?? null;
                     $amt = $var->amount ?? null;
+                    $status = $var ?? null;
 
-                    dd($var);
 
 
-                    if ($var == 0) {
+
+                    if ($status == 0) {
                         return back()->with('error', 'Session Check failed, Kindly verify the sessionID  and try again');
                     }
 

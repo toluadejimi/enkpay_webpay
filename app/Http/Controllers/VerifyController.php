@@ -698,26 +698,27 @@ class VerifyController extends Controller
 
                     $var = curl_exec($curl);
                     curl_close($curl);
+                    $var = json_decode($var);
+
+                    $session_id = $var->session_id  ?? null;
+                    $acct_no = $var->account_no ?? null;
+                    $amt = $var->amount ?? null;
 
 
                     if ($var == 0) {
                         return back()->with('error', 'Session Check failed, Kindly verify the sessionID  and try again');
                     }
 
-                    if ($var->session_id == $request->t_session) {
-
-                        $acc_no = $var->account_no;
-                        $amount = $var->amount;
+                    if ($session_id == $request->t_session) {
 
                         $set = Setting::where('id', 1)->first();
-
-                        if ($var->amount > 15000) {
-                            $p_amount = $var->amount - $set->psb_cap;
+                        if ($amt > 15000) {
+                            $p_amount = $amt - $set->psb_cap;
                         } else {
-                            $p_amount = $var->amount - $set->psb_charge;
+                            $p_amount = $amt - $set->psb_charge;
                         }
 
-                        $status = Transfertransaction::where('account_no', $var->account_no)->first()->status ?? null;
+                        $status = Transfertransaction::where('account_no', $acct_no)->first()->status ?? null;
                         if ($status == 4) {
                             return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
                         }
@@ -729,13 +730,12 @@ class VerifyController extends Controller
                         dd($urlkey);
 
                         $trx = new Transfertransaction();
-                        $trx->amount = $var->amount;
-                        $trx->account_no = $var->account_no;
-                        $trx->amount = $var->amount;
-                        $trx->amount = $var->amount;
+                        $trx->amount = $amt;
+                        $trx->account_no = $acct_no;
+                        $trx->amount = $amt;
                         $trx->e_ref = $var->session_id;
-                        $trx->ref_trans_id = $var->session_id;
-                        $trx->session_id = $var->session_id;
+                        $trx->ref_trans_id = $session_id;
+                        $trx->session_id = $session_id;
                         $trx->status = 4;
                         $trx->user_id = $urlkey;
                         $trx->save();
@@ -743,10 +743,10 @@ class VerifyController extends Controller
 
                         //fund Vendor
                         $charge = Setting::where('id', 1)->first()->webpay_transfer_charge;
-                        if ($var->amount <= 100) {
-                            $f_amount = $var->amount;
+                        if ($amt <= 100) {
+                            $f_amount = $amt;
                         } else {
-                            $f_amount = $var->amount - $charge;
+                            $f_amount = $amt - $charge;
                         }
 
 
@@ -757,8 +757,8 @@ class VerifyController extends Controller
 
                         $url = Webkey::where('user_id', $urlkey)->first()->url_fund ?? null;
                         $user_email = $request->email ?? null;
-                        $amount = $var->amount ?? null;
-                        $order_id = $trx->ref_trans_id ?? null;
+                        $amount = $amt ?? null;
+                        $order_id = $session_id ?? null;
                         $site_name = Webkey::where('user_id', $urlkey)->first()->site_name ?? null;
 
 
@@ -778,7 +778,7 @@ class VerifyController extends Controller
                             $trasnaction->credit = $f_amount;
                             $trasnaction->note = "Transaction Successful | Web Pay ";
                             $trasnaction->fee = $charge ?? 0;
-                            $trasnaction->amount = $var->amount;
+                            $trasnaction->amount = $amt;
                             $trasnaction->e_charges = 0;
                             $trasnaction->enkPay_Cashout_profit = 0;
                             $trasnaction->balance = $balance;
@@ -791,7 +791,7 @@ class VerifyController extends Controller
                             // send_notification($message);
 
                             $date = date('d M Y H:i:s');
-                            $message = $var->account_no . " | NGN  $var->amount | $request->email  | $site_name | $date | has been funded";
+                            $message = $account_no . " | NGN  $amt | $request->email  | $site_name | $date | has been funded";
                             Log::info('User Funded', ['message' => $message]);
                             //send_notification($message);
 

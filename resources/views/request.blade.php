@@ -49,6 +49,8 @@
                     <a href="/wrong-amount" class="btn btn-secondary">Wrong Amount</a>
                     <a href="/hold" class="btn btn-warning">Hold</a>
                     <a href="/approved" class="btn btn-success">Approved</a>
+                    <a href="/payments" class="btn btn-success">Payments</a>
+
 
 
                 </div>

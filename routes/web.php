@@ -29,6 +29,12 @@ Route::get('/', function () {
 
 
 
+Route::get('payment-search', [TransactionController::class, 'payment_search']);
+
+
+
+
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 });
@@ -176,6 +182,11 @@ Route::get('open-ticket', [VerifyController::class, 'open_ticket']);
 Route::any('submit-resolve', [VerifyController::class, 'submit_resolve']);
 Route::any('track-request', [VerifyController::class, 'track_request_view']);
 Route::any('request-order', [VerifyController::class, 'request_order']);
+
+Route::any('payments', [TransactionController::class, 'payment_view']);
+
+
+
 
 
 

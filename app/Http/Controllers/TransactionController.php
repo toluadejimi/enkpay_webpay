@@ -2597,4 +2597,60 @@ class TransactionController extends Controller
 
     }
 
+
+    public function payment_view(request $request)
+    {
+
+
+        $query = $request->get('query');
+        $title = "Payments";
+
+        $data = Transfertransaction::when($query, function ($queryBuilder, $query) {
+            return $queryBuilder->where('email', 'LIKE', "%{$query}%")
+                ->orWhere('bank', 'LIKE', "%{$query}%")
+                ->orWhere('amount', 'LIKE', "%{$query}%");
+        })
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        if ($request->ajax()) {
+            return view('partials.table', compact('data'))->render();
+        }
+
+        return view('payments', compact('data', 'title'));
+
+
+
+
+    }
+
+
+    public function payment_search(request $request)
+    {
+
+
+        $query = $request->get('query');
+        $title = "Payments";
+
+        $data = Transfertransaction::when($query, function ($queryBuilder, $query) {
+            return $queryBuilder->where('email', 'LIKE', "%{$query}%")
+                ->orWhere('bank', 'LIKE', "%{$query}%")
+                ->orWhere('amount', 'LIKE', "%{$query}%");
+        })
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+
+        if ($request->ajax()) {
+            return view('partials.table', compact('data'))->render();
+        }
+
+        return view('partials.table', compact('data', 'title'));
+
+
+
+
+    }
+
+
 }

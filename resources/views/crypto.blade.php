@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <!-- partial:index.partial.html -->
+    <!-- partials:index.partials.html -->
     <div class="min-w-screen min-h-screen bg-gray-50 flex items-center justify-center px-3 py-5">
 
 
@@ -111,7 +111,7 @@
                 document.getElementById('searchInput').addEventListener('input', function () {
                     var searchQuery = this.value.toLowerCase();
                     var items = document.querySelectorAll('.crypto-item');
-            
+
                     items.forEach(function (item) {
                         var itemName = item.textContent.toLowerCase();
                         item.style.display = itemName.includes(searchQuery) ? 'block' : 'none';
@@ -166,7 +166,7 @@
             </div>
         </div>
     </div>
-    <!-- partial -->
+    <!-- partials -->
 
 
 

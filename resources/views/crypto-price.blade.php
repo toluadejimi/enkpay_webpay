@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <!-- partial:index.partial.html -->
+    <!-- partials:index.partials.html -->
     <div class="min-w-screen min-h-screen bg-gray-50 flex items-center justify-center px-3 py-5">
         <div class="w-full bg-white text-gray-800 overflow-hidden border-4 border-white rounded-4xl shadow-lg relative"
             style="max-width:414px;">
@@ -27,8 +27,8 @@
 
 
             <div class="w-full bg-gradient-to-br from-yellow-500 to-pink-600 pt-12 pb-12 px-4 text-white text-center">
-               
-                <div class=""> 
+
+                <div class="">
                     <img src="{{ $image }}" class=""
                         style="max-height: 60px; margin: 0px 125px 0px;" width="60" alt=""><br>
                 </div>
@@ -80,7 +80,7 @@
                 document.getElementById('searchInput').addEventListener('input', function () {
                     var searchQuery = this.value.toLowerCase();
                     var items = document.querySelectorAll('.crypto-item');
-            
+
                     items.forEach(function (item) {
                         var itemName = item.textContent.toLowerCase();
                         item.style.display = itemName.includes(searchQuery) ? 'block' : 'none';
@@ -135,7 +135,7 @@
             </div>
         </div>
     </div>
-    <!-- partial -->
+    <!-- partials -->
 
 
 

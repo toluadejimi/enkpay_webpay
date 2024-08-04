@@ -176,14 +176,20 @@ class VerifyController extends Controller
             $amount = $trx->payable_amount ?? null;
             $order_id = $trx->trans_id ?? null;
             $site_name = Webkey::where('key', $trx->key)->first()->site_name ?? null;
+            $bank = $trx->bank;
 
 
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
 
             if ($fund == 2) {
-
                 Webtransfer::where('trans_id', $request->id)->update(['status' => 4]);
-                Transfertransaction::where('ref_trans_id', $request->id)->update(['status' => 2, 'approved_by' => Auth::user()->first_name]);
+                Transfertransaction::where('ref_trans_id', $request->id)->update([
+                    'status' => 4,
+                    'approved_by' => Auth::user()->first_name,
+                    'email' => $trx->email,
+                ]);
+
+
 
 
                 //update Transactions
@@ -467,6 +473,18 @@ class VerifyController extends Controller
             $trasnaction->balance = $balance;
             $trasnaction->status = 1;
             $trasnaction->save();
+
+
+            $trx = new Transfertransaction();
+            $trx->amount = $order->r_amount;
+            $trx->ref = $reff;
+            $trx->ref_trans_id = $reff;
+            $trx->email = $order->email;
+            $trx->transaction_type = "WEBTRASNSFER";
+            $trx->bank = "Resolve";
+            $trx->status = 2;
+            $trx->user_id = $user_id;
+            $trx->save();
 
 
             $message = "Business funded | $reff | $f_amount | $user->first_name " . " " . $user->last_name;
@@ -778,7 +796,6 @@ class VerifyController extends Controller
                     $trasnaction->save();
 
                     $trx = new Transfertransaction();
-                    $trx->amount = $amt;
                     $trx->account_no = $acct_no;
                     $trx->amount = $f_amount;
                     $trx->ref = $var->session_id;

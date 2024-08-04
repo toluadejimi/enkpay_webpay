@@ -14,6 +14,7 @@
             <td>{{$item->email}}</td>
             <td>{{number_format($item->amount, 2)}}</td>
             <td>{{$item->bank}}</td>
+            <td>{{$item->account_no}}</td>
             <td>{{$item->created_at}}</td>
             <td>
                 @if($item->status == 0)
@@ -23,7 +24,7 @@
                 @elseif($item->status == 4)
                     <a href="#" class="btn btn-success">User Funded</a>
                 @elseif($item->status == 5)
-                    <a href="#" class="btn btn-danger">Ticket on Hold</a>
+                    <a href="#" class="btn btn-danger">Processing</a>
                 @else
                     <a href="#" class="btn btn-success">Completed</a>
                 @endif

@@ -1,6 +1,8 @@
-<table class="table table-responsive mt-3">
+<div class="table-responsive">
+    <table class="table">
     <thead style="background: #d3d3d3">
     <tr>
+        <th>Ref</th>
         <th>Email</th>
         <th>Amount</th>
         <th>Bank</th>
@@ -12,6 +14,7 @@
     <tbody id="tableBody">
     @foreach($data as $item)
         <tr>
+            <td>{{$item->ref}}</td>
             <td>{{$item->email}}</td>
             <td>{{number_format($item->amount, 2)}}</td>
             <td>{{$item->bank}}</td>
@@ -34,9 +37,6 @@
     @endforeach
     </tbody>
 </table>
-
 <div>
     {{$data->links()}}
 </div>
-
-

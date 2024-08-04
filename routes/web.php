@@ -161,7 +161,7 @@ Route::any('edit-now', [VerifyController::class, 'edit_now']);
 Route::get('all-issues', [VerifyController::class, 'all_request_view']);
 Route::get('hold', [VerifyController::class, 'hold']);
 Route::get('no-ref', [VerifyController::class, 'noref_request_view']);
-Route::get('ninepsb', [VerifyController::class, 'ninepsb_ticket_view']);
+Route::get('ninepsbticket', [VerifyController::class, 'ninepsb_ticket_view']);
 Route::get('opayticket', [VerifyController::class, 'opay_ticket_view']);
 Route::get('palmpayticket', [VerifyController::class, 'palmpay_ticket_view']);
 

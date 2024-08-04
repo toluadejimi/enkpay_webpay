@@ -585,7 +585,7 @@ class VerifyController extends Controller
             return view('login');
         }
         $data['title'] = "Opay Ticket";
-        $data['tickets'] = ResolveOrder::latest()->where('pay_type', "opay")->get();
+        $data['tickets'] = ResolveOrder::latest()->where('pay_type', "opay")->where('status', 0)->get();
         return view('request', $data);
     }
 
@@ -596,7 +596,7 @@ class VerifyController extends Controller
             return view('login');
         }
         $data['title'] = "9psb Ticket";
-        $data['tickets'] = ResolveOrder::latest()->where('pay_type', "9PSB")->get();
+        $data['tickets'] = ResolveOrder::latest()->where('pay_type', "9PSB")->where('status', 0)->get();
         return view('request', $data);
     }
 
@@ -608,7 +608,7 @@ class VerifyController extends Controller
             return view('login');
         }
         $data['title'] = "9psb Ticket";
-        $data['tickets'] = ResolveOrder::latest()->where('pay_type', "palmpay")->get();
+        $data['tickets'] = ResolveOrder::latest()->where('pay_type', "palmpay")->where('status', 0)->get();
         return view('request', $data);
     }
 

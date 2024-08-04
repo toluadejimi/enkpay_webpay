@@ -49,7 +49,13 @@
                     <a href="/wrong-amount" class="btn btn-secondary">Wrong Amount</a>
                     <a href="/hold" class="btn btn-warning">Hold</a>
                     <a href="/approved" class="btn btn-success">Approved</a>
-                    <a href="/payments" class="btn btn-success">Payments</a>
+                    <a href="/payments" class="btn btn-danger">Payments</a>
+                    <a href="/opayticket" class="btn btn-danger">Opay Ticket</a>
+                    <a href="/palmpayticket" class="btn btn-danger">Palmpay Ticket</a>
+                    <a href="/ninepsbticket" class="btn btn-danger">9PSB Ticket</a>
+
+
+
 
 
 

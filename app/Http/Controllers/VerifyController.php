@@ -577,6 +577,49 @@ class VerifyController extends Controller
         return view('request', $data);
     }
 
+
+    public
+    function opay_ticket_view(request $request)
+    {
+        if (Auth::check() == false) {
+            return view('login');
+        }
+        $data['title'] = "Opay Ticket";
+        $data['tickets'] = ResolveOrder::latest()->where('bank', "opay")->get();
+        return view('request', $data);
+    }
+
+    public
+    function ninepsb_ticket_view(request $request)
+    {
+        if (Auth::check() == false) {
+            return view('login');
+        }
+        $data['title'] = "9psb Ticket";
+        $data['tickets'] = ResolveOrder::latest()->where('bank', "9PSB")->get();
+        return view('request', $data);
+    }
+
+
+    public
+    function palmpay_ticket_view(request $request)
+    {
+        if (Auth::check() == false) {
+            return view('login');
+        }
+        $data['title'] = "9psb Ticket";
+        $data['tickets'] = ResolveOrder::latest()->where('bank', "palmpay")->get();
+        return view('request', $data);
+    }
+
+
+
+
+
+
+
+
+
     public
     function no_credit_view(request $request)
     {
@@ -617,6 +660,8 @@ class VerifyController extends Controller
         ResolveOrder::where('id', $order->id)->update(['status' => 5]);
         return back()->with('message', 'Transaction Moveed');
     }
+
+
 
 
     public

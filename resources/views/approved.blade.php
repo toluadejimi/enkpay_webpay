@@ -8,12 +8,10 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, viewport-fit=cover">
     <title>top up</title>
-    <!-- Favicon and Touch Icons  -->
     <link rel="shortcut icon" href="{{url('')}}/public/assets/assets/images/logo.png"/>
     <link rel="apple-touch-icon-precomposed" href="{{url('')}}/public/assets/assets/images/logo.png"/>
     <!-- Font -->
     <link rel="stylesheet" href="{{url('')}}/public/assets/assets/fonts/fonts.css"/>
-    <!-- Icons -->
     <link rel="stylesheet" href="{{url('')}}/public/assets/assets/fonts/icons-alipay.css">
     <link rel="stylesheet" href="{{url('')}}/public/assets/assets/styles/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="{{url('')}}/public/assets/assets/styles/styles.css"/>

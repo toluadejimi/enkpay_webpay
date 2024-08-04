@@ -728,7 +728,6 @@ class VerifyController extends Controller
 
         if ($request->pay_type == "psb") {
             $status = Transfertransaction::where('session_id', $request->t_session)->first()->status ?? null;
-
             if ($status == 4) {
                 return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
             }
@@ -847,6 +846,8 @@ class VerifyController extends Controller
                     $trx->ref_trans_id = $session_id;
                     $trx->email = $request->email;
                     $trx->session_id = $session_id;
+                    $trx->bank = "9PSBRESLOVE";
+                    $trx->reslove = 1;
                     $trx->transaction_type = "WEBTRASNSFER";
                     $trx->status = 4;
                     $trx->user_id = $urlkey;

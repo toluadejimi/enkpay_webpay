@@ -2638,7 +2638,7 @@ class TransactionController extends Controller
                 ->orWhere('amount', 'LIKE', "%{$query}%");
         })
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(50);
 
 
         if ($request->ajax()) {

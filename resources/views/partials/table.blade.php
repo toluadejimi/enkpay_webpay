@@ -4,6 +4,7 @@
         <th>Email</th>
         <th>Amount</th>
         <th>Bank</th>
+        <th>Acct no</th>
         <th>Date</th>
         <th>Status</th>
     </tr>

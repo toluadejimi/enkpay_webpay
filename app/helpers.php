@@ -1889,8 +1889,6 @@ if (!function_exists('verifypelpay')) {
                     $var = curl_exec($curl);
                     curl_close($curl);
 
-                    dd($var);
-
 
                 } catch (QueryException $e) {
                     echo "$e";

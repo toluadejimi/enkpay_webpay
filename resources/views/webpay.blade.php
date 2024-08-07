@@ -3208,7 +3208,7 @@
                                                                 console.log(data);
                                                                 console.log(data.responseData.bankAccount);
                                                                 var wemaaccountNo = data.responseData.bankAccount;
-                                                                var wemaaccountName = data.responseData.bankName;
+                                                                var wemaaccountName = 'Enkw';
                                                                 var paym_ref = data.responseData.paymentReference;
 
 

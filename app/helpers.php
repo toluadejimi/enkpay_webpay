@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Ttmfb;
 use App\Models\Setting;
 use App\Models\AccountInfo;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Str;
 use App\Models\VirtualAccount;
 use Illuminate\Support\Facades\Auth;
@@ -1820,7 +1821,7 @@ if (!function_exists('tokenkey')) {
 
 if (!function_exists('verifypelpay')) {
 
-    function verifypelpay($pref)
+    function verifypelpay($pref, $amount)
     {
 
         $token = tokenkey();
@@ -1849,6 +1850,7 @@ if (!function_exists('verifypelpay')) {
         curl_close($curl);
         $var = json_decode($var);
 
+
         if ($var->requestSuccessful == true) {
 
 
@@ -1858,16 +1860,12 @@ if (!function_exists('verifypelpay')) {
 
             if($var->responseData->transactionStatus == "Successful" && $var->responseData->message == "Successful:Correct amount" ){
 
-                Transfertransaction::where('pay_ref', $pref)->update(['status' => 4]) ?? null;
-                $pay = Transfertransaction::where('pay_ref', $pref)->first() ?? null;
-
-
 
                 try {
 
                     $curl = curl_init();
                     $data = array(
-                        'receiver_account_number' => $pay->receiver_account_number,
+                        'receiver_account_number' => $pref,
                         'amount' => $amount,
 
                     );
@@ -1891,14 +1889,16 @@ if (!function_exists('verifypelpay')) {
                     $var = curl_exec($curl);
                     curl_close($curl);
 
+                    dd($var);
+
 
                 } catch (QueryException $e) {
                     echo "$e";
                 }
 
 
-                $data['amount'] = $var->responseData->amountCollected;
-                $data['merchantReference'] = $var->responseData->merchantReference;
+                $data['amount'] = $amount;
+                //$data['merchantReference'] = $var->responseData->merchantReference;
                 $data['code'] = 4;
                 return $data;
             }

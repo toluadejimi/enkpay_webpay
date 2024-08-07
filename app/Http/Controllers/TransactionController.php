@@ -91,8 +91,6 @@ class TransactionController extends Controller
             ])->first() ?? null;
 
 
-
-
         if ($trx == null) {
 
             return response()->json([
@@ -1284,13 +1282,13 @@ class TransactionController extends Controller
 
 
         $trans_id = $request->ref;
-        $pref = $request->pref;
+        $ref = $request->ref;
         $account_no = $request->account_no;
 
 
 
 
-        $p_ref = Transfertransaction::where('pay_ref', $pref)->first() ?? null;
+        $p_ref = Transfertransaction::where('ref', $ref)->first() ?? null;
 
         if($p_ref == null){
             return response()->json([
@@ -1300,12 +1298,17 @@ class TransactionController extends Controller
         }
 
 
-        $verify = verifypelpay($pref);
+        $pref = $p_ref->account_no;
+        $amount = $p_ref->amount;
+
+        $verify = verifypelpay($pref, $amount);
 
         if($verify == 0){
 
             return response()->json([
-                'status' => 'pending'
+                'status' => 'pending',
+                'data' => $verify
+
             ], 200);
 
         }
@@ -1315,7 +1318,6 @@ class TransactionController extends Controller
         if ($verify['code'] == 2) {
 
             return response()->json([
-
                 'status' => 'success'
             ], 200);
 
@@ -2521,7 +2523,6 @@ class TransactionController extends Controller
             $trasnaction->note = "WEBTRANSFER";
             $trasnaction->e_charges = 0;
             $trasnaction->enkPay_Cashout_profit = 0;
-            $trasnaction->pay_ref = $request->pay_ref;
             $trasnaction->status = 0;
             $trasnaction->save();
 

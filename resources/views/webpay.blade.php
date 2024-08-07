@@ -123,6 +123,29 @@
             display: none; /* Initially hidden */
         }
 
+
+        .loaderpsb {
+            border: 8px solid #f3f3f3; /* Light grey */
+            border-top: 8px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto; /* Center loader */
+            display: none; /* Initially hidden */
+        }
+
+        .loaderwema {
+            border: 8px solid #f3f3f3; /* Light grey */
+            border-top: 8px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto; /* Center loader */
+            display: none; /* Initially hidden */
+        }
+
         @keyframes spin {
             0% {
                 transform: rotate(0deg);
@@ -2427,7 +2450,7 @@
                                                     <button class="p-2" id="fetch" style="color: #03103a" onclick="fetchInfo()">Get
                                                         Account Details
                                                     </button>
-                                                    <div class="loader2" id="loader2"></div>
+                                                    <div class="loaderpsb" id="loaderpsb"></div>
 
 
 
@@ -2439,7 +2462,7 @@
 
                                                         function fetchInfo() {
                                                             // Display the loader
-                                                            document.getElementById('loader2').style.display = 'block';
+                                                            document.getElementById('loaderpsb').style.display = 'block';
 
                                                             // Reset timeout if retrying
                                                             clearTimeout(fetchTimeout);
@@ -2635,7 +2658,7 @@
                                                                     infoContainer.innerHTML = infoHTML;
 
                                                                     // Hide the loader after displaying information
-                                                                    document.getElementById('loader2').style.display = 'none';
+                                                                    document.getElementById('loaderpsb').style.display = 'none';
                                                                 })
                                                                 .catch(error => {
                                                                     console.error('Error fetching data:', error);
@@ -2643,14 +2666,14 @@
                                                                     infoContainer.innerHTML = '<p>Error fetching data. Please retry.</p>';
 
                                                                     // Hide the loader
-                                                                    document.getElementById('loader2').style.display = 'none';
+                                                                    document.getElementById('loaderpsb').style.display = 'none';
                                                                 });
 
                                                             // Set timeout for retrying
                                                             fetchTimeout = setTimeout(() => {
                                                                 const infoContainer = document.getElementById('info-container');
                                                                 infoContainer.innerHTML = '<p>Request timed out. Please retry.</p>';
-                                                                document.getElementById('loader2').style.display = 'none';
+                                                                document.getElementById('loaderpsb').style.display = 'none';
                                                             }, 30000000); // 30 seconds timeout
                                                         }
                                                     </script>
@@ -3136,14 +3159,14 @@
                                                     </div>
                                                 </div>
 
-                                                <div id="info-containerwema">
+                                                <div id="infoContainerwema">
                                                     <!-- Placeholder for fetched information -->
                                                 </div>
 
                                                 <button class="p-2" id="fetchwema" style="color: #03103a" onclick="fetchInfowema()">Get
                                                     Account Details
                                                 </button>
-                                                <div class="loader2" id="loaderwema"></div>
+                                                <div class="loaderwema" id="loaderwema"></div>
 
 
 
@@ -3189,7 +3212,7 @@
                                                                 var paym_ref = data.responseData.paymentReference;
 
 
-                                                                document.getElementById('fetch').style.display = 'none';
+                                                                document.getElementById('fetchwema').style.display = 'none';
 
 
                                                                 fetch('{{ url('') }}/api/wema-transfer-transaction', {
@@ -3353,8 +3376,8 @@
 `;
 
                                                                 // Display fetched information in info-container
-                                                                const infoContainer = document.getElementById('info-containerwema');
-                                                                infoContainer.innerHTML = infoHTML;
+                                                                const infoContainerwema = document.getElementById('infoContainerwema');
+                                                                infoContainerwema.innerHTML = infoHTML;
 
                                                                 // Hide the loader after displaying information
                                                                 document.getElementById('loaderwema').style.display = 'none';
@@ -3363,18 +3386,18 @@
                                                             })
                                                             .catch(error => {
                                                                 console.error('Error fetching data:', error);
-                                                                const infoContainer = document.getElementById('info-containerwema');
-                                                                infoContainer.innerHTML = '<p>Error fetching data. Please retry.</p>';
+                                                                const infoContainerwema = document.getElementById('infoContainerwema');
+                                                                infoContainerwema.innerHTML = '<p>Error fetching data. Please retry.</p>';
 
                                                                 // Hide the loader
-                                                                document.getElementById('loader2').style.display = 'none';
+                                                                document.getElementById('loaderwema').style.display = 'none';
 
                                                             });
 
                                                         // Set timeout for retrying
                                                         fetchTimeout = setTimeout(() => {
-                                                            const infoContainer = document.getElementById('info-containerwema');
-                                                            infoContainer.innerHTML = '<p>Request timed out. Please retry.</p>';
+                                                            const infoContainerwema = document.getElementById('infoContainerwema');
+                                                            infoContainerwema.innerHTML = '<p>Request timed out. Please retry.</p>';
                                                             document.getElementById('loaderwema').style.display = 'none';
                                                         }, 30000000); // 30 seconds timeout
                                                     }

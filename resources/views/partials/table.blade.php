@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="table">
+    <table class="table table-responsive">
     <thead style="background: #d3d3d3">
     <tr>
         <th>Ref</th>
@@ -37,6 +37,7 @@
     @endforeach
     </tbody>
 </table>
+</div>
 <div>
     {{$data->links()}}
 </div>

@@ -26,6 +26,7 @@ Route::post('notify', [TransactionController::class, 'notify_webhook']);
 Route::post('e-payment', [TransactionController::class, 'e_payment']);
 Route::any('payment', [TransactionController::class, 'payment']);
 
+Route::get('cable-plan',[CableController::class, 'get_cable_plan']);
 
 
 
@@ -56,7 +57,6 @@ Route::group(['middleware' => ['auth:api', 'acess']], function () {
     Route::post('buy-airtime',[AirtimeController::class, 'buy_airtime']);
     Route::post('buy-ng-airtime',[AirtimeController::class, 'buy_ng_airtime']);
     Route::post('buy-data',[DataController::class, 'buy_data']);
-    Route::get('cable-plan',[CableController::class, 'get_cable_plan']);
     Route::get('validate-cable',[CableController::class, 'validate_cable']);
 
 

@@ -28,6 +28,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('get-cable-plan',[CableController::class, 'get_cable_plan']);
 
 
 Route::get('payment-search', [TransactionController::class, 'payment_search']);
@@ -218,7 +219,6 @@ Route::get('verifywema', [TransactionController::class, 'wema_check_status']);
 
 
 Route::get('validate-cable',[CableController::class, 'validate_cable']);
-Route::get('get-cable-plan',[CableController::class, 'get_cable_plan']);
 
 
 

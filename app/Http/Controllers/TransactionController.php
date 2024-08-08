@@ -684,6 +684,8 @@ class TransactionController extends Controller
             }else{
                 $pamount = $request->amount;
             }
+
+
             $first_name = User::inRandomOrder()->first()->first_name;
             $last_name = User::inRandomOrder()->first()->last_name;
             $tremail = $faker->email;
@@ -698,7 +700,11 @@ class TransactionController extends Controller
         } else {
             $pre_link = "#";
             $payment_ref = null;
+            $pamount = $request->amount;
         }
+
+
+
 
 
 

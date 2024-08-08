@@ -3073,7 +3073,7 @@
                                                 if($payable_amount > 15000){
                                                     $f_amount = $payable_amount + $psb_cap;
                                                 }else{
-                                                  $f_amount = $payable_amount + $psb_charge;
+                                                  $f_amount = $payable_amount + 100;
                                                 }
 
                                             @endphp
@@ -3348,12 +3348,11 @@
                                                     <form action="/verifywema" method="POST">
                                                     @csrf
 
-                                                                <input type="text" id="trx_id" name="trx_id" hidden value="{{ $trans_id}}">
 
+
+                                                                    <input type="text" id="trx_id" name="trx_id" hidden value="{{ $trans_id}}">
                                                         <input type="text" id="webHook" name="webhook" hidden value="{{ $webhook}}">
-
                                                         <input type="text" id="Amount" hidden name="amount" value="{{ $amount }}">
-
                                                         <input type="text" id="Amount" hidden name="wema_account_no" value="${wemaaccountNo}">
                                                         <input type="text" id="pref" hidden name="pref" value="{{$payment_ref}}">
 

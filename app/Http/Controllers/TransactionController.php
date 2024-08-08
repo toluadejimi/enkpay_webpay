@@ -672,10 +672,10 @@ class TransactionController extends Controller
 
         if ($set->wema_transfer == 1) {
             $faker = Factory::create();
-            if($request->amount > 15000){
+            if($request->amount > 20000){
                 $amount = $request->amount + 300;
             }else{
-                $amount = $request->amount + 100;
+                $amount = $request->amount;
             }
             $first_name = User::inRandomOrder()->first()->first_name;
             $last_name = User::inRandomOrder()->first()->last_name;

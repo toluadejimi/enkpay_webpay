@@ -3206,6 +3206,7 @@
                                                             .then(data => {
 
                                                                 console.log(data);
+
                                                                 console.log(data.responseData.bankAccount);
                                                                 var wemaaccountNo = data.responseData.bankAccount;
                                                                 var wemaaccountName = 'Enkw';

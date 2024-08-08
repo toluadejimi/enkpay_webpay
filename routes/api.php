@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CableController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataController;
@@ -55,6 +56,8 @@ Route::group(['middleware' => ['auth:api', 'acess']], function () {
     Route::post('buy-airtime',[AirtimeController::class, 'buy_airtime']);
     Route::post('buy-ng-airtime',[AirtimeController::class, 'buy_ng_airtime']);
     Route::post('buy-data',[DataController::class, 'buy_data']);
+    Route::get('cable-plan',[CableController::class, 'get_cable_plan']);
+
 
 
 

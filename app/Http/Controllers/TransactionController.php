@@ -567,6 +567,7 @@ class TransactionController extends Controller
     function webpay_view(Request $request)
     {
 
+
         $key = $request->key;
         $amount = $request->amount;
         $email = $request->email;
@@ -683,6 +684,8 @@ class TransactionController extends Controller
             $trans_id = $iref;
             $ref = trx();
             $pre = pre_pay($amount, $first_name, $last_name, $tremail, $ref, $userId, $trans_id, $key);
+
+            dd($pre);
             $payment_ref = $pre['adviceReference'] ?? null;
 
 

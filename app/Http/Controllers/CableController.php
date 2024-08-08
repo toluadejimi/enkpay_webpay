@@ -86,15 +86,46 @@ class CableController extends Controller
             $var = curl_exec($curl);
             curl_close($curl);
             $var = json_decode($var);
-
-            dd($var);
-
+            $code = $var->code ?? null;
 
 
-            return response()->json([
 
 
-            ], 200);
+            if($code == "000"){
+
+                $error = $var->content->error ?? null;
+                if($error != null){
+
+                    return response()->json([
+                        'status' => false,
+                        'message' => $error
+                    ], 422);
+
+                }
+
+                $data['customer_name'] = $var->content->Customer_Name;
+                $data['Due_Date'] = $var->content->Due_Date;
+                $data['decoder_no'] = $var->content->Customer_Number;
+                $data['decoder_type'] = $var->content->Customer_Type;
+                $data['Current_Bouquet'] = $var->content->Current_Bouquet;
+                $data['Renewal_Amount'] = $var->content->Renewal_Amount;
+
+
+                return response()->json([
+
+                    'status' => true,
+                    'data' => $data
+
+                ], 200);
+
+
+            }
+
+
+
+
+
+
 
         } catch (\Exception$th) {
             return $th->getMessage();

@@ -58,6 +58,7 @@ Route::group(['middleware' => ['auth:api', 'acess']], function () {
     Route::post('buy-ng-airtime',[AirtimeController::class, 'buy_ng_airtime']);
     Route::post('buy-data',[DataController::class, 'buy_data']);
     Route::get('validate-cable',[CableController::class, 'validate_cable']);
+    Route::post('buy-cable', [CableController::class, 'buy_cable']);
 
 
 

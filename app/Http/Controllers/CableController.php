@@ -73,7 +73,7 @@ class CableController extends Controller
                 CURLOPT_CUSTOMREQUEST => 'POST',
                 CURLOPT_POSTFIELDS => array(
                     'serviceID' => $request->serviceid,
-                    'biller_code' => $request->biller_code,
+                    'billersCode' => $request->biller_code,
                 ),
                 CURLOPT_HTTPHEADER => array(
                     //"Authorization: Basic $auth=",

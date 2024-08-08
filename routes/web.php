@@ -218,6 +218,9 @@ Route::get('verifywema', [TransactionController::class, 'wema_check_status']);
 
 
 Route::get('validate-cable',[CableController::class, 'validate_cable']);
+Route::get('get-cable-plan',[CableController::class, 'get_cable_plan']);
+
+
 
 
 

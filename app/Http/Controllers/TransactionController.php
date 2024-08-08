@@ -685,7 +685,6 @@ class TransactionController extends Controller
             $ref = trx();
             $pre = pre_pay($amount, $first_name, $last_name, $tremail, $ref, $userId, $trans_id, $key);
 
-            dd($pre);
             $payment_ref = $pre['adviceReference'] ?? null;
 
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CableController;
 use App\Http\Controllers\VerifyController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProxyController;
@@ -214,6 +215,10 @@ Route::get('verifypalmpay', [TransactionController::class, 'palmpay_check_status
 Route::get('verifykuda', [TransactionController::class, 'kuda_check_status']);
 Route::get('verifyninepsb', [TransactionController::class, 'ninepsb_check_status']);
 Route::get('verifywema', [TransactionController::class, 'wema_check_status']);
+
+
+Route::get('validate-cable',[CableController::class, 'validate_cable']);
+
 
 
 

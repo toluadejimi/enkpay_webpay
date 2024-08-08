@@ -1774,50 +1774,47 @@ if (!function_exists('tokenkey')) {
 
         $ref = $data['adviceReference'];
 
-        if($req != null){
-
-
-            $databody2 = array(
-
-                'bankCode' => "035"
-
-            );
-
-            $url2= "$url/Payment/process/banktransfer/$ref";
-
-            $post_data2 = json_encode($databody2);
-
-            $curl = curl_init();
-
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => "$url/Payment/process/banktransfer/$ref",
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => $post_data2,
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/json',
-                    "Authorization: Bearer $token"
-                ),
-            ));
-
-            $var2 = curl_exec($curl);
-            curl_close($curl);
-            $var2 = json_decode($var2);
-           dd($var2, $var, $post_data2, $url2);
-
-            curl_close($curl);
-            $var2 = json_decode($var2);
-
-
-        }
-
-
-
+//        if($req != null){
+//
+//
+//            $databody2 = array(
+//
+//                'bankCode' => "035"
+//
+//            );
+//
+//            $url2= "$url/Payment/process/banktransfer/$ref";
+//
+//            $post_data2 = json_encode($databody2);
+//
+//            $curl = curl_init();
+//
+//            curl_setopt_array($curl, array(
+//                CURLOPT_URL => "$url/Payment/process/banktransfer/$ref",
+//                CURLOPT_RETURNTRANSFER => true,
+//                CURLOPT_ENCODING => '',
+//                CURLOPT_MAXREDIRS => 10,
+//                CURLOPT_TIMEOUT => 0,
+//                CURLOPT_FOLLOWLOCATION => true,
+//                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//                CURLOPT_CUSTOMREQUEST => 'POST',
+//                CURLOPT_POSTFIELDS => $post_data2,
+//                CURLOPT_HTTPHEADER => array(
+//                    'Content-Type: application/json',
+//                    "Authorization: Bearer $token"
+//                ),
+//            ));
+//
+//            $var2 = curl_exec($curl);
+//            curl_close($curl);
+//            $var2 = json_decode($var2);
+//           dd($var2, $var, $post_data2, $url2);
+//
+//            curl_close($curl);
+//            $var2 = json_decode($var2);
+//
+//
+//        }
 
 
         return $data;

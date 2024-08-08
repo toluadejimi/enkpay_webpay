@@ -1054,8 +1054,7 @@
                             </svg>
                             <div class="content">
                                 <h4><a href="#" data-bs-toggle="collapse" data-bs-target="#opay"
-                                       aria-expanded="false" aria-controls="opay" class="fw_6">Click here to get account
-                                        details
+                                       aria-expanded="false" aria-controls="opay" class="fw_6">Pay Using Opay
                                     </a>
                                 </h4>
                                 <p>Refrence is required in note/remarks/refrence</p>
@@ -1521,9 +1520,7 @@
 
                             <div class="content">
                                 <h4><a href="#" data-bs-toggle="collapse" data-bs-target="#palmpay"
-                                       aria-expanded="false" aria-controls="palmpay" class="fw_6">Click here to get
-                                        account
-                                        details
+                                       aria-expanded="false" aria-controls="palmpay" class="fw_6">Pay Using Palmpay
                                     </a>
                                 </h4>
                                 <p>Refrence is required in note/remarks/refrence</p>
@@ -3044,7 +3041,7 @@
                  class="accordion border-0 tf-card-block d-flex align-items-center justify-content-between">
                 <div class="accordion-item border-0">
                     <div class="inner d-flex align-items-center">
-                        <img src="{{url('')}}/public/wema.svg">
+                        <img  src="{{url('')}}/public/wema.svg" >
                         <div class="content col-12" >
                             <h4><a href="#" data-bs-toggle="collapse" data-bs-target="#wema"
                                    aria-expanded="false" aria-controls="wema" class="fw_6">Pay Using Wema</a></h4>
@@ -3058,7 +3055,7 @@
 
 
                         <div class="tf-container my-2">
-                            <a id="openModalBtnwema" class="tf-btn success large">Pay To Wema Account</a>
+                            <a id="openModalBtnwema"  class="tf-btn success large w-100">Pay To Wema Account</a>
                         </div>
 
                         <div id="myModalwema" class="modal">
@@ -3082,8 +3079,8 @@
                                             @endphp
 
                                             <div class="col-12">
-                                                <div class="text-center">
-                                                    <img src="{{url('')}}/public/wema.svg"  width="342" height="102">
+                                                <div class="d-flex justify-content-center w-100">
+                                                    <img style="background: #990c81; margin-bottom: 10px;" src="{{url('')}}/public/wema.svg"  width="342" height="102">
 
                                                 </div>
 
@@ -3206,10 +3203,9 @@
                                                             .then(data => {
 
                                                                 console.log(data);
-
                                                                 console.log(data.responseData.bankAccount);
                                                                 var wemaaccountNo = data.responseData.bankAccount;
-                                                                var wemaaccountName = 'Enkw';
+                                                                var wemaaccountName = "TeamX";
                                                                 var paym_ref = data.responseData.paymentReference;
 
 

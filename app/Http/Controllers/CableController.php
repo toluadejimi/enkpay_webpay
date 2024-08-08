@@ -102,15 +102,11 @@ class CableController extends Controller
                     ], 422);
 
                 }
-
                 $data['customer_name'] = $var->content->Customer_Name;
                 $data['Due_Date'] = $var->content->Due_Date;
-                $data['decoder_no'] = $var->content->Customer_Number;
                 $data['decoder_type'] = $var->content->Customer_Type;
                 $data['Current_Bouquet'] = $var->content->Current_Bouquet;
                 $data['Renewal_Amount'] = $var->content->Renewal_Amount;
-
-
                 return response()->json([
 
                     'status' => true,

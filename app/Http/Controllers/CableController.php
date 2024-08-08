@@ -145,7 +145,7 @@ class CableController extends Controller
 
                 return response()->json([
 
-                    'status' => $this->failed,
+                    'status' => false,
                     'message' => 'You can not make transfer at the moment, Please contact  support',
 
                 ], 500);
@@ -159,7 +159,7 @@ class CableController extends Controller
                 send_notification($message);
 
                 return response()->json([
-                    'status' => $this->failed,
+                    'status' => false,
                     'message' => 'Please verify your account to enjoy enkpay full service',
                 ], 500);
             }
@@ -188,7 +188,7 @@ class CableController extends Controller
 
                 return response()->json([
 
-                    'status' => $this->failed,
+                    'status' => false,
                     'message' => 'Amount must not be less than NGN 100',
 
                 ], 500);
@@ -198,7 +198,7 @@ class CableController extends Controller
 
             if ($amount > $user_blance) {
                 return response()->json([
-                    'status' => $this->failed,
+                    'status' => false,
                     'message' => 'Insufficient Funds, Fund your main wallet',
                     'balance' => $user_blance
                 ], 500);
@@ -210,7 +210,7 @@ class CableController extends Controller
 
                 return response()->json([
 
-                    'status' => $this->failed,
+                    'status' => false,
                     'message' => 'Insufficient Funds, Fund your wallet',
 
                 ], 500);
@@ -221,7 +221,7 @@ class CableController extends Controller
 
             if ($amount > $user_blance) {
                 return response()->json([
-                    'status' => $this->failed,
+                    'status' => false,
                     'message' => 'Insufficient Funds, Fund your main wallet',
                 ], 500);
 
@@ -230,7 +230,7 @@ class CableController extends Controller
 
             if ($amount > $user_blance) {
                 return response()->json([
-                    'status' => $this->failed,
+                    'status' => false,
                     'message' => 'Insufficient Funds, Fund your main wallet',
                 ], 500);
 
@@ -330,7 +330,7 @@ class CableController extends Controller
 
                 return response()->json([
 
-                    'status' => $this->success,
+                    'status' => true,
                     'message' => 'TV Subscription Purchase Successful',
 
                 ], 200);
@@ -342,7 +342,7 @@ class CableController extends Controller
 
             return response()->json([
 
-                'status' => $this->failed,
+                'status' => false,
                 'message' => "Service unavailable please try again later, \n\n NGN $amount has been refunded back to your wallet",
 
             ], 200);

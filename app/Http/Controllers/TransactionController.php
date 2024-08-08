@@ -673,7 +673,9 @@ class TransactionController extends Controller
             $faker = Factory::create();
             if($request->amount < 200){
                 $pamount = $request->amount;
-            }elseif ($request->amount == 300){
+            }elseif ($request->amount == 300) {
+                $pamount = $request->amount + 100;
+            }elseif ($request->amount > 300 && $request->amount < 19999){
                 $pamount = $request->amount + 100;
             }elseif($request->amount >= 20000) {
                 $pamount = $request->amount + 300;

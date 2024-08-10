@@ -72,13 +72,13 @@
             <div class="row d-flex justify-content-center">
 
                 <div class="col-12 d-flex justify-content-center">
-                    <p class="text-danger">Do not refresh page or else you will loose your transaction</p>
+                    <p class="text-danger">Please wait your payment is confirming... page will redirect when conformed</p>
                 </div>
 
                 <div class="col-12 d-flex justify-content-center my-3">
                     <div class="countdown text-danger" id="countdown">03:00</div>
 
-                    <a href="#" class="chat-button text-center btn btn-primary" id="chatButton">Chat with Support</a>
+                    <a href="#" onclick="location.reload();" class="chat-button text-center btn btn-primary" id="chatButton">Payment not confirmed? Click here to try again</a>
 
 
                     <script>

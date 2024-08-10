@@ -72,7 +72,7 @@
             <div class="row d-flex justify-content-center">
 
                 <div class="col-12 d-flex justify-content-center">
-                    <p class="text-danger">Please wait your payment is confirming... page will redirect when conformed</p>
+                    <p class="text-danger">Please wait your payment is confirming... page will redirect when confirmed</p>
                 </div>
 
                 <div class="col-12 d-flex justify-content-center my-3">

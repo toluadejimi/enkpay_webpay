@@ -965,10 +965,7 @@ class VerifyController extends Controller
             return redirect($url)->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
         }
 
-
-        dd($status);
-
-        if ($status == null) {
+        if ($status == null || $status == 0 ) {
             $ref = $request->account_no;
 
             $var = verify_payment($ref);
@@ -977,8 +974,6 @@ class VerifyController extends Controller
             $acct_no = $var->account_no ?? null;
             $amt = $var['amount'] ?? null;
             $status = $var['transactionStatus'] ?? null;
-
-            dd($var);
 
 
             if ($status == "Processing") {

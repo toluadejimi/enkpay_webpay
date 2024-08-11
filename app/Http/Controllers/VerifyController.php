@@ -1025,7 +1025,7 @@ class VerifyController extends Controller
                 $urluser = Webkey::where('user_id', $urlkey)->first()->user_url ?? null;
 
                 $user_email = $request->email ?? null;
-                $amount = $f_amount ?? null;
+                $amount = $amt ?? null;
                 $order_id = $session_id ?? null;
                 $site_name = Webkey::where('user_id', $urlkey)->first()->site_name ?? null;
 
@@ -1081,7 +1081,7 @@ class VerifyController extends Controller
                     $data['trans'] = $request->account_no;
                     $data['recepit'] = "payment";
                     $data['url_page'] = $urluser;
-                    $data['amount'] = $f_amount;
+                    $data['amount'] = $amt;
 
                     return view('paid-success', $data);
 

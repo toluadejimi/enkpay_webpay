@@ -962,10 +962,9 @@ class VerifyController extends Controller
         $url = $request->url;
         $status = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;
         if ($status == 4) {
-
-
             return redirect($url)->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
         }
+
 
 
 
@@ -980,6 +979,17 @@ class VerifyController extends Controller
             $acct_no = $var->account_no ?? null;
             $amt = $var['amount'] ?? null;
             $status = $var['transactionStatus'] ?? null;
+
+
+            if ($status == "Processing") {
+                return redirect($url)->with('error', 'We have not confirmed your payment yet, please try again later');
+            }
+
+
+            if ($status == "Failed") {
+                return redirect($url)->with('error', 'Please note that your payment failed, kindly contact your bank');
+            }
+
 
 
             if ($status == false) {
@@ -1086,7 +1096,7 @@ class VerifyController extends Controller
             }
         }
 
-        return back()->with('error', 'Account number you provided is not correct, please check and try again');
+        return redirect($url)->with('error', 'Account number you provided is not correct, please check and try again');
 
 
     }
@@ -1134,7 +1144,7 @@ class VerifyController extends Controller
         ]);
 
 
-        return back()->with('message', 'Ticket Updated successfully');
+        return redirect($url)->with('message', 'Ticket Updated successfully');
 
 
     }

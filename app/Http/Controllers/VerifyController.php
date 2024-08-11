@@ -842,6 +842,8 @@ class VerifyController extends Controller
             $amt = $var->amount ?? null;
             $status = $var->status ?? null;
 
+            dd($var);
+
 
 
             if ($status == false) {

@@ -965,12 +965,7 @@ class VerifyController extends Controller
             return redirect($url)->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
         }
 
-
-
-
         if ($status == null) {
-
-
             $ref = $request->account_no;
 
             $var = verify_payment($ref);
@@ -1094,9 +1089,10 @@ class VerifyController extends Controller
                 }
 
             }
+        }else{
+            return redirect($url)->with('error', 'Account number you provided is not correct, please check and try again');
         }
 
-        return redirect($url)->with('error', 'Account number you provided is not correct, please check and try again');
 
 
     }

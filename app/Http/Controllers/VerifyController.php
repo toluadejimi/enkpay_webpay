@@ -965,6 +965,9 @@ class VerifyController extends Controller
             return redirect($url)->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
         }
 
+
+        dd($request->all());
+
         if ($status == null) {
             $ref = $request->account_no;
 

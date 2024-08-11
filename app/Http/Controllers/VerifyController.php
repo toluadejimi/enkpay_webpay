@@ -846,6 +846,8 @@ class VerifyController extends Controller
             $amt = $var->amount ?? null;
             $status = $var->status ?? null;
 
+            dd($var);
+
 
             if ($status == false) {
                 return redirect($url)->with('error', 'Session Check failed, Kindly verify the sessionID  and try again');

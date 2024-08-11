@@ -842,8 +842,6 @@ class VerifyController extends Controller
             $amt = $var->amount ?? null;
             $status = $var->status ?? null;
 
-            dd($var);
-
 
 
             if ($status == false) {
@@ -912,20 +910,29 @@ class VerifyController extends Controller
                 $trasnaction->status = 1;
                 $trasnaction->save();
 
+                $trxa = Transfertransaction::where('account_no', $acct_no)->first() ?? null;
+                if($trxa == null){
+                    $trx = new Transfertransaction();
+                    $trx->account_no = $acct_no;
+                    $trx->amount = $f_amount;
+                    $trx->ref = $var->session_id;
+                    $trx->ref_trans_id = $session_id;
+                    $trx->email = $request->email;
+                    $trx->session_id = $session_id;
+                    $trx->bank = "9PSBRESLOVE";
+                    $trx->resolve = 1;
+                    $trx->transaction_type = "WEBTRASNSFER";
+                    $trx->status = 4;
+                    $trx->user_id = $urlkey;
+                    $trx->save();
 
-                $trx = new Transfertransaction();
-                $trx->account_no = $acct_no;
-                $trx->amount = $f_amount;
-                $trx->ref = $var->session_id;
-                $trx->ref_trans_id = $session_id;
-                $trx->email = $request->email;
-                $trx->session_id = $session_id;
-                $trx->bank = "9PSBRESLOVE";
-                $trx->resolve = 1;
-                $trx->transaction_type = "WEBTRASNSFER";
-                $trx->status = 4;
-                $trx->user_id = $urlkey;
-                $trx->save();
+                }else{
+
+                    Transfertransaction::where('account_no', $acct_no)->update(['status' => 4, 'note' => 'WEMARESOLVE', 'resolve' => 1]);
+
+                }
+
+
 
                 $message = "Business funded | $request->sessionid | $f_amount | $user->first_name " . " " . $user->last_name;
                 Log::info('Business Funded', ['message' => $message]);

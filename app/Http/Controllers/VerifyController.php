@@ -966,7 +966,7 @@ class VerifyController extends Controller
         }
 
 
-        dd($request->all());
+        dd($status);
 
         if ($status == null) {
             $ref = $request->account_no;

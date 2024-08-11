@@ -116,7 +116,7 @@
                     <input name="account_no" type="text" class="form-control" placeholder="977446334">
                     <input hidden name="user_id" value="{{$user_id}}">
                     <input hidden name="email" value="{{$email}}">
-                    <input  name="url" value="{{$currentUrl}}">
+                    <input hidden name="url" value="{{$currentUrl}}">
 
 
                     <hr>

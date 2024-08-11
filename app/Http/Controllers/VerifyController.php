@@ -975,6 +975,8 @@ class VerifyController extends Controller
             $amt = $var['amount'] ?? null;
             $status = $var['transactionStatus'] ?? null;
 
+            dd($var);
+
 
             if ($status == "Processing") {
                 return redirect($url)->with('error', 'We have not confirmed your payment yet, please try again later');

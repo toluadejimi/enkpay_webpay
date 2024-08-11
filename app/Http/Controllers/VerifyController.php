@@ -808,10 +808,6 @@ class VerifyController extends Controller
         }
 
 
-        if ($status == false) {
-            return redirect($url)->with('error', 'Session Check failed, Kindly verify the sessionID  and try again');
-        }
-
 
         if ($status == null || $status == 0 || $status == 3) {
 

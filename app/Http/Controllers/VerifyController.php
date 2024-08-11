@@ -190,8 +190,6 @@ class VerifyController extends Controller
                 ]);
 
 
-
-
                 //update Transactions
                 $trasnaction = new Transaction();
                 $trasnaction->user_id = $trx->user_id;
@@ -613,13 +611,6 @@ class VerifyController extends Controller
     }
 
 
-
-
-
-
-
-
-
     public
     function no_credit_view(request $request)
     {
@@ -660,8 +651,6 @@ class VerifyController extends Controller
         ResolveOrder::where('id', $order->id)->update(['status' => 5]);
         return back()->with('message', 'Transaction Moveed');
     }
-
-
 
 
     public
@@ -803,16 +792,28 @@ class VerifyController extends Controller
     }
 
 
-    public function reslove_psb(request $request){
+    public function reslove_psb(request $request)
+    {
 
+        $url = $request->url;
 
         $status = Transfertransaction::where('session_id', $request->t_session)->first()->status ?? null;
         if ($status == 4) {
-            return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
+            return redirect($url)->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
         }
 
 
-        if ($status == null) {
+        if ($status == 3) {
+            return redirect($url)->with('error', 'Please note that your payment failed, kindly contact your bank');
+        }
+
+
+        if ($status == false) {
+            return redirect($url)->with('error', 'Session Check failed, Kindly verify the sessionID  and try again');
+        }
+
+
+        if ($status == null || $status == 0 || $status == 3) {
 
             $curl = curl_init();
             $data = array(
@@ -847,7 +848,7 @@ class VerifyController extends Controller
 
 
             if ($status == false) {
-                return back()->with('error', 'Session Check failed, Kindly verify the sessionID  and try again');
+                return redirect($url)->with('error', 'Session Check failed, Kindly verify the sessionID  and try again');
             }
 
 
@@ -860,12 +861,11 @@ class VerifyController extends Controller
 
             $status = Transfertransaction::where('account_no', $acct_no)->first()->status ?? null;
             if ($status == 4) {
-                return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
+                return redirect($url)->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
             }
 
 
             $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
-
 
 
             //fund Vendor
@@ -892,7 +892,6 @@ class VerifyController extends Controller
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
 
 
-
             if ($fund == 2) {
 
                 //update Transactions
@@ -913,6 +912,7 @@ class VerifyController extends Controller
                 $trasnaction->balance = $balance;
                 $trasnaction->status = 1;
                 $trasnaction->save();
+
 
                 $trx = new Transfertransaction();
                 $trx->account_no = $acct_no;
@@ -950,13 +950,14 @@ class VerifyController extends Controller
 
         }
 
-        return back()->with('error', 'Session ID you provided is not correct, please check and try again');
+        return redirect($url)->with('error', 'Session ID you provided is not correct, please check and try again');
 
 
     }
 
 
-    public function reslove_wema(request $request){
+    public function reslove_wema(request $request)
+    {
 
 
         $url = $request->url;
@@ -965,7 +966,7 @@ class VerifyController extends Controller
             return redirect($url)->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
         }
 
-        if ($status == null || $status == 0 || $status == 3 ) {
+        if ($status == null || $status == 0 || $status == 3) {
             $ref = $request->account_no;
 
             $var = verify_payment($ref);
@@ -984,7 +985,6 @@ class VerifyController extends Controller
             if ($status == "Failed") {
                 return redirect($url)->with('error', 'Please note that your payment failed, kindly contact your bank');
             }
-
 
 
             if ($status == false) {
@@ -1058,7 +1058,6 @@ class VerifyController extends Controller
                     $trasnaction->save();
 
 
-
                     $message = "Business funded | $request->account_no | $f_amount | $user->first_name " . " " . $user->last_name;
                     Log::info('Business Funded', ['message' => $message]);
 
@@ -1080,14 +1079,12 @@ class VerifyController extends Controller
                 }
 
             }
-        }else{
+        } else {
             return redirect($url)->with('error', 'Account number you provided is not correct, please check and try again');
         }
 
 
-
     }
-
 
 
     public

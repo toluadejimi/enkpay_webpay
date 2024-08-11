@@ -190,6 +190,15 @@ Route::get('open-ticket', [VerifyController::class, 'open_ticket']);
 
 
 Route::any('submit-resolve', [VerifyController::class, 'submit_resolve']);
+
+
+Route::any('resolve-psb-transaction', [VerifyController::class, 'reslove_psb']);
+Route::any('resolve-wema-transaction', [VerifyController::class, 'reslove_wema']);
+
+
+
+
+
 Route::any('track-request', [VerifyController::class, 'track_request_view']);
 Route::any('request-order', [VerifyController::class, 'request_order']);
 

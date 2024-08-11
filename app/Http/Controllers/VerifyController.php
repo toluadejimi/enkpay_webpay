@@ -1036,7 +1036,7 @@ class VerifyController extends Controller
                 if ($fund == 2) {
 
 
-                    Transfertransaction::where('account_no', $request->account_no)->update(['status' => 4, 'note' => 'WEMARESOLVE', 'reslove' => 1]);
+                    Transfertransaction::where('account_no', $request->account_no)->update(['status' => 4, 'note' => 'WEMARESOLVE', 'resolve' => 1]);
 
                     //update Transactions
                     $trasnaction = new Transaction();

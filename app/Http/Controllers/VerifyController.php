@@ -1033,10 +1033,10 @@ class VerifyController extends Controller
                 $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
 
 
-                dd($fund);
-
-
                 if ($fund == 2) {
+
+
+                    TransactionController::where('account_no', $request->account_no)->update(['status' => 4, 'note' => 'WEMARESOLVE', 'reslove' => 1]);
 
                     //update Transactions
                     $trasnaction = new Transaction();
@@ -1057,19 +1057,7 @@ class VerifyController extends Controller
                     $trasnaction->status = 1;
                     $trasnaction->save();
 
-                    $trx = new Transfertransaction();
-                    $trx->account_no = $acct_no;
-                    $trx->amount = $f_amount;
-                    $trx->ref = $request->account_no;
-                    $trx->ref_trans_id = $request->account_no;
-                    $trx->email = $request->email;
-                    $trx->session_id = $request->account_no;
-                    $trx->bank = "WEMARESLOVE";
-                    $trx->resolve = 1;
-                    $trx->transaction_type = "WEBTRASNSFER";
-                    $trx->status = 4;
-                    $trx->user_id = $urlkey;
-                    $trx->save();
+
 
                     $message = "Business funded | $request->account_no | $f_amount | $user->first_name " . " " . $user->last_name;
                     Log::info('Business Funded', ['message' => $message]);

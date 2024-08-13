@@ -1828,14 +1828,10 @@ if (!function_exists('verifypelpay')) {
 
     function verifypelpay($pref, $amount)
     {
-
         $token = tokenkey();
         $url = env('PELPAYURL');
-
         $curl = curl_init();
-
         $url2= "$url/api/Transaction/bypaymentreference/$pref";
-
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url2,
             CURLOPT_RETURNTRANSFER => true,
@@ -1901,7 +1897,6 @@ if (!function_exists('verifypelpay')) {
 
 
                 $data['amount'] = $amount;
-                //$data['merchantReference'] = $var->responseData->merchantReference;
                 $data['code'] = 4;
                 return $data;
             }
@@ -1910,7 +1905,6 @@ if (!function_exists('verifypelpay')) {
 
 
         } else {
-
             $message = "Fools trying to do stuffs";
             send_notification($message);
             return null;
@@ -2242,6 +2236,7 @@ if (!function_exists('credit_user_wallet')) {
         $status = $var->status ?? null;
 
 
+        dd($var);
 
 
 

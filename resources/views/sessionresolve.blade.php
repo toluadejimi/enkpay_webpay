@@ -70,8 +70,8 @@
                     @endif
 
 
-                    <label>Enter session ID / Refrence on Receipt</label>
-                    <input name="t_session" type="text" class="form-control" placeholder="8858885884747474744">
+                    <label>Enter the 9psb Account number you paid to</label>
+                    <input name="account_no" type="text" class="form-control" placeholder="5554485574">
                     <input hidden name="user_id" value="{{$user_id}}">
                     <input hidden name="email" value="{{$email}}">
                     <input hidden name="url" value="{{$currentUrl}}">

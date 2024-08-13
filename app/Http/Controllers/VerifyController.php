@@ -797,7 +797,7 @@ class VerifyController extends Controller
 
         $url = $request->url;
 
-        $status = Transfertransaction::where('session_id', $request->t_session)->first()->status ?? null;
+        $status = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;
         if ($status == 4) {
             return redirect($url)->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
         }
@@ -813,7 +813,7 @@ class VerifyController extends Controller
 
             $curl = curl_init();
             $data = array(
-                'session_id' => $request->t_session,
+                'account_no' => $request->account_no,
             );
             $post_data = json_encode($data);
 
@@ -840,13 +840,15 @@ class VerifyController extends Controller
             $session_id = $var->session_id ?? null;
             $acct_no = $var->account_no ?? null;
             $amt = $var->amount ?? null;
+            $name = $var->sender_name ?? null;
             $status = $var->status ?? null;
-
+            $message = $var->messsage ?? null;
 
 
             if ($status == false) {
-                return redirect($url)->with('error', 'Session Check failed, Kindly verify the sessionID  and try again');
+                return redirect($url)->with('error', $message);
             }
+
 
 
             $set = Setting::where('id', 1)->first();
@@ -927,9 +929,7 @@ class VerifyController extends Controller
                     $trx->save();
 
                 }else{
-
                     Transfertransaction::where('account_no', $acct_no)->update(['status' => 4, 'note' => 'WEMARESOLVE', 'resolve' => 1]);
-
                 }
 
 
@@ -956,7 +956,7 @@ class VerifyController extends Controller
 
         }
 
-        return redirect($url)->with('error', 'Session ID you provided is not correct, please check and try again');
+        return redirect($url)->with('error', 'Account number you provided is not correct, please check and try again');
 
 
     }

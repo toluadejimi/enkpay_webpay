@@ -2246,7 +2246,7 @@ if (!function_exists('credit_user_wallet')) {
             return 2;
         }else{
 
-            $message = json_encode($var);
+            $message ="Funding user Error ===>".json_encode($var);
             send_notification($message);
             return 0;
         }

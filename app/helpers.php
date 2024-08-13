@@ -2197,8 +2197,7 @@ if (!function_exists('credit_user_wallet')) {
     function credit_user_wallet($url, $user_email, $amount, $order_id)
     {
 
-        $message = "$url | $user_email | $amount | $order_id";
-        send_notification($message);
+
 
         $databody = array(
 
@@ -2237,7 +2236,13 @@ if (!function_exists('credit_user_wallet')) {
 
 
         if($status == true){
+
+            $message = "$url | $user_email | $amount | $order_id successfully funded";
+            send_notification($message);
+
             return 2;
+
+
         }else{
 
             $message ="Funding user Error ===>".json_encode($var);

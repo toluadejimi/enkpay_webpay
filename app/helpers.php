@@ -1901,7 +1901,8 @@ if (!function_exists('verifypelpay')) {
 
 
         } else {
-            $message = "Fools trying to do stuffs";
+            $message = "====> Fools trying to do stuffs \n
+            =======>".json_decode($var);
             send_notification($message);
             return null;
         }
@@ -1949,8 +1950,8 @@ if (!function_exists('verify_payment')) {
         } else {
 
             $request = $ref;
-            $message =  "=======> Fools trying to do stuffs \n
-            =======>>>> $ref";
+            $message = "====> Fools trying to do stuffs \n
+            =======>".json_decode($var);
             send_notification($message);
             return null;
         }

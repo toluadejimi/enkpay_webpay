@@ -840,7 +840,7 @@ class VerifyController extends Controller
             curl_close($curl);
             $var = json_decode($var);
 
-            dd($var);
+
 
             $session_id = $var->session_id ?? null;
             $acct_no = $var->account_no ?? null;
@@ -853,6 +853,7 @@ class VerifyController extends Controller
             if ($status == false) {
                 return redirect($url)->with('error', $message);
             }
+
 
 
 
@@ -870,6 +871,9 @@ class VerifyController extends Controller
 
 
             $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
+
+
+            dd($var, $urlkey);
 
 
             //fund Vendor

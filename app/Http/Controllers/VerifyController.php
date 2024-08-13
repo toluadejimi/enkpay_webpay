@@ -873,7 +873,7 @@ class VerifyController extends Controller
             $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
 
 
-            dd($var, $urlkey);
+
 
 
             //fund Vendor
@@ -898,6 +898,8 @@ class VerifyController extends Controller
 
             //fund user
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
+
+            dd($var, $urlkey, $fund);
 
 
             if ($fund == 2) {

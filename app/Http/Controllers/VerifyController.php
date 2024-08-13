@@ -804,12 +804,13 @@ class VerifyController extends Controller
 
 
 
-        dd($url);
 
         if ($status == 3) {
             return redirect($url)->with('error', 'Please note that your payment failed, kindly contact your bank');
         }
 
+
+        dd("hello");
 
 
         if ($status == null || $status == 0 || $status == 3) {

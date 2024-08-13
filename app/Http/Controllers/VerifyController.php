@@ -810,7 +810,7 @@ class VerifyController extends Controller
         }
 
 
-        dd("hello");
+
 
 
         if ($status == null || $status == 0 || $status == 3) {
@@ -840,6 +840,7 @@ class VerifyController extends Controller
             curl_close($curl);
             $var = json_decode($var);
 
+            dd($var);
 
             $session_id = $var->session_id ?? null;
             $acct_no = $var->account_no ?? null;

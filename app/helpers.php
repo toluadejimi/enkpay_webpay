@@ -2236,10 +2236,6 @@ if (!function_exists('credit_user_wallet')) {
         $status = $var->status ?? null;
 
 
-        dd($var);
-
-
-
 
         if($status == true){
             return 2;

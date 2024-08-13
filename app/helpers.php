@@ -1756,10 +1756,6 @@ if (!function_exists('tokenkey')) {
         curl_close($curl);
         $var = json_decode($var);
 
-
-
-
-
         $req = $var->requestSuccessful ?? null;
 
         if ($req == null) {
@@ -1942,15 +1938,13 @@ if (!function_exists('verify_payment')) {
         $var = curl_exec($curl);
         curl_close($curl);
         $var = json_decode($var);
+        $status = $var->requestSuccessful ?? null;
 
 
-        if ($var->requestSuccessful == true) {
-
+        if ($status == true) {
             $data['transactionStatus'] = $var->responseData->transactionStatus;
             $data['amount'] = $var->responseData->amountCollected;
             $data['merchantReference'] = $var->responseData->merchantReference;
-
-
             return $data;
         } else {
 

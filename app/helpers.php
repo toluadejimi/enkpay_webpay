@@ -1954,7 +1954,9 @@ if (!function_exists('verify_payment')) {
             return $data;
         } else {
 
-            $message = "Fools trying to do stuffs";
+            $request = $ref;
+            $message =  "=======> Fools trying to do stuffs \n
+            =======>>>> $ref";
             send_notification($message);
             return null;
         }
@@ -2230,7 +2232,10 @@ if (!function_exists('credit_user_wallet')) {
         ));
 
         $var = curl_exec($curl);
-        //dd($var, $url, $user_email, $amount, $order_id);
+
+        dd($var, $url, $user_email, $amount, $order_id);
+
+
         curl_close($curl);
         $var = json_decode($var);
         $status = $var->status ?? null;
@@ -2240,6 +2245,7 @@ if (!function_exists('credit_user_wallet')) {
         if($status == true){
             return 2;
         }else{
+
             $message = json_encode($var);
             send_notification($message);
             return 0;

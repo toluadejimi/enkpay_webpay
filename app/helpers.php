@@ -1951,7 +1951,7 @@ if (!function_exists('verify_payment')) {
 
             $request = $ref;
             $message = "====> Fools trying to do stuffs \n
-            =======>".json_decode($var);
+            =======>".json_encode($var);
             send_notification($message);
             return null;
         }

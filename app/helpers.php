@@ -1947,14 +1947,15 @@ if (!function_exists('verify_payment')) {
             $data['transactionStatus'] = $var->responseData->transactionStatus;
             $data['amount'] = $var->responseData->amountCollected;
             $data['merchantReference'] = $var->responseData->merchantReference;
+            $data['message'] = $var->responseData->message ?? null;
+
             return $data;
         } else {
-
             $request = $ref;
             $message = "====> Fools trying to do stuffs \n
             =======>".json_encode($var);
             send_notification($message);
-            return null;
+            return 0;
         }
     }
 }

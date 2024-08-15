@@ -816,7 +816,7 @@ class VerifyController extends Controller
 
 
         if ($status == 3) {
-            return back()->with('error', 'Please note that your payment failed, kindly contact your bank');
+            return back()->with('error', 'Please note that your payment failed, Your reversal has been processed back to your bank account ');
         }
 
 
@@ -1016,18 +1016,20 @@ class VerifyController extends Controller
 
 
             if ($status == "Processing") {
-                return back()->with('error', 'We have not confirmed your payment yet, please try again later');
+                return back()->with('error', 'We have not confirmed your payment yet its still processing, please try again later');
             }
 
 
             if ($status == "Failed") {
-                return back()->with('error', 'Please note that your payment failed, kindly contact your bank');
+                $emessage = $var['message'];
+                return back()->with('error',  "You pay ".$emessage);
             }
 
 
             if ($status == false) {
-                return back()->with('error', 'Session Check failed, Kindly verify the sessionID  and try again');
+                return back()->with('error', 'Account No Check failed, Kindly verify the Account No  and try again');
             }
+
 
 
             if ($status == "Successful") {

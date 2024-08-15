@@ -1952,8 +1952,7 @@ if (!function_exists('verify_payment')) {
             return $data;
         } else {
             $request = $ref;
-            $message = "====> Fools trying to do stuffs \n
-            =======>".json_encode($var);
+            $message = "=======>".json_encode($var);
             send_notification($message);
             return 0;
         }

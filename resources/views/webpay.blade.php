@@ -250,9 +250,6 @@
     </div>
 </div>
 
-
-
-
 <div class="card-secton transfer-section">
     <div class="tf-container">
         <div class="tf-balance-box transfer-amount">
@@ -285,6 +282,10 @@
 
     </div>
 </div>
+
+
+
+
 
 
 <div class="my-4 d-flex justify-content-center">

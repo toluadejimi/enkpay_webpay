@@ -810,9 +810,6 @@ class VerifyController extends Controller
         }
 
 
-
-
-
         if ($status == null || $status == 0 || $status == 3) {
 
             $curl = curl_init();
@@ -976,6 +973,9 @@ class VerifyController extends Controller
     public function reslove_wema(request $request)
     {
 
+
+        $message = json_encode($request->all());
+        send_notification($message);
 
         $url = $request->url;
         $status = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;

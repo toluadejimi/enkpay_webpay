@@ -365,6 +365,7 @@ class VerifyController extends Controller
     {
         $data['user_id'] = $request->user_id;
         $data['check_url'] = $request->check_url;
+        $data['currentUrl'] =  Webkey::where('key', $request->user_id)->first()->support_number ?? null;
         return view('resolve', $data);
     }
 
@@ -715,29 +716,7 @@ class VerifyController extends Controller
         }
 
 
-        if ($request->pay_type == "psb") {
 
-            $data['currentUrl'] = url()->current();
-            $data['email'] = $request->email;
-            $data['user_id'] = $request->user_id;
-            $data['type'] = "ninepsb";
-            $data['currentUrl'] = Webkey::where('key', $request->user_id)->first()->support_number ?? null;
-
-
-            return view('sessionresolve', $data);
-
-        }
-
-        if ($request->pay_type == "wema") {
-
-            $data['email'] = $request->email;
-            $data['user_id'] = $request->user_id;
-            $data['currentUrl'] = Webkey::where('key', $request->user_id)->first()->support_number ?? null;
-            $data['type'] = "wema";
-
-            return view('sessionresolve', $data);
-
-        }
 
 
         if ($request->receipt != null) {
@@ -792,21 +771,52 @@ class VerifyController extends Controller
     }
 
 
+
+    public function reslove_wema_view(request $request)
+    {
+
+        $data['email'] = $request->email;
+        $data['user_id'] = $request->user_id;
+        $data['check_url'] = $request->check_url;
+        $data['currentUrl'] = Webkey::where('key', $request->user_id)->first()->support_number ?? null;
+        $data['type'] = "wema";
+
+        return view('sessionresolve', $data);
+
+    }
+
+    public function reslove_psb_view(request $request)
+    {
+        $data['currentUrl'] = url()->current();
+        $data['email'] = $request->email;
+        $data['user_id'] = $request->user_id;
+        $data['check_url'] = $request->check_url;
+        $data['type'] = "ninepsb";
+        $data['currentUrl'] = Webkey::where('key', $request->user_id)->first()->support_number ?? null;
+
+
+        return view('sessionresolve', $data);
+    }
+
+
+
     public function reslove_psb(request $request)
     {
+        if($request->username == "Not Found, Pleas try again"){
+            return back()->with('error', 'Email is invalid, please try again');
+        }
+
 
         $url = $request->url;
 
         $status = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;
         if ($status == 4) {
-            return redirect($url)->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
+            return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
         }
 
 
-
-
         if ($status == 3) {
-            return redirect($url)->with('error', 'Please note that your payment failed, kindly contact your bank');
+            return back()->with('error', 'Please note that your payment failed, kindly contact your bank');
         }
 
 
@@ -848,7 +858,7 @@ class VerifyController extends Controller
 
 
             if ($status == false) {
-                return redirect($url)->with('error', $message);
+                return back()->with('error', $message);
             }
 
 
@@ -863,14 +873,11 @@ class VerifyController extends Controller
 
             $status = Transfertransaction::where('account_no', $acct_no)->first()->status ?? null;
             if ($status == 4) {
-                return redirect($url)->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
+                return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
             }
 
 
             $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
-
-
-
 
 
             //fund Vendor
@@ -937,7 +944,7 @@ class VerifyController extends Controller
                     $trx->save();
 
                 }else{
-                    Transfertransaction::where('account_no', $acct_no)->update(['status' => 4, 'note' => 'WEMARESOLVE', 'resolve' => 1]);
+                    Transfertransaction::where('account_no', $acct_no)->update(['status' => 4, 'note' => '9PSBRESOLVE', 'resolve' => 1]);
                 }
 
 
@@ -964,7 +971,7 @@ class VerifyController extends Controller
 
         }
 
-        return redirect($url)->with('error', 'Account number you provided is not correct, please check and try again');
+        return back()->with('error', 'Account number you provided is not correct, please check and try again');
 
 
     }
@@ -973,17 +980,31 @@ class VerifyController extends Controller
     public function reslove_wema(request $request)
     {
 
+        if($request->username == "Not Found, Pleas try again"){
+            return back()->with('error', 'Email is invalid, please try again');
+        }
 
-        $message = "WWEMA RESOLVE====>>>>>>". json_encode($request->all());
+
+
+
+        $message = "WEMA RESOLVE====>>>>>>". json_encode($request->all());
         send_notification($message);
 
         $url = $request->url;
         $status = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;
         if ($status == 4) {
-            return redirect($url)->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
+            return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
         }
 
+
         if ($status == null || $status == 0 || $status == 3) {
+
+            $status = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;
+            if ($status == 4) {
+                return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
+            }
+
+
             $ref = $request->account_no;
 
             $var = verify_payment($ref);
@@ -995,26 +1016,33 @@ class VerifyController extends Controller
 
 
             if ($status == "Processing") {
-                return redirect($url)->with('error', 'We have not confirmed your payment yet, please try again later');
+                return back()->with('error', 'We have not confirmed your payment yet, please try again later');
             }
 
 
             if ($status == "Failed") {
-                return redirect($url)->with('error', 'Please note that your payment failed, kindly contact your bank');
+                return back()->with('error', 'Please note that your payment failed, kindly contact your bank');
             }
 
 
             if ($status == false) {
-                return redirect($url)->with('error', 'Session Check failed, Kindly verify the sessionID  and try again');
+                return back()->with('error', 'Session Check failed, Kindly verify the sessionID  and try again');
             }
 
 
             if ($status == "Successful") {
 
+                $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
+                $user = User::where('id', $urlkey)->first();
+
+
                 $svtrx = new Transfertransaction();
-                $svtrx->account_no = $acct_no;
+                $svtrx->account_no = $request->account_no;
                 $svtrx->status = 4;
+                $svtrx->amount = $amt;
                 $svtrx->note = "WEMARESOLVE";
+                $svtrx->user_id = $user->id;
+                $svtrx->transaction_type = "Resolve";
                 $svtrx->save();
 
 
@@ -1026,11 +1054,6 @@ class VerifyController extends Controller
                 }
 
 
-
-                $status = Transfertransaction::where('account_no', $acct_no)->first()->status ?? null;
-                if ($status == 4) {
-                    return redirect($url)->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
-                }
 
 
                 $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
@@ -1107,8 +1130,10 @@ class VerifyController extends Controller
 
             }
         } else {
-            return redirect($url)->with('error', 'Account number you provided is not correct, please check and try again');
+            return back()->with('error', 'Account number you provided is not correct, please check and try again');
         }
+
+        return back()->with('error', 'Resolve Error, Contact admin');
 
 
     }

@@ -140,6 +140,11 @@ Route::get('approve', [VerifyController::class, 'approve_transaction']);
 
 
 Route::get('resolve', [VerifyController::class, 'resolve']);
+Route::get('resolve-wema', [VerifyController::class, 'reslove_wema_view']);
+Route::get('resolve-psb', [VerifyController::class, 'reslove_psb_view']);
+
+
+
 
 Route::any('deposit-approve', [VerifyController::class, 'deposit_approve']);
 Route::any('deposit-decline', [VerifyController::class, 'decline_approve']);

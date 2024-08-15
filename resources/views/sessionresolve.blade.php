@@ -20,15 +20,49 @@
     <link rel="manifest" href="{{url('')}}/public/assets/assets/__manifest.json"
           data-pwa-version="set_in_manifest_and_pwa_js">
     <link rel="apple-touch-icon" sizes="192x192" href="{{url('')}}/public/assets/assets/app/icons/icon-192x192.png">
+
+    <style>
+        .btn {
+            position: relative;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .loader {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin-top: -10px;
+            margin-left: -10px;
+            border: 3px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 3px solid #3498db;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .btn.disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+    </style>
 </head>
 
 <body>
-<!-- preloade -->
-<div class="preload preload-container">
-    <div class="preload-logo">
-        <div class="spinner"></div>
-    </div>
-</div>
+{{--<!-- preloade -->--}}
+{{--<div class="preload preload-container">--}}
+{{--    <div class="preload-logo">--}}
+{{--        <div class="spinner"></div>--}}
+{{--    </div>--}}
+{{--</div>--}}
 <!-- /preload -->
 <div class="app-header st1">
     <div class="tf-container">
@@ -46,7 +80,7 @@
 
 
             @if($type == "ninepsb")
-                <form action="resolve-psb-transaction" enctype="multipart/form-data" method="POST">
+                <form id="transactionForm" action="resolve-psb-transaction" enctype="multipart/form-data" method="POST">
                     @csrf
 
                     @if ($errors->any())
@@ -70,25 +104,90 @@
                     @endif
 
 
+                    <label>Enter Email used on the site</label>
+                    <input type="email" id="email" class="form-control" name="email" required>
+
+                    <div class="text-danger my-2" id="result">verifying email</div>
+
+                    <input type="text" name="username" id="usernameResult" class="form-control" readonly
+                           style="display: none;">
+
+
+                    <script>
+                        document.getElementById('email').addEventListener('input', function () {
+                            document.getElementById('result').textContent = ''; // Clear previous result
+                            toggleVerifyButton(false); // Disable verify button on input change
+                        });
+
+                        document.getElementById('email').addEventListener('blur', function () {
+                            var email = this.value.trim();
+                            if (email !== '') {
+                                verifyEmail(email);
+                            }
+                        });
+
+                        function toggleVerifyButton(enabled) {
+                            document.getElementById('verifyButton').disabled = !enabled;
+                        }
+
+                        function verifyEmail(email) {
+                            fetch('{{$check_url}}', {
+                                method: 'POST',
+                                body: new URLSearchParams({
+                                    email: email
+                                })
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.error) {
+                                        document.getElementById('result').textContent = 'Account not found or not a customer email. Please try again.';
+                                        toggleVerifyButton(false); // Keep button disabled on error
+                                        document.getElementById('usernameResult').style.display = 'none'; // Hide username result field on error
+                                    } else {
+                                        console.log(data);
+                                        document.getElementById('result').textContent = 'Your Username is: ' + data.username;
+                                        document.getElementById('usernameResult').value = data.username; // Set username in input field
+                                        document.getElementById('usernameResult').style.display = 'block'; // Show username result field
+                                        toggleVerifyButton(true); // Enable button on successful verification
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    document.getElementById('result').textContent = 'Error verifying email. Please try again later.';
+                                    toggleVerifyButton(false); // Keep button disabled on error
+                                    document.getElementById('usernameResult').style.display = 'none'; // Hide username result field on error
+                                });
+                        }
+
+                        // Disable submit button initially
+                        toggleVerifyButton(false);
+                    </script>
+
+                    <hr>
+
                     <label>Enter the 9psb Account number you paid to</label>
+
                     <input name="account_no" type="text" class="form-control" placeholder="5554485574">
+
                     <input hidden name="user_id" value="{{$user_id}}">
-                    <input hidden name="email" value="{{$email}}">
+                    <input hidden name="usernameResult" id="usernameResult">
                     <input hidden name="url" value="{{$currentUrl}}">
 
 
 
-
-                    <hr>
-
-                    <button type="submit" id="verifyButton" class="tf-btn accent large my-3">Resolve Transaction
+                    <button id="submitBtn"  type="submit" class="btn tf-btn accent large my-3">
+                        <span class="btn-text">Resolve 9PSB Transaction</span>
+                        <div class="loader" id="loader"></div>
                     </button>
+
+
+
 
                 </form>
             @endif
 
             @if($type == "wema")
-                <form action="resolve-wema-transaction" enctype="multipart/form-data" method="POST">
+                <form id="transactionFormwema"  action="resolve-wema-transaction" enctype="multipart/form-data" method="POST">
                     @csrf
 
                     @if ($errors->any())
@@ -112,16 +211,80 @@
                     @endif
 
 
+                    <label>Enter Email used on the site</label>
+                    <input type="email" id="email" class="form-control" name="email" required>
+
+                    <div class="text-danger my-2" id="result">verifying email</div>
+
+                    <input type="text" name="username" id="usernameResult" class="form-control" readonly
+                           style="display: none;">
+
+                    <script>
+                        document.getElementById('email').addEventListener('input', function () {
+                            document.getElementById('result').textContent = ''; // Clear previous result
+                            toggleVerifyButton(false); // Disable verify button on input change
+                        });
+
+                        document.getElementById('email').addEventListener('blur', function () {
+                            var email = this.value.trim();
+                            if (email !== '') {
+                                verifyEmail(email);
+                            }
+                        });
+
+                        function toggleVerifyButton(enabled) {
+                            document.getElementById('verifyButton').disabled = !enabled;
+                        }
+
+                        function verifyEmail(email) {
+                            fetch('{{$check_url}}', {
+                                method: 'POST',
+                                body: new URLSearchParams({
+                                    email: email
+                                })
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.error) {
+                                        document.getElementById('result').textContent = 'Account not found or not a customer email. Please try again.';
+                                        toggleVerifyButton(false); // Keep button disabled on error
+                                        document.getElementById('usernameResult').style.display = 'none'; // Hide username result field on error
+                                    } else {
+                                        console.log(data);
+                                        document.getElementById('result').textContent = 'Your Username is: ' + data.username;
+                                        document.getElementById('usernameResult').value = data.username; // Set username in input field
+                                        document.getElementById('usernameResult').style.display = 'block'; // Show username result field
+                                        toggleVerifyButton(true); // Enable button on successful verification
+                                    }
+                                })
+                                // .catch(error => {
+                                //     console.error('Error:', error);
+                                //     document.getElementById('result').textContent = 'Error verifying email. Please try again later.';
+                                //     toggleVerifyButton(false); // Keep button disabled on error
+                                //     document.getElementById('usernameResult').style.display = 'none'; // Hide username result field on error
+                                // });
+                        }
+
+                        // Disable submit button initially
+                        toggleVerifyButton(false);
+                    </script>
+
+                    <hr>
+
                     <label>Enter wema account number paid to</label>
                     <input name="account_no" type="text" class="form-control" placeholder="977446334">
+
+
                     <input hidden name="user_id" value="{{$user_id}}">
-                    <input hidden name="email" value="{{$email}}">
+                    <input hidden name="usernameResult" id="usernameResult">
                     <input hidden name="url" value="{{$currentUrl}}">
 
 
                     <hr>
 
-                    <button type="submit" id="verifyButton" class="tf-btn accent large my-3">Resolve Transaction
+                    <button id="submitBtnwema"  type="submit" class="btn tf-btn accent large my-3">
+                        <span class="btn-text">Resolve Wema Transaction</span>
+                        <div class="loader" id="loaderwema"></div>
                     </button>
 
                 </form>
@@ -133,6 +296,42 @@
     </div>
 
 </div>
+
+
+<script>
+    document.getElementById('transactionForm').addEventListener('submit', function (e) {
+        // Get the button and loader
+        const button = document.getElementById('submitBtn');
+        const loader = document.getElementById('loader');
+        const btnText = document.querySelector('.btn-text');
+
+        // Disable the button and show loader
+        button.classList.add('disabled');
+        loader.style.display = 'block';
+        btnText.style.display = 'none';
+
+        // Prevent multiple submissions by disabling the button
+        button.disabled = true;
+    });
+</script>
+
+
+<script>
+    document.getElementById('transactionFormwema').addEventListener('submit', function (e) {
+        // Get the button and loader
+        const button = document.getElementById('submitBtnwema');
+        const loader = document.getElementById('loaderwema');
+        const btnText = document.querySelector('.btn-text');
+
+        // Disable the button and show loader
+        button.classList.add('disabled');
+        loader.style.display = 'block';
+        btnText.style.display = 'none';
+
+        // Prevent multiple submissions by disabling the button
+        button.disabled = true;
+    });
+</script>
 
 
 <script type="text/javascript" src="{{url('')}}/public/assets/assets/javascript/jquery.min.js"></script>

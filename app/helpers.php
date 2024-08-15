@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Transaction;
 use App\Models\Transfertransaction;
 use App\Models\User;
 use App\Models\Ttmfb;

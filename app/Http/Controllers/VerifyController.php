@@ -1011,12 +1011,21 @@ class VerifyController extends Controller
 
             if ($status == "Successful") {
 
+                $svtrx = new Transfertransaction();
+                $svtrx->account_no = $acct_no;
+                $svtrx->status = 4;
+                $svtrx->note = "WEMARESOLVE";
+                $svtrx->save();
+
+
                 $set = Setting::where('id', 1)->first();
                 if ($amt > 15000) {
                     $p_amount = $amt - $set->psb_cap;
                 } else {
                     $p_amount = $amt - $set->psb_charge;
                 }
+
+
 
                 $status = Transfertransaction::where('account_no', $acct_no)->first()->status ?? null;
                 if ($status == 4) {
@@ -1046,12 +1055,13 @@ class VerifyController extends Controller
                 $order_id = $session_id ?? null;
                 $site_name = Webkey::where('user_id', $urlkey)->first()->site_name ?? null;
 
+
+
                 //fund user
                 $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
 
 
                 if ($fund == 2) {
-
 
                     Transfertransaction::where('account_no', $request->account_no)->update(['status' => 4, 'note' => 'WEMARESOLVE', 'resolve' => 1]);
 

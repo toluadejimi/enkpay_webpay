@@ -974,7 +974,7 @@ class VerifyController extends Controller
     {
 
 
-        $message = json_encode($request->all());
+        $message = "WWEMA RESOLVE====>>>>>>". json_encode($request->all());
         send_notification($message);
 
         $url = $request->url;

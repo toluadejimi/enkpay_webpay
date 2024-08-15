@@ -1004,7 +1004,6 @@ class VerifyController extends Controller
                 return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
             }
 
-
             $ref = $request->account_no;
 
             $var = verify_payment($ref);

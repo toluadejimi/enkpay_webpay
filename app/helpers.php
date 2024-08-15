@@ -1952,7 +1952,7 @@ if (!function_exists('verify_payment')) {
             return $data;
         } else {
             $request = $ref;
-            $message = "=======>".json_encode($var2);
+            $message = "Wema Resolve error =======>".json_encode($var2);
             send_notification($message);
             return 0;
         }

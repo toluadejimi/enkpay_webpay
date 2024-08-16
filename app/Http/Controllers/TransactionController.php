@@ -777,6 +777,7 @@ class TransactionController extends Controller
             if($boomzy == 1){
                 $wema = 1;
                 $transfer = 1;
+                $ninepsb = 1;
             }
 
             $card = $set->pay_by_card;
@@ -785,7 +786,6 @@ class TransactionController extends Controller
             $kuda_transfer = $set->kuda_trx;
             $bank = $set->pay_with_providus;
             $crypto = $set->pay_by_crypto;
-            $ninepsb = $set->ninepsb;
             $boomzy = $set->boomzy;
             $psb_cap = $set->psb_cap;
             $psb_charge = $set->psb_charge;

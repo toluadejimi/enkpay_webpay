@@ -741,8 +741,6 @@ class TransactionController extends Controller
             $get_trans_id = Webtransfer::where('trans_id', $request->ref)->first() ?? null;
             $transref = $get_trans_id->manual_acc_ref ?? null;
 
-            dd($wc_order, $request->ref);
-
             if ($get_trans_id == null) {
                 $transref = date('ymdhis') . Str::upper(random_int(00, 99) . Str::random(2));
                 $trans = new Webtransfer();

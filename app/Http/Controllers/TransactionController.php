@@ -775,7 +775,7 @@ class TransactionController extends Controller
             $boomzy = $set->boomzy;
 
             if($boomzy == 1){
-                $wema = 1;
+                $wema = 0;
                 $transfer = 1;
                 $ninepsb = 1;
             }

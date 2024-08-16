@@ -738,10 +738,10 @@ class TransactionController extends Controller
             $opay_acct_name = $opay_acct->account_name;
 
 
-            $get_trans_id = Webtransfer::where('trans_id', $iref)->first() ?? null;
+            $get_trans_id = Webtransfer::where('trans_id', $request->ref)->first() ?? null;
             $transref = $get_trans_id->manual_acc_ref ?? null;
 
-            dd($wc_order);
+            dd($wc_order, $request->ref);
 
             if ($get_trans_id == null) {
                 $transref = date('ymdhis') . Str::upper(random_int(00, 99) . Str::random(2));
@@ -759,7 +759,7 @@ class TransactionController extends Controller
                 $trans->manual_acc_ref = $transref;
                 $trans->bank_name = $p_bank_name;
                 $trans->web_charges = $commmission;
-                $trans->trans_id = $trans_id;
+                $trans->trans_id = $request->ref;
                 $trans->payable_amount = $pamount ?? $payable_amount;
                 $trans->total_received = $total_received;
                 $trans->wc_order = $wc_order;

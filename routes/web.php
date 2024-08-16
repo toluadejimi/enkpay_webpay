@@ -128,6 +128,8 @@ Route::post('change-support', [VerifyController::class, 'change_support']);
 
 
 Route::get('pay', [TransactionController::class, 'webpay_view']);
+
+
 Route::get('invalid', [TransactionController::class, 'invalid']);
 
 

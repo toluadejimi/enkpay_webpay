@@ -2226,13 +2226,13 @@ if (!function_exists('credit_user_wallet')) {
             ),
         ));
 
-        $var2 = curl_exec($curl);
+        $var = curl_exec($curl);
 
         //dd($var, $url, $user_email, $amount, $order_id);
 
 
         curl_close($curl);
-        $var = json_decode($var2);
+        $var = json_decode($var);
         $status = $var->status ?? null;
 
 
@@ -2247,7 +2247,7 @@ if (!function_exists('credit_user_wallet')) {
 
         }else{
 
-            $message ="Funding user Error ===>".json_encode($var2);
+            $message ="Funding user Error ===>".json_encode($var);
             send_notification($message);
             return 0;
         }

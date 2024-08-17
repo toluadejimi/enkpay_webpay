@@ -876,6 +876,11 @@ class VerifyController extends Controller
                 return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
             }
 
+            $status = Transfertransaction::where('session_id', $session_id)->first()->status ?? null;
+            if ($status == 4) {
+                return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
+            }
+
 
             $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
 

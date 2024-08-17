@@ -799,7 +799,7 @@
                                         </div>
 </div>
 
-                                                    <form action="/verifypsb" method="POST">
+                                                    <form action="/verifypsbboomzy" method="POST">
                                                     @csrf
 
                                                                     <input type="text" id="trx_id" name="trx_id" hidden value="{{ $trans_id}}">
@@ -1512,7 +1512,7 @@
                                         </div>
 </div>
 
-                                                    <form action="/verifywema" method="POST">
+                                                    <form action="/verifywemaboomzy" method="POST">
                                                     @csrf
 
 

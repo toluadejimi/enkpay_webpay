@@ -2879,7 +2879,54 @@ class TransactionController extends Controller
 
     }
 
+
+    public function verifypsbboomzy(Request $request)
+    {
+
+        $ref = Webtransfer::where('trans_id', $request->trx_id)->first() ?? null;
+        $tref = Transfertransaction::where('ref_trans_id', $request->trx_id)->where('account_no', $request->account_no)->first() ?? null;
+        $usr = User::where('id', $ref->user_id)->first();
+
+
+        $message = "Boomzy  Payment Initiated |" . $request->trx_id . "| ON 9PSB " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
+        Log::info('Transfer Initiated', ['message' => $message]);
+        send_notification($message);
+
+        $data['ref'] = $ref->manual_acc_ref;
+        $data['account_no'] = $request->account_no;
+        $data['amount'] = $ref->amount;
+        $data['title'] = "Payment Confirmation";
+
+        return view('waitingboomzy', $data);
+
+
+    }
+
     public function verifywema(Request $request)
+    {
+
+        $ref = Webtransfer::where('trans_id', $request->trx_id)->first() ?? null;
+        $tref = Transfertransaction::where('ref_trans_id', $request->trx_id)->first() ?? null;
+        $usr = User::where('id', $ref->user_id)->first();
+
+
+        $message = "Boomzy  Payment Initiated |" . $request->trx_id . "| ON WEMA " . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
+        send_notification($message);
+
+        $data['ref'] = $ref->manual_acc_ref;
+        $data['account_no'] = $request->account_no;
+        $data['amount'] = $ref->amount;
+        $data['pref'] = $tref->pay_ref  ?? null;
+        $data['title'] = "Payment Confirmation";
+
+        return view('waitingwema', $data);
+
+
+    }
+
+
+
+    public function verifywemaboomzy(Request $request)
     {
 
         $ref = Webtransfer::where('trans_id', $request->trx_id)->first() ?? null;
@@ -2899,7 +2946,7 @@ class TransactionController extends Controller
         $data['pref'] = $tref->pay_ref  ?? null;
         $data['title'] = "Payment Confirmation";
 
-        return view('waitingwema', $data);
+        return view('waitingwemaboomzy', $data);
 
 
     }

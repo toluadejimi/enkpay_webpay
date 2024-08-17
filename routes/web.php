@@ -50,7 +50,11 @@ Route::post('session-check', [TransactionController::class, 'session_check']);
 
 
 Route::post('verifypsb', [TransactionController::class, 'verifypsb']);
+Route::post('verifypsbboomzy', [TransactionController::class, 'verifypsbboomzy']);
+
 Route::post('verifywema', [TransactionController::class, 'verifywema']);
+Route::post('verifywemaboomzy', [TransactionController::class, 'verifywemaboomzy']);
+
 
 
 

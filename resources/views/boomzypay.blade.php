@@ -389,7 +389,7 @@
                                                         } else if (data.status === 'paid') {
                                                             audio.play();
 
-                                                            window.location.href = "{{ url('') }}/paid-success?trans_id=" + trx_id;
+                                                            window.location.href = "{{ url('') }}/paid-success-boomzy?trans_id=" + trx_id;
 
                                                             repeatRequestprovidus = false; // Adjusted variable name here
                                                         }

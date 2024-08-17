@@ -135,6 +135,8 @@ Route::get('invalid', [TransactionController::class, 'invalid']);
 
 Route::get('success', [TransactionController::class, 'success']);
 Route::get('paid-success', [TransactionController::class, 'paid_success']);
+Route::get('paid-success-boomzy', [TransactionController::class, 'paid_success_boomzy']);
+
 
 
 Route::get('pend', [VerifyController::class, 'pending_transaction']);

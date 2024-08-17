@@ -1675,6 +1675,7 @@ class TransactionController extends Controller
 
 
         $url_page = Webkey::where('key', $key)->first()->user_url ?? null;
+       
 
         $webhook = $marchant_url . "?" . "amount=$amount" . "&trans_id=$trans_id" . "&status=success" . "&wc_order=$wc_order" . "&client_id=$client_id" ?? null;
         $recepit = "https://web.enkpay.com/receipt?trans_id=$trans_id&amount=$amount";
@@ -1682,6 +1683,66 @@ class TransactionController extends Controller
         //
 
         return view('paid-success', compact('webhook', 'url_page', 'marchant_url', 'amount', 'trans_id', 'wc_order', 'client_id', 'wc', 'recepit'));
+    }
+
+
+
+    public
+    function paid_success_boomzy(Request $request)
+    {
+
+
+        $get_tramn_id = Transfertransaction::where('ref', $request->trans_id)->first()->ref_trans_id ?? null;
+
+        if ($get_tramn_id == null) {
+            $trans_id = $request->trans_id;
+        } else {
+            $trans_id = $get_tramn_id;
+
+        }
+
+
+        $user_id = Webtransfer::where('trans_id', $trans_id)
+            ->first()->user_id ?? null;
+
+        $wc = Webtransfer::where('trans_id', $trans_id)
+            ->first()->wc_order ?? null;
+
+
+        $key = Webtransfer::where('trans_id', $trans_id)
+            ->first()->key ?? null;
+
+
+        $status = Webtransfer::where('trans_id', $trans_id)
+            ->first()->status ?? null;
+
+
+        $amount = Webtransfer::where('trans_id', $trans_id)
+            ->first()->amount ?? 0;
+
+
+        $wc_order = Webtransfer::where('trans_id', $trans_id)
+            ->first()->wc_order ?? null;
+
+
+        $client_id = Webtransfer::where('trans_id', $trans_id)
+            ->first()->client_id ?? null;
+
+
+        $amount_received = Webtransfer::where('trans_id', $trans_id)
+            ->first()->total_received ?? null;
+
+        $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
+
+
+        $url_page = "https://admin.boomzy.ng/payment/enkpay/callback?status=success&wc_order=$wc_order";
+       
+
+        $webhook = $marchant_url . "?" . "amount=$amount" . "&trans_id=$trans_id" . "&status=success" . "&wc_order=$wc_order" . "&client_id=$client_id" ?? null;
+        $recepit = "https://web.enkpay.com/receipt?trans_id=$trans_id&amount=$amount";
+
+
+        return view('paid-success-boomzy', compact('webhook', 'url_page', 'marchant_url', 'amount', 'trans_id', 'wc_order', 'client_id', 'wc', 'recepit'));
     }
 
 

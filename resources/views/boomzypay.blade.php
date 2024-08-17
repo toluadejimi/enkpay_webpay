@@ -363,6 +363,8 @@
                                                 const p_account_no = document.getElementById('p_account_no').value;
                                                 const url = "{{ url('') }}/verify?trans_id=" + trx_id + "&account_no=" + p_account_no;
 
+
+
                                                 var audio = new Audio('{{url('')}}/public/assets/sound.wav');
 
                                                 fetch(url)
@@ -381,7 +383,7 @@
                                                             const amount = document.getElementById('Amount').value;
                                                             audio.play();
 
-                                                            window.location.href = "{{ url('') }}/success?trans_id=" + trx_id;
+                                                            window.location.href = "{{ url('') }}/success?platform=boomzy&trans_id=" + trx_id;
 
                                                             repeatRequestprovidus = false;
                                                         } else if (data.status === 'paid') {

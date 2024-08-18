@@ -994,8 +994,6 @@ class VerifyController extends Controller
             curl_close($curl);
             $var = json_decode($var);
 
-            dd($var);
-
 
 
             $session_id = $var->session_id ?? null;

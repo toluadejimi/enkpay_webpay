@@ -965,8 +965,6 @@ class VerifyController extends Controller
 
         }
 
-
-
         if ($status == null || $status == 0 || $status == 3) {
 
             $curl = curl_init();
@@ -1161,6 +1159,9 @@ class VerifyController extends Controller
             $amt = $var['amount'] ?? null;
             $status = $var['transactionStatus'] ?? null;
 
+            dd($status);
+
+
 
             if ($status == "Processing") {
                 return back()->with('error', 'We have not confirmed your payment yet its still processing, please try again later');
@@ -1171,6 +1172,8 @@ class VerifyController extends Controller
                 $emessage = $var['message'];
                 return back()->with('error',  "You pay ".$emessage);
             }
+
+
 
 
             if ($status == false) {

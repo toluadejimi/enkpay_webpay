@@ -1137,13 +1137,13 @@ class VerifyController extends Controller
 
 
         $url = $request->url;
-        $status = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;
-        if ($status == 4) {
+        $ckstatus = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;
+        if ($ckstatus == 4) {
             return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
         }
 
 
-        if ($status == null || $status == 0 || $status == 3) {
+        if ($ckstatus == null || $ckstatus == 0 || $ckstatus == 3) {
 
             $status = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;
             if ($status == 4) {
@@ -1276,7 +1276,7 @@ class VerifyController extends Controller
                 }
 
             }
-        } elseif ($status == 2) {
+        } elseif ($ckstatus == 2) {
 
             $status = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;
             if ($status == 4) {
@@ -1307,8 +1307,6 @@ class VerifyController extends Controller
             if ($status == false) {
                 return back()->with('error', 'Account No Check failed, Kindly verify the Account No  and try again');
             }
-
-
 
             if ($status == "Successful") {
 
@@ -1410,7 +1408,6 @@ class VerifyController extends Controller
         } else {
             return back()->with('error', 'Account number you provided is not correct, please check and try again');
         }
-
 
 
         return back()->with('error', 'Resolve Error, Contact admin');

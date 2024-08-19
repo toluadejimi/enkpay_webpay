@@ -1142,6 +1142,9 @@ class VerifyController extends Controller
             return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
         }
 
+        dd($status);
+
+
 
         if ($status == 2) {
 
@@ -1159,7 +1162,6 @@ class VerifyController extends Controller
             $amt = $var['amount'] ?? null;
             $status = $var['transactionStatus'] ?? null;
 
-            dd($status);
 
 
 

@@ -1276,12 +1276,7 @@ class VerifyController extends Controller
                 }
 
             }
-        } else {
-            return back()->with('error', 'Account number you provided is not correct, please check and try again');
-        }
-
-
-        if ($status == 2) {
+        } elseif ($status == 2) {
 
             $status = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;
             if ($status == 4) {
@@ -1298,8 +1293,6 @@ class VerifyController extends Controller
             $status = $var['transactionStatus'] ?? null;
 
 
-
-
             if ($status == "Processing") {
                 return back()->with('error', 'We have not confirmed your payment yet its still processing, please try again later');
             }
@@ -1309,8 +1302,6 @@ class VerifyController extends Controller
                 $emessage = $var['message'];
                 return back()->with('error',  "You pay ".$emessage);
             }
-
-
 
 
             if ($status == false) {
@@ -1419,7 +1410,6 @@ class VerifyController extends Controller
         } else {
             return back()->with('error', 'Account number you provided is not correct, please check and try again');
         }
-
 
 
 

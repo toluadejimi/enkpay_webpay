@@ -2245,8 +2245,8 @@ if (!function_exists('credit_user_wallet')) {
 
         }else{
 
-            $message ="request ======>  ".$url | $user_email | $amount | $order_id." \n\n
-            Funding user Error ===>".json_encode($var);
+            $message ="request ======>  $url | $user_email | $amount | $order_id".
+            "\n\n Funding user Error ===>".json_encode($var);
             send_notification($message);
             return 0;
         }

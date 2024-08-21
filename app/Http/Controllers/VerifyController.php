@@ -829,6 +829,10 @@ class VerifyController extends Controller
 
         if ($status == 2) {
 
+
+            Transfertransaction::where('account_no', $request->account_no)->update(['status' => 4, 'note' => '9PSBRESOLVE', 'resolve' => 1]);
+
+
             $curl = curl_init();
             $data = array(
                 'account_no' => $request->account_no,
@@ -1289,12 +1293,18 @@ class VerifyController extends Controller
             }
         } elseif ($ckstatus == 2) {
 
+
+
             $status = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;
             if ($status == 4) {
                 return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
             }
 
             $ref = $request->account_no;
+
+
+            Transfertransaction::where('account_no', $request->account_no)->update(['status' => 4, 'note' => '9PSBRESOLVE', 'resolve' => 1]);
+
 
             $var = verify_payment($ref);
 

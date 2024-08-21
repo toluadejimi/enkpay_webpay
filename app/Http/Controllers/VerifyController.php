@@ -787,6 +787,9 @@ class VerifyController extends Controller
 
     public function reslove_psb_view(request $request)
     {
+
+
+
         $data['currentUrl'] = url()->current();
         $data['email'] = $request->email;
         $data['user_id'] = $request->user_id;
@@ -802,6 +805,10 @@ class VerifyController extends Controller
 
     public function reslove_psb(request $request)
     {
+        $message = "9psb Resolve Request ====>".json_encode($request->all());
+        send_notification($message);
+
+
         if($request->username == "Not Found, Pleas try again"){
             return back()->with('error', 'Email is invalid, please try again');
         }
@@ -1129,6 +1136,10 @@ class VerifyController extends Controller
 
     public function reslove_wema(request $request)
     {
+
+        $message = "Wema Resolve Request ====>".json_encode($request->all());
+        send_notification($message);
+
 
         if($request->username == "Not Found, Pleas try again"){
             return back()->with('error', 'Email is invalid, please try again');

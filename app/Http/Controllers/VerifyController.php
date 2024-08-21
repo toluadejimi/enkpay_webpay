@@ -681,7 +681,7 @@ class VerifyController extends Controller
 
 
         if ($data['orders'] == 0) {
-            return back()->with('error', "No resolve founnd with email $request->email");
+            return back()->with('error', "No resolve found with email $request->email");
         }
 
         return view('track-request', $data);
@@ -815,19 +815,21 @@ class VerifyController extends Controller
 
 
         $url = $request->url;
+        $ckstatus = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;
+        $email = Transfertransaction::where('account_no', $request->account_no)->first()->email ?? null;
 
-        $status = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;
-        if ($status == 4) {
-            return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
+        if ($ckstatus == 4) {
+            return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
         }
 
 
-        if ($status == 3) {
+
+        if ($ckstatus == 3) {
             return back()->with('error', 'Please note that your payment failed, Your reversal has been processed back to your bank account ');
         }
 
 
-        if ($status == 2) {
+        if ($ckstatus == 2) {
 
 
             Transfertransaction::where('account_no', $request->account_no)->update(['status' => 4, 'note' => '9PSBRESOLVE', 'resolve' => 1]);
@@ -976,7 +978,7 @@ class VerifyController extends Controller
 
         }
 
-        if ($status == null || $status == 0 || $status == 3) {
+        if ($ckstatus == null || $ckstatus == 0 || $ckstatus == 3) {
 
             $curl = curl_init();
             $data = array(
@@ -1027,10 +1029,13 @@ class VerifyController extends Controller
                 $p_amount = $amt - $set->psb_charge;
             }
 
-            $status = Transfertransaction::where('account_no', $acct_no)->first()->status ?? null;
-            if ($status == 4) {
-                return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
+            $ckstatus = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;
+            $email = Transfertransaction::where('account_no', $request->account_no)->first()->email ?? null;
+
+            if ($ckstatus == 4) {
+                return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
             }
+
 
             $status = Transfertransaction::where('session_id', $session_id)->first()->status ?? null;
             if ($status == 4) {
@@ -1153,16 +1158,20 @@ class VerifyController extends Controller
 
         $url = $request->url;
         $ckstatus = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;
+        $email = Transfertransaction::where('account_no', $request->account_no)->first()->email ?? null;
+
         if ($ckstatus == 4) {
-            return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
+            return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
         }
 
 
         if ($ckstatus == null || $ckstatus == 0 || $ckstatus == 3) {
 
             $status = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;
+            $email = Transfertransaction::where('account_no', $request->account_no)->first()->email ?? null;
+
             if ($status == 4) {
-                return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
+                return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
             }
 
             $ref = $request->account_no;

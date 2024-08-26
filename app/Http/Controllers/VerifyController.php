@@ -1018,8 +1018,6 @@ class VerifyController extends Controller
             $rrstatus = $var->status ?? null;
             $message = $var->messsage ?? null;
 
-            dd($rrstatus);
-
             if ($rrstatus == false) {
                 return back()->with('error', $message);
             }
@@ -1077,6 +1075,8 @@ class VerifyController extends Controller
 
             //fund user
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
+
+            dd($fund);
             if ($fund == 2) {
                 //update Transactions
                 $trasnaction = new Transaction();

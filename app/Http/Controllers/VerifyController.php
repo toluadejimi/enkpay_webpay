@@ -878,7 +878,6 @@ class VerifyController extends Controller
 
 
             $user_email = $request->email ?? null;
-            $amount = $f_amount ?? null;
             $order_id = $session_id ?? null;
             $site_name = Webkey::where('key', $request->user_id)->first()->site_name ?? null;
 
@@ -917,6 +916,8 @@ class VerifyController extends Controller
             } else {
                 $f_amount = $amt - $charge;
             }
+
+            $amount = $f_amount;
 
 
             //fund user
@@ -1033,7 +1034,6 @@ class VerifyController extends Controller
 
 
             $user_email = $request->email ?? null;
-            $amount = $f_amount ?? null;
             $order_id = $session_id ?? null;
             $site_name = Webkey::where('key', $request->user_id)->first()->site_name ?? null;
 
@@ -1072,8 +1072,10 @@ class VerifyController extends Controller
                 $f_amount = $amt - $charge;
             }
 
+            $amount = $f_amount;
 
-            //fund user
+
+                //fund user
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
 
             dd($fund);

@@ -2226,7 +2226,7 @@ if (!function_exists('credit_user_wallet')) {
 
         $var = curl_exec($curl);
 
-        //dd($var, $url, $user_email, $amount, $order_id);
+        dd($var, $url, $user_email, $amount, $order_id);
 
 
         curl_close($curl);

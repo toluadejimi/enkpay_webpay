@@ -967,15 +967,14 @@ class VerifyController extends Controller
 
 
 
-                $message = "Business funded | $request->sessionid | $f_amount | $user->first_name " . " " . $user->last_name;
-                Log::info('Business Funded', ['message' => $message]);
-
+                //$message = "Business funded | $request->sessionid | $f_amount | $user->first_name " . " " . $user->last_name;
+                //Log::info('Business Funded', ['message' => $message]);
                 // send_notification($message);
 
                 $date = date('d M Y H:i:s');
                 $message = $acct_no . " | NGN  $amt | $request->email  | $site_name | $date | has been funded";
-                Log::info('User Funded', ['message' => $message]);
-                //send_notification($message);
+                //Log::info('User Funded', ['message' => $message]);
+                send_notification($message);
 
                 $data['trans'] = $request->sessionid;
                 $data['recepit'] = "payment";
@@ -1139,15 +1138,15 @@ class VerifyController extends Controller
 
 
 
-                $message = "Business funded | $request->sessionid | $f_amount | $user->first_name " . " " . $user->last_name;
-                Log::info('Business Funded', ['message' => $message]);
+                //$message = "Business funded | $request->sessionid | $f_amount | $user->first_name " . " " . $user->last_name;
+                //Log::info('Business Funded', ['message' => $message]);
 
-                // send_notification($message);
+                //send_notification($message);
 
                 $date = date('d M Y H:i:s');
                 $message = $acct_no . " | NGN  $amt | $request->email  | $site_name | $date | has been funded";
-                Log::info('User Funded', ['message' => $message]);
-                //send_notification($message);
+                //Log::info('User Funded', ['message' => $message]);
+                send_notification($message);
 
                 $data['trans'] = $request->sessionid;
                 $data['recepit'] = "payment";
@@ -1303,15 +1302,15 @@ class VerifyController extends Controller
                     $trasnaction->save();
 
 
-                    $message = "Business funded | $request->account_no | $f_amount | $user->first_name " . " " . $user->last_name;
-                    Log::info('Business Funded', ['message' => $message]);
+                    //$message = "Business funded | $request->account_no | $f_amount | $user->first_name " . " " . $user->last_name;
+                    //Log::info('Business Funded', ['message' => $message]);
 
                     // send_notification($message);
 
                     $date = date('d M Y H:i:s');
                     $message = $acct_no . " | NGN  $amt | $request->email  | $site_name | $date | has been funded";
-                    Log::info('User Funded', ['message' => $message]);
-                    //send_notification($message);
+                    //Log::info('User Funded', ['message' => $message]);
+                    send_notification($message);
 
                     $data['trans'] = $request->account_no;
                     $data['recepit'] = "payment";
@@ -1445,8 +1444,8 @@ class VerifyController extends Controller
 
                     $date = date('d M Y H:i:s');
                     $message = $acct_no . " | NGN  $amt | $request->email  | $site_name | $date | has been funded";
-                    Log::info('User Funded', ['message' => $message]);
-                    //send_notification($message);
+                    //Log::info('User Funded', ['message' => $message]);
+                    send_notification($message);
 
                     $data['trans'] = $request->account_no;
                     $data['recepit'] = "payment";

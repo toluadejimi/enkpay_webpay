@@ -890,7 +890,8 @@ class VerifyController extends Controller
                 $svtrx->account_no = $request->account_no;
                 $svtrx->status = 4;
                 $svtrx->amount = $amt;
-                $svtrx->note = "WEMARESOLVE";
+                $svtrx->email = $request->email;
+                $svtrx->note = "PSBRESOLVE";
                 $svtrx->user_id = $user->id;
                 $svtrx->transaction_type = "Resolve";
                 $svtrx->save();
@@ -1048,7 +1049,8 @@ class VerifyController extends Controller
                 $svtrx->account_no = $request->account_no;
                 $svtrx->status = 4;
                 $svtrx->amount = $amt;
-                $svtrx->note = "WEMARESOLVE";
+                $svtrx->email = $request->email;
+                $svtrx->note = "PSBRESOLVE";
                 $svtrx->user_id = $user->id;
                 $svtrx->transaction_type = "Resolve";
                 $svtrx->save();
@@ -1072,7 +1074,7 @@ class VerifyController extends Controller
 
             $status = Transfertransaction::where('session_id', $session_id)->first()->status ?? null;
             if ($status == 4) {
-                return back()->with('error', 'Transaction has already been funded in your wallet, Please go back to site to check your wallet');
+                return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
             }
 
 

@@ -1016,7 +1016,7 @@ class VerifyController extends Controller
             $var = json_decode($var);
 
 
-            dd($var, $ckstatus);
+
 
             $session_id = $var->session_id ?? null;
             $acct_no = $var->account_no ?? null;
@@ -1036,6 +1036,9 @@ class VerifyController extends Controller
             $user = User::where('id', $urlkey)->first();
             $url = Webkey::where('user_id', $urlkey)->first()->url_fund ?? null;
             $urluser = Webkey::where('user_id', $urlkey)->first()->user_url ?? null;
+
+
+            dd($url);
 
             $user_email = $request->email ?? null;
             $amount = $f_amount ?? null;

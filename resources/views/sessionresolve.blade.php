@@ -153,7 +153,7 @@
                                 })
                                 .catch(error => {
                                     console.error('Error:', error);
-                                    document.getElementById('result').textContent = 'Error verifying email. Please try again later.';
+                                    document.getElementById('result').textContent = '';
                                     toggleVerifyButton(false); // Keep button disabled on error
                                     document.getElementById('usernameResult').style.display = 'none'; // Hide username result field on error
                                 });

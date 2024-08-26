@@ -822,8 +822,6 @@ class VerifyController extends Controller
             return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
         }
 
-
-
         if ($ckstatus == "3") {
             return back()->with('error', 'Please note that your payment failed, Your reversal has been processed back to your bank account ');
         }
@@ -969,11 +967,6 @@ class VerifyController extends Controller
                 }
 
 
-
-                //$message = "Business funded | $request->sessionid | $f_amount | $user->first_name " . " " . $user->last_name;
-                //Log::info('Business Funded', ['message' => $message]);
-                // send_notification($message);
-
                 $date = date('d M Y H:i:s');
                 $message = $acct_no . " | NGN  $amt | $request->email  | $site_name | $date | has been funded";
                 //Log::info('User Funded', ['message' => $message]);
@@ -991,7 +984,7 @@ class VerifyController extends Controller
 
         }
 
-        if ($ckstatus == null || $ckstatus == "0" || $ckstatus == "1") {
+
 
             $curl = curl_init();
             $data = array(
@@ -1018,16 +1011,12 @@ class VerifyController extends Controller
             curl_close($curl);
             $var = json_decode($var);
 
-
-
-
             $session_id = $var->session_id ?? null;
             $acct_no = $var->account_no ?? null;
             $amt = $var->amount ?? null;
             $name = $var->sender_name ?? null;
             $status = $var->status ?? null;
             $message = $var->messsage ?? null;
-
 
             if ($status == false) {
                 return back()->with('error', $message);
@@ -1084,10 +1073,6 @@ class VerifyController extends Controller
 
             //fund user
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
-
-            // dd($var, $urlkey, $fund);
-
-
             if ($fund == 2) {
                 //update Transactions
                 $trasnaction = new Transaction();
@@ -1150,11 +1135,10 @@ class VerifyController extends Controller
 
             }
 
-        }
 
 
 
-        return back()->with('error', 'Account number you provided is not correct, please check and try again');
+
 
 
     }

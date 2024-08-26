@@ -1077,8 +1077,6 @@ class VerifyController extends Controller
 
                 //fund user
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
-
-            dd($fund);
             if ($fund == 2) {
                 //update Transactions
                 $trasnaction = new Transaction();

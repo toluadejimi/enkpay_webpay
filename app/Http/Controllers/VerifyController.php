@@ -1015,15 +1015,16 @@ class VerifyController extends Controller
             $acct_no = $var->account_no ?? null;
             $amt = $var->amount ?? null;
             $name = $var->sender_name ?? null;
-            $status = $var->status ?? null;
+            $rrstatus = $var->status ?? null;
             $message = $var->messsage ?? null;
 
-            if ($status == false) {
+            dd($rrstatus);
+
+            if ($rrstatus == false) {
                 return back()->with('error', $message);
             }
 
-
-            if($status == true){
+            if($rrstatus == true){
 
 
             $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;

@@ -1023,6 +1023,9 @@ class VerifyController extends Controller
             }
 
 
+            if($status == true){
+
+
             $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
             $balance = User::where('id', $urlkey)->first()->main_wallet;
             $user = User::where('id', $urlkey)->first();
@@ -1135,9 +1138,9 @@ class VerifyController extends Controller
 
             }
 
+            }
 
-
-
+            return back()->with('error', 'Account number you provided is not correct, please check and try again');
 
 
 

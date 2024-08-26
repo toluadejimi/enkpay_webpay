@@ -1152,7 +1152,7 @@ class VerifyController extends Controller
 
         }
 
-        dd($ckstatus);
+
 
         return back()->with('error', 'Account number you provided is not correct, please check and try again');
 

@@ -1034,8 +1034,8 @@ class VerifyController extends Controller
             $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
             $balance = User::where('id', $urlkey)->first()->main_wallet;
             $user = User::where('id', $urlkey)->first();
-            $url = Webkey::where('user_id', $urlkey)->first()->url_fund ?? null;
-            $urluser = Webkey::where('user_id', $urlkey)->first()->user_url ?? null;
+            $url = Webkey::where('key', $request->user_id)->first()->url_fund ?? null;
+            $urluser = Webkey::where('key', $request->user_id)->first()->user_url ?? null;
 
 
             dd($url);
@@ -1043,7 +1043,7 @@ class VerifyController extends Controller
             $user_email = $request->email ?? null;
             $amount = $f_amount ?? null;
             $order_id = $session_id ?? null;
-            $site_name = Webkey::where('user_id', $urlkey)->first()->site_name ?? null;
+            $site_name = Webkey::where('key', $request->user_id)->first()->site_name ?? null;
 
 
             $trxxc = Transfertransaction::where('account_no', $request->account_no)->first() ?? null;

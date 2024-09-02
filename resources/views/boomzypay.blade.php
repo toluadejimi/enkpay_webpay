@@ -233,7 +233,7 @@
 <div class="transfer-card">
 
 
-    <div class="tf-container">    
+    <div class="tf-container">
             @if($transfer == 1 && $bank == 1)
 
                 <div id=""
@@ -644,7 +644,7 @@
                                                                     'Content-Type': 'application/json'
                                                                 },
                                                                 body: JSON.stringify({
-                                                                    user_id: 95,
+                                                                    user_id: 113,
                                                                     description: "Payment",
                                                                     name: "{{$account_name}}",
                                                                     amount: {{$f_amount}}

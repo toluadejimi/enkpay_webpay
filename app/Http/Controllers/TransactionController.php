@@ -818,6 +818,9 @@ class TransactionController extends Controller
             $views = ['webpay', 'webpayopay', 'webpaypalmpay'];
         }elseif( $data['ninepsb'] == 1 && $data['opay_transfer'] == 0  &&  $data['palmpay_transfer'] == 0 ){
             $views = ['webpay'];
+        }elseif( $data['ninepsb'] == 1 && $data['opay_transfer'] == 0  &&  $data['palmpay_transfer'] == 1 ) {
+            $views = ['webpay', 'webpaypalmpay'];
+
         }else{
             $views = ['webpay', 'webpayopay', 'webpaypalmpay'];
         }

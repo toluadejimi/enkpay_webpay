@@ -1684,7 +1684,7 @@ if (!function_exists('tokenkey')) {
     }
 
 
-    function pre_pay($amount, $first_name, $last_name, $tremail, $ref, $userId, $trans_id, $key)
+    function pre_pay($amtt, $first_name, $last_name, $tremail, $ref, $userId, $txid,$keyrr)
     {
 
 

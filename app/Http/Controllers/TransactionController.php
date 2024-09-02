@@ -568,272 +568,47 @@ class TransactionController extends Controller
     {
 
 
-        $key = $request->key;
-        $amount = $request->amount;
-        $email = $request->email;
-        $ref = $request->ref;
-        $wc_order = $request->wc_order;
+        $data['key'] = $request->key;
+        $data['amount'] = $request->amount;
+        $data['email'] = $request->email ?? "example@gmail.com";;
+        $data['ref'] = $request->ref;
+        $data['wc_order'] = $request->wc_order;
         $client_id = $request->client_id;
-        $iref = $ref ?? $wc_order;
-        $email = $request->email ?? "example@gmail.com";
+        $data['iref'] = $request->ref ?? $request->wc_order;
         $details = Webkey::where('key', $request->key)->first() ?? null;
-        $user_id = $details->user_id;
+        $data['user_id'] = $details->user_id;
         $business_id = VirtualAccount::where('user_id', $details->user_id)->first()->business_id ?? null;
 
         $text = ["KEM GLOBAL", "VIVID ENT", "ROYAL LTD", "LOGI ENT", "KABS LTD", "KENS ENT"];
         $random_index = array_rand($text);
-        $account_name = $text[$random_index];
+        $data['account_name'] = $text[$random_index];
 
-
-        if($request->platform == 'boomzy'){
-
-
-            $key = $request->key;
-            $amount = $request->amount;
-            $email = $request->email;
-            $ref = $request->ref;
-            $wc_order = $request->wc_order;
-            $client_id = $request->client_id;
-            $iref = $ref ?? $wc_order;
-            $email = $request->email ?? "example@gmail.com";
-            $details = Webkey::where('key', $request->key)->first() ?? null;
-            $user_id = $details->user_id;
-            $business_id = VirtualAccount::where('user_id', $details->user_id)->first()->business_id ?? null;
-
-            $text = ["BOOMZY"];
-            $random_index = array_rand($text);
-            $account_name = $text[$random_index];
-
-
-
-
-
-
-            if ($business_id != null) {
-
-                if ($email == null) {
-                    $webhook = Webkey::where('key', $request->key)->first()->url ?? null;
-                    return Redirect::to($webhook);
-                }
-
-                $acc = VirtualAccount::where('user_id', $details->user_id)->where('state', 0)->first() ?? null;
-            }
-
-            $marchant_url = $details->url ?? null;
-
-            if ($amount == null) {
-                return view('invalid');
-            }
-
-            if ($ref == null) {
-                return view('invalid');
-            }
-
-            if ($key == null) {
-                return view('invalid');
-            }
-
-            if ($details->user_id == null) {
-                return view('invalidkey');
-            }
-
-            $charge_status = $acc->charge_status ?? null;
-            $p_account_no = $acc->v_account_no ?? null;
-            $p_account_name = $acc->v_account_name ?? null;
-            $p_bank_name = $acc->v_bank_name ?? null;
-
-
-            $web_commission = Charge::where('title', 'bwebpay')->first()->amount;
-            //Both Commission
-            $amount1 = $web_commission / 100;
-            $amount2 = $amount1 * $amount;
-            $both_commmission = number_format($amount2, 2);
-
-            if ($both_commmission >= 300) {
-                $commmission = 300;
-            } else {
-                $commmission = $both_commmission;
-            }
-
-            $trans_id = $ref ?? random_int(100000, 999999);
-
-            if ($charge_status == 0) {
-                $payable_amount = $amount;
-            } else {
-
-                $payable_amount1 = (int)$amount + (int)$commmission;
-                $payable_amount = round($payable_amount1);
-            }
-
-
-            $total_received = 0.00;
-
-            $webhook = $marchant_url;
-
-            $url = "https://web.enkpay.com/continue-pay?amount=$amount&key=$key&ref=$trans_id&email=$email";
-            $qrdata = $details->user_id . " " . $payable_amount . " " . $trans_id;
-
-            $data = Crypt::encryptString($qrdata);
-
-            $set = Setting::where('id', 1)->first();
-            if ($set->pay_by_card == 1) {
-                $faker = Factory::create();
-                $amount = $request->amount;
-                $first_name = User::inRandomOrder()->first()->first_name;
-                $last_name = User::inRandomOrder()->first()->last_name;
-                $tremail = $faker->email;
-                $userId = Str::random(4); //$request->user_id;
-                $trans_id = $iref;
-                $ref = trx();
-                $pre = pre_pay($amount, $first_name, $last_name, $tremail, $ref, $userId, $trans_id, $key);
-                $adviceReference = $pre['adviceReference'] ?? null;
-                $pre_link = $pre['paymentUrl'] ?? null;
-            } else {
-                $pre_link = "#";
-            }
-
-            if ($set->wema_transfer == 1) {
-                $faker = Factory::create();
-                if($request->amount < 200){
-                    $pamount = $request->amount;
-                }elseif ($request->amount == 300) {
-                    $pamount = $request->amount + 100;
-                }elseif ($request->amount > 300 && $request->amount < 19999){
-                    $pamount = $request->amount + 100;
-                }elseif($request->amount >= 20000) {
-                    $pamount = $request->amount + 300;
-                    $amount = $pamount-100;
-
-                }else{
-                    $pamount = $request->amount;
-                }
-
-
-                $first_name = User::inRandomOrder()->first()->first_name;
-                $last_name = User::inRandomOrder()->first()->last_name;
-                $tremail = $faker->email;
-                $userId = Str::random(4); //$request->user_id;
-                $trans_id = $iref;
-                $ref = trx();
-                $pre = pre_pay($amount, $first_name, $last_name, $tremail, $ref, $userId, $trans_id, $key);
-
-                $payment_ref = $pre['adviceReference'] ?? null;
-
-
-            } else {
-                $pre_link = "#";
-                $payment_ref = null;
-                $pamount = $request->amount;
-            }
-
-
-
-            $opay_acct = ManualAccount::where('status', 1)->where('type', "opay")->first() ?? null;
-            $palmpay_acct = ManualAccount::where('status', 1)->where('type', "palmpay")->first() ?? null;
-            $kuda_acct = ManualAccount::where('status', 1)->where('type', "kuda")->first() ?? null;
-            $ninepsb_acct = ManualAccount::where('status', 1)->where('type', "ninepsb")->first() ?? null;
-
-
-            $opay_acct_no = $opay_acct->account_no;
-            $opay_acct_name = $opay_acct->account_name;
-
-
-            $get_trans_id = Webtransfer::where('trans_id', $request->ref)->first() ?? null;
-            $transref = $get_trans_id->manual_acc_ref ?? null;
-
-            if ($get_trans_id == null) {
-                $transref = date('ymdhis') . Str::upper(random_int(00, 99) . Str::random(2));
-                $trans = new Webtransfer();
-                $trans->amount = $amount;
-                $trans->user_id = $details->user_id;
-                $trans->v_account_no = $p_account_no;
-                $trans->v_account_name = $p_account_name;
-                $trans->manual_acc_no_opay = $opay_acct->account_no;
-                $trans->manual_acc_name_opay = $opay_acct->account_name;
-                $trans->manual_acc_no_palmpay = $palmpay_acct->account_no;
-                $trans->manual_acc_name_palmpay = $palmpay_acct->account_name;
-                $trans->manual_acc_no_kuda = $kuda_acct->account_no;
-                $trans->manual_acc_name_kuda = $kuda_acct->account_name;
-                $trans->manual_acc_ref = $transref;
-                $trans->bank_name = $p_bank_name;
-                $trans->web_charges = $commmission;
-                $trans->trans_id = $request->ref;
-                $trans->payable_amount = $pamount ?? $payable_amount;
-                $trans->total_received = $total_received;
-                $trans->wc_order = $wc_order;
-                $trans->client_id = $client_id;
-                $trans->email = $email;
-                $trans->url = $url;
-                $trans->webhook = $details->webhook;
-                $trans->key = $key;
-                $trans->data = $data;
-                $trans->adviceReference = $adviceReference ?? null;
-                $trans->ref = $ref ?? null;
-                $trans->adviceReference =  $payment_ref ?? null;
-                $trans->both_commmission = $both_commmission;
-                $trans->save();
-            }
-
-
-            $set = Setting::where('id', 1)->first();
-            $boomzy = $set->boomzy;
-
-            if($boomzy == 1){
-                $wema = 0;
-                $transfer = 1;
-                $ninepsb = 1;
-            }
-
-            $card = $set->pay_by_card;
-            $opay_transfer = $set->opay_trx;
-            $palmpay_transfer = $set->palmpay_trx;
-            $kuda_transfer = $set->kuda_trx;
-            $bank = $set->pay_with_providus;
-            $crypto = $set->pay_by_crypto;
-            $boomzy = $set->boomzy;
-            $psb_cap = $set->psb_cap;
-            $psb_charge = $set->psb_charge;
-
-
-
-            $support_channel = Webkey::where('key', $request->key)->first()->support ?? null;
-            $support_number = Webkey::where('key', $request->key)->first()->support_number ?? null;
-
-
-            if ($support_number == null) {
-                $support = Support::where('id', 1)->first()->number ?? null;
-            } else {
-                $support = $support_number;
-            }
-
-
-            return view('boomzypay', compact('support','pamount', 'wema', 'payment_ref', 'psb_cap', 'psb_charge', 'account_name', 'boomzy', 'ninepsb', 'ninepsb_acct', 'support_number', 'opay_transfer', 'support_channel', 'kuda_transfer', 'palmpay_transfer', 'transref', 'opay_acct', 'kuda_acct', 'palmpay_acct', 'opay_acct', 'ref', 'iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name', 'p_bank_name', 'total_received'));
-
-
-        }
 
 
         if ($business_id != null) {
 
-            if ($email == null) {
-                $webhook = Webkey::where('key', $request->key)->first()->url ?? null;
-                return Redirect::to($webhook);
+            if ($data['email'] == null) {
+                $data['webhook'] = Webkey::where('key', $request->key)->first()->url ?? null;
+                return Redirect::to($data['webhook']);
             }
 
             $acc = VirtualAccount::where('user_id', $details->user_id)->where('state', 0)->first() ?? null;
         }
 
+
+
+
         $marchant_url = $details->url ?? null;
 
-        if ($amount == null) {
+        if ($data['amount'] == null) {
             return view('invalid');
         }
 
-        if ($ref == null) {
+        if ($data['ref'] == null) {
             return view('invalid');
         }
 
-        if ($key == null) {
+        if ($data['key'] == null) {
             return view('invalid');
         }
 
@@ -842,177 +617,220 @@ class TransactionController extends Controller
         }
 
         $charge_status = $acc->charge_status ?? null;
-        $p_account_no = $acc->v_account_no ?? null;
-        $p_account_name = $acc->v_account_name ?? null;
-        $p_bank_name = $acc->v_bank_name ?? null;
+        $data['p_account_no'] = $acc->v_account_no ?? null;
+        $data['p_account_name'] = $acc->v_account_name ?? null;
+        $data['p_bank_name'] = $acc->v_bank_name ?? null;
+
+
 
 
         $web_commission = Charge::where('title', 'bwebpay')->first()->amount;
         //Both Commission
         $amount1 = $web_commission / 100;
-        $amount2 = $amount1 * $amount;
-        $both_commmission = number_format($amount2, 2);
+        $amount2 = $amount1 * $data['amount'];
+        $data['both_commmission'] = number_format($amount2, 2);
 
-        if ($both_commmission >= 300) {
+        if ($data['both_commmission'] >= 300) {
             $commmission = 300;
         } else {
-            $commmission = $both_commmission;
+            $commmission = $data['both_commmission'];
         }
 
-        $trans_id = $ref ?? random_int(100000, 999999);
+        $data['trans_id'] = $ref ?? random_int(100000, 999999);
 
         if ($charge_status == 0) {
-            $payable_amount = $amount;
+            $data['payable_amount'] = $data['amount'];
         } else {
 
-            $payable_amount1 = (int)$amount + (int)$commmission;
-            $payable_amount = round($payable_amount1);
+            $payable_amount1 = (int)$data['amount'] + (int)$commmission;
+            $data['payable_amount'] = round($payable_amount1);
         }
 
 
-        $total_received = 0.00;
 
-        $webhook = $marchant_url;
 
-        $url = "https://web.enkpay.com/continue-pay?amount=$amount&key=$key&ref=$trans_id&email=$email";
-        $qrdata = $details->user_id . " " . $payable_amount . " " . $trans_id;
 
-        $data = Crypt::encryptString($qrdata);
+
+        $data['total_received'] = 0.00;
+        $data['webhook'] = $marchant_url;
+
+        $amttt = $data['amount'];
+
+        $keyrr = $data['key'];
+
+        $txid = $data['trans_id'];
+
+        $eemail = $data['email'];
+
+
+
+
+        $url = "https://web.enkpay.com/continue-pay?amount=$amttt&key=$keyrr&ref=$txid&email=$eemail";
+        $qrdata = $details->user_id . " " . $data['payable_amount'] . " " . $txid;
+        $data1 = Crypt::encryptString($qrdata);
+
+
 
         $set = Setting::where('id', 1)->first();
+
         if ($set->pay_by_card == 1) {
             $faker = Factory::create();
-            $amount = $request->amount;
+            $data['amount'] = $request->amount;
+            $amtt = $request->amount;
             $first_name = User::inRandomOrder()->first()->first_name;
             $last_name = User::inRandomOrder()->first()->last_name;
             $tremail = $faker->email;
             $userId = Str::random(4); //$request->user_id;
-            $trans_id = $iref;
-            $ref = trx();
-            $pre = pre_pay($amount, $first_name, $last_name, $tremail, $ref, $userId, $trans_id, $key);
+            $data['trans_id'] = $data['iref'];
+            $data['ref'] = trx();
+            $pkey = $data['key'];
+            $pre = pre_pay($amtt, $first_name, $last_name, $tremail, $ref, $userId, $txid,$keyrr );
             $adviceReference = $pre['adviceReference'] ?? null;
-            $pre_link = $pre['paymentUrl'] ?? null;
+            $data['pre_link'] = $pre['paymentUrl'] ?? null;
+
+
         } else {
-            $pre_link = "#";
+            $data['pre_link'] = "#";
         }
+
+
+
+
 
 
         if ($set->wema_transfer == 1) {
             $faker = Factory::create();
             if($request->amount < 200){
-                $pamount = $request->amount;
+                $data['pamount'] = $request->amount;
             }elseif ($request->amount == 300) {
-                $pamount = $request->amount + 100;
+                $data['pamount'] = $request->amount + 100;
             }elseif ($request->amount > 300 && $request->amount < 19999){
-                $pamount = $request->amount + 100;
+                $data['pamount'] = $request->amount + 100;
             }elseif($request->amount >= 20000) {
-                $pamount = $request->amount + 300;
-                $amount = $pamount-100;
+                $data['pamount'] = $request->amount + 300;
+                $data['pamount'] = $data['pamount']-100;
 
             }else{
-                $pamount = $request->amount;
+                $data['pamount'] = $request->amount;
             }
+
+
+
+
 
 
             $first_name = User::inRandomOrder()->first()->first_name;
             $last_name = User::inRandomOrder()->first()->last_name;
             $tremail = $faker->email;
             $userId = Str::random(4); //$request->user_id;
-            $trans_id = $iref;
-            $ref = trx();
-            $pre = pre_pay($amount, $first_name, $last_name, $tremail, $ref, $userId, $trans_id, $key);
+            $data['trans_id'] = $data['iref'];
+            $data['ref'] = trx();
+            $pkey = $data['key'];
+            $pre = pre_pay($amtt, $first_name, $last_name, $tremail, $ref, $userId, $txid,$keyrr);
 
-            $payment_ref = $pre['adviceReference'] ?? null;
+            $data['payment_ref'] = $pre['adviceReference'] ?? null;
 
 
         } else {
-            $pre_link = "#";
-            $payment_ref = null;
-            $pamount = $request->amount;
+            $data['pre_link'] = "#";
+            $data['payment_ref'] = null;
+            $data['pamount'] = $request->amount;
         }
 
 
+        $data['opay_acct'] = ManualAccount::where('status', 1)->where('type', "opay")->first() ?? null;
+        $data['palmpay_acct'] = ManualAccount::where('status', 1)->where('type', "palmpay")->first() ?? null;
+        $data['kuda_acct'] = ManualAccount::where('status', 1)->where('type', "kuda")->first() ?? null;
+        $data['ninepsb_acct'] = ManualAccount::where('status', 1)->where('type', "ninepsb")->first() ?? null;
 
 
+        $dataref = $data['iref'];
 
 
-
-        $opay_acct = ManualAccount::where('status', 1)->where('type', "opay")->first() ?? null;
-        $palmpay_acct = ManualAccount::where('status', 1)->where('type', "palmpay")->first() ?? null;
-        $kuda_acct = ManualAccount::where('status', 1)->where('type', "kuda")->first() ?? null;
-        $ninepsb_acct = ManualAccount::where('status', 1)->where('type', "ninepsb")->first() ?? null;
-
-
-        $opay_acct_no = $opay_acct->account_no;
-        $opay_acct_name = $opay_acct->account_name;
-
-
-        $get_trans_id = Webtransfer::where('trans_id', $iref)->first() ?? null;
-        $transref = $get_trans_id->manual_acc_ref ?? null;
+        $get_trans_id = Webtransfer::where('trans_id',$dataref )->first() ?? null;
+        $data['transref'] = $get_trans_id->manual_acc_ref ?? null;
 
         if ($get_trans_id == null) {
-            $transref = date('ymdhis') . Str::upper(random_int(00, 99) . Str::random(2));
+            $data['transref'] = date('ymdhis') . Str::upper(random_int(00, 99) . Str::random(2));
             $trans = new Webtransfer();
-            $trans->amount = $amount;
+            $trans->amount = $data['amount'];
             $trans->user_id = $details->user_id;
-            $trans->v_account_no = $p_account_no;
-            $trans->v_account_name = $p_account_name;
-            $trans->manual_acc_no_opay = $opay_acct->account_no;
-            $trans->manual_acc_name_opay = $opay_acct->account_name;
-            $trans->manual_acc_no_palmpay = $palmpay_acct->account_no;
-            $trans->manual_acc_name_palmpay = $palmpay_acct->account_name;
-            $trans->manual_acc_no_kuda = $kuda_acct->account_no;
-            $trans->manual_acc_name_kuda = $kuda_acct->account_name;
-            $trans->manual_acc_ref = $transref;
-            $trans->bank_name = $p_bank_name;
+            $trans->v_account_no = $data['p_account_no'];
+            $trans->v_account_name = $data['p_account_name'];
+            $trans->manual_acc_no_opay = $data['opay_acct']->account_no;
+            $trans->manual_acc_name_opay = $data['opay_acct']->account_name;
+            $trans->manual_acc_no_palmpay = $data['palmpay_acct']->account_no;
+            $trans->manual_acc_name_palmpay = $data['palmpay_acct']->account_name;
+            $trans->manual_acc_no_kuda = $data['kuda_acct']->account_no;
+            $trans->manual_acc_name_kuda = $data['kuda_acct']->account_name;
+            $trans->manual_acc_ref = $data['transref'];
+            $trans->bank_name = $data['p_bank_name'];
             $trans->web_charges = $commmission;
-            $trans->trans_id = $trans_id;
-            $trans->payable_amount = $pamount ?? $payable_amount;
-            $trans->total_received = $total_received;
-            $trans->wc_order = $wc_order;
+            $trans->trans_id = $data['trans_id'];
+            $trans->payable_amount = $pamount ?? $data['payable_amount'];
+            $trans->total_received = $data['total_received'];
+            $trans->wc_order = $data['wc_order'];
             $trans->client_id = $client_id;
-            $trans->email = $email;
+            $trans->email = $data['email'];
             $trans->url = $url;
             $trans->webhook = $details->webhook;
-            $trans->key = $key;
-            $trans->data = $data;
+            $trans->key = $data['key'];
+            $trans->data = $data1;
             $trans->adviceReference = $adviceReference ?? null;
-            $trans->ref = $ref ?? null;
+            $trans->ref =  $data['iref']?? null;
             $trans->adviceReference =  $payment_ref ?? null;
-            $trans->both_commmission = $both_commmission;
+            $trans->both_commmission = $data['both_commmission'];
             $trans->save();
         }
 
 
         $set = Setting::where('id', 1)->first();
-        $card = $set->pay_by_card;
-        $opay_transfer = $set->opay_trx;
-        $palmpay_transfer = $set->palmpay_trx;
-        $kuda_transfer = $set->kuda_trx;
-        $transfer = $set->pay_by_trx;
-        $bank = $set->pay_with_providus;
-        $crypto = $set->pay_by_crypto;
-        $ninepsb = $set->ninepsb;
-        $boomzy = $set->boomzy;
-        $psb_cap = $set->psb_cap;
-        $psb_charge = $set->psb_charge;
-        $wema = $set->wema_transfer;
+        $data['card'] = $set->pay_by_card;
+        $data['opay_transfer'] = $set->opay_trx;
+        $data['palmpay_transfer'] = $set->palmpay_trx;
+        $data['kuda_transfer'] = $set->kuda_trx;
+        $data['transfer'] = $set->pay_by_trx;
+        $data['bank'] = $set->pay_with_providus;
+        $data['crypto'] = $set->pay_by_crypto;
+        $data['ninepsb'] = $set->ninepsb;
+        $data['boomzy'] = $set->boomzy;
+        $data['psb_cap'] = $set->psb_cap;
+        $data['psb_charge'] = $set->psb_charge;
+        $data['wema'] = $set->wema_transfer;
+        $data['support_channel'] = Webkey::where('key', $request->key)->first()->support ?? null;
+        $data['support_number'] = Webkey::where('key', $request->key)->first()->support_number ?? null;
 
 
-
-        $support_channel = Webkey::where('key', $request->key)->first()->support ?? null;
-        $support_number = Webkey::where('key', $request->key)->first()->support_number ?? null;
-
-
-        if ($support_number == null) {
-            $support = Support::where('id', 1)->first()->number ?? null;
+        if ($data['support_number'] == null) {
+            $data['support'] = Support::where('id', 1)->first()->number ?? null;
         } else {
-            $support = $support_number;
+            $data['support'] = $data['support_number'];
         }
 
 
-        return view('webpay', compact('support','pamount', 'wema', 'payment_ref', 'psb_cap', 'psb_charge', 'account_name', 'boomzy', 'ninepsb', 'ninepsb_acct', 'support_number', 'opay_transfer', 'support_channel', 'kuda_transfer', 'palmpay_transfer', 'transref', 'opay_acct', 'kuda_acct', 'palmpay_acct', 'opay_acct', 'ref', 'iref', 'crypto', 'card', 'transfer', 'bank', 'pre_link', 'payable_amount', 'email', 'user_id', 'data', 'webhook', 'key', 'amount', 'p_account_no', 'trans_id', 'both_commmission', 'p_account_name', 'p_bank_name', 'total_received'));
+        if($data['palmpay_transfer'] == 1  &&  $data['opay_transfer'] == 1 && $data['ninepsb'] == 0 ){
+            $views = ['webpayopay', 'webpaypalmpay'];
+        }elseif($data['palmpay_transfer'] == 1 &&  $data['opay_transfer'] == 0 && $data['ninepsb'] == 0 ){
+            $views = ['webpaypalmpay'];
+        }elseif($data['opay_transfer'] == 1  &&  $data['palmpay_transfer'] == 0 && $data['ninepsb'] == 0  ){
+            $views = ['webpayopay'];
+        }elseif( $data['ninepsb'] == 1 && $data['palmpay_transfer'] == 1 &&  $data['opay_transfer'] == 1){
+            $views = ['webpay', 'webpayopay', 'webpaypalmpay'];
+        }elseif( $data['ninepsb'] == 1 && $data['opay_transfer'] == 0  &&  $data['palmpay_transfer'] == 0 ){
+            $views = ['webpay'];
+        }else{
+            $views = ['webpay', 'webpayopay', 'webpaypalmpay'];
+        }
+
+
+
+        $randomView = $views[array_rand($views)];
+        return view($randomView, $data);
+
+
     }
+
+
 
 
     public
@@ -1675,7 +1493,7 @@ class TransactionController extends Controller
 
 
         $url_page = Webkey::where('key', $key)->first()->user_url ?? null;
-       
+
 
         $webhook = $marchant_url . "?" . "amount=$amount" . "&trans_id=$trans_id" . "&status=success" . "&wc_order=$wc_order" . "&client_id=$client_id" ?? null;
         $recepit = "https://web.enkpay.com/receipt?trans_id=$trans_id&amount=$amount";
@@ -1736,7 +1554,7 @@ class TransactionController extends Controller
 
 
         $url_page = "https://admin.boomzy.ng/payment/enkpay/callback?status=success&wc_order=$wc_order";
-       
+
 
         $webhook = $marchant_url . "?" . "amount=$amount" . "&trans_id=$trans_id" . "&status=success" . "&wc_order=$wc_order" . "&client_id=$client_id" ?? null;
         $recepit = "https://web.enkpay.com/receipt?trans_id=$trans_id&amount=$amount";

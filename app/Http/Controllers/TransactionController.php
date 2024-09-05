@@ -133,67 +133,6 @@ class TransactionController extends Controller
                 $order_id = $trx->ref_trans_id ?? null;
                 $site_name = Webkey::where('key', $trx->key)->first()->site_name ?? null;
 
-
-                //fund user
-                $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
-
-                if ($fund == 2) {
-                    Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 4]);
-                    Transfertransaction::where('account_no', $request->receiver_account_number)->update(['status' => 4, 'resolve' => 1]);
-
-                    $trx = Transfertransaction::where('account_no', $request->receiver_account_number)->first();
-
-                    $site_name = Webkey::where('key', $trx->key)->first()->site_name ?? null;
-
-
-                    //update Transactions
-                    $trasnaction = new Transaction();
-                    $trasnaction->user_id = $trx->user_id;
-                    $trasnaction->e_ref = $request->sessionid ?? $data['acc_no'];
-                    $trasnaction->ref_trans_id = $request->sessionid ?? $data['acc_no'];
-                    $trasnaction->type = "webpay";
-                    $trasnaction->transaction_type = "VirtualFundWallet";
-                    $trasnaction->title = "Wallet Funding";
-                    $trasnaction->main_type = "Transfer";
-                    $trasnaction->credit = $f_amount;
-                    $trasnaction->note = "Transaction Successful | Web Pay ";
-                    $trasnaction->fee = $charge ?? 0;
-                    $trasnaction->amount = $trx->amount;
-                    $trasnaction->e_charges = 0;
-                    $trasnaction->enkPay_Cashout_profit = 0;
-                    $trasnaction->balance = $balance;
-                    $trasnaction->status = 1;
-                    $trasnaction->save();
-
-                    $message = "Business funded | $trx->manual_acc_ref | $f_amount | $user->first_name " . " " . $user->last_name;
-                    Log::info('Business Funded', ['message' => $message]);
-
-                    // send_notification($message);
-
-                    $date = date('d M Y H:i:s');
-                    $message = $request->receiver_account_number." | NGN  $trx->amount | $trx->email  | $site_name | $date | has been funded";
-                    Log::info('User Funded', ['message' => $message]);
-                    //send_notification($message);
-//                    send_notification2($message);
-//                    send_notification3($message);
-
-
-                    return response()->json([
-                        'status' => true,
-                        'message' => "Transaction Funded to wallet",
-
-                    ]);
-
-
-                }
-
-
-                Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 1]);
-                Transfertransaction::where('account_no', $request->receiver_account_number)->update(['status' => 2, 'resolve' => 1]);
-                $trx = Transfertransaction::where('account_no', $request->receiver_account_number)->first();
-
-
-                //update Transactions
                 $trasnaction = new Transaction();
                 $trasnaction->user_id = $trx->user_id;
                 $trasnaction->e_ref = $request->sessionid ?? $data['acc_no'];
@@ -212,19 +151,53 @@ class TransactionController extends Controller
                 $trasnaction->status = 1;
                 $trasnaction->save();
 
-                $message = "Business Funded | $trx->ref | Pending customer not funded | $f_amount | $user->first_name " . " " . $user->last_name;
-                Log::info('Business Funded', ['message' => $message]);
+                $message = "Business funded | $trx->manual_acc_ref | $f_amount | $user->first_name " . " " . $user->last_name;
+                send_notification($message);
 
-                // send_notification($message);
+                Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 4]);
+                Transfertransaction::where('account_no', $request->receiver_account_number)->update(['status' => 4, 'resolve' => 1]);
 
-                return response()->json([
-                    'status' => true,
-                    'message' => "Transaction Funded with directly"
-                ]);
+
+                //fund user
+                $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
+
+
+                Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 1]);
+                Transfertransaction::where('account_no', $request->receiver_account_number)->update(['status' => 2, 'resolve' => 1]);
+                $trx = Transfertransaction::where('account_no', $request->receiver_account_number)->first();
+
+
+//                //update Transactions
+//                $trasnaction = new Transaction();
+//                $trasnaction->user_id = $trx->user_id;
+//                $trasnaction->e_ref = $request->sessionid ?? $data['acc_no'];
+//                $trasnaction->ref_trans_id = $request->sessionid ?? $data['acc_no'];
+//                $trasnaction->type = "webpay";
+//                $trasnaction->transaction_type = "VirtualFundWallet";
+//                $trasnaction->title = "Wallet Funding";
+//                $trasnaction->main_type = "Transfer";
+//                $trasnaction->credit = $f_amount;
+//                $trasnaction->note = "Transaction Successful | Web Pay ";
+//                $trasnaction->fee = $charge ?? 0;
+//                $trasnaction->amount = $trx->amount;
+//                $trasnaction->e_charges = 0;
+//                $trasnaction->enkPay_Cashout_profit = 0;
+//                $trasnaction->balance = $balance;
+//                $trasnaction->status = 1;
+//                $trasnaction->save();
+//
+//                $message = "Business Funded | $trx->ref | Pending customer not funded | $f_amount | $user->first_name " . " " . $user->last_name;
+//                Log::info('Business Funded', ['message' => $message]);
+//
+//                // send_notification($message);
+//
+//                return response()->json([
+//                    'status' => true,
+//                    'message' => "Transaction Funded with directly"
+//                ]);
 
             }
         }
-
 
         return response()->json([
             'status' => false,
@@ -864,7 +837,7 @@ class TransactionController extends Controller
             $commmission = $data['both_commmission'];
         }
 
-        $data['trans_id'] = $ref ?? random_int(100000, 999999);
+        $data['trans_id'] = $request->ref ?? $request->wc_order;
 
         if ($charge_status == 0) {
             $data['payable_amount'] = $data['amount'];
@@ -994,7 +967,7 @@ class TransactionController extends Controller
             $trans->manual_acc_ref = $data['transref'];
             $trans->bank_name = $data['p_bank_name'];
             $trans->web_charges = $commmission;
-            $trans->trans_id = $data['trans_id'];
+            $trans->trans_id = $request->ref ?? $request->wc_order;
             $trans->payable_amount = $pamount ?? $data['payable_amount'];
             $trans->total_received = $data['total_received'];
             $trans->wc_order = $data['wc_order'];

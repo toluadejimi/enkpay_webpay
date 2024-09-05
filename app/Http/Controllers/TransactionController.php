@@ -163,8 +163,6 @@ class TransactionController extends Controller
 
 
                 Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 1]);
-                Transfertransaction::where('account_no', $request->receiver_account_number)->update(['status' => 2, 'resolve' => 1]);
-                $trx = Transfertransaction::where('account_no', $request->receiver_account_number)->first();
 
 
 //                //update Transactions

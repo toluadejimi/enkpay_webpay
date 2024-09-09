@@ -1693,8 +1693,7 @@ if (!function_exists('tokenkey')) {
 
 
         $databody = array(
-
-            "amount" => $amount ?? 200,
+            "amount" => $amtt ?? 200,
             "currency" =>  "NGN",
             "merchantRef" => $ref,
             "narration" =>  "Card Payment",
@@ -1754,6 +1753,7 @@ if (!function_exists('tokenkey')) {
         ));
 
         $var = curl_exec($curl);
+
         curl_close($curl);
         $var = json_decode($var);
 
@@ -1848,17 +1848,13 @@ if (!function_exists('verifypelpay')) {
         curl_close($curl);
         $var = json_decode($var);
 
-
         if ($var->requestSuccessful == true) {
-
 
             if($var->responseData->message == "Processing"){
                 return 0;
             }
 
             if($var->responseData->transactionStatus == "Successful" && $var->responseData->message == "Successful:Correct amount" ){
-
-
                 try {
 
                     $curl = curl_init();
@@ -1897,8 +1893,6 @@ if (!function_exists('verifypelpay')) {
                 $data['code'] = 4;
                 return $data;
             }
-
-
 
 
         } else {

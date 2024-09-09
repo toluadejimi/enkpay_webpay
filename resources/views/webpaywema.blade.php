@@ -264,7 +264,7 @@
                 </svg>
 
 
-                <h1>₦{{ number_format($payable_amount, 2) }}</h1>
+                <h1>₦{{ number_format($pamount, 2) }}</h1>
                 <h4 class="secondary_color text-center fw_4 mb-3">Make sure you send exact amount</h4>
                 <hr>
 
@@ -815,7 +815,7 @@
 
                                                 </div>
                                                 <small style="font-size: 13px" class="text-danger text-center my-2">Please
-                                                    add Reference to your transaction narration to avoide delay in
+                                                    add Reference to your transaction narration to avoid delay in
                                                     confirmation</small>
                                                 <form onsubmit="event.preventDefault()">
 
@@ -885,7 +885,7 @@
                                                     <button class="tf-btn accent large my-3 request-btn"
                                                             id="requestwema">I
                                                         ve sent ₦{{
-                                        number_format($payable_amount )}}
+                                                        number_format($payable_amount )}}
 
                                                     </button>
 
@@ -920,86 +920,6 @@
                         </script>
 
 
-                        <script>
-                            let repeatRequest = true;
-
-                            function makeRequestwema() {
-                                if (!repeatRequestwema) {
-                                    return;
-                                }
-
-                                const trx_id = '{{$trans_id}}'
-                                const account_no = "document.getElementById('wema_account_no').value"
-                                const url = "{{ url('') }}/verifywema?trans_id={{$trans_id}}";
-
-                                var audio = new Audio('{{url('')}}/public/assets/sound.wav');
-
-
-                                fetch(url)
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        console.log(data);
-
-                                        if (data.status === 'pending') {
-                                            setTimeout(makeRequestwema, 3000);
-                                        } else if (data.status === 'success') {
-
-                                            audio.play();
-
-                                            const webhook = document.getElementById('webHook').value;
-                                            const amount = document.getElementById('Amount').value;
-
-                                            window.location.href = "{{ url('') }}/success?trans_id=" + trx_id;
-
-                                            repeatRequestkuda = false; // Adjusted variable name here
-                                        } else if (data.status === 'paid') {
-                                            audio.play();
-                                            window.location.href = "{{ url('') }}/paid-success?trans_id=" + trx_id;
-
-                                            repeatRequestkuda = false; // Adjusted variable name here
-                                        }
-                                    })
-                                    .catch(error => {
-                                        console.error(error);
-                                    });
-                            }
-
-                            function startTimerwema(duration, display) {
-                                let timer = duration;
-                                const countdownElement = document.getElementById(display);
-
-                                const intervalId = setInterval(function () {
-                                    const minutes = Math.floor(timer / 60);
-                                    const seconds = timer % 60;
-
-                                    countdownElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-
-                                    if (timer === 0) {
-                                        clearInterval(intervalId);
-                                        countdownElement.textContent = "Have you been debited and payment still not confirmed, Return to merchant website to resolve or report transaction";
-                                    }
-
-                                    timer--;
-                                }, 1000);
-                            }
-
-                            function startMessagewema() {
-                                var messageDisplay = document.getElementById('messagewema');
-                                messageDisplay.innerHTML = "Confirming Wema payment...";
-                            }
-
-                            const requestwemaBtn = document.getElementById('requestwema');
-                            requestwemaBtn.addEventListener("click", function () {
-                                const requestwemaBtn = document.getElementById('requestwema');
-
-                                startTimerwema(1200, 'countdown');
-                                makeRequestwema();
-                                startMessagewema();
-                                $('#myModalwemashow').modal('show');
-                                requestkudaBtn.disabled = true;
-                                requestkudaBtn.hidden = true;
-                            });
-                        </script>
 
 
                     </div>
@@ -1156,6 +1076,9 @@
         $("#warning").modal('show');
     });
 </script>
+
+
+
 
 
 <!-- Modal -->

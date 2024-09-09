@@ -1180,25 +1180,20 @@ class VerifyController extends Controller
             }
 
             $ref = $request->account_no;
-
             $var = verify_payment($ref);
-
             $session_id = $request->account_no ?? null;
             $acct_no = $var->account_no ?? null;
             $amt = $var['amount'] ?? null;
             $status = $var['transactionStatus'] ?? null;
 
-
             if ($status == "Processing") {
                 return back()->with('error', 'We have not confirmed your payment yet its still processing, please try again later');
             }
-
 
             if ($status == "Failed") {
                 $emessage = $var['message'];
                 return back()->with('error',  "You pay ".$emessage);
             }
-
 
             if ($status == false) {
                 return back()->with('error', 'Account No Check failed, Kindly verify the Account No  and try again');
@@ -1228,9 +1223,6 @@ class VerifyController extends Controller
                 } else {
                     $p_amount = $amt - $set->psb_charge;
                 }
-
-
-
 
                 $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
 
@@ -1262,9 +1254,7 @@ class VerifyController extends Controller
 
 
                 if ($fund == 2) {
-
                     Transfertransaction::where('account_no', $request->account_no)->update(['status' => 4, 'note' => 'WEMARESOLVE', 'resolve' => 1]);
-
                     //update Transactions
                     $trasnaction = new Transaction();
                     $trasnaction->user_id = $urlkey;

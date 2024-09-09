@@ -899,23 +899,11 @@ class TransactionController extends Controller
 
         if ($set->wema_transfer == 1) {
             $faker = Factory::create();
-            if($request->amount < 200){
-                $data['pamount'] = $request->amount;
-            }elseif ($request->amount == 300) {
-                $data['pamount'] = $request->amount + 100;
-            }elseif ($request->amount > 300 && $request->amount < 19999){
-                $data['pamount'] = $request->amount + 100;
-            }elseif($request->amount >= 20000) {
-                $data['pamount'] = $request->amount + 300;
-                $data['pamount'] = $data['pamount']-100;
-
+            if($request->amount > 10000){
+                $data['pamount'] = $request->amount + 200;
             }else{
-                $data['pamount'] = $request->amount;
+                $data['pamount'] = $request->amount + 100;
             }
-
-
-
-
 
 
             $first_name = User::inRandomOrder()->first()->first_name;
@@ -924,12 +912,16 @@ class TransactionController extends Controller
             $userId = Str::random(4); //$request->user_id;
             $data['trans_id'] = $data['iref'];
             $data['ref'] = $data['iref'];
-            $ref = $data['iref'];
+            $ref = $data['iref'].date('his');
             $pkey = $data['key'];
-            $amtt = $request->amount;
+            $amtt = $data['pamount'];
             $pre = pre_pay($amtt, $first_name, $last_name, $tremail, $ref, $userId, $txid,$keyrr);
 
+
+
             $data['payment_ref'] = $pre['adviceReference'] ?? null;
+
+
 
 
         } else {
@@ -1551,16 +1543,12 @@ class TransactionController extends Controller
     function wema_check_status(Request $request)
     {
 
-
         $trans_id = $request->ref;
         $ref = $request->ref;
         $account_no = $request->account_no;
 
 
-
-
         $p_ref = Transfertransaction::where('ref', $ref)->first() ?? null;
-
         if($p_ref == null){
             return response()->json([
                 'status' => false,

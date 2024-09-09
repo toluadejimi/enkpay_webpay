@@ -923,8 +923,10 @@ class TransactionController extends Controller
             $tremail = $faker->email;
             $userId = Str::random(4); //$request->user_id;
             $data['trans_id'] = $data['iref'];
-            $data['ref'] = trx();
+            $data['ref'] = $data['iref'];
+            $ref = $data['iref'];
             $pkey = $data['key'];
+            $amtt = $request->amount;
             $pre = pre_pay($amtt, $first_name, $last_name, $tremail, $ref, $userId, $txid,$keyrr);
 
             $data['payment_ref'] = $pre['adviceReference'] ?? null;
@@ -1007,20 +1009,25 @@ class TransactionController extends Controller
         }
 
 
-        if($data['palmpay_transfer'] == 1  &&  $data['opay_transfer'] == 1 && $data['ninepsb'] == 0 ){
+
+        if($data['wema'] == 1 && $data['palmpay_transfer'] == 1  &&  $data['opay_transfer'] == 1 && $data['ninepsb'] == 0 ){
+            $views = ['webpayopay', 'webpaypalmpay', 'webpaywema'];
+        }elseif($data['wema'] == 0 && $data['palmpay_transfer'] == 1  &&  $data['opay_transfer'] == 1 && $data['ninepsb'] == 0 ){
             $views = ['webpayopay', 'webpaypalmpay'];
-        }elseif($data['palmpay_transfer'] == 1 &&  $data['opay_transfer'] == 0 && $data['ninepsb'] == 0 ){
+        }elseif($data['wema'] == 0 && $data['palmpay_transfer'] == 1 &&  $data['opay_transfer'] == 0 && $data['ninepsb'] == 0 ){
             $views = ['webpaypalmpay'];
-        }elseif($data['opay_transfer'] == 1  &&  $data['palmpay_transfer'] == 0 && $data['ninepsb'] == 0  ){
+        }elseif($data['wema'] == 0 && $data['opay_transfer'] == 1  &&  $data['palmpay_transfer'] == 0 && $data['ninepsb'] == 0  ){
             $views = ['webpayopay'];
-        }elseif( $data['ninepsb'] == 1 && $data['palmpay_transfer'] == 1 &&  $data['opay_transfer'] == 1){
+        }elseif($data['wema'] == 0 && $data['ninepsb'] == 1 && $data['palmpay_transfer'] == 1 &&  $data['opay_transfer'] == 1){
             $views = ['webpay', 'webpayopay', 'webpaypalmpay'];
-        }elseif( $data['ninepsb'] == 1 && $data['opay_transfer'] == 0  &&  $data['palmpay_transfer'] == 0 ){
+        }elseif($data['wema'] == 0 && $data['ninepsb'] == 1 && $data['opay_transfer'] == 0  &&  $data['palmpay_transfer'] == 0 ){
             $views = ['webpay'];
-        }elseif( $data['ninepsb'] == 1 && $data['opay_transfer'] == 0  &&  $data['palmpay_transfer'] == 1 ) {
+        }elseif($data['wema'] == 0 && $data['ninepsb'] == 1 && $data['opay_transfer'] == 0  &&  $data['palmpay_transfer'] == 1 ) {
             $views = ['webpay', 'webpaypalmpay'];
-        }elseif( $data['ninepsb'] == 1 && $data['opay_transfer'] == 1  &&  $data['palmpay_transfer'] == 0 ) {
+        }elseif($data['wema'] == 0 && $data['ninepsb'] == 1 && $data['opay_transfer'] == 1  &&  $data['palmpay_transfer'] == 0 ) {
             $views = ['webpay', 'webpayopay'];
+        }elseif($data['wema'] == 1 && $data['ninepsb'] == 0 && $data['opay_transfer'] == 0  &&  $data['palmpay_transfer'] == 0 ) {
+            $views = ['webpaywema'];
         }else{
             $views = ['webpay', 'webpayopay', 'webpaypalmpay'];
         }

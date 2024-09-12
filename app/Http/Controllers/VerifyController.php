@@ -1181,10 +1181,21 @@ class VerifyController extends Controller
 
             $ref = $request->account_no;
             $var = verify_payment($ref);
+            if($var == 0){
+                return back()->with('error', 'Somthing went wrong');
+            }
+
+
             $session_id = $request->account_no ?? null;
             $acct_no = $var->account_no ?? null;
             $amt = $var['amount'] ?? null;
             $status = $var['transactionStatus'] ?? null;
+            $amountCollected = $var['amountCollected'];
+
+
+            if ($status == "PartPayment") {
+                return back()->with('error', "Incomplete Amount Received\n, You paid NGN". $amt. " instead of NGN ".$amountCollected ."\n Note that the funds will be refunded back to your account" );
+            }
 
             if ($status == "Processing") {
                 return back()->with('error', 'We have not confirmed your payment yet its still processing, please try again later');
@@ -1233,7 +1244,6 @@ class VerifyController extends Controller
                 } else {
                     $f_amount = $amt - $charge;
                 }
-
 
                 $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
                 $balance = User::where('id', $urlkey)->first()->main_wallet;
@@ -1296,7 +1306,7 @@ class VerifyController extends Controller
                 }
 
             }
-        } elseif ($ckstatus == 2) {
+            } elseif ($ckstatus == 2) {
 
 
 

@@ -7,6 +7,7 @@ use App\Models\Ttmfb;
 use App\Models\Setting;
 use App\Models\AccountInfo;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use App\Models\VirtualAccount;
 use Illuminate\Support\Facades\Auth;
@@ -1672,13 +1673,9 @@ if (!function_exists('tokenkey')) {
         ));
 
         $var = curl_exec($curl);
-
-dd($var);
         curl_close($curl);
 
         $var = json_decode($var);
-
-
         return $var->access_token ?? null;
 
     }
@@ -1753,9 +1750,6 @@ dd($var);
         ));
 
         $var = curl_exec($curl);
-
-        dd($var);
-
         curl_close($curl);
         $var = json_decode($var);
 
@@ -1913,8 +1907,6 @@ if (!function_exists('verify_payment')) {
 
     function verify_payment($ref)
     {
-
-
         $token = tokenkey();
         $curl = curl_init();
 
@@ -1944,14 +1936,16 @@ if (!function_exists('verify_payment')) {
             $data['amount'] = $var->responseData->amountCollected;
             $data['merchantReference'] = $var->responseData->merchantReference;
             $data['message'] = $var->responseData->message ?? null;
+            $data['amountCollected'] = $var->responseData->amount ?? null;
 
             return $data;
-        } else {
+        }
+
             $request = $ref;
             $message = "Wema Resolve error =======>".json_encode($var2);
             send_notification($message);
             return 0;
-        }
+
     }
 }
 
@@ -2250,5 +2244,60 @@ if (!function_exists('credit_user_wallet')) {
         }
 
     }
+
+}
+
+function woven_create($amtt, $first_name, $last_name, $tremail, $phone){
+
+    $key = env('WOVENKEY');
+
+      $databody = array(
+          "customer_reference" => $first_name."_".$last_name,
+          "name" => $first_name." ".$last_name,
+          "email" => $tremail,
+          "mobile_number" => $phone,
+          "expires_on" => Carbon::now()->addDay()->format('Y-m-d'),
+          "use_frequency" => 2,
+          "min_amount" => 100,
+          "max_amount" => $amtt,
+          "callback_url" => url('')."/api/woven/callback",
+          "meta_data" =>[
+              ],
+
+
+      );
+
+        $post_data = json_encode($databody);
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.woven.finance/v2/api/vnubans/create_customer',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $post_data,
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                "api_secret: $key"
+            ),
+        ));
+
+        $var = curl_exec($curl);
+        curl_close($curl);
+        $var = json_decode($var);
+        $status = $var->status ?? null;
+
+        if($status == true){
+            $data['account_no'] = $var->data->vnuban;
+            $data['bank_name'] = $var->data->bank_name;
+            $data['account_name'] = $var->data->account_name;
+        }
+
+          return $data;
+
 }
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CableController;
+use App\Http\Controllers\WovenController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataController;
@@ -28,6 +29,8 @@ Route::any('payment', [TransactionController::class, 'payment']);
 
 Route::get('cable-plan',[CableController::class, 'get_cable_plan']);
 
+Route::post('get-account/wvn',[WovenController::class, 'get_account']);
+
 
 
 
@@ -39,6 +42,8 @@ Route::post('kuda-transfer-transaction', [TransactionController::class, 'kuda_tr
 
 Route::post('ninepsb-transfer-transaction', [TransactionController::class, 'ninepsb_transaction']);
 Route::post('wema-transfer-transaction', [TransactionController::class, 'wema_transaction']);
+Route::post('woven-transfer-transaction', [TransactionController::class, 'woven_transaction']);
+
 
 
 
@@ -59,10 +64,6 @@ Route::group(['middleware' => ['auth:api', 'acess']], function () {
     Route::post('buy-data',[DataController::class, 'buy_data']);
     Route::get('validate-cable',[CableController::class, 'validate_cable']);
     Route::post('buy-cable', [CableController::class, 'buy_cable']);
-
-
-
-
 
 
 

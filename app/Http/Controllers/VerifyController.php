@@ -179,7 +179,8 @@ class VerifyController extends Controller
             $bank = $trx->bank;
 
 
-            $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
+            $type = "manual";
+            $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
 
             if ($fund == 2) {
                 Webtransfer::where('trans_id', $request->id)->update(['status' => 4]);
@@ -920,11 +921,8 @@ class VerifyController extends Controller
             $amount = $f_amount;
 
 
-            //fund user
-            $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
-
-            // dd($var, $urlkey, $fund);
-
+            $type = "presolve";
+            $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
 
             if ($fund == 2) {
 
@@ -1075,8 +1073,9 @@ class VerifyController extends Controller
             $amount = $f_amount;
 
 
+            $type = "presolve";
                 //fund user
-            $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
+            $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
             if ($fund == 2) {
                 //update Transactions
                 $trasnaction = new Transaction();
@@ -1152,7 +1151,7 @@ class VerifyController extends Controller
     {
 
         $message = "Wema Resolve Request ====>".json_encode($request->all());
-        send_notification($message);
+        send_notification_resolve($message);
 
 
         if($request->username == "Not Found, Pleas try again"){
@@ -1181,6 +1180,7 @@ class VerifyController extends Controller
 
             $ref = $request->account_no;
             $var = verify_payment($ref);
+
             if($var == 0){
                 return back()->with('error', 'Somthing went wrong');
             }
@@ -1213,6 +1213,7 @@ class VerifyController extends Controller
 
 
             if ($status == "Successful") {
+
 
                 $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
                 $user = User::where('id', $urlkey)->first();
@@ -1257,43 +1258,39 @@ class VerifyController extends Controller
                 $order_id = $session_id ?? null;
                 $site_name = Webkey::where('key', $request->user_id)->first()->site_name ?? null;
 
+                $trasnaction = new Transaction();
+                $trasnaction->user_id = $urlkey;
+                $trasnaction->e_ref = $request->account_no;
+                $trasnaction->ref_trans_id = $request->account_no;
+                $trasnaction->type = "webpay";
+                $trasnaction->transaction_type = "VirtualFundWallet";
+                $trasnaction->title = "Wallet Funding";
+                $trasnaction->main_type = "Transfer";
+                $trasnaction->credit = $f_amount;
+                $trasnaction->note = "Transaction Successful | Web Pay ";
+                $trasnaction->fee = $charge ?? 0;
+                $trasnaction->amount = $amt;
+                $trasnaction->e_charges = 0;
+                $trasnaction->enkPay_Cashout_profit = 0;
+                $trasnaction->balance = $balance;
+                $trasnaction->status = 1;
+                $trasnaction->save();
+
+                $date = date('d M Y H:i:s');
+                $message = $acct_no . " | NGN  $amt | $request->email  | $site_name | $date | has been funded";
+                //Log::info('User Funded', ['message' => $message]);
+                send_notification($message);
 
 
+
+                $type = "wresolve";
                 //fund user
-                $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
-
-
+                $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
                 if ($fund == 2) {
-                    Transfertransaction::where('account_no', $request->account_no)->update(['status' => 4, 'note' => 'WEMARESOLVE', 'resolve' => 1]);
-                    //update Transactions
-                    $trasnaction = new Transaction();
-                    $trasnaction->user_id = $urlkey;
-                    $trasnaction->e_ref = $request->account_no;
-                    $trasnaction->ref_trans_id = $request->account_no;
-                    $trasnaction->type = "webpay";
-                    $trasnaction->transaction_type = "VirtualFundWallet";
-                    $trasnaction->title = "Wallet Funding";
-                    $trasnaction->main_type = "Transfer";
-                    $trasnaction->credit = $f_amount;
-                    $trasnaction->note = "Transaction Successful | Web Pay ";
-                    $trasnaction->fee = $charge ?? 0;
-                    $trasnaction->amount = $amt;
-                    $trasnaction->e_charges = 0;
-                    $trasnaction->enkPay_Cashout_profit = 0;
-                    $trasnaction->balance = $balance;
-                    $trasnaction->status = 1;
-                    $trasnaction->save();
 
-
-                    //$message = "Business funded | $request->account_no | $f_amount | $user->first_name " . " " . $user->last_name;
-                    //Log::info('Business Funded', ['message' => $message]);
-
-                    // send_notification($message);
-
-                    $date = date('d M Y H:i:s');
-                    $message = $acct_no . " | NGN  $amt | $request->email  | $site_name | $date | has been funded";
-                    //Log::info('User Funded', ['message' => $message]);
-                    send_notification($message);
+                    $date = date('dmy h:i:s');
+                    $message = "Wema Resolve ======> $user_email has been funded NGN$amount \n| 0n $url \n using reslove | $request->account_no on $date";
+                    send_notification_resolve($message);
 
                     $data['trans'] = $request->account_no;
                     $data['recepit'] = "payment";
@@ -1394,7 +1391,8 @@ class VerifyController extends Controller
                 $site_name = Webkey::where('key', $request->user_id)->first()->site_name ?? null;
 
                 //fund user
-                $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
+                $type = "wresolve";
+                $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
 
 
                 if ($fund == 2) {

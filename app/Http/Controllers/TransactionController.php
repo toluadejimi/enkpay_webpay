@@ -158,8 +158,8 @@ class TransactionController extends Controller
                 Transfertransaction::where('account_no', $request->receiver_account_number)->update(['status' => 4, 'resolve' => 1]);
 
 
-                //fund user
-                $fund = credit_user_wallet($url, $user_email, $amount, $order_id);
+                $type ="epayment";
+                $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
 
 
                 Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 1]);
@@ -931,6 +931,7 @@ class TransactionController extends Controller
         }
 
 
+
         $data['opay_acct'] = ManualAccount::where('status', 1)->where('type', "opay")->first() ?? null;
         $data['palmpay_acct'] = ManualAccount::where('status', 1)->where('type', "palmpay")->first() ?? null;
         $data['kuda_acct'] = ManualAccount::where('status', 1)->where('type', "kuda")->first() ?? null;
@@ -990,6 +991,7 @@ class TransactionController extends Controller
         $data['psb_cap'] = $set->psb_cap;
         $data['psb_charge'] = $set->psb_charge;
         $data['wema'] = $set->wema_transfer;
+        $data['woven'] = $set->woven;
         $data['support_channel'] = Webkey::where('key', $request->key)->first()->support ?? null;
         $data['support_number'] = Webkey::where('key', $request->key)->first()->support_number ?? null;
 
@@ -1001,9 +1003,32 @@ class TransactionController extends Controller
         }
 
 
+//        if ($set->woven == 1) {
+//            $faker = Factory::create();
+//            if($request->amount > 10000){
+//                $data['pamount'] = $request->amount + 200;
+//            }else{
+//                $data['pamount'] = $request->amount + 100;
+//            }
+//
+//            $first_name = User::inRandomOrder()->first()->first_name;
+//            $last_name = User::inRandomOrder()->first()->last_name;
+//            $tremail = $faker->email;
+//            $phone = User::inRandomOrder()->first()->phone;
+//            $amtt = $data['pamount'];
+//            $woven_details = woven_create($amtt, $first_name, $last_name, $tremail, $phone);
+//            return response()->json([
+//                'account_no' => $woven_details['account_no'],
+//                'account_name' => $woven_details['account_name'],
+//                'bank_name' => $woven_details['bank_name'],
+//            ]);
+//
+//
+//        }
 
-        if($data['wema'] == 1 && $data['palmpay_transfer'] == 1  &&  $data['opay_transfer'] == 1 && $data['ninepsb'] == 0 ){
-            $views = ['webpayopay', 'webpaypalmpay', 'webpaywema'];
+
+        if($data['woven'] == 1 && $data['wema'] == 1 && $data['palmpay_transfer'] == 1  &&  $data['opay_transfer'] == 1 && $data['ninepsb'] == 0 ){
+            $views = ['webpayopay', 'webpaywoven', 'webpaypalmpay', 'webpaywema'];
         }elseif($data['wema'] == 0 && $data['palmpay_transfer'] == 1  &&  $data['opay_transfer'] == 1 && $data['ninepsb'] == 0 ){
             $views = ['webpayopay', 'webpaypalmpay'];
         }elseif($data['wema'] == 0 && $data['palmpay_transfer'] == 1 &&  $data['opay_transfer'] == 0 && $data['ninepsb'] == 0 ){
@@ -1022,6 +1047,8 @@ class TransactionController extends Controller
             $views = ['webpaywema'];
         }elseif($data['wema'] == 1 && $data['ninepsb'] == 0 && $data['opay_transfer'] == 0  &&  $data['palmpay_transfer'] == 1 ) {
             $views = ['webpaypalmpay', 'webpaywema'];
+        }elseif($data['woven'] == 1 && $data['wema'] == 0 && $data['palmpay_transfer'] == 0  &&  $data['opay_transfer'] == 0 && $data['ninepsb'] == 0 ){
+        $views = ['webpaywoven'];
         }else{
             $views = ['webpay', 'webpayopay', 'webpaypalmpay'];
         }
@@ -2821,6 +2848,57 @@ class TransactionController extends Controller
 
     }
 
+    public
+    function woven_transaction(Request $request)
+    {
+
+        $trx = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
+
+        $usr = User::where('id', $trx->user_id)->first();
+        if ($trx != null) {
+            $trasnaction = new Transfertransaction();
+            $trasnaction->user_id = $trx->user_id;
+            $trasnaction->type = "manualtransferpay";
+            $trasnaction->key = $trx->key;
+            $trasnaction->email = $trx->email;
+            $trasnaction->ref_trans_id = $trx->trans_id;
+            $trasnaction->amount = $trx->amount;
+            $trasnaction->transaction_type = "WEBTRANSFER";
+            $trasnaction->bank = $request->bankName;
+            $trasnaction->ref = $request->ref;
+            $trasnaction->account_no = $request->accountNo;
+            $trasnaction->v_account_name = $request->accountName;
+            $trasnaction->title = "WEBTRANSFER";
+            $trasnaction->main_type = "WEBTRF";
+            $trasnaction->note = "WEBTRANSFER";
+            $trasnaction->e_charges = 0;
+            $trasnaction->enkPay_Cashout_profit = 0;
+            $trasnaction->status = 0;
+            $trasnaction->save();
+
+            $message = "Transfer Payment Initiated |" . $request->ref . "| ON WOVEN " . "For " . $usr->last_name . " | " . number_format($trx->payable_amount, 2);
+            Log::info('Transfer Initiated', ['message' => $message]);
+
+            //send_notification($message);
+
+            return response()->json([
+                'status' => true,
+                'message' => "Successful",
+                'ref' => $request->ref,
+                'account' => $request->account_no,
+                'name' => $request->account_name
+            ]);
+
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => "REF NOT FOUND",
+                'ref' => $request->ref
+            ]);
+        }
+
+
+    }
 
     public
     function wema_transaction(Request $request)

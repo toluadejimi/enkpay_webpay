@@ -33,6 +33,198 @@ if (!function_exists('refrence_code')) {
     }
 }
 
+if (!function_exists('send_notification_resolve')) {
+
+    function send_notification_resolve($message)
+    {
+
+        $boturl = env('BOTURLRESOLVE');
+        $chat_id = env('BOTID');
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $boturl,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+                'chat_id' => $chat_id,
+                'text' => $message,
+
+            ),
+            CURLOPT_HTTPHEADER => array(),
+        ));
+
+        $var = curl_exec($curl);
+        curl_close($curl);
+
+        $var = json_decode($var);
+    }
+
+
+
+    if (!function_exists('create_p_account')) {
+
+        function create_p_account($name, $bvn)
+        {
+
+            $curl = curl_init();
+            $data = array(
+                "account_name" => $name,
+                "bvn" => $bvn,
+            );
+
+            $databody = json_encode($data);
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://vps.providusbank.com/vps/api/appdevapi/api/PiPCreateReservedAccountNumber',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $databody,
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json',
+                    'Accept: application/json',
+                    'Client-Id: dGVzdF9Qcm92aWR1cw==',
+                    'X-Auth-Signature: b900d355dd66f3507c775ba52bcd3ba6b6f3f4093448ea24f3aa6500bbbce5c1e63c12214acd08d8057b7bec36d37a8f66a504a1b7a8df54af00ba6ba825a9c4',
+                ),
+            ));
+
+            $var = curl_exec($curl);
+
+            curl_close($curl);
+            $var = json_decode($var);
+
+            // dd($var);
+
+            $status = $var->responseCode ?? null;
+            $p_acct_no = $var->account_number ?? null;
+            $p_acct_name = $var->account_name ?? null;
+
+            $pbank = "PROVIDUS BANK";
+
+            if ($status == 00) {
+
+                $create = new VirtualAccount();
+                $create->v_account_no = $p_acct_no;
+                $create->v_account_name = $p_acct_name;
+                $create->v_bank_name = $pbank;
+                $create->save();
+
+                $user = User::find(Auth::id());
+                $user->p_account_no = $p_acct_no;
+                $user->p_account_name = $p_acct_name;
+                $user->save();
+
+
+                return response()->json(['account_no' => $p_acct_no,  'account_name' => $p_acct_name]);
+
+                $message = "Account Created on Providus";
+                send_notification($message);
+            }
+
+
+            $message = "Error from Providus Account Creation | Account Created on Providus";
+            send_notification($message);
+        }
+    }
+
+
+
+
+
+    if (!function_exists('create_dynamic_p_account')) {
+
+        function create_dynamic_p_account($name, $business_id)
+        {
+
+
+            $client_id = env('CLIENTID');
+            $hashkey = env('HASHKEY');
+
+
+            $curl = curl_init();
+            $data = array(
+                "account_name" => $name,
+            );
+
+            $databody = json_encode($data);
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://vps.providusbank.com/vps/api/PiPCreateDynamicAccountNumber',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $databody,
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json',
+                    'Accept: application/json',
+                    "Client-Id: $client_id",
+                    "X-Auth-Signature: $hashkey",
+                ),
+            ));
+
+            $var = curl_exec($curl);
+
+            curl_close($curl);
+            $var = json_decode($var);
+
+
+            $status = $var->responseCode ?? null;
+            $p_acct_no = $var->account_number ?? null;
+            $p_acct_name = $var->account_name ?? null;
+
+
+            $pbank = "PROVIDUS BANK";
+
+            $usr = User::where('business_id', $business_id)->first();
+
+            if ($status == 00) {
+
+                $create = new VirtualAccount();
+                $create->v_account_no = $p_acct_no;
+                $create->v_account_name = $p_acct_name;
+                $create->v_bank_name = $pbank;
+                $create->business_id = $business_id ?? null;
+                $create->save();
+
+                // $user = User::find(Auth::id());
+                // $user->p_account_no = $p_acct_no;
+                // $user->p_account_name = $p_acct_name;
+                // $user->save();
+
+                $message = "Account Created on Providus";
+                send_notification($message);
+
+
+                $data_array = array();
+                $data_array[0] = [
+                    "account_no" => $p_acct_no,
+                    "amount_name" => $p_acct_name,
+                ];
+
+
+                return $data_array;
+            }
+
+
+            $message = "Error from Providus Account Creation | Account Created on Providus";
+            send_notification($message);
+        }
+    }
+}
+
 
 if (!function_exists('send_notification')) {
 
@@ -2186,7 +2378,7 @@ if (!function_exists('create_payment')) {
 
 
 if (!function_exists('credit_user_wallet')) {
-    function credit_user_wallet($url, $user_email, $amount, $order_id)
+    function credit_user_wallet($url, $user_email, $amount, $order_id, $type)
     {
 
 
@@ -2215,27 +2407,53 @@ if (!function_exists('credit_user_wallet')) {
         ));
 
         $var = curl_exec($curl);
-
-        //dd($var, $url, $user_email, $amount, $order_id);
-
-
         curl_close($curl);
         $var = json_decode($var);
         $status = $var->status ?? null;
 
-
-
         if($status == true){
-
             $message = "$url | $user_email | $amount | $order_id successfully funded";
             send_notification($message);
+
+            if($type == "wresolve"){
+                $date = date('dmy h:i:s');
+                $message = "Wema Resolve ======> $user_email has been funded NGN$amount \n| 0n $url \n using reslove | on $date";
+                send_notification_resolve($message);
+            }elseif($type == "presolve"){
+
+                $date = date('dmy h:i:s');
+                $message = "9psb Resolve ======> $user_email has been funded NGN$amount \n| 0n $url \n using reslove on $date";
+                send_notification_resolve($message);
+
+            }else{
+
+                $date = date('dmy h:i:s');
+                $message = "Woven Resolve ======> $user_email has been funded NGN$amount \n| 0n $url \n using reslove on $date";
+                send_notification_resolve($message);
+
+            }
 
             return 2;
 
 
-
-
         }else{
+
+            if($type == "wresolve"){
+                $message ="Error Reslove Wema ======>  $url | $user_email | $amount | $order_id".
+                    "\n\n Funding user Error ===>".json_encode($var);
+                send_notification_resolve($message);
+            }elseif($type == "presolve"){
+                $message ="Error Reslove PSB ======>  $url | $user_email | $amount | $order_id".
+                    "\n\n Funding user Error ===>".json_encode($var);
+                send_notification_resolve($message);
+
+            }else{
+
+                $message ="Error Reslove WOVEN ======>  $url | $user_email | $amount | $order_id".
+                    "\n\n Funding user Error ===>".json_encode($var);
+                send_notification_resolve($message);
+
+            }
 
             $message ="request ======>  $url | $user_email | $amount | $order_id".
             "\n\n Funding user Error ===>".json_encode($var);
@@ -2289,6 +2507,8 @@ function woven_create($amtt, $first_name, $last_name, $tremail, $phone){
         $var = curl_exec($curl);
         curl_close($curl);
         $var = json_decode($var);
+
+
         $status = $var->status ?? null;
 
         if($status == true){

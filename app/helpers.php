@@ -2412,8 +2412,6 @@ if (!function_exists('credit_user_wallet')) {
         $status = $var->status ?? null;
 
         if($status == true){
-            $message = "$url | $user_email | $amount | $order_id successfully funded";
-            send_notification($message);
 
             if($type == "wresolve"){
                 $date = date('dmy h:i:s');
@@ -2425,11 +2423,16 @@ if (!function_exists('credit_user_wallet')) {
                 $message = "9psb Resolve ======> $user_email has been funded NGN$amount \n| 0n $url \n using reslove on $date";
                 send_notification_resolve($message);
 
-            }else{
+            }elseif($type == "woresolve"){
 
                 $date = date('dmy h:i:s');
                 $message = "Woven Resolve ======> $user_email has been funded NGN$amount \n| 0n $url \n using reslove on $date";
                 send_notification_resolve($message);
+
+            }else{
+
+                $message = "$url | $user_email | $amount | $order_id successfully funded";
+                send_notification($message);
 
             }
 

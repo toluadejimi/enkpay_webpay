@@ -2481,6 +2481,7 @@ function woven_create($amtt, $first_name, $last_name, $tremail, $phone){
           "use_frequency" => 2,
           "min_amount" => 100,
           "max_amount" => $amtt,
+          "collection_bank" =>"000017",
           "callback_url" => url('')."/api/woven/callback",
           "meta_data" =>[
               ],

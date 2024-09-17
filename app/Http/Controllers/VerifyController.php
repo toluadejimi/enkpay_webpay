@@ -822,6 +822,9 @@ class VerifyController extends Controller
         $ckstatus = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;
         $email = Transfertransaction::where('account_no', $request->account_no)->first()->email ?? null;
 
+        dd($ckstatus);
+
+
         if ($ckstatus == "4") {
             return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
         }
@@ -830,7 +833,6 @@ class VerifyController extends Controller
             return back()->with('error', 'Please note that your payment failed, Your reversal has been processed back to your bank account ');
         }
 
-        dd($ckstatus);
 
 
         if ($ckstatus == "2") {

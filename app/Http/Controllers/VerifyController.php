@@ -861,8 +861,6 @@ class VerifyController extends Controller
             $var = json_decode($var);
 
 
-            dd($var);
-
             $session_id = $var->session_id ?? null;
             $acct_no = $var->account_no ?? null;
             $amt = $var->amount ?? null;
@@ -927,6 +925,8 @@ class VerifyController extends Controller
 
 
             $type = "presolve";
+
+            dd($url, $user_email, $amount, $order_id, $type);
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
 
             if ($fund == 2) {

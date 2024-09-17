@@ -832,9 +832,6 @@ class VerifyController extends Controller
 
         if ($ckstatus == "2" || $ckstatus == "3") {
 
-
-
-            Transfertransaction::where('account_no', $request->account_no)->update(['status' => 4, 'note' => '9PSBRESOLVE', 'resolve' => 1]);
             $curl = curl_init();
             $data = array(
                 'account_no' => $request->account_no,
@@ -887,8 +884,6 @@ class VerifyController extends Controller
 
 
 
-
-
             $trxxc = Transfertransaction::where('account_no', $request->account_no)->first() ?? null;
             if($trxxc == null){
                 $svtrx = new Transfertransaction();
@@ -900,9 +895,9 @@ class VerifyController extends Controller
                 $svtrx->user_id = $user->id;
                 $svtrx->transaction_type = "Resolve";
                 $svtrx->save();
+            }else{
+                Transfertransaction::where('account_no', $request->account_no)->update(['status' => 4, 'note' => '9PSBRESOLVE', 'resolve' => 1]);
             }
-
-
 
 
             $set = Setting::where('id', 1)->first();
@@ -927,8 +922,6 @@ class VerifyController extends Controller
 
 
             $type = "presolve";
-
-
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
 
             if ($fund == 2) {

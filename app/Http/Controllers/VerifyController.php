@@ -822,20 +822,17 @@ class VerifyController extends Controller
         $ckstatus = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;
         $email = Transfertransaction::where('account_no', $request->account_no)->first()->email ?? null;
 
-        dd($ckstatus);
 
 
         if ($ckstatus == "4") {
             return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
         }
 
-        if ($ckstatus == "3") {
-            return back()->with('error', 'Please note that your payment failed, Your reversal has been processed back to your bank account ');
-        }
 
 
+        if ($ckstatus == "2" || $ckstatus == "3") {
 
-        if ($ckstatus == "2") {
+
 
             Transfertransaction::where('account_no', $request->account_no)->update(['status' => 4, 'note' => '9PSBRESOLVE', 'resolve' => 1]);
             $curl = curl_init();
@@ -864,6 +861,7 @@ class VerifyController extends Controller
             $var = json_decode($var);
 
 
+            dd($var);
 
             $session_id = $var->session_id ?? null;
             $acct_no = $var->account_no ?? null;

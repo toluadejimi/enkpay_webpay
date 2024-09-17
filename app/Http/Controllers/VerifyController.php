@@ -828,8 +828,6 @@ class VerifyController extends Controller
             return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
         }
 
-
-
         if ($ckstatus == "2" || $ckstatus == "3") {
 
             $curl = curl_init();
@@ -1143,10 +1141,7 @@ class VerifyController extends Controller
         }
 
 
-
-
-
-            return back()->with('error', 'Account number you provided is not correct, please check and try again');
+        return back()->with('error', 'Something went wrong, please try again or contact our support');
 
 
 

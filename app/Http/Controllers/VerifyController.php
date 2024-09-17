@@ -830,7 +830,6 @@ class VerifyController extends Controller
             return back()->with('error', 'Please note that your payment failed, Your reversal has been processed back to your bank account ');
         }
 
-        dd($ckstatus);
 
 
         if ($ckstatus == "2") {

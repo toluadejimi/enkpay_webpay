@@ -889,18 +889,18 @@ class VerifyController extends Controller
 
 
 
-//            $trxxc = Transfertransaction::where('account_no', $request->account_no)->first() ?? null;
-//            if($trxxc == null){
-//                $svtrx = new Transfertransaction();
-//                $svtrx->account_no = $request->account_no;
-//                $svtrx->status = 4;
-//                $svtrx->amount = $amt;
-//                $svtrx->email = $request->email;
-//                $svtrx->note = "PSBRESOLVE";
-//                $svtrx->user_id = $user->id;
-//                $svtrx->transaction_type = "Resolve";
-//                $svtrx->save();
-//            }
+            $trxxc = Transfertransaction::where('account_no', $request->account_no)->first() ?? null;
+            if($trxxc == null){
+                $svtrx = new Transfertransaction();
+                $svtrx->account_no = $request->account_no;
+                $svtrx->status = 4;
+                $svtrx->amount = $amt;
+                $svtrx->email = $request->email;
+                $svtrx->note = "PSBRESOLVE";
+                $svtrx->user_id = $user->id;
+                $svtrx->transaction_type = "Resolve";
+                $svtrx->save();
+            }
 
 
 
@@ -928,7 +928,6 @@ class VerifyController extends Controller
 
             $type = "presolve";
 
-            dd($url, $user_email, $amount, $order_id, $type);
 
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
 

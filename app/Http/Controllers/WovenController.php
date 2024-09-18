@@ -39,4 +39,13 @@ class WovenController extends Controller
 
 
     }
+
+
+
+    public function woven_webhook(Request $request){
+
+        $message = json_encode($request->all());
+        send_notification_resolve($message);
+
+    }
 }

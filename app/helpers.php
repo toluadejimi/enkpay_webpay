@@ -2479,7 +2479,7 @@ function woven_create($amtt, $first_name, $last_name, $tremail, $phone){
           "mobile_number" => $phone,
           "expires_on" => Carbon::now()->addDay()->format('Y-m-d'),
           "use_frequency" => 2,
-          "min_amount" => 100,
+          "min_amount" => $amtt,
           "max_amount" => $amtt,
           "collection_bank" =>"000017",
           "callback_url" => url('')."/api/woven/callback",

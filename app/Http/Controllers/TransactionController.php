@@ -1056,6 +1056,8 @@ class TransactionController extends Controller
         }
 
 
+        dd($views);
+
 
         $randomView = $views[array_rand($views)];
         return view($randomView, $data);

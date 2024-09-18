@@ -2160,7 +2160,7 @@ if (!function_exists('verify_payment_woven')) {
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json',
-                "Authorization: Bearer $token"
+                "api_secret:$token"
             ),
         ));
 

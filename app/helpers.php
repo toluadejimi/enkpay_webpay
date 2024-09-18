@@ -2171,26 +2171,16 @@ if (!function_exists('verify_payment_woven')) {
         $pstatus = $var->data->transactions[0]->status ?? null;
         $acct_no = $var->data->transactions[0]->nuban ?? null;
 
-        dd($var);
 
 
-        if ($status == "success" && $pstatus == "ACTIVE" && $ref == $acct_no) {
-            $data['amount'] = $var->data->transactions[0]->amount;
-            return $data;
+        if ($status == "success" && $pstatus == "PALVS" && $ref == $acct_no) {
+            return 5;
         }elseif($status == "success" && $pstatus == "ACTIVE" && $ref == $acct_no){
             $data['message'] = "Transaction Not found";
             return $data;
-        }
-
-
-        if ($status == "success" && $pstatus == "ACTIVE" && $ref == $acct_no) {
-            $data['amount'] = $var->data->transactions[0]->amount;
-            return $data;
         }else{
-            $data['message'] = "Transaction Not found";
-            return $data;
+            return 9;
         }
-
 
 
         $request = $ref;

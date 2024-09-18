@@ -1204,10 +1204,16 @@ class VerifyController extends Controller
 
             $var = verify_payment_woven($ref);
 
-            dd($var);
-
             if($var == 0){
                 return back()->with('error', 'Something went wrong');
+            }
+
+            if($var == 9){
+                return back()->with('error', 'Transaction not found');
+            }
+
+            if($var == 5){
+                return back()->with('error', 'Transaction will be reversed to your account');
             }
 
 

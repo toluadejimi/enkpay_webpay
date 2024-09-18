@@ -145,7 +145,7 @@ class TransactionController extends Controller
                 $trasnaction->main_type = "Transfer";
                 $trasnaction->credit = $f_amount;
                 $trasnaction->note = "Transaction Successful | Web Pay  | from $user_email";
-                $trasnaction->receiver_account_no = $account_no;
+                $trasnaction->receiver_account_no = $data['acc_no'];
                 $trasnaction->fee = $charge ?? 0;
                 $trasnaction->amount = $trx->amount;
                 $trasnaction->e_charges = 0;

@@ -2170,18 +2170,23 @@ if (!function_exists('verify_payment_woven')) {
         $status = $var->requestSuccessful ?? null;
 
 
+
+
+        if ($status == "success") {
+            $data['transactionStatus'] = $var->data->transactions[0]->description;
+            $data['amount'] = $var->data->transactions[0]->amount;
+
+            dd($var,$data,$ref);
+
+            return $data;
+
+
+        }
+
         dd($var, $ref);
 
 
-        if ($status == true) {
-            $data['transactionStatus'] = $var->responseData->transactionStatus;
-            $data['amount'] = $var->responseData->amountCollected;
-            $data['merchantReference'] = $var->responseData->merchantReference;
-            $data['message'] = $var->responseData->message ?? null;
-            $data['amountCollected'] = $var->responseData->amount ?? null;
 
-            return $data;
-        }
 
         $request = $ref;
         $message = "Wema Resolve error =======>".json_encode($var2);

@@ -1049,14 +1049,15 @@ class TransactionController extends Controller
             $views = ['webpaywema'];
         }elseif($data['wema'] == 1 && $data['ninepsb'] == 0 && $data['opay_transfer'] == 0  &&  $data['palmpay_transfer'] == 1 ) {
             $views = ['webpaypalmpay', 'webpaywema'];
-        }elseif($data['woven'] == 1 && $data['wema'] == 0 && $data['palmpay_transfer'] == 0  &&  $data['opay_transfer'] == 0 && $data['ninepsb'] == 0 ){
-        $views = ['webpaywoven'];
+        }elseif($data['woven'] == 1 && $data['wema'] == 0 && $data['palmpay_transfer'] == 0  &&  $data['opay_transfer'] == 0 && $data['ninepsb'] == 0 ) {
+            $views = ['webpaywoven'];
+        }elseif($data['woven'] == 1 && $data['wema'] == 0 && $data['palmpay_transfer'] == 0  &&  $data['opay_transfer'] == 0 && $data['ninepsb'] == 1 ){
+            $views = ['webpaywoven', 'webpay'];
         }else{
             $views = ['webpay', 'webpayopay', 'webpaypalmpay'];
         }
 
 
-        dd($views);
 
 
         $randomView = $views[array_rand($views)];

@@ -295,7 +295,7 @@
 
             @if($type == "wema" && $partner == "woven")
 
-                <form id="transactionFormwema" action=resolve-woven-transaction" enctype="multipart/form-data"
+                <form id="transactionFormwema" action="resolve-woven-transaction" enctype="multipart/form-data"
                       method="POST">
                     @csrf
 

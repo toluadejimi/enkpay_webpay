@@ -2176,7 +2176,7 @@ if (!function_exists('verify_payment_woven')) {
         if ($status == "success" && $pstatus == "PALVS" && $ref == $acct_no) {
             return 5;
         }elseif($status == "success" && $pstatus == "ACTIVE" && $ref == $acct_no){
-            $data['message'] = "Transaction Not found";
+            $data['amount'] = $var->data->transactions[0]->amount;
             $data['transactionStatus'] = "Successful";
             return $data;
         }else{

@@ -1188,6 +1188,8 @@ class VerifyController extends Controller
         }
 
 
+        dd($ckstatus);
+
         if ($ckstatus == null || $ckstatus == 0 || $ckstatus == 3 || $ckstatus == 2) {
 
             $status = Transfertransaction::where('session_id', $request->session_id)->first()->status ?? null;

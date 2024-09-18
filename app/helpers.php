@@ -2517,8 +2517,8 @@ function woven_create($amtt, $first_name, $last_name, $tremail, $phone){
 
         if($status == true){
             $data['account_no'] = $var->data->vnuban;
-            $data['bank_name'] = "WOV/TEAMX/".$var->data->bank_name;
-            $data['account_name'] = $var->data->account_name;
+            $data['bank_name'] = $var->data->bank_name;
+            $data['account_name'] = "WOV/TEAMX/".$var->data->account_name;
         }
 
           return $data;

@@ -2170,10 +2170,13 @@ if (!function_exists('verify_payment_woven')) {
         $status = $var->status ?? null;
         $pstatus = $var->data->transactions[0]->status ?? null;
 
+        dd($var);
+
 
 
         if ($status == "success" && $pstatus == "success") {
             $data['amount'] = $var->data->transactions[0]->amount;
+
             return $data;
         }else{
             $data['message'] = $var->data->transactions[0]->description;

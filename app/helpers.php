@@ -2168,21 +2168,17 @@ if (!function_exists('verify_payment_woven')) {
         curl_close($curl);
         $var = json_decode($var2);
         $status = $var->status ?? null;
+        $pstatus = $var->data->transactions[0]->status ?? null;
 
 
-        if ($status == "success") {
-            $data['transactionStatus'] = $var->data->transactions[0]->description;
+
+        if ($status == "success" && $pstatus == "success") {
             $data['amount'] = $var->data->transactions[0]->amount;
-
-            dd($var,$data,$ref);
-
             return $data;
-
-
+        }else{
+            $data['message'] = $var->data->transactions[0]->description;
+            return $data;
         }
-
-        dd($var, $ref);
-
 
 
 

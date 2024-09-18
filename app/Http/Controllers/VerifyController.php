@@ -1204,6 +1204,8 @@ class VerifyController extends Controller
 
             $var = verify_payment_woven($ref);
 
+            dd($var);
+
             if($var == 0){
                 return back()->with('error', 'Something went wrong');
             }

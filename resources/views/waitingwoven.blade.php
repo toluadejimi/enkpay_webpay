@@ -163,7 +163,7 @@
                 return;
             }
 
-            const url = "{{ url('') }}/verifywema?account_no={{$account_no}}&amount={{$amount}}&ref={{$ref}}&pref={{$pref}}";
+            const url = "{{ url('') }}/verifywovencheck?account_no={{$account_no}}&amount={{$amount}}&ref={{$ref}}&pref={{$pref}}";
 
             var audio = new Audio('{{url('')}}/public/assets/sound.wav');
 

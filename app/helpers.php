@@ -2172,9 +2172,7 @@ if (!function_exists('verify_payment_woven')) {
         $acct_no = $var->data->transactions[0]->nuban ?? null;
 
 
-        dd($ref, $status, $pstatus, $acct_no, $var);
-
-        if ($status == "success" && $pstatus == "success" && $ref == $acct_no) {
+        if ($status == "success" && $pstatus == "ACTIVE" && $ref == $acct_no) {
             $data['amount'] = $var->data->transactions[0]->amount;
             return $data;
         }else{

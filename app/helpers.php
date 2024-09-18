@@ -2142,6 +2142,56 @@ if (!function_exists('verify_payment')) {
 }
 
 
+if (!function_exists('verify_payment_woven')) {
+
+    function verify_payment_woven($ref)
+    {
+        $token = env('WOVENKEY');
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.woven.finance/v2/api/transactions?vnuban=$ref",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                "Authorization: Bearer $token"
+            ),
+        ));
+
+        $var2 = curl_exec($curl);
+        curl_close($curl);
+        $var = json_decode($var2);
+        $status = $var->requestSuccessful ?? null;
+
+
+        dd($var);
+
+
+        if ($status == true) {
+            $data['transactionStatus'] = $var->responseData->transactionStatus;
+            $data['amount'] = $var->responseData->amountCollected;
+            $data['merchantReference'] = $var->responseData->merchantReference;
+            $data['message'] = $var->responseData->message ?? null;
+            $data['amountCollected'] = $var->responseData->amount ?? null;
+
+            return $data;
+        }
+
+        $request = $ref;
+        $message = "Wema Resolve error =======>".json_encode($var2);
+        send_notification($message);
+        return 0;
+
+    }
+}
+
+
 if (!function_exists('crypto_token')) {
 
     function crypto_token()

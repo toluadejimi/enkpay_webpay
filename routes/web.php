@@ -211,6 +211,8 @@ Route::any('submit-resolve', [VerifyController::class, 'submit_resolve']);
 
 Route::any('resolve-psb-transaction', [VerifyController::class, 'reslove_psb']);
 Route::any('resolve-wema-transaction', [VerifyController::class, 'reslove_wema']);
+Route::any('resolve-woven-transaction', [VerifyController::class, 'reslove_woven']);
+
 
 
 

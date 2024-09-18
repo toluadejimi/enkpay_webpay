@@ -2167,9 +2167,7 @@ if (!function_exists('verify_payment_woven')) {
         $var2 = curl_exec($curl);
         curl_close($curl);
         $var = json_decode($var2);
-        $status = $var->requestSuccessful ?? null;
-
-
+        $status = $var->status ?? null;
 
 
         if ($status == "success") {

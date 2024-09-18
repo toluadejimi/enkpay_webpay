@@ -1193,6 +1193,8 @@ class VerifyController extends Controller
             $status = Transfertransaction::where('session_id', $request->session_id)->first()->status ?? null;
             $email = Transfertransaction::where('session_id', $request->session_id)->first()->email ?? null;
             $account_no = Transfertransaction::where('session_id', $request->session_id)->first()->account_no ?? null;
+            $order_id = Transfertransaction::where('session_id', $request->session_id)->first()->ref_trans_id ?? null;
+
 
 
             if ($status == 4) {
@@ -1220,35 +1222,19 @@ class VerifyController extends Controller
             $session_id = $request->account_no ?? null;
             $acct_no = $var->account_no ?? null;
             $amt = $var['amount'] ?? null;
-            $status = $var['transactionStatus'] ?? null;
-            $amountCollected = $var['amountCollected'];
+            $wstatus = $var['transactionStatus'] ?? null;
+            $amountCollected = $var['amount'];
 
 
-            if ($status == "PartPayment") {
-                return back()->with('error', "Incomplete Amount Received\n, You paid NGN". $amt. " instead of NGN ".$amountCollected ."\n Note that the funds will be refunded back to your account" );
-            }
 
-            if ($status == "Processing") {
-                return back()->with('error', 'We have not confirmed your payment yet its still processing, please try again later');
-            }
-
-            if ($status == "Failed") {
-                $emessage = $var['message'];
-                return back()->with('error',  "You pay ".$emessage);
-            }
-
-            if ($status == false) {
-                return back()->with('error', 'Account No Check failed, Kindly verify the Account No  and try again');
-            }
-
-            if ($status == "Successful") {
+            if ($wstatus == "Successful") {
 
                 $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
                 $user = User::where('id', $urlkey)->first();
 
 
                 $svtrx = new Transfertransaction();
-                $svtrx->account_no = $request->account_no;
+                $svtrx->account_no = $account_no;
                 $svtrx->status = 4;
                 $svtrx->amount = $amt;
                 $svtrx->note = "WEMARESOLVE";
@@ -1289,7 +1275,7 @@ class VerifyController extends Controller
                 $trasnaction = new Transaction();
                 $trasnaction->user_id = $urlkey;
                 $trasnaction->e_ref = $request->account_no;
-                $trasnaction->ref_trans_id = $request->account_no;
+                $trasnaction->ref_trans_id = $order_id;
                 $trasnaction->type = "webpay";
                 $trasnaction->transaction_type = "VirtualFundWallet";
                 $trasnaction->title = "Wallet Funding";
@@ -1313,6 +1299,7 @@ class VerifyController extends Controller
 
                 $type = "wresolve";
                 //fund user
+
                 $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
                 if ($fund == 2) {
 
@@ -1320,7 +1307,7 @@ class VerifyController extends Controller
                     $message = "Wema Resolve ======> $user_email has been funded NGN$amount \n| 0n $url \n using reslove | $account_no on $date";
                     send_notification_resolve($message);
 
-                    $data['trans'] = $request->account_no;
+                    $data['trans'] = $order_id;
                     $data['recepit'] = "payment";
                     $data['url_page'] = $urluser;
                     $data['amount'] = $amt;

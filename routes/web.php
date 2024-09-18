@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CableController;
 use App\Http\Controllers\VerifyController;
+use App\Http\Controllers\WovenController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProxyController;
 use App\Http\Controllers\BotManController;
@@ -54,6 +55,9 @@ Route::post('verifypsbboomzy', [TransactionController::class, 'verifypsbboomzy']
 
 Route::post('verifywema', [TransactionController::class, 'verifywema']);
 Route::post('verifywemaboomzy', [TransactionController::class, 'verifywemaboomzy']);
+Route::post('verifywoven', [WovenController::class, 'verifywoven']);
+
+
 
 
 
@@ -238,6 +242,8 @@ Route::get('verifypalmpay', [TransactionController::class, 'palmpay_check_status
 Route::get('verifykuda', [TransactionController::class, 'kuda_check_status']);
 Route::get('verifyninepsb', [TransactionController::class, 'ninepsb_check_status']);
 Route::get('verifywema', [TransactionController::class, 'wema_check_status']);
+Route::get('verifywovencheck', [WovenController::class, 'woven_check_status']);
+
 
 
 Route::get('validate-cable',[CableController::class, 'validate_cable']);

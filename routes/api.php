@@ -43,7 +43,7 @@ Route::post('kuda-transfer-transaction', [TransactionController::class, 'kuda_tr
 
 Route::post('ninepsb-transfer-transaction', [TransactionController::class, 'ninepsb_transaction']);
 Route::post('wema-transfer-transaction', [TransactionController::class, 'wema_transaction']);
-Route::post('woven-transfer-transaction', [TransactionController::class, 'woven_transaction']);
+Route::post('woven-transfer-transaction', [WovenController::class, 'woven_transaction']);
 
 
 

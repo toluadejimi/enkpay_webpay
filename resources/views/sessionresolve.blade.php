@@ -272,7 +272,7 @@
                     <hr>
 
                     <label>Enter wema account number paid to</label>
-                    <input name="account_no" type="text" class="form-control" placeholder="977446334">
+                    <input name="session_id" type="text" class="form-control" placeholder="977446334">
 
 
                     <input hidden name="user_id" value="{{$user_id}}">

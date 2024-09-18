@@ -814,8 +814,6 @@ class VerifyController extends Controller
     public function reslove_psb(request $request)
     {
 
-
-
         $message = "9psb Resolve Request ====>".json_encode($request->all());
         send_notification($message);
 
@@ -1009,7 +1007,8 @@ class VerifyController extends Controller
 
     public function reslove_wema(request $request)
     {
-
+        $message = "Charm Wema Resolve Request ==>>>>". json_encode($request->all());
+        send_notification_resolve($message);
 
         if($request->username == "Not Found, Pleas try again"){
             return back()->with('error', 'Email is invalid, please try again');
@@ -1174,6 +1173,8 @@ class VerifyController extends Controller
     public function reslove_woven(request $request)
     {
 
+        $message = "Woven Resolve Request ==>>>>". json_encode($request->all());
+        send_notification_resolve($message);
 
         if($request->username == "Not Found, Pleas try again"){
             return back()->with('error', 'Email is invalid, please try again');
@@ -1292,6 +1293,7 @@ class VerifyController extends Controller
                 $date = date('d M Y H:i:s');
                 $message = $acct_no . " | NGN  $amt | $request->email  | $site_name | $date | has been funded";
                 send_notification($message);
+
 
 
 

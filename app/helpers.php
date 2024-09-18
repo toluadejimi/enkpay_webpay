@@ -2512,8 +2512,6 @@ function woven_create($amtt, $first_name, $last_name, $tremail, $phone){
         curl_close($curl);
         $var = json_decode($var);
 
-        dd($var, $post_data);
-
 
         $status = $var->status ?? null;
 

@@ -2169,17 +2169,15 @@ if (!function_exists('verify_payment_woven')) {
         $var = json_decode($var2);
         $status = $var->status ?? null;
         $pstatus = $var->data->transactions[0]->status ?? null;
-
-        dd($var);
-
+        $acct_no = $var->data->transactions[0]->nuban ?? null;
 
 
-        if ($status == "success" && $pstatus == "success") {
+
+        if ($status == "success" && $pstatus == "success" && $ref == $acct_no) {
             $data['amount'] = $var->data->transactions[0]->amount;
-
             return $data;
         }else{
-            $data['message'] = $var->data->transactions[0]->description;
+            $data['message'] = "Transaction Not found";
             return $data;
         }
 

@@ -1188,7 +1188,6 @@ class VerifyController extends Controller
         }
 
 
-        dd($ckstatus);
 
         if ($ckstatus == null || $ckstatus == 0 || $ckstatus == 3 || $ckstatus == 2) {
 
@@ -1234,14 +1233,12 @@ class VerifyController extends Controller
                 $user = User::where('id', $urlkey)->first();
 
 
-                $svtrx = new Transfertransaction();
-                $svtrx->account_no = $account_no;
-                $svtrx->status = 4;
-                $svtrx->amount = $amt;
-                $svtrx->note = "WEMARESOLVE";
-                $svtrx->user_id = $user->id;
-                $svtrx->transaction_type = "Resolve";
-                $svtrx->save();
+                Transfertransaction::where('account_no', $account_no)->update([
+                    "note" => "WEMARESOLVE",
+                    "account_no" => $account_no,
+                    "status" => 4,
+                ]);
+
 
 
                 $set = Setting::where('id', 1)->first();

@@ -169,9 +169,9 @@
 
                     <hr>
 
-                    <label>Enter the 9psb Account number you paid to</label>
+                    <label>Enter your Session ID or Refrence</label>
 
-                    <input name="account_no" type="text" class="form-control" placeholder="5554485574">
+                    <input name="session_id" type="text" class="form-control" placeholder="1122838777466466364">
 
                     <input hidden name="user_id" value="{{$user_id}}">
                     <input hidden name="usernameResult" id="usernameResult">

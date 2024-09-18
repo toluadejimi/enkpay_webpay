@@ -264,6 +264,14 @@
                 </svg>
 
 
+                @php
+                    if($payable_amount > 15000){
+                        $f_amount = $payable_amount + $psb_cap;
+                    }else{
+                      $f_amount = $payable_amount + $psb_charge;
+                    }
+
+                @endphp
 
 
                 <h1>₦{{ number_format($f_amount, 2) }}</h1>

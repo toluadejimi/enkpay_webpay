@@ -1219,6 +1219,7 @@ class VerifyController extends Controller
             }
 
 
+            dd($var);
             $session_id = $request->account_no ?? null;
             $acct_no = $var->account_no ?? null;
             $amt = $var['amount'] ?? null;

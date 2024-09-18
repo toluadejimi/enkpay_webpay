@@ -137,14 +137,15 @@ class TransactionController extends Controller
 
                 $trasnaction = new Transaction();
                 $trasnaction->user_id = $trx->user_id;
-                $trasnaction->e_ref = $request->sessionid ?? $data['acc_no'];
-                $trasnaction->ref_trans_id = $request->sessionid ?? $data['acc_no'];
+                $trasnaction->e_ref = $order_id ?? $data['acc_no'];
+                $trasnaction->ref_trans_id = $order_id ?? $data['acc_no'];
                 $trasnaction->type = "webpay";
                 $trasnaction->transaction_type = "VirtualFundWallet";
                 $trasnaction->title = "Wallet Funding";
                 $trasnaction->main_type = "Transfer";
                 $trasnaction->credit = $f_amount;
-                $trasnaction->note = "Transaction Successful | Web Pay ";
+                $trasnaction->note = "Transaction Successful | Web Pay  | from $user_email";
+                $trasnaction->receiver_account_no = $account_no;
                 $trasnaction->fee = $charge ?? 0;
                 $trasnaction->amount = $trx->amount;
                 $trasnaction->e_charges = 0;

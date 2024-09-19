@@ -827,6 +827,9 @@ class VerifyController extends Controller
         }
 
 
+
+
+
         if ($ckstatus == "2" || $ckstatus == "3" || $ckstatus == null) {
 
             $status = Transfertransaction::where('session_id', $request->session_id)->first()->status ?? null;
@@ -882,21 +885,21 @@ class VerifyController extends Controller
             $user_email = $request->email ?? null;
             $site_name = Webkey::where('key', $request->user_id)->first()->site_name ?? null;
 
-            $trxxc = Transfertransaction::where('account_no', $account_no)->first() ?? null;
-            if ($trxxc == null) {
-                $svtrx = new Transfertransaction();
-                $svtrx->account_no = $account_no;
-                $svtrx->session_id = $session_id;
-                $svtrx->status = 4;
-                $svtrx->amount = $amt;
-                $svtrx->email = $request->email;
-                $svtrx->note = "PSBRESOLVE";
-                $svtrx->user_id = $user->id;
-                $svtrx->transaction_type = "Resolve";
-                $svtrx->save();
-            } else {
-                Transfertransaction::where('account_no', $account_no)->update(['status' => 4, 'note' => '9PSBRESOLVE', 'resolve' => 1]);
-            }
+//            $trxxc = Transfertransaction::where('account_no', $account_no)->first() ?? null;
+//            if ($trxxc == null) {
+//                $svtrx = new Transfertransaction();
+//                $svtrx->account_no = $account_no;
+//                $svtrx->session_id = $session_id;
+//                $svtrx->status = 4;
+//                $svtrx->amount = $amt;
+//                $svtrx->email = $request->email;
+//                $svtrx->note = "PSBRESOLVE";
+//                $svtrx->user_id = $user->id;
+//                $svtrx->transaction_type = "Resolve";
+//                $svtrx->save();
+//            } else {
+//                Transfertransaction::where('account_no', $account_no)->update(['status' => 4, 'note' => '9PSBRESOLVE', 'resolve' => 1]);
+//            }
 
 
             $set = Setting::where('id', 1)->first();
@@ -921,6 +924,8 @@ class VerifyController extends Controller
             $type = "presolve";
             $order_id = $order_idd . "Resolve";
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
+
+
 
             if ($fund == 2) {
 

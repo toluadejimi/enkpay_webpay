@@ -366,7 +366,7 @@ class VerifyController extends Controller
     {
         $data['user_id'] = $request->user_id;
         $data['check_url'] = $request->check_url;
-        $data['currentUrl'] =  Webkey::where('key', $request->user_id)->first()->support_number ?? null;
+        $data['currentUrl'] = Webkey::where('key', $request->user_id)->first()->support_number ?? null;
         return view('resolve', $data);
     }
 
@@ -717,9 +717,6 @@ class VerifyController extends Controller
         }
 
 
-
-
-
         if ($request->receipt != null) {
 
             $file = $request->file('receipt');
@@ -772,7 +769,6 @@ class VerifyController extends Controller
     }
 
 
-
     public function reslove_wema_view(request $request)
     {
 
@@ -783,9 +779,9 @@ class VerifyController extends Controller
         $data['currentUrl'] = Webkey::where('key', $request->user_id)->first()->support_number ?? null;
         $data['type'] = "wema";
 
-        if($set->woven == 1){
+        if ($set->woven == 1) {
             $data['partner'] = "woven";
-        }else{
+        } else {
             $data['partner'] = "charm";
         }
 
@@ -795,7 +791,6 @@ class VerifyController extends Controller
 
     public function reslove_psb_view(request $request)
     {
-
 
 
         $data['currentUrl'] = url()->current();
@@ -810,15 +805,14 @@ class VerifyController extends Controller
     }
 
 
-
     public function reslove_psb(request $request)
     {
 
-        $message = "9psb Resolve Request ====>".json_encode($request->all());
+        $message = "9psb Resolve Request ====>" . json_encode($request->all());
         send_notification($message);
 
 
-        if($request->username == "Not Found, Pleas try again"){
+        if ($request->username == "Not Found, Pleas try again") {
             return back()->with('error', 'Email is invalid, please try again');
         }
 
@@ -828,18 +822,15 @@ class VerifyController extends Controller
         $email = Transfertransaction::where('session_id', $request->session_id)->first()->email ?? null;
 
 
-
-            if ($ckstatus == "4") {
+        if ($ckstatus == "4" || $ckstatus == 4) {
             return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
         }
 
         if ($ckstatus == "2" || $ckstatus == "3" || $ckstatus == null) {
 
-
             $status = Transfertransaction::where('session_id', $request->session_id)->first()->status ?? null;
             $email = Transfertransaction::where('session_id', $request->session_id)->first()->email ?? null;
             $order_idd = Transfertransaction::where('session_id', $request->session_id)->first()->ref_trans_id ?? null;
-
 
 
             $curl = curl_init();
@@ -868,9 +859,6 @@ class VerifyController extends Controller
             $var = json_decode($var);
 
 
-            dd($var);
-
-
             $session_id = $var->session_id ?? null;
             $account_no = $var->account_no ?? null;
             $amt = $var->amount ?? null;
@@ -894,9 +882,10 @@ class VerifyController extends Controller
             $site_name = Webkey::where('key', $request->user_id)->first()->site_name ?? null;
 
             $trxxc = Transfertransaction::where('account_no', $account_no)->first() ?? null;
-            if($trxxc == null){
+            if ($trxxc == null) {
                 $svtrx = new Transfertransaction();
                 $svtrx->account_no = $account_no;
+                $svtrx->session_id = $session_id;
                 $svtrx->status = 4;
                 $svtrx->amount = $amt;
                 $svtrx->email = $request->email;
@@ -904,7 +893,7 @@ class VerifyController extends Controller
                 $svtrx->user_id = $user->id;
                 $svtrx->transaction_type = "Resolve";
                 $svtrx->save();
-            }else{
+            } else {
                 Transfertransaction::where('account_no', $account_no)->update(['status' => 4, 'note' => '9PSBRESOLVE', 'resolve' => 1]);
             }
 
@@ -929,7 +918,7 @@ class VerifyController extends Controller
 
 
             $type = "presolve";
-            $order_id = $order_idd."Resolve";
+            $order_id = $order_idd . "Resolve";
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
 
             if ($fund == 2) {
@@ -955,7 +944,7 @@ class VerifyController extends Controller
                 $trasnaction->save();
 
                 $trxa = Transfertransaction::where('account_no', $account_no)->first() ?? null;
-                if($trxa == null){
+                if ($trxa == null) {
                     $trx = new Transfertransaction();
                     $trx->account_no = $acct_no;
                     $trx->amount = $f_amount;
@@ -972,7 +961,7 @@ class VerifyController extends Controller
                     $trx->user_id = $urlkey;
                     $trx->save();
 
-                }else{
+                } else {
                     Transfertransaction::where('account_no', $account_no)->update(['status' => 4, 'note' => '9PSBRESOLVE', 'resolve' => 1]);
                 }
 
@@ -995,21 +984,18 @@ class VerifyController extends Controller
         }
 
 
-
         return back()->with('error', 'Something went wrong, please try again or contact our support');
-
 
 
     }
 
 
-
     public function reslove_wema(request $request)
     {
-        $message = "Charm Wema Resolve Request ==>>>>". json_encode($request->all());
+        $message = "Charm Wema Resolve Request ==>>>>" . json_encode($request->all());
         send_notification_resolve($message);
 
-        if($request->username == "Not Found, Pleas try again"){
+        if ($request->username == "Not Found, Pleas try again") {
             return back()->with('error', 'Email is invalid, please try again');
         }
 
@@ -1017,8 +1003,6 @@ class VerifyController extends Controller
         $url = $request->url;
         $ckstatus = Transfertransaction::where('session_id', $request->session_id)->first()->status ?? null;
         $email = Transfertransaction::where('session_id', $request->session_id)->first()->email ?? null;
-
-
 
 
         if ($ckstatus == 4) {
@@ -1041,7 +1025,7 @@ class VerifyController extends Controller
 
             $var = verify_payment($ref);
 
-            if($var == 0){
+            if ($var == 0) {
                 return back()->with('error', 'Something went wrong');
             }
 
@@ -1054,7 +1038,7 @@ class VerifyController extends Controller
 
 
             if ($status == "PartPayment") {
-                return back()->with('error', "Incomplete Amount Received\n, You paid NGN". $amt. " instead of NGN ".$amountCollected ."\n Note that the funds will be refunded back to your account" );
+                return back()->with('error', "Incomplete Amount Received\n, You paid NGN" . $amt . " instead of NGN " . $amountCollected . "\n Note that the funds will be refunded back to your account");
             }
 
             if ($status == "Processing") {
@@ -1063,7 +1047,7 @@ class VerifyController extends Controller
 
             if ($status == "Failed") {
                 $emessage = $var['message'];
-                return back()->with('error',  "You pay ".$emessage);
+                return back()->with('error', "You pay " . $emessage);
             }
 
             if ($status == false) {
@@ -1139,7 +1123,6 @@ class VerifyController extends Controller
                 send_notification($message);
 
 
-
                 $type = "wresolve";
                 //fund user
                 $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
@@ -1172,10 +1155,10 @@ class VerifyController extends Controller
     public function reslove_woven(request $request)
     {
 
-        $message = "Woven Resolve Request ==>>>>". json_encode($request->all());
+        $message = "Woven Resolve Request ==>>>>" . json_encode($request->all());
         send_notification_resolve($message);
 
-        if($request->username == "Not Found, Pleas try again"){
+        if ($request->username == "Not Found, Pleas try again") {
             return back()->with('error', 'Email is invalid, please try again');
         }
 
@@ -1188,14 +1171,12 @@ class VerifyController extends Controller
         }
 
 
-
         if ($ckstatus == null || $ckstatus == 0 || $ckstatus == 3 || $ckstatus == 2) {
 
             $status = Transfertransaction::where('session_id', $request->session_id)->first()->status ?? null;
             $email = Transfertransaction::where('session_id', $request->session_id)->first()->email ?? null;
             $account_no = Transfertransaction::where('session_id', $request->session_id)->first()->account_no ?? null;
             $order_id = Transfertransaction::where('session_id', $request->session_id)->first()->ref_trans_id ?? null;
-
 
 
             if ($status == 4) {
@@ -1207,15 +1188,15 @@ class VerifyController extends Controller
 
             $var = verify_payment_woven($ref);
 
-            if($var == 0){
+            if ($var == 0) {
                 return back()->with('error', 'Something went wrong');
             }
 
-            if($var == 9){
+            if ($var == 9) {
                 return back()->with('error', 'Transaction not found');
             }
 
-            if($var == 5){
+            if ($var == 5) {
                 return back()->with('error', 'Transaction will be reversed to your account');
             }
 
@@ -1224,7 +1205,6 @@ class VerifyController extends Controller
             $acct_no = $var->account_no ?? null;
             $amt = $var['amount'] ?? null;
             $wstatus = $var['transactionStatus'] ?? null;
-
 
 
             if ($wstatus == "Successful") {
@@ -1238,7 +1218,6 @@ class VerifyController extends Controller
                     "account_no" => $account_no,
                     "status" => 4,
                 ]);
-
 
 
                 $set = Setting::where('id', 1)->first();
@@ -1292,8 +1271,6 @@ class VerifyController extends Controller
                 $date = date('d M Y H:i:s');
                 $message = $acct_no . " | NGN  $amt | $request->email  | $site_name | $date | has been funded";
                 send_notification($message);
-
-
 
 
                 $type = "wresolve";

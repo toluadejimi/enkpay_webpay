@@ -826,7 +826,6 @@ class VerifyController extends Controller
             return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
         }
 
-        dd($ckstatus);
 
         if ($ckstatus == "2" || $ckstatus == "3" || $ckstatus == null) {
 

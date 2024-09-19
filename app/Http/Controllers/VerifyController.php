@@ -824,8 +824,9 @@ class VerifyController extends Controller
 
 
         $url = $request->url;
-        $ckstatus = Transfertransaction::where('account_no', $request->account_no)->first()->status ?? null;
-        $email = Transfertransaction::where('account_no', $request->account_no)->first()->email ?? null;
+        $ckstatus = Transfertransaction::where('session_id', $request->session_id)->first()->status ?? null;
+        $email = Transfertransaction::where('session_id', $request->session_id)->first()->email ?? null;
+
 
 
 
@@ -945,7 +946,7 @@ class VerifyController extends Controller
                 $trasnaction->title = "Wallet Funding";
                 $trasnaction->main_type = "Transfer";
                 $trasnaction->credit = $f_amount;
-                $trasnaction->note = "Transaction Successful | Web Pay | form  $request->email";
+                $trasnaction->note = "Resolve Transaction Successful | Web Pay | form  $request->email";
                 $trasnaction->receiver_account_no = $account_no;
                 $trasnaction->fee = $charge ?? 0;
                 $trasnaction->amount = $amt;
@@ -955,7 +956,7 @@ class VerifyController extends Controller
                 $trasnaction->status = 1;
                 $trasnaction->save();
 
-                $trxa = Transfertransaction::where('account_no', $acct_no)->first() ?? null;
+                $trxa = Transfertransaction::where('account_no', $account_no)->first() ?? null;
                 if($trxa == null){
                     $trx = new Transfertransaction();
                     $trx->account_no = $acct_no;
@@ -965,7 +966,7 @@ class VerifyController extends Controller
                     $trx->email = $request->email;
                     $trx->session_id = $session_id;
                     $trx->bank = "9PSBRESLOVE";
-                    $trasnaction->note = "Transaction Successful | Web Pay | form  $request->email";
+                    $trasnaction->note = "Resolve Transaction Successful | Web Pay | form  $request->email";
                     $trasnaction->receiver_account_no = $account_no;
                     $trx->resolve = 1;
                     $trx->transaction_type = "WEBTRASNSFER";
@@ -974,7 +975,7 @@ class VerifyController extends Controller
                     $trx->save();
 
                 }else{
-                    Transfertransaction::where('account_no', $acct_no)->update(['status' => 4, 'note' => '9PSBRESOLVE', 'resolve' => 1]);
+                    Transfertransaction::where('account_no', $account_no)->update(['status' => 4, 'note' => '9PSBRESOLVE', 'resolve' => 1]);
                 }
 
 

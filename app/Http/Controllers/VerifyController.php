@@ -867,18 +867,16 @@ class VerifyController extends Controller
             curl_close($curl);
             $var = json_decode($var);
 
-            dd($var);
 
             $session_id = $var->session_id ?? null;
             $account_no = $var->account_no ?? null;
             $amt = $var->amount ?? null;
             $name = $var->sender_name ?? null;
-            $status = $var->status ?? null;
-            $message = $var->messsage ?? null;
+            $statusbb = $var->status ?? null;
 
 
-            if ($status == false) {
-                return back()->with('error', $message);
+            if ($statusbb == false) {
+                return back()->with('error', "Transaction not found");
             }
 
 

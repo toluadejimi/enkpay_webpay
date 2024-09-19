@@ -170,9 +170,7 @@
                     <hr>
 
                     <label>Enter your Session ID or Refrence</label>
-
                     <input name="session_id" type="text" class="form-control" placeholder="1122838777466466364">
-
                     <input hidden name="user_id" value="{{$user_id}}">
                     <input hidden name="usernameResult" id="usernameResult">
                     <input hidden name="url" value="{{$currentUrl}}">

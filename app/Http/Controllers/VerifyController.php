@@ -829,8 +829,7 @@ class VerifyController extends Controller
 
 
 
-
-        if ($ckstatus == "4") {
+            if ($ckstatus == "4") {
             return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
         }
 
@@ -839,14 +838,13 @@ class VerifyController extends Controller
 
             $status = Transfertransaction::where('session_id', $request->session_id)->first()->status ?? null;
             $email = Transfertransaction::where('session_id', $request->session_id)->first()->email ?? null;
-            $account_no = Transfertransaction::where('session_id', $request->session_id)->first()->account_no ?? null;
             $order_idd = Transfertransaction::where('session_id', $request->session_id)->first()->ref_trans_id ?? null;
 
 
 
             $curl = curl_init();
             $data = array(
-                'account_no' => $account_no,
+                'session_id' => $request->session_id,
             );
             $post_data = json_encode($data);
 
@@ -871,7 +869,7 @@ class VerifyController extends Controller
 
 
             $session_id = $var->session_id ?? null;
-            $acct_no = $var->account_no ?? null;
+            $account_no = $var->account_no ?? null;
             $amt = $var->amount ?? null;
             $name = $var->sender_name ?? null;
             $status = $var->status ?? null;
@@ -892,8 +890,6 @@ class VerifyController extends Controller
 
             $user_email = $request->email ?? null;
             $site_name = Webkey::where('key', $request->user_id)->first()->site_name ?? null;
-
-
 
             $trxxc = Transfertransaction::where('account_no', $account_no)->first() ?? null;
             if($trxxc == null){

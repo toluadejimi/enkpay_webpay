@@ -2458,12 +2458,13 @@ if (!function_exists('credit_user_wallet')) {
         ));
 
         $var = curl_exec($curl);
+
         curl_close($curl);
         $var = json_decode($var);
         $status = $var->status ?? null;
 
-        if($status == true){
 
+        if($status == true){
             if($type == "wresolve"){
                 $date = date('dmy h:i:s');
                 $message = "Wema Resolve ======> $user_email has been funded NGN$amount \n| 0n $url \n using reslove | on $date";
@@ -2488,7 +2489,6 @@ if (!function_exists('credit_user_wallet')) {
             }
 
             return 2;
-
 
         }else{
 

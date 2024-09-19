@@ -946,7 +946,7 @@ class VerifyController extends Controller
                 $trxa = Transfertransaction::where('account_no', $account_no)->first() ?? null;
                 if ($trxa == null) {
                     $trx = new Transfertransaction();
-                    $trx->account_no = $acct_no;
+                    $trx->account_no = $account_no;
                     $trx->amount = $f_amount;
                     $trx->ref = $order_id;
                     $trx->ref_trans_id = $order_id;
@@ -967,7 +967,7 @@ class VerifyController extends Controller
 
 
                 $date = date('d M Y H:i:s');
-                $message = $acct_no . " | NGN  $amt | $request->email  | $site_name | $date | has been funded";
+                $message = $account_no . " | NGN  $amt | $request->email  | $site_name | $date | has been funded";
                 //Log::info('User Funded', ['message' => $message]);
                 send_notification($message);
 

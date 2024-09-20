@@ -885,21 +885,21 @@ class VerifyController extends Controller
             $user_email = $request->email ?? null;
             $site_name = Webkey::where('key', $request->user_id)->first()->site_name ?? null;
 
-//            $trxxc = Transfertransaction::where('account_no', $account_no)->first() ?? null;
-//            if ($trxxc == null) {
-//                $svtrx = new Transfertransaction();
-//                $svtrx->account_no = $account_no;
-//                $svtrx->session_id = $session_id;
-//                $svtrx->status = 4;
-//                $svtrx->amount = $amt;
-//                $svtrx->email = $request->email;
-//                $svtrx->note = "PSBRESOLVE";
-//                $svtrx->user_id = $user->id;
-//                $svtrx->transaction_type = "Resolve";
-//                $svtrx->save();
-//            } else {
-//                Transfertransaction::where('account_no', $account_no)->update(['status' => 4, 'note' => '9PSBRESOLVE', 'resolve' => 1]);
-//            }
+            $trxxc = Transfertransaction::where('account_no', $account_no)->first() ?? null;
+            if ($trxxc == null) {
+                $svtrx = new Transfertransaction();
+                $svtrx->account_no = $account_no;
+                $svtrx->session_id = $session_id;
+                $svtrx->status = 4;
+                $svtrx->amount = $amt;
+                $svtrx->email = $request->email;
+                $svtrx->note = "PSBRESOLVE";
+                $svtrx->user_id = $user->id;
+                $svtrx->transaction_type = "Resolve";
+                $svtrx->save();
+            } else {
+                Transfertransaction::where('account_no', $account_no)->update(['status' => 4, 'note' => '9PSBRESOLVE', 'resolve' => 1]);
+            }
 
 
             $set = Setting::where('id', 1)->first();
@@ -914,13 +914,11 @@ class VerifyController extends Controller
             $charge = Setting::where('id', 1)->first()->webpay_transfer_charge;
             if ($amt <= 100) {
                 $f_amount = $amt;
-            } else {
-                $f_amount = $amt - $charge;
+            } elseif($amt > 15000) {
+                $f_amount = $amt - 300;
             }
 
             $amount = $f_amount;
-
-
             $type = "presolve";
             $order_id = $order_idd . "Resolve";
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
@@ -928,7 +926,6 @@ class VerifyController extends Controller
 
 
             if ($fund == 2) {
-
                 //update Transactions
                 $trasnaction = new Transaction();
                 $trasnaction->user_id = $urlkey;
@@ -949,6 +946,8 @@ class VerifyController extends Controller
                 $trasnaction->status = 1;
                 $trasnaction->save();
 
+                User::where('id', $urlkey)->increment('main_wallet', $f_amount);
+
                 $trxa = Transfertransaction::where('account_no', $account_no)->first() ?? null;
                 if ($trxa == null) {
                     $trx = new Transfertransaction();
@@ -959,8 +958,8 @@ class VerifyController extends Controller
                     $trx->email = $request->email;
                     $trx->session_id = $session_id;
                     $trx->bank = "9PSBRESLOVE";
-                    $trasnaction->note = "Resolve Transaction Successful | Web Pay | form  $request->email";
-                    $trasnaction->receiver_account_no = $account_no;
+                    $trx->note = "Resolve Transaction Successful | Web Pay | form  $request->email";
+                    $trx->receiver_account_no = $account_no;
                     $trx->resolve = 1;
                     $trx->transaction_type = "WEBTRASNSFER";
                     $trx->status = 4;

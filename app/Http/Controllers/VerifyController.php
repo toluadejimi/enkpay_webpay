@@ -1123,6 +1123,9 @@ class VerifyController extends Controller
                 $trasnaction->status = 1;
                 $trasnaction->save();
 
+                User::where('id', $urlkey)->increment('main_wallet', $f_amount);
+
+
                 $date = date('d M Y H:i:s');
                 $message = $acct_no . " | NGN  $amt | $request->email  | $site_name | $date | has been funded";
                 send_notification($message);
@@ -1272,6 +1275,9 @@ class VerifyController extends Controller
                 $trasnaction->balance = $balance;
                 $trasnaction->status = 1;
                 $trasnaction->save();
+
+                User::where('id', $urlkey)->increment('main_wallet', $f_amount);
+
 
                 $date = date('d M Y H:i:s');
                 $message = $acct_no . " | NGN  $amt | $request->email  | $site_name | $date | has been funded";

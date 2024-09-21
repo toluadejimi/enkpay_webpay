@@ -72,7 +72,11 @@
     <div class="tf-container">
         <div class="tf-topbar d-flex justify-content-center align-items-center">
             <a href="29_topup.html#" class="back-btn"><i class="icon-left white_color"></i></a>
-            <h3 class="white_color">Resolve Transaction</h3>
+            @if($type == "wema" && $partner == "woven")
+            <h3 class="white_color">Resolve Transaction Wema</h3>
+            @else
+                <h3 class="white_color">Resolve Transaction</h3>
+            @endif
         </div>
     </div>
 </div>

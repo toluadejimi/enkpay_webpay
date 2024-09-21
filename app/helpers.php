@@ -2171,6 +2171,7 @@ if (!function_exists('verify_payment_woven')) {
         $pstatus = $var->data->transactions[0]->status ?? null;
         $acct_no = $var->data->transactions[0]->nuban ?? null;
 
+        dd($var);
 
 
         if ($status == "success" && $pstatus == "PALVS" && $ref == $acct_no) {

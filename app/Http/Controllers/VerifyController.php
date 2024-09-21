@@ -1163,6 +1163,7 @@ class VerifyController extends Controller
     public function reslove_woven(request $request)
     {
 
+        dd($request->all());
         $message = "Woven Resolve Request ==>>>>" . json_encode($request->all());
         send_notification_resolve($message);
 

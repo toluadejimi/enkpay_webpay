@@ -371,7 +371,7 @@
                                                 </div>
 
 
-                                                <div class="col-12 d-flex justify-content-center">
+                                                <div class="col-12 d-flex justify-content-center mb-2">
                                                     <h5>You are about to pay</h5>
                                                 </div>
 

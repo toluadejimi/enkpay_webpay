@@ -98,6 +98,12 @@ class WovenController extends Controller
         $acc_no = $request->nuban;
         $amount = $request->amount;
         $session_id = $request->unique_reference;
+        $payable = $request->amount_payable;
+        $fee = $request->fee;
+
+
+
+
 
 
         $set = Setting::where('id', 1)->first();
@@ -172,9 +178,10 @@ class WovenController extends Controller
                 $trasnaction->main_type = "WOVEN";
                 $trasnaction->credit = $f_amount;
                 $trasnaction->note = "Transaction Successful | Web Pay | for $user_email";
-                $trasnaction->fee = $charge ?? 0;
+                $trasnaction->fee = $fee ?? 0;
                 $trasnaction->amount = $trx->amount;
                 $trasnaction->e_charges = 0;
+                $trasnaction->charge = $payable ?? 0;
                 $trasnaction->enkPay_Cashout_profit = 0;
                 $trasnaction->balance = $balance;
                 $trasnaction->status = 1;

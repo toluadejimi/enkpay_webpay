@@ -1241,22 +1241,18 @@ class VerifyController extends Controller
                 ]);
 
 
-                $set = Setting::where('id', 1)->first();
-                if ($amt > 15000) {
-                    $p_amount = $amt - $set->psb_cap;
-                } else {
-                    $p_amount = $amt - $set->psb_charge;
-                }
 
                 $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
 
                 //fund Vendor
-                $charge = Setting::where('id', 1)->first()->webpay_transfer_charge;
-                if ($amt <= 100) {
-                    $f_amount = $amt;
+
+                $set = Setting::where('id', 1)->first();
+                if ($amt > 15000) {
+                    $f_amount = $amt - $set->psb_cap;
                 } else {
-                    $f_amount = $amt - $charge;
+                    $f_amount = $amt - $set->psb_charge;
                 }
+
 
                 $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
                 $balance = User::where('id', $urlkey)->first()->main_wallet;
@@ -1310,7 +1306,7 @@ class VerifyController extends Controller
                     $data['trans'] = $order_id;
                     $data['recepit'] = "payment";
                     $data['url_page'] = $urluser;
-                    $data['amount'] = $amt;
+                    $data['amount'] = $f_amount;
                     return view('paid-success', $data);
 
                 }

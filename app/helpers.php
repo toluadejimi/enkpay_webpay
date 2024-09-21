@@ -2172,9 +2172,6 @@ if (!function_exists('verify_payment_woven')) {
         $acct_no = $var->data->transactions[0]->unique_reference ?? null;
 
 
-
-
-
         if ($status == "success" && $pstatus == "PALVS" && $ref == $acct_no) {
             return 5;
         }elseif($status == "success" && $pstatus == "ACTIVE" && $ref == $acct_no){

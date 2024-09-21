@@ -1193,7 +1193,9 @@ class VerifyController extends Controller
             }
 
 
-            $ref = Transfertransaction::where('session_id', $request->session_id)->first()->account_no ?? null;
+//            $ref = Transfertransaction::where('session_id', $request->session_id)->first()->account_no ?? null;
+
+            $ref = $request->session_id;
 
             $var = verify_payment_woven($ref);
 
@@ -1201,13 +1203,23 @@ class VerifyController extends Controller
                 return back()->with('error', 'Something went wrong');
             }
 
+            if ($var == 4) {
+                return back()->with('error', 'Reversal Failed to your bank account, Please contact admin');
+            }
+
+            if ($var == 5) {
+                return back()->with('error', 'You paid incorrect amount, Transaction will be reversed to your bank account');
+            }
+
+            if ($var == 6) {
+                return back()->with('error', 'Transaction has been reversed to your bank account');
+            }
+
             if ($var == 9) {
                 return back()->with('error', 'Transaction not found');
             }
 
-            if ($var == 5) {
-                return back()->with('error', 'Transaction will be reversed to your account');
-            }
+
 
 
             $session_id = $request->account_no ?? null;

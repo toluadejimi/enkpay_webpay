@@ -2150,7 +2150,7 @@ if (!function_exists('verify_payment_woven')) {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.woven.finance/v2/api/transactions?vnuban=$ref",
+            CURLOPT_URL => "https://api.woven.finance/v2/api/transactions?unique_reference=$ref",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -2169,9 +2169,10 @@ if (!function_exists('verify_payment_woven')) {
         $var = json_decode($var2);
         $status = $var->status ?? null;
         $pstatus = $var->data->transactions[0]->status ?? null;
-        $acct_no = $var->data->transactions[0]->nuban ?? null;
+        $acct_no = $var->data->transactions[0]->unique_reference ?? null;
 
-        dd($var);
+
+
 
 
         if ($status == "success" && $pstatus == "PALVS" && $ref == $acct_no) {
@@ -2180,6 +2181,10 @@ if (!function_exists('verify_payment_woven')) {
             $data['amount'] = $var->data->transactions[0]->amount;
             $data['transactionStatus'] = "Successful";
             return $data;
+        }elseif($status == "success" && $pstatus == "REVERSE_FAILED" && $ref == $acct_no) {
+            return 4;
+        }elseif($status == "success" && $pstatus == "REVERSED" && $ref == $acct_no) {
+            return 6;
         }else{
             return 9;
         }

@@ -779,7 +779,7 @@ class VerifyController extends Controller
         $data['currentUrl'] = Webkey::where('key', $request->user_id)->first()->support_number ?? null;
         $data['type'] = "wema";
 
-        if ($set->woven == 1) {
+        if ($set->woven_ck == 1) {
             $data['partner'] = "woven";
         } else {
             $data['partner'] = "charm";

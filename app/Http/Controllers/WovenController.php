@@ -165,13 +165,13 @@ class WovenController extends Controller
                 $trasnaction = new Transaction();
                 $trasnaction->user_id = $trx->user_id;
                 $trasnaction->e_ref = $request->sessionid ?? $acc_no;
-                $trasnaction->ref_trans_id = $request->sessionid ?? $acc_no;
+                $trasnaction->ref_trans_id = $order_id;
                 $trasnaction->type = "webpay";
                 $trasnaction->transaction_type = "VirtualFundWallet";
                 $trasnaction->title = "Wallet Funding";
-                $trasnaction->main_type = "Transfer";
+                $trasnaction->main_type = "WOVEN";
                 $trasnaction->credit = $f_amount;
-                $trasnaction->note = "Transaction Successful | Web Pay ";
+                $trasnaction->note = "Transaction Successful | Web Pay | for $user_email";
                 $trasnaction->fee = $charge ?? 0;
                 $trasnaction->amount = $trx->amount;
                 $trasnaction->e_charges = 0;

@@ -376,6 +376,11 @@
                                                 </div>
 
 
+                                                <div class="col-12 d-flex justify-content-center">
+                                                    <h5>If you send wrong amount, it will be reversed back to your bank account</h5>
+                                                </div>
+
+
                                                 <div class="col-12 my-3 d-flex justify-content-center">
                                                     <h2>₦{{number_format($f_amount,2)}}</h2>
                                                 </div>

@@ -1193,6 +1193,9 @@ class VerifyController extends Controller
             }
 
 
+
+
+
 //            $ref = Transfertransaction::where('session_id', $request->session_id)->first()->account_no ?? null;
 
             $ref = $request->session_id;
@@ -1234,11 +1237,31 @@ class VerifyController extends Controller
                 $user = User::where('id', $urlkey)->first();
 
 
-                Transfertransaction::where('account_no', $account_no)->update([
-                    "note" => "WEMARESOLVE",
-                    "account_no" => $account_no,
-                    "status" => 4,
-                ]);
+                $ckttr = Transfertransaction::where('session_id', $request->session_id)->first() ?? null;
+                if($ckttr == null){
+                    $svtrx = new Transfertransaction();
+                    $svtrx->account_no = $acct_no;
+                    $svtrx->session_id = $request->session_id;
+                    $svtrx->status = 4;
+                    $svtrx->amount = $amt;
+                    $svtrx->note = "WOVENRESOLVE";
+                    $svtrx->user_id = $user->id;
+                    $svtrx->transaction_type = "Resolve";
+                    $svtrx->save();
+                }else{
+
+                    Transfertransaction::where('session_id', $request->session_id)->update([
+                        "note" => "WOVENRESOLVE",
+                        "account_no" => $acct_no,
+                        "status" => 4,
+                    ]);
+
+                }
+
+
+
+
+
 
 
 

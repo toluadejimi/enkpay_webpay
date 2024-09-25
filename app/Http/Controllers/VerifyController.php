@@ -918,7 +918,10 @@ class VerifyController extends Controller
                 $f_amount = $amt - 300;
             }
 
-            $amount = $f_amount;
+
+
+
+            $amount = $p_amount;
             $type = "presolve";
             $order_id = $order_idd . "Resolve";
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
@@ -935,7 +938,7 @@ class VerifyController extends Controller
                 $trasnaction->transaction_type = "VirtualFundWallet";
                 $trasnaction->title = "Wallet Funding";
                 $trasnaction->main_type = "Transfer";
-                $trasnaction->credit = $f_amount;
+                $trasnaction->credit = $p_amount;
                 $trasnaction->note = "Resolve Transaction Successful | Web Pay | form  $request->email";
                 $trasnaction->receiver_account_no = $account_no;
                 $trasnaction->fee = $charge ?? 0;
@@ -946,7 +949,7 @@ class VerifyController extends Controller
                 $trasnaction->status = 1;
                 $trasnaction->save();
 
-                User::where('id', $urlkey)->increment('main_wallet', $f_amount);
+                User::where('id', $urlkey)->increment('main_wallet', $p_amount);
 
                 $trxa = Transfertransaction::where('account_no', $account_no)->first() ?? null;
                 if ($trxa == null) {

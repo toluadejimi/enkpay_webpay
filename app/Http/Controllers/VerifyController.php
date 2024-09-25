@@ -955,7 +955,7 @@ class VerifyController extends Controller
                 if ($trxa == null) {
                     $trx = new Transfertransaction();
                     $trx->account_no = $account_no;
-                    $trx->amount = $f_amount;
+                    $trx->amount = $p_amount;
                     $trx->ref = $order_id;
                     $trx->ref_trans_id = $order_id;
                     $trx->email = $request->email;
@@ -982,7 +982,7 @@ class VerifyController extends Controller
                 $data['trans'] = $request->sessionid;
                 $data['recepit'] = "payment";
                 $data['url_page'] = $urluser;
-                $data['amount'] = $f_amount;
+                $data['amount'] = $p_amount;
 
                 return view('paid-success', $data);
 

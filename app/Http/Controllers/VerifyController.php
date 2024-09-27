@@ -828,8 +828,6 @@ class VerifyController extends Controller
 
 
 
-
-
         if ($ckstatus == "2" || $ckstatus == "3" || $ckstatus == null) {
 
             $status = Transfertransaction::where('session_id', $request->session_id)->first()->status ?? null;
@@ -868,10 +866,15 @@ class VerifyController extends Controller
             $amt = $var->amount ?? null;
             $name = $var->sender_name ?? null;
             $statusbb = $var->status ?? null;
+            $resolve = $var->resolve ?? null;
 
 
             if ($statusbb == false) {
                 return back()->with('error', "Transaction not found");
+            }
+
+            if ($resolve == 1) {
+                return back()->with('error', "Transaction has already being funded");
             }
 
 

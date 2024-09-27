@@ -124,6 +124,8 @@ class TransactionController extends Controller
                 }
 
 
+
+
                 User::where('id', $trx->user_id)->increment('main_wallet', $f_amount);
                 $balance = User::where('id', $trx->user_id)->first()->main_wallet;
                 $user = User::where('id', $trx->user_id)->first();

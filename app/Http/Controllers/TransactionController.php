@@ -163,6 +163,39 @@ class TransactionController extends Controller
                 Transfertransaction::where('account_no', $request->receiver_account_number)->update(['status' => 4, 'resolve' => 1]);
 
 
+                try {
+
+                    $curl = curl_init();
+                    $data = array(
+                        'session_id' => $request->sessionid,
+                    );
+                    $post_data = json_encode($data);
+
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => 'https://etopagency.com/api/update-session',
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'GET',
+                        CURLOPT_POSTFIELDS => $post_data,
+                        CURLOPT_HTTPHEADER => array(
+                            'Content-Type: application/json'
+                        ),
+                    ));
+
+                    $var = curl_exec($curl);
+                    curl_close($curl);
+                    $var = json_decode($var);
+
+
+                } catch (\Exception $th) {
+                    return $th->getMessage();
+                }
+
+
                 $type ="epayment";
                 $session_id = $request->sessionid;
                 $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type,$session_id);

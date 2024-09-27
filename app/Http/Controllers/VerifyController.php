@@ -924,7 +924,7 @@ class VerifyController extends Controller
             $amount = $p_amount;
             $type = "presolve";
             $order_id = $order_idd . "Resolve";
-            $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
+            $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type, $session_id);
 
 
 
@@ -1137,7 +1137,8 @@ class VerifyController extends Controller
 
                 $type = "wresolve";
                 //fund user
-                $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
+                $session_id = $request->session_id;
+                $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type,$session_id);
                 if ($fund == 2) {
 
                     $date = date('dmy h:i:s');
@@ -1321,8 +1322,8 @@ class VerifyController extends Controller
 
                 $type = "wresolve";
                 //fund user
-
-                $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
+                $session_id = $request->session_id;
+                $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type, $session_id);
                 if ($fund == 2) {
 
                     $date = date('dmy h:i:s');

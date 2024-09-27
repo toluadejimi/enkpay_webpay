@@ -162,7 +162,8 @@ class TransactionController extends Controller
 
 
                 $type ="epayment";
-                $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
+                $session_id = $request->sessionid;
+                $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type,$session_id);
 
 
                 Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 1]);

@@ -102,10 +102,6 @@ class WovenController extends Controller
         $fee = $request->fee;
 
 
-
-
-
-
         $set = Setting::where('id', 1)->first();
 
         if ($request->amount > 15000) {
@@ -195,7 +191,7 @@ class WovenController extends Controller
 
 
                 $type ="epayment";
-                $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type);
+                $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type, $session_id);
 
                 return response()->json([
                     'status' => true,

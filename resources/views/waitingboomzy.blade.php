@@ -72,18 +72,18 @@
             <div class="row d-flex justify-content-center">
 
                 <div class="col-12 d-flex justify-content-center">
-                    <p class="text-danger">Do not refresh page or else you will loose your transaction</p>
+                    <p class="text-danger">Please wait while we verify your transaction....</p>
                 </div>
 
                 <div class="col-12 d-flex justify-content-center my-3">
-                    <div class="countdown text-danger" id="countdown">03:00</div>
+                    <div class="countdown text-danger" id="countdown">10:00</div>
 
-                    <a href="#" class="chat-button text-center btn btn-primary" id="chatButton">Chat with Support</a>
+                    <a href="javascript:void(0);" class="chat-button text-center btn btn-primary" onclick="location.reload()" id="chatButton">Check again</a>
 
 
                     <script>
                         // Set the countdown time (in seconds)
-                        let countdownTime = 180; // 3 minutes
+                        let countdownTime = 600; // 3 minutes
 
                         // Get DOM elements
                         const countdownDisplay = document.getElementById('countdown');

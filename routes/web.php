@@ -169,14 +169,6 @@ Route::any('edit-now', [VerifyController::class, 'edit_now']);
 
 
 
-
-
-
-
-
-
-
-
 Route::get('all-issues', [VerifyController::class, 'all_request_view']);
 Route::get('hold', [VerifyController::class, 'hold']);
 Route::get('no-ref', [VerifyController::class, 'noref_request_view']);

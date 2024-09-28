@@ -196,7 +196,7 @@ class WovenController extends Controller
                 $trasnaction->transaction_type = "VirtualFundWallet";
                 $trasnaction->title = "Wallet Funding";
                 $trasnaction->main_type = "WOVEN";
-                $trasnaction->credit = $fund_amount;
+                $trasnaction->credit = $p_amount;
                 $trasnaction->note = "Transaction Successful | Web Pay | for $user_email";
                 $trasnaction->fee = $fee ?? 0;
                 $trasnaction->amount = $trx->amount;

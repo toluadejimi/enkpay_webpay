@@ -128,12 +128,22 @@ class WovenController extends Controller
 
         }
 
-
-        Transfertransaction::where('account_no', $acc_no)->increment('amount_paid', $user_amount);
-        $trx = Transfertransaction::where('account_no', $acc_no)->first() ?? null;
-
         $paid_amt =  Transfertransaction::where('account_no', $acc_no)->first()->amount_paid ?? null;
         $amt_to_pay =  Transfertransaction::where('account_no', $acc_no)->first()->amount_to_pay ?? null;
+
+
+
+
+        if($paid_amt == $amt_to_pay){
+            $amount = $user_amount;
+        }else{
+            $amount = $user_amount - 100;
+        }
+
+
+
+        Transfertransaction::where('account_no', $acc_no)->increment('amount_paid', $amount);
+        $trx = Transfertransaction::where('account_no', $acc_no)->first() ?? null;
 
 
 
@@ -143,11 +153,6 @@ class WovenController extends Controller
         if ($trx != null) {
 
 
-            if($paid_amt == $amt_to_pay){
-                $amount = $user_amount;
-            }else{
-                $amount = $user_amount - 100;
-            }
 
 
 

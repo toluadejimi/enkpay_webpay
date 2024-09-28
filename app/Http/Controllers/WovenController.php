@@ -178,7 +178,8 @@ class WovenController extends Controller
                 $trx = Transfertransaction::where('account_no', $acc_no)->first();
 
 
-                User::where('id', $trx->user_id)->increment('main_wallet', $p_amount);
+                $fund_amount = $p_amount - 100;
+                User::where('id', $trx->user_id)->increment('main_wallet', $fund_amount);
                 $balance = User::where('id', $trx->user_id)->first()->main_wallet;
                 $user = User::where('id', $trx->user_id)->first();
 

@@ -129,7 +129,9 @@ class WovenController extends Controller
         }
 
 
-        $trx = Transfertransaction::where('account_no', $acc_no)->increment('amount_paid', $user_amount);
+        Transfertransaction::where('account_no', $acc_no)->increment('amount_paid', $user_amount);
+        $trx = Transfertransaction::where('account_no', $acc_no)->first()->status;
+
         $paid_amt =  Transfertransaction::where('account_no', $acc_no)->first()->amount_paid ?? null;
         $amt_to_pay =  Transfertransaction::where('account_no', $acc_no)->first()->amount_to_pay ?? null;
 

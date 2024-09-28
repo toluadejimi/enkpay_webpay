@@ -83,7 +83,7 @@
 
                     <script>
                         // Set the countdown time (in seconds)
-                        let countdownTime = 180; // 3 minutes
+                        let countdownTime = 600; // 3 minutes
 
                         // Get DOM elements
                         const countdownDisplay = document.getElementById('countdown');

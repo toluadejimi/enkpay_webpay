@@ -150,6 +150,7 @@ class WovenController extends Controller
             }
 
 
+            dd($amount);
 
             $set = Setting::where('id', 1)->first();
             if ($amount > 15000) {

@@ -160,7 +160,6 @@ class WovenController extends Controller
 
 
 
-            dd($amount);
 
 
             if ($trx->ststus == 0) {
@@ -181,7 +180,7 @@ class WovenController extends Controller
 
                 $url = Webkey::where('key', $trx->key)->first()->url_fund ?? null;
                 $user_email = $trx->email ?? null;
-                $amount = $trx->amount ?? null;
+                //$amount = $trx->amount ?? null;
                 $order_id = $trx->ref_trans_id ?? null;
                 $site_name = Webkey::where('key', $trx->key)->first()->site_name ?? null;
 

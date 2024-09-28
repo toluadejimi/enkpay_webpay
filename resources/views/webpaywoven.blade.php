@@ -510,7 +510,7 @@
                                                                         ref: '{{ $transref }}',
                                                                         accountNo: data.account_no,
                                                                         name: data.account_name,
-                                                                        amount: '{{$famount}}',
+                                                                        amount: '{{$f_amount}}',
                                                                         bankName:data.bank_name,
 
                                                                     }) // Replace with actual data to send

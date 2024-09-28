@@ -150,7 +150,6 @@ class WovenController extends Controller
             }
 
 
-            dd($amount);
 
             $set = Setting::where('id', 1)->first();
             if ($amount > 15000) {
@@ -158,6 +157,10 @@ class WovenController extends Controller
             } else {
                 $p_amount = $amount - $set->psb_charge;
             }
+
+
+
+            dd($amount);
 
 
             if ($trx->ststus == 0) {
@@ -169,12 +172,6 @@ class WovenController extends Controller
 
                 //fund Vendor
                 $trx = Transfertransaction::where('account_no', $acc_no)->first();
-                $charge = Setting::where('id', 1)->first()->webpay_transfer_charge;
-                if ($trx->amount <= 100) {
-                    $f_amount = $trx->amount;
-                } else {
-                    $f_amount = $trx->amount - $charge;
-                }
 
 
                 User::where('id', $trx->user_id)->increment('main_wallet', $p_amount);

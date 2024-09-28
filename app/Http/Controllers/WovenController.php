@@ -207,7 +207,7 @@ class WovenController extends Controller
                 send_notification($message);
 
                 Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 4]);
-                Transfertransaction::where('account_no', $acc_no)->update(['status' => 4, 'resolve' => 1]);
+                //Transfertransaction::where('account_no', $acc_no)->update(['status' => 4, 'resolve' => 1]);
 
 
                 $type ="epayment";

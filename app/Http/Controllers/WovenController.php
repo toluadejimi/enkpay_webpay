@@ -214,6 +214,7 @@ class WovenController extends Controller
 
 
                 $type ="epayment";
+                dd($amount);
                 $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type, $session_id);
 
                 return response()->json([

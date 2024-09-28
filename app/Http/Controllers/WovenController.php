@@ -97,19 +97,11 @@ class WovenController extends Controller
     public function woven_webhook(Request $request){
 
         $acc_no = $request->nuban;
-        $amount = $request->amount;
+        $user_amount = $request->amount;
         $session_id = $request->unique_reference;
         $payable = $request->amount_payable;
         $fee = $request->fee;
 
-
-        $set = Setting::where('id', 1)->first();
-
-        if ($request->amount > 15000) {
-            $p_amount = $request->amount - $set->psb_cap;
-        } else {
-            $p_amount = $request->amount - $set->psb_charge;
-        }
 
         $status = Transfertransaction::where('account_no', $acc_no)->first()->status ?? null;
         if ($status == 4) {
@@ -137,12 +129,40 @@ class WovenController extends Controller
         }
 
 
+        $trx = Transfertransaction::where('account_no', $acc_no)->increment('amount_paid', $user_amount);
+        $paid_amt =  Transfertransaction::where('account_no', $acc_no)->first()->amount_paid ?? null;
+        $amt_to_pay =  Transfertransaction::where('account_no', $acc_no)->first()->amount_to_pay ?? null;
+
+
+
+
+
+
         if ($trx != null) {
+
+
+            if($paid_amt == $amt_to_pay){
+                $amount = $user_amount;
+            }else{
+                $amount = $user_amount - 100;
+            }
+
+
+
+            $set = Setting::where('id', 1)->first();
+            if ($amount > 15000) {
+                $p_amount = $amount - $set->psb_cap;
+            } else {
+                $p_amount = $amount - $set->psb_charge;
+            }
+
+
             if ($trx->ststus == 0) {
                     Transfertransaction::where('account_no', $acc_no)
                         ->where([
                             'status' => 0
-                        ])->update(['status' => 5, 'session_id' => $session_id, 'amount_paid' => $amount ]) ?? null;
+                        ])->update(['status' => 5, 'session_id' => $session_id]) ?? null;
+
 
                 //fund Vendor
                 $trx = Transfertransaction::where('account_no', $acc_no)->first();
@@ -154,7 +174,7 @@ class WovenController extends Controller
                 }
 
 
-                User::where('id', $trx->user_id)->increment('main_wallet', $f_amount);
+                User::where('id', $trx->user_id)->increment('main_wallet', $p_amount);
                 $balance = User::where('id', $trx->user_id)->first()->main_wallet;
                 $user = User::where('id', $trx->user_id)->first();
 
@@ -173,7 +193,7 @@ class WovenController extends Controller
                 $trasnaction->transaction_type = "VirtualFundWallet";
                 $trasnaction->title = "Wallet Funding";
                 $trasnaction->main_type = "WOVEN";
-                $trasnaction->credit = $f_amount;
+                $trasnaction->credit = $p_amount;
                 $trasnaction->note = "Transaction Successful | Web Pay | for $user_email";
                 $trasnaction->fee = $fee ?? 0;
                 $trasnaction->amount = $trx->amount;
@@ -184,7 +204,7 @@ class WovenController extends Controller
                 $trasnaction->status = 1;
                 $trasnaction->save();
 
-                $message = "Business funded | $trx->manual_acc_ref | $f_amount | $user->first_name " . " " . $user->last_name;
+                $message = "Business funded | $trx->manual_acc_ref | $p_amount | $user->first_name " . " " . $user->last_name;
                 send_notification($message);
 
                 Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 4]);

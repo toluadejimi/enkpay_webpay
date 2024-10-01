@@ -135,7 +135,7 @@
             display: none; /* Initially hidden */
         }
 
-        .loaderwema {
+        .loadercharm {
             border: 8px solid #f3f3f3; /* Light grey */
             border-top: 8px solid #3498db; /* Blue */
             border-radius: 50%;
@@ -264,7 +264,17 @@
                 </svg>
 
 
-                <h1>₦{{ number_format($pamount, 2) }}</h1>
+                @php
+                    if($payable_amount > 15000){
+                        $f_amount = $payable_amount + $psb_cap;
+                    }else{
+                      $f_amount = $payable_amount + $psb_charge;
+                    }
+
+                @endphp
+
+
+                <h1>₦{{ number_format($f_amount, 2) }}</h1>
                 <h4 class="secondary_color text-center fw_4 mb-3">Make sure you send exact amount</h4>
                 <hr>
 
@@ -295,29 +305,37 @@
     <div class="tf-container">
 
 
-        @if($wema == 1)
+        @if($charm == 1)
             <div id=""
                  class="accordion border-0 tf-card-block d-flex align-items-center justify-content-between">
                 <div class="accordion-item border-0">
                     <div class="inner d-flex align-items-center">
-                        <img src="{{url('')}}/public/wema.svg">
-                        <div class="content col-12">
-                            <h4><a href="#" data-bs-toggle="collapse" data-bs-target="#wema"
-                                   aria-expanded="false" aria-controls="wema" class="fw_6">Pay Using Wema</a></h4>
+                        <svg width="140" height="51" viewBox="0 0 142 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="142" height="70" rx="20" fill="#F3F5FF"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M71.407 13.3346L89.257 23.3655C89.781 23.6286 90.2217 24.0333 90.5296 24.5343C90.8375 25.0353 91.0004 25.6127 91 26.2016V29.2426C91 30.6997 89.824 31.8823 88.375 31.8823H86.8V48.7765H88.9C89.457 48.7765 89.9911 48.9989 90.3849 49.395C90.7788 49.791 91 50.3282 91 50.8882C91 51.4483 90.7788 51.9854 90.3849 52.3815C89.9911 52.7775 89.457 53 88.9 53H51.1C50.543 53 50.0089 52.7775 49.6151 52.3815C49.2212 51.9854 49 51.4483 49 50.8882C49 50.3282 49.2212 49.791 49.6151 49.395C50.0089 48.9989 50.543 48.7765 51.1 48.7765H53.2V31.8823H51.625C50.176 31.8823 49 30.6997 49 29.2426V26.2016C49 25.0993 49.567 24.0856 50.4826 23.5112L68.5909 13.3346C69.0284 13.1146 69.5108 13 70 13C70.4892 13 70.9695 13.1146 71.407 13.3346ZM80.5 31.8823H59.5V48.7765H63.7V36.1058H67.9V48.7765H72.1V36.1058H76.3V48.7765H80.5V31.8823ZM70 21.3234C69.443 21.3234 68.9089 21.5459 68.5151 21.942C68.1212 22.338 67.9 22.8751 67.9 23.4352C67.9 23.9953 68.1212 24.5324 68.5151 24.9285C68.9089 25.3245 69.443 25.547 70 25.547C70.557 25.547 71.0911 25.3245 71.4849 24.9285C71.8787 24.5324 72.1 23.9953 72.1 23.4352C72.1 22.8751 71.8787 22.338 71.4849 21.942C71.0911 21.5459 70.557 21.3234 70 21.3234Z" fill="url(#paint0_linear_0_1)"/>
+                            <defs>
+                                <linearGradient id="paint0_linear_0_1" x1="70" y1="13" x2="70" y2="53" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#0D0150"/>
+                                    <stop offset="1" stop-color="#785DFF"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+
+                        <div class="content">
+                            <h4><a href="#" data-bs-toggle="collapse" data-bs-target="#ninepsb"
+                                   aria-expanded="false" aria-controls="ninepsb" class="fw_6">Click to get account details</a></h4>
                             <p>No refrence required</p>
                         </div>
                     </div>
 
 
-                    <div id="wema" class="accordion-collapse collapse"
-                         data-bs-parent="#accordionExample">
-
+                    <div id="charm" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
 
                         <div class="tf-container my-2">
-                            <a id="openModalBtnwema" class="tf-btn success large w-100">Pay To Wema Account</a>
+                            <a id="openModalBtncharm" class="tf-btn success large w-100">Proceed</a>
                         </div>
 
-                        <div id="myModalwema" class="modal">
+                        <div id="myModalcharm" class="modal">
                             <div class="modal-content">
 
 
@@ -329,19 +347,37 @@
                                         <div class="row">
 
                                             @php
-                                                $f_amount = $pamount;
+                                                if($payable_amount > 15000){
+                                                    $f_amount = $payable_amount + $psb_cap;
+                                                }else{
+                                                  $f_amount = $payable_amount + $psb_charge;
+                                                }
+
                                             @endphp
 
-                                            <div class="col-12">
-                                                <div class="d-flex justify-content-center w-100">
-                                                    <img style="background: #990c81; margin-bottom: 10px;"
-                                                         src="{{url('')}}/public/wema.svg" width="342" height="102">
 
+                                            <div class="col-12">
+                                                <div class="text-center">
+                                                    <svg width="140" height="51" viewBox="0 0 142 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <rect width="142" height="70" rx="20" fill="#F3F5FF"/>
+                                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M71.407 13.3346L89.257 23.3655C89.781 23.6286 90.2217 24.0333 90.5296 24.5343C90.8375 25.0353 91.0004 25.6127 91 26.2016V29.2426C91 30.6997 89.824 31.8823 88.375 31.8823H86.8V48.7765H88.9C89.457 48.7765 89.9911 48.9989 90.3849 49.395C90.7788 49.791 91 50.3282 91 50.8882C91 51.4483 90.7788 51.9854 90.3849 52.3815C89.9911 52.7775 89.457 53 88.9 53H51.1C50.543 53 50.0089 52.7775 49.6151 52.3815C49.2212 51.9854 49 51.4483 49 50.8882C49 50.3282 49.2212 49.791 49.6151 49.395C50.0089 48.9989 50.543 48.7765 51.1 48.7765H53.2V31.8823H51.625C50.176 31.8823 49 30.6997 49 29.2426V26.2016C49 25.0993 49.567 24.0856 50.4826 23.5112L68.5909 13.3346C69.0284 13.1146 69.5108 13 70 13C70.4892 13 70.9695 13.1146 71.407 13.3346ZM80.5 31.8823H59.5V48.7765H63.7V36.1058H67.9V48.7765H72.1V36.1058H76.3V48.7765H80.5V31.8823ZM70 21.3234C69.443 21.3234 68.9089 21.5459 68.5151 21.942C68.1212 22.338 67.9 22.8751 67.9 23.4352C67.9 23.9953 68.1212 24.5324 68.5151 24.9285C68.9089 25.3245 69.443 25.547 70 25.547C70.557 25.547 71.0911 25.3245 71.4849 24.9285C71.8787 24.5324 72.1 23.9953 72.1 23.4352C72.1 22.8751 71.8787 22.338 71.4849 21.942C71.0911 21.5459 70.557 21.3234 70 21.3234Z" fill="url(#paint0_linear_0_1)"/>
+                                                        <defs>
+                                                            <linearGradient id="paint0_linear_0_1" x1="70" y1="13" x2="70" y2="53" gradientUnits="userSpaceOnUse">
+                                                                <stop stop-color="#0D0150"/>
+                                                                <stop offset="1" stop-color="#785DFF"/>
+                                                            </linearGradient>
+                                                        </defs>
+                                                    </svg>
+                                                </div>
+
+
+                                                <div class="col-12 d-flex justify-content-center mb-2">
+                                                    <h5>You are about to pay</h5>
                                                 </div>
 
 
                                                 <div class="col-12 d-flex justify-content-center">
-                                                    <h5>You are about to pay</h5>
+                                                    <h5 class="text-center text-danger">Make sure you send exact amount to avoid delays</h5>
                                                 </div>
 
 
@@ -350,14 +386,15 @@
                                                 </div>
 
 
+
                                             </div>
 
 
-                                            @if($wema != null)
+                                            @if($charm != null)
 
                                                 <div
                                                     style="background-image: linear-gradient(to right top, #051937, #001c2d, #001a1c, #02160f, #0e1109);"
-                                                    class="modal fade" id="myModalwema"
+                                                    class="modal fade" id="myModalcharm"
                                                     data-backdrop="static"
                                                     data-keyboard="false">
                                                     <div class="modal-dialog "
@@ -386,7 +423,7 @@
                                                                         <div class="loader-text">
                                                                             <p class="text-center mb-4"
                                                                                style="color:rrgb(11, 1, 63)"
-                                                                               id="messagewema"></p>
+                                                                               id="messagecharm"></p>
                                                                         </div>
 
                                                                     </div>
@@ -406,15 +443,15 @@
                                                     </div>
                                                 </div>
 
-                                                <div id="infoContainerwema">
+                                                <div id="infoContainercharm">
                                                     <!-- Placeholder for fetched information -->
                                                 </div>
 
-                                                <button class="p-2" id="fetchwema" style="color: #03103a"
-                                                        onclick="fetchInfowema()">Get
+                                                <button class="p-2" id="fetchcharm" style="color: #03103a"
+                                                        onclick="fetchInfocharm()">Get
                                                     Account Details
                                                 </button>
-                                                <div class="loaderwema" id="loaderwema"></div>
+                                                <div class="loadercharm" id="loadercharm"></div>
 
 
 
@@ -422,14 +459,14 @@
 
 
                                                 <script>
-                                                    let fetchTimeoutwema;
+                                                    let fetchTimeoutcharm;
 
-                                                    function fetchInfowema() {
+                                                    function fetchInfocharm() {
                                                         // Display the loader
-                                                        document.getElementById('loaderwema').style.display = 'block';
+                                                        document.getElementById('loadercharm').style.display = 'block';
 
                                                         // Reset timeout if retrying
-                                                        clearTimeout(fetchTimeoutwema);
+                                                        clearTimeout(fetchTimeoutcharm);
 
                                                         // Simulating a POST request (replace with actual API call)
                                                         {{--fetch('{{url('')}}/api/get-account', {--}}
@@ -440,8 +477,6 @@
                                                             },
                                                             body: JSON.stringify({
                                                                 bankCode: "035"
-
-
                                                             }) // Replace with actual data to send
                                                         })
                                                             .then(response => {
@@ -455,22 +490,20 @@
 
                                                                 console.log(data);
                                                                 console.log(data.responseData.bankAccount);
-                                                                var wemaaccountNo = data.responseData.bankAccount;
-                                                                var wemaaccountName = "TeamX";
+                                                                var charmaccountNo = data.responseData.bankAccount;
+                                                                var charmaccountName = "TeamX";
                                                                 var paym_ref = data.responseData.paymentReference;
 
+                                                                document.getElementById('fetchcharm').style.display = 'none';
 
-                                                                document.getElementById('fetchwema').style.display = 'none';
-
-
-                                                                fetch('{{ url('') }}/api/wema-transfer-transaction', {
+                                                                fetch('{{ url('') }}/api/charm-transfer-transaction', {
                                                                     method: 'POST',
                                                                     headers: {
                                                                         'Content-Type': 'application/json'
                                                                     },
                                                                     body: JSON.stringify({
                                                                         ref: '{{ $transref }}',
-                                                                        accountNo: wemaaccountNo,
+                                                                        accountNo: charmaccountNo,
                                                                         name: 'WEMA BANK',
                                                                         pay_ref: paym_ref,
                                                                         amount: '{{$payable_amount}}'
@@ -516,7 +549,7 @@
                                                                     id="text_element">{{number_format($f_amount,2)}}</h5>
                                                                 <input hidden
                                                                        value="{{$f_amount}}"
-                                                                       id="wema_account_no">
+                                                                       id="charm_account_no">
 
                                                                 <i style="font-size: 1em; margin-left: 4px"
                                                                    class="fa fa-copy"
@@ -546,14 +579,14 @@
                                                                                    p-1">
                                                                 <h5 style="border-right: 4px; font-size: 15px;"
 
-                                                                    id="wemaelement">${wemaaccountNo}</h5>
+                                                                    id="charmelement">${charmaccountNo}</h5>
                                                                 <input hidden
-                                                                       value="${wemaaccountNo}"
-                                                                       id="wema_account_no">
+                                                                       value="${charmaccountNo}"
+                                                                       id="charm_account_no">
 
                                                                 <i style="font-size: 1em; margin-left: 4px"
                                                                    class="fa fa-copy"
-                                                                   onclick="copyToClipboardwema('wemaelement')">
+                                                                   onclick="copyToClipboardcharm('charmelement')">
 
                                                                 </i>
 
@@ -578,10 +611,10 @@
                                                                                    p-1">
                                                                 <h5 style="border-right: 4px; font-size: 15px;"
 
-                                                                    id="text_element">${wemaaccountName}</h5>
+                                                                    id="text_element">${charmaccountName}</h5>
                                                                 <input hidden
-                                                                       value="${wemaaccountName}"
-                                                                       id="wema_account_name">
+                                                                       value="${charmaccountName}"
+                                                                       id="charm_account_name">
 
                                                                 <i style="font-size: 1em; margin-left: 4px"
                                                                    class="fa fa-copy"
@@ -596,7 +629,7 @@
                                         </div>
 </div>
 
-                                                    <form action="/verifywema" method="POST">
+                                                    <form action="/verifycharm" method="POST">
                                                     @csrf
 
 
@@ -604,7 +637,7 @@
                                                                 <input type="text" id="trx_id" name="trx_id" hidden value="{{ $trans_id}}">
                                                         <input type="text" id="webHook" name="webhook" hidden value="{{ $webhook}}">
                                                         <input type="text" id="Amount" hidden name="amount" value="{{ $amount }}">
-                                                        <input type="text" id="Amount" hidden name="wema_account_no" value="${wemaaccountNo}">
+                                                        <input type="text" id="Amount" hidden name="charm_account_no" value="${charmaccountNo}">
                                                         <input type="text" id="pref" hidden name="pref" value="{{$payment_ref}}">
 
 
@@ -613,7 +646,7 @@
                                                         <!-- Button trigger modal -->
 
                                                         <button class="tf-btn accent large my-3 request-btn"
-                                                                id="requestwema">I
+                                                                id="requestcharm">I
                                                             ve sent ₦{{ number_format($f_amount )}}</button>
 
 
@@ -623,35 +656,35 @@
 `;
 
                                                                 // Display fetched information in info-container
-                                                                const infoContainerwema = document.getElementById('infoContainerwema');
-                                                                infoContainerwema.innerHTML = infoHTML;
+                                                                const infoContainercharm = document.getElementById('infoContainercharm');
+                                                                infoContainercharm.innerHTML = infoHTML;
 
                                                                 // Hide the loader after displaying information
-                                                                document.getElementById('loaderwema').style.display = 'none';
-                                                                document.getElementById('fetchwema').style.display = 'none';
+                                                                document.getElementById('loadercharm').style.display = 'none';
+                                                                document.getElementById('fetchcharm').style.display = 'none';
 
                                                             })
                                                             .catch(error => {
                                                                 console.error('Error fetching data:', error);
-                                                                const infoContainerwema = document.getElementById('infoContainerwema');
-                                                                infoContainerwema.innerHTML = '<p>Error fetching data. Please retry.</p>';
+                                                                const infoContainercharm = document.getElementById('infoContainercharm');
+                                                                infoContainercharm.innerHTML = '<p>Error fetching data. Please retry.</p>';
 
                                                                 // Hide the loader
-                                                                document.getElementById('loaderwema').style.display = 'none';
+                                                                document.getElementById('loadercharm').style.display = 'none';
 
                                                             });
 
                                                         // Set timeout for retrying
                                                         fetchTimeout = setTimeout(() => {
-                                                            const infoContainerwema = document.getElementById('infoContainerwema');
-                                                            infoContainerwema.innerHTML = '<p>Request timed out. Please retry.</p>';
-                                                            document.getElementById('loaderwema').style.display = 'none';
+                                                            const infoContainercharm = document.getElementById('infoContainercharm');
+                                                            infoContainercharm.innerHTML = '<p>Request timed out. Please retry.</p>';
+                                                            document.getElementById('loadercharm').style.display = 'none';
                                                         }, 30000000); // 30 seconds timeout
                                                     }
                                                 </script>
 
                                                 <script>
-                                                    function copyToClipboardwema(elementId) {
+                                                    function copyToClipboardcharm(elementId) {
                                                         var aux = document.createElement("input");
                                                         aux.setAttribute("value", document.getElementById(elementId).innerHTML);
                                                         document.body.appendChild(aux);
@@ -688,10 +721,10 @@
                                                                                    p-1">
 
                                                             <h5 style="border-right: 4px; font-size: 15px;"
-                                                                id="text_element">{{ $wema->account_no ?? "Not Available"}}</h5>
+                                                                id="text_element">{{ $charm->account_no ?? "Not Available"}}</h5>
                                                             <input hidden
-                                                                   value="{{ $wema->account_no ?? "Not Available" }}"
-                                                                   id="wema_account_no">
+                                                                   value="{{ $charm->account_no ?? "Not Available" }}"
+                                                                   id="charm_account_no">
 
                                                             <i style="font-size: 1em; margin-left: 4px"
                                                                class="fa fa-copy"
@@ -740,7 +773,7 @@
                                                     p-1">
 
                                                             <h5 style="font-size: 15px;"
-                                                                id="text_element">{{ $wema->account_name ?? "Not Available"}}</h5>
+                                                                id="text_element">{{ $charm->account_name ?? "Not Available"}}</h5>
                                                             </i>
 
                                                             <script>
@@ -787,7 +820,7 @@
 
                                                             <h3 style="border-right: 4px; font-size: 15px; color: darkred"
                                                                 id="text_element1">{{ $transref ?? "Not Available" ?? "Not Available"}}</h3>
-                                                            <input hidden value="{{ $trans_id }}" id="trfwema">
+                                                            <input hidden value="{{ $trans_id }}" id="trfcharm">
 
                                                             <i style="font-size: 1em; margin-left: 4px"
                                                                class="fa fa-copy"
@@ -816,7 +849,7 @@
                                                 </div>
                                                 <small style="font-size: 13px" class="text-danger text-center my-2">Please
                                                     add Reference to your transaction narration to avoid delay in
-                                                    confirmation</small>
+                                                    confirmation </small>
                                                 <form onsubmit="event.preventDefault()">
 
                                                     <input type="text" id="trx_id" hidden value="{{ $trans_id}}">
@@ -831,7 +864,7 @@
                                                     <!-- Modal -->
                                                     <div
                                                         style="background-image: linear-gradient(to right top, #051937, #001c2d, #001a1c, #02160f, #0e1109);"
-                                                        class="modal fade" id="myModalwemashow"
+                                                        class="modal fade" id="myModalcharmshow"
                                                         data-backdrop="static"
                                                         data-keyboard="false">
                                                         <div class="modal-dialog "
@@ -861,7 +894,7 @@
                                                                             <div class="loader-text">
                                                                                 <p class="text-center mb-4"
                                                                                    style="color:rrgb(11, 1, 63)"
-                                                                                   id="messagewema"></p>
+                                                                                   id="messagecharm"></p>
                                                                             </div>
 
                                                                         </div>
@@ -883,7 +916,7 @@
 
 
                                                     <button class="tf-btn accent large my-3 request-btn"
-                                                            id="requestwema">I
+                                                            id="requestcharm">I
                                                         ve sent ₦{{
                                                         number_format($payable_amount )}}
 
@@ -908,12 +941,12 @@
                         </div>
 
                         <script>
-                            document.getElementById("openModalBtnwema").onclick = function () {
-                                document.getElementById("myModalwema").style.display = "block";
+                            document.getElementById("openModalBtncharm").onclick = function () {
+                                document.getElementById("myModalcharm").style.display = "block";
                             };
 
                             document.getElementsByClassName("close")[0].onclick = function () {
-                                document.getElementById("myModalwema").style.display = "none";
+                                document.getElementById("myModalcharm").style.display = "none";
                             };
 
 

@@ -328,10 +328,7 @@
                     </div>
 
 
-                    <div id="ninepsb" class="accordion-collapse collapse"
-                         data-bs-parent="#accordionExample">
-
-
+                    <div id="ninepsb" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div class="tf-container my-2">
                             <a id="openModalBtnninepsb"  class="d-flex justify-content-center tf-btn success large">Proceed</a>
                         </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CableController;
+use App\Http\Controllers\CharmController;
 use App\Http\Controllers\VerifyController;
 use App\Http\Controllers\WovenController;
 use Illuminate\Support\Facades\Route;
@@ -235,7 +236,7 @@ Route::get('verifyopay', [TransactionController::class, 'opay_check_status']);
 Route::get('verifypalmpay', [TransactionController::class, 'palmpay_check_status']);
 Route::get('verifykuda', [TransactionController::class, 'kuda_check_status']);
 Route::get('verifyninepsb', [TransactionController::class, 'ninepsb_check_status']);
-Route::get('verifywema', [TransactionController::class, 'wema_check_status']);
+Route::get('verifycharm', [CharmController::class, 'charm_check_status']);
 Route::get('verifywovencheck', [WovenController::class, 'woven_check_status']);
 
 

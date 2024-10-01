@@ -606,8 +606,6 @@ class TransactionController extends Controller
         }
 
 
-
-
         $marchant_url = $details->url ?? null;
 
         if ($data['amount'] == null) {
@@ -738,7 +736,7 @@ class TransactionController extends Controller
                 $pre_link = "#";
             }
 
-            if ($set->wema_transfer == 1) {
+            if ($set->charm == 1) {
                 $faker = Factory::create();
                 if($request->amount < 200){
                     $pamount = $request->amount;
@@ -934,14 +932,13 @@ class TransactionController extends Controller
 
 
 
-        if ($set->wema_transfer == 1) {
+        if ($set->charm == 1) {
             $faker = Factory::create();
-            if($request->amount > 10000){
-                $data['pamount'] = $request->amount + 200;
+            if($request->amount > 15000){
+                $data['pamount'] = $request->amount + 300;
             }else{
                 $data['pamount'] = $request->amount + 100;
             }
-
 
             $first_name = User::inRandomOrder()->first()->first_name;
             $last_name = User::inRandomOrder()->first()->last_name;
@@ -953,20 +950,12 @@ class TransactionController extends Controller
             $pkey = $data['key'];
             $amtt = $data['pamount'];
             $pre = pre_pay($amtt, $first_name, $last_name, $tremail, $ref, $userId, $txid,$keyrr);
-
-
-
             $data['payment_ref'] = $pre['adviceReference'] ?? null;
-
-
-
-
         } else {
             $data['pre_link'] = "#";
             $data['payment_ref'] = null;
             $data['pamount'] = $request->amount;
         }
-
 
 
         $data['opay_acct'] = ManualAccount::where('status', 1)->where('type', "opay")->first() ?? null;
@@ -1014,7 +1003,6 @@ class TransactionController extends Controller
             $trans->save();
         }
 
-
         $set = Setting::where('id', 1)->first();
         $data['card'] = $set->pay_by_card;
         $data['opay_transfer'] = $set->opay_trx;
@@ -1027,10 +1015,11 @@ class TransactionController extends Controller
         $data['boomzy'] = $set->boomzy;
         $data['psb_cap'] = $set->psb_cap;
         $data['psb_charge'] = $set->psb_charge;
-        $data['wema'] = $set->wema_transfer;
+        $data['charm'] = $set->charm;
         $data['woven'] = $set->woven;
         $data['support_channel'] = Webkey::where('key', $request->key)->first()->support ?? null;
         $data['support_number'] = Webkey::where('key', $request->key)->first()->support_number ?? null;
+
 
 
         if ($data['support_number'] == null) {
@@ -1064,29 +1053,29 @@ class TransactionController extends Controller
 //        }
 
 
-        if($data['woven'] == 1 && $data['wema'] == 1 && $data['palmpay_transfer'] == 1  &&  $data['opay_transfer'] == 1 && $data['ninepsb'] == 0 ){
-            $views = ['webpayopay', 'webpaywoven', 'webpaypalmpay', 'webpaywema'];
-        }elseif($data['wema'] == 0 && $data['palmpay_transfer'] == 1  &&  $data['opay_transfer'] == 1 && $data['ninepsb'] == 0 ){
+        if($data['woven'] == 1 && $data['charm'] == 1 && $data['palmpay_transfer'] == 1  &&  $data['opay_transfer'] == 1 && $data['ninepsb'] == 0 ){
+            $views = ['webpayopay', 'webpaywoven', 'webpaypalmpay', 'webpaycharm'];
+        }elseif($data['charm'] == 0 && $data['palmpay_transfer'] == 1  &&  $data['opay_transfer'] == 1 && $data['ninepsb'] == 0 ){
             $views = ['webpayopay', 'webpaypalmpay'];
-        }elseif($data['wema'] == 0 && $data['palmpay_transfer'] == 1 &&  $data['opay_transfer'] == 0 && $data['ninepsb'] == 0 ){
+        }elseif($data['charm'] == 0 && $data['palmpay_transfer'] == 1 &&  $data['opay_transfer'] == 0 && $data['ninepsb'] == 0 ){
             $views = ['webpaypalmpay'];
-        }elseif($data['wema'] == 0 && $data['opay_transfer'] == 1  &&  $data['palmpay_transfer'] == 0 && $data['ninepsb'] == 0  ){
+        }elseif($data['charm'] == 0 && $data['opay_transfer'] == 1  &&  $data['palmpay_transfer'] == 0 && $data['ninepsb'] == 0  ){
             $views = ['webpayopay'];
-        }elseif($data['wema'] == 0 && $data['ninepsb'] == 1 && $data['palmpay_transfer'] == 1 &&  $data['opay_transfer'] == 1){
+        }elseif($data['charm'] == 0 && $data['ninepsb'] == 1 && $data['palmpay_transfer'] == 1 &&  $data['opay_transfer'] == 1){
             $views = ['webpay', 'webpayopay', 'webpaypalmpay'];
-        }elseif($data['wema'] == 0 && $data['ninepsb'] == 1 && $data['opay_transfer'] == 0  &&  $data['palmpay_transfer'] == 0 ){
+        }elseif($data['charm'] == 0 && $data['ninepsb'] == 1 && $data['opay_transfer'] == 0  &&  $data['palmpay_transfer'] == 0 ){
             $views = ['webpay'];
-        }elseif($data['wema'] == 0 && $data['ninepsb'] == 1 && $data['opay_transfer'] == 0  &&  $data['palmpay_transfer'] == 1 ) {
+        }elseif($data['charm'] == 0 && $data['ninepsb'] == 1 && $data['opay_transfer'] == 0  &&  $data['palmpay_transfer'] == 1 ) {
             $views = ['webpay', 'webpaypalmpay'];
-        }elseif($data['wema'] == 0 && $data['ninepsb'] == 1 && $data['opay_transfer'] == 1  &&  $data['palmpay_transfer'] == 0 ) {
+        }elseif($data['charm'] == 0 && $data['ninepsb'] == 1 && $data['opay_transfer'] == 1  &&  $data['palmpay_transfer'] == 0 ) {
             $views = ['webpay', 'webpayopay'];
-        }elseif($data['wema'] == 1 && $data['ninepsb'] == 0 && $data['opay_transfer'] == 0  &&  $data['palmpay_transfer'] == 0 ) {
-            $views = ['webpaywema'];
-        }elseif($data['wema'] == 1 && $data['ninepsb'] == 0 && $data['opay_transfer'] == 0  &&  $data['palmpay_transfer'] == 1 ) {
-            $views = ['webpaypalmpay', 'webpaywema'];
-        }elseif($data['woven'] == 1 && $data['wema'] == 0 && $data['palmpay_transfer'] == 0  &&  $data['opay_transfer'] == 0 && $data['ninepsb'] == 0 ) {
+        }elseif($data['charm'] == 1 && $data['ninepsb'] == 0 && $data['opay_transfer'] == 0  &&  $data['palmpay_transfer'] == 0 ) {
+            $views = ['webpaycharm'];
+        }elseif($data['charm'] == 1 && $data['ninepsb'] == 0 && $data['opay_transfer'] == 0  &&  $data['palmpay_transfer'] == 1 ) {
+            $views = ['webpaypalmpay', 'webpaycharm'];
+        }elseif($data['woven'] == 1 && $data['charm'] == 0 && $data['palmpay_transfer'] == 0  &&  $data['opay_transfer'] == 0 && $data['ninepsb'] == 0 ) {
             $views = ['webpaywoven'];
-        }elseif($data['woven'] == 1 && $data['wema'] == 0 && $data['palmpay_transfer'] == 0  &&  $data['opay_transfer'] == 0 && $data['ninepsb'] == 1 ){
+        }elseif($data['woven'] == 1 && $data['charm'] == 0 && $data['palmpay_transfer'] == 0  &&  $data['opay_transfer'] == 0 && $data['ninepsb'] == 1 ){
             $views = ['webpaywoven', 'webpay'];
         }else{
             $views = ['webpay', 'webpayopay', 'webpaypalmpay'];
@@ -1611,58 +1600,6 @@ class TransactionController extends Controller
 
 
 
-    public
-    function wema_check_status(Request $request)
-    {
-
-        $trans_id = $request->ref;
-        $ref = $request->ref;
-        $account_no = $request->account_no;
-
-
-        $p_ref = Transfertransaction::where('ref', $ref)->first() ?? null;
-        if($p_ref == null){
-            return response()->json([
-                'status' => false,
-                'message' => "no transaction found"
-            ]);
-        }
-
-
-        $pref = $p_ref->account_no;
-        $amount = $p_ref->amount;
-
-        $verify = verifypelpay($pref, $amount);
-
-        if($verify == 0){
-
-            return response()->json([
-                'status' => 'pending',
-                'data' => $verify
-
-            ], 200);
-
-        }
-
-
-
-        if ($verify['code'] == 2) {
-
-            return response()->json([
-                'status' => 'success'
-            ], 200);
-
-        }
-
-        if ($verify['code'] == 4) {
-            return response()->json([
-                'status' => 'paid'
-            ], 200);
-
-            //return view('success', compact('webhook'));
-        }
-
-    }
 
 
     public

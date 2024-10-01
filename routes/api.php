@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CableController;
+use App\Http\Controllers\CharmController;
 use App\Http\Controllers\WovenController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,8 @@ Route::get('cable-plan',[CableController::class, 'get_cable_plan']);
 
 Route::post('get-account/wvn',[WovenController::class, 'get_account']);
 Route::post('woven/callback',[WovenController::class, 'woven_webhook']);
+Route::post('charm/callback',[CharmController::class, 'charm_webhook']);
+
 
 
 
@@ -42,7 +45,7 @@ Route::post('palmpay-transfer-transaction', [TransactionController::class, 'palm
 Route::post('kuda-transfer-transaction', [TransactionController::class, 'kuda_transfer_transaction']);
 
 Route::post('ninepsb-transfer-transaction', [TransactionController::class, 'ninepsb_transaction']);
-Route::post('wema-transfer-transaction', [TransactionController::class, 'wema_transaction']);
+Route::post('charm-transfer-transaction', [CharmController::class, 'charm_transaction']);
 Route::post('woven-transfer-transaction', [WovenController::class, 'woven_transaction']);
 
 

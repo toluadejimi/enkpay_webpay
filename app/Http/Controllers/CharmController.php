@@ -51,8 +51,6 @@ class CharmController extends Controller
 
 
 
-
-
         $acc_no = $request->nuban;
         $user_amount = $request->amount;
         $session_id = $request->unique_reference;
@@ -245,6 +243,7 @@ class CharmController extends Controller
     function charm_check_status(Request $request)
     {
 
+
         $trans_id = $request->ref;
         $ref = $request->ref;
         $account_no = $request->account_no;
@@ -259,96 +258,38 @@ class CharmController extends Controller
         }
 
 
-        $status = Transfertransaction::where('ref', $trans_id)
-            ->where('account_no', $account_no)
-            ->first()->status ?? null;
+        $pref = $p_ref->account_no;
+        $amount = $p_ref->amount;
 
+        $verify = verifypelpay($pref, $amount);
 
-        if ($status == 0) {
+        if($verify == 0){
 
             return response()->json([
-                'status' => 'pending'
+                'status' => 'pending',
+                'data' => $verify
+
             ], 200);
 
         }
 
 
-        if ($status == 5) {
 
-            return response()->json([
-                'status' => 'pending'
-            ], 200);
+        if ($verify['code'] == 2) {
 
-        }
-
-
-        if ($status == 2) {
             return response()->json([
                 'status' => 'success'
             ], 200);
 
         }
 
-        if ($status == 4) {
+        if ($verify['code'] == 4) {
             return response()->json([
                 'status' => 'paid'
             ], 200);
+
+            //return view('success', compact('webhook'));
         }
-
-
-
-
-
-
-
-
-//
-//        $trans_id = $request->ref;
-//        $ref = $request->ref;
-//        $account_no = $request->account_no;
-//
-//
-//        $p_ref = Transfertransaction::where('ref', $ref)->first() ?? null;
-//        if($p_ref == null){
-//            return response()->json([
-//                'status' => false,
-//                'message' => "no transaction found"
-//            ]);
-//        }
-//
-//
-//        $pref = $p_ref->account_no;
-//        $amount = $p_ref->amount;
-//
-//        $verify = verifypelpay($pref, $amount);
-//
-//        if($verify == 0){
-//
-//            return response()->json([
-//                'status' => 'pending',
-//                'data' => $verify
-//
-//            ], 200);
-//
-//        }
-//
-//
-//
-//        if ($verify['code'] == 2) {
-//
-//            return response()->json([
-//                'status' => 'success'
-//            ], 200);
-//
-//        }
-//
-//        if ($verify['code'] == 4) {
-//            return response()->json([
-//                'status' => 'paid'
-//            ], 200);
-//
-//            //return view('success', compact('webhook'));
-//        }
 
     }
 

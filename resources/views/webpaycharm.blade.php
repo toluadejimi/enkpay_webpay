@@ -322,8 +322,8 @@
                         </svg>
 
                         <div class="content">
-                            <h4><a href="#" data-bs-toggle="collapse" data-bs-target="#ninepsb"
-                                   aria-expanded="false" aria-controls="ninepsb" class="fw_6">Click to get account details</a></h4>
+                            <h4><a href="#" data-bs-toggle="collapse" data-bs-target="#charm"
+                                   aria-expanded="false" aria-controls="charm" class="fw_6">Click to get account details</a></h4>
                             <p>No refrence required</p>
                         </div>
                     </div>

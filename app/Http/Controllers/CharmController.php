@@ -204,7 +204,7 @@ class CharmController extends Controller
             $trasnaction->amount = $trx->amount;
             $trasnaction->transaction_type = "WEBTRANSFER";
             $trasnaction->bank = $request->bankName;
-            $trasnaction->ref = $request->ref;
+            $trasnaction->ref = $request->pay_ref;
             $trasnaction->account_no = $request->accountNo;
             $trasnaction->v_account_name = $request->accountName;
             $trasnaction->amount_to_pay = $request->amount;

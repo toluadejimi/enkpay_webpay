@@ -1,17 +1,15 @@
 <?php
 
+use App\Models\AccountInfo;
+use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\Transfertransaction;
-use App\Models\User;
 use App\Models\Ttmfb;
-use App\Models\Setting;
-use App\Models\AccountInfo;
+use App\Models\User;
+use App\Models\VirtualAccount;
 use App\Models\Webkey;
 use App\Models\Webtransfer;
-use Illuminate\Database\QueryException;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
-use App\Models\VirtualAccount;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -22,7 +20,6 @@ if (!function_exists('refxx')) {
         return $refs;
     }
 }
-
 
 
 if (!function_exists('refrence_code')) {
@@ -67,7 +64,6 @@ if (!function_exists('send_notification_resolve')) {
 
         $var = json_decode($var);
     }
-
 
 
     if (!function_exists('create_p_account')) {
@@ -127,7 +123,7 @@ if (!function_exists('send_notification_resolve')) {
                 $user->save();
 
 
-                return response()->json(['account_no' => $p_acct_no,  'account_name' => $p_acct_name]);
+                return response()->json(['account_no' => $p_acct_no, 'account_name' => $p_acct_name]);
 
                 $message = "Account Created on Providus";
                 send_notification($message);
@@ -138,9 +134,6 @@ if (!function_exists('send_notification_resolve')) {
             send_notification($message);
         }
     }
-
-
-
 
 
     if (!function_exists('create_dynamic_p_account')) {
@@ -262,7 +255,6 @@ if (!function_exists('send_notification')) {
     }
 
 
-
     if (!function_exists('create_p_account')) {
 
         function create_p_account($name, $bvn)
@@ -298,7 +290,7 @@ if (!function_exists('send_notification')) {
             curl_close($curl);
             $var = json_decode($var);
 
-           // dd($var);
+            // dd($var);
 
             $status = $var->responseCode ?? null;
             $p_acct_no = $var->account_number ?? null;
@@ -320,7 +312,7 @@ if (!function_exists('send_notification')) {
                 $user->save();
 
 
-                return response()->json(['account_no' => $p_acct_no,  'account_name' => $p_acct_name]);
+                return response()->json(['account_no' => $p_acct_no, 'account_name' => $p_acct_name]);
 
                 $message = "Account Created on Providus";
                 send_notification($message);
@@ -331,9 +323,6 @@ if (!function_exists('send_notification')) {
             send_notification($message);
         }
     }
-
-
-
 
 
     if (!function_exists('create_dynamic_p_account')) {
@@ -452,7 +441,6 @@ if (!function_exists('send_notification2')) {
     }
 
 
-
     if (!function_exists('create_p_account')) {
 
         function create_p_account($name, $bvn)
@@ -488,7 +476,7 @@ if (!function_exists('send_notification2')) {
             curl_close($curl);
             $var = json_decode($var);
 
-          //  dd($var);
+            //  dd($var);
 
             $status = $var->responseCode ?? null;
             $p_acct_no = $var->account_number ?? null;
@@ -510,7 +498,7 @@ if (!function_exists('send_notification2')) {
                 $user->save();
 
 
-                return response()->json(['account_no' => $p_acct_no,  'account_name' => $p_acct_name]);
+                return response()->json(['account_no' => $p_acct_no, 'account_name' => $p_acct_name]);
 
                 $message = "Account Created on Providus";
                 send_notification($message);
@@ -521,9 +509,6 @@ if (!function_exists('send_notification2')) {
             send_notification($message);
         }
     }
-
-
-
 
 
     if (!function_exists('create_dynamic_p_account')) {
@@ -642,7 +627,6 @@ if (!function_exists('send_notification3')) {
     }
 
 
-
     if (!function_exists('create_p_account')) {
 
         function create_p_account($name, $bvn)
@@ -678,7 +662,7 @@ if (!function_exists('send_notification3')) {
             curl_close($curl);
             $var = json_decode($var);
 
-           // dd($var);
+            // dd($var);
 
             $status = $var->responseCode ?? null;
             $p_acct_no = $var->account_number ?? null;
@@ -700,7 +684,7 @@ if (!function_exists('send_notification3')) {
                 $user->save();
 
 
-                return response()->json(['account_no' => $p_acct_no,  'account_name' => $p_acct_name]);
+                return response()->json(['account_no' => $p_acct_no, 'account_name' => $p_acct_name]);
 
                 $message = "Account Created on Providus";
                 send_notification($message);
@@ -711,9 +695,6 @@ if (!function_exists('send_notification3')) {
             send_notification($message);
         }
     }
-
-
-
 
 
     if (!function_exists('create_dynamic_p_account')) {
@@ -832,7 +813,6 @@ if (!function_exists('send_notification_palmpay')) {
     }
 
 
-
     if (!function_exists('create_p_account')) {
 
         function create_p_account($name, $bvn)
@@ -868,7 +848,7 @@ if (!function_exists('send_notification_palmpay')) {
             curl_close($curl);
             $var = json_decode($var);
 
-           // dd($var);
+            // dd($var);
 
             $status = $var->responseCode ?? null;
             $p_acct_no = $var->account_number ?? null;
@@ -890,7 +870,7 @@ if (!function_exists('send_notification_palmpay')) {
                 $user->save();
 
 
-                return response()->json(['account_no' => $p_acct_no,  'account_name' => $p_acct_name]);
+                return response()->json(['account_no' => $p_acct_no, 'account_name' => $p_acct_name]);
 
                 $message = "Account Created on Providus";
                 send_notification($message);
@@ -901,9 +881,6 @@ if (!function_exists('send_notification_palmpay')) {
             send_notification($message);
         }
     }
-
-
-
 
 
     if (!function_exists('create_dynamic_p_account')) {
@@ -1023,7 +1000,6 @@ if (!function_exists('send_notification_opay')) {
     }
 
 
-
     if (!function_exists('create_p_account')) {
 
         function create_p_account($name, $bvn)
@@ -1059,7 +1035,7 @@ if (!function_exists('send_notification_opay')) {
             curl_close($curl);
             $var = json_decode($var);
 
-           // dd($var);
+            // dd($var);
 
             $status = $var->responseCode ?? null;
             $p_acct_no = $var->account_number ?? null;
@@ -1081,7 +1057,7 @@ if (!function_exists('send_notification_opay')) {
                 $user->save();
 
 
-                return response()->json(['account_no' => $p_acct_no,  'account_name' => $p_acct_name]);
+                return response()->json(['account_no' => $p_acct_no, 'account_name' => $p_acct_name]);
 
                 $message = "Account Created on Providus";
                 send_notification($message);
@@ -1092,9 +1068,6 @@ if (!function_exists('send_notification_opay')) {
             send_notification($message);
         }
     }
-
-
-
 
 
     if (!function_exists('create_dynamic_p_account')) {
@@ -1182,7 +1155,6 @@ if (!function_exists('send_notification_opay')) {
 }
 
 
-
 if (!function_exists('create_p_account')) {
 
     function create_p_account($name, $bvn, $business_id)
@@ -1218,7 +1190,7 @@ if (!function_exists('create_p_account')) {
         curl_close($curl);
         $var = json_decode($var);
 
-       // dd($var);
+        // dd($var);
 
         $status = $var->responseCode ?? null;
         $p_acct_no = $var->account_number ?? null;
@@ -1240,7 +1212,7 @@ if (!function_exists('create_p_account')) {
             $user->save();
 
 
-            return response()->json(['account_no' => $p_acct_no,  'account_name' => $p_acct_name]);
+            return response()->json(['account_no' => $p_acct_no, 'account_name' => $p_acct_name]);
 
             $message = "Account Created on Providus";
             send_notification($message);
@@ -1251,9 +1223,6 @@ if (!function_exists('create_p_account')) {
         send_notification($message);
     }
 }
-
-
-
 
 
 if (!function_exists('create_dynamic_p_account')) {
@@ -1293,7 +1262,7 @@ if (!function_exists('create_dynamic_p_account')) {
         curl_close($curl);
         $var = json_decode($var);
 
-       // dd($var);
+        // dd($var);
 
         $status = $var->responseCode ?? null;
         $p_acct_no = $var->account_number ?? null;
@@ -1315,7 +1284,7 @@ if (!function_exists('create_dynamic_p_account')) {
             $user->save();
 
 
-            return response()->json(['account_no' => $p_acct_no,  'account_name' => $p_acct_name]);
+            return response()->json(['account_no' => $p_acct_no, 'account_name' => $p_acct_name]);
 
             $message = "Account Created on Providus";
             send_notification($message);
@@ -1387,8 +1356,6 @@ if (!function_exists('resolve_bank')) {
             $authHeader = 'magtipon ' . $username . ':' . base64_encode(hex2bin($sha));
 
 
-
-
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
@@ -1411,7 +1378,6 @@ if (!function_exists('resolve_bank')) {
             $var = curl_exec($curl);
             curl_close($curl);
             $var = json_decode($var);
-
 
 
             $customer_name = $var->AccountName ?? null;
@@ -1544,8 +1510,6 @@ if (!function_exists('resolve_bank')) {
             }
 
 
-
-
             if (!empty($customer_name) || $customer_name == null) {
 
                 $databody = array(
@@ -1662,14 +1626,14 @@ if (!function_exists('get_services')) {
 
                     if ($status == 000) {
 
-                            $data = [];
-                            foreach ($var->content as $item) {
-                                $data[] = [
-                                    'operator_id' => $item->operator_id,
-                                    'name' => $item->name,
-                                    'product_id' => $product->product_type_id,
-                                ];
-                            }
+                        $data = [];
+                        foreach ($var->content as $item) {
+                            $data[] = [
+                                'operator_id' => $item->operator_id,
+                                'name' => $item->name,
+                                'product_id' => $product->product_type_id,
+                            ];
+                        }
 
                         return $data;
                     } else {
@@ -1710,10 +1674,7 @@ if (!function_exists('get_services')) {
         $variations = $var->content->variations ?? null;
 
 
-
         if ($status == 000) {
-
-
 
 
             $data = [];
@@ -1830,7 +1791,6 @@ if (!function_exists('charge_wallet')) {
 }
 
 
-
 if (!function_exists('tokenkey')) {
 
     function tokenkey()
@@ -1847,7 +1807,6 @@ if (!function_exists('tokenkey')) {
 
 
         $post_data = json_encode($databody);
-
 
 
         $curl = curl_init();
@@ -1875,7 +1834,7 @@ if (!function_exists('tokenkey')) {
     }
 
 
-    function pre_pay($amtt, $first_name, $last_name, $tremail, $ref, $userId, $txid,$keyrr)
+    function pre_pay($amtt, $first_name, $last_name, $tremail, $ref, $userId, $txid, $keyrr)
     {
 
 
@@ -1883,11 +1842,11 @@ if (!function_exists('tokenkey')) {
         $url = env('PELPAYURL');
         $databody = array(
             "amount" => $amtt ?? 200,
-            "currency" =>  "NGN",
+            "currency" => "NGN",
             "merchantRef" => $ref,
-            "narration" =>  "Card Payment",
+            "narration" => "Card Payment",
             "callBackUrl" => url('') . "/response",
-            "notificationUrl" => url('')."/api/charm/callback",
+            "notificationUrl" => url('') . "/api/charm/callback",
             "splitCode" => "",
             "shouldTokenizeCard" => false,
             "customer" => array(
@@ -1900,7 +1859,7 @@ if (!function_exists('tokenkey')) {
                 "customerCity" => "",
                 "customerStateCode" => "",
                 "customerPostalCode" => "",
-                "customerCountryCode"  => "NG"
+                "customerCountryCode" => "NG"
             ),
 //
 //            "channels" => array(
@@ -1912,7 +1871,7 @@ if (!function_exists('tokenkey')) {
 
             "integrationKey" => env('PELPAYTOKEN'),
             "mcc" => 0,
-            "merchantDescriptor" =>  $ref
+            "merchantDescriptor" => $ref
         );
 
 
@@ -1964,7 +1923,7 @@ if (!function_exists('verifypelpay')) {
         $token = tokenkey();
         $url = env('PELPAYURL');
         $curl = curl_init();
-        $url2= "$url/api/Transaction/bypaymentreference/$pref";
+        $url2 = "$url/api/Transaction/bypaymentreference/$pref";
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url2,
             CURLOPT_RETURNTRANSFER => true,
@@ -1986,13 +1945,16 @@ if (!function_exists('verifypelpay')) {
 
         dd($var);
 
+
         if ($var->requestSuccessful == true) {
 
-            if($var->responseData->message == "Processing"){
+            if ($var->responseData->message == "Processing") {
                 return 0;
             }
 
-            if($var->responseData->transactionStatus == "Successful" && $var->responseData->message == "Successful:Correct amount" ){
+            if ($var->responseData->transactionStatus == "Successful" && $var->responseData->message == "Successful:Correct amount") {
+
+
                 try {
 
                     $status = Transfertransaction::where('account_no', $acc_no)->first()->status ?? null;
@@ -2020,32 +1982,22 @@ if (!function_exists('verifypelpay')) {
 
                     }
 
-                    $paid_amt =  Transfertransaction::where('account_no', $acc_no)->first()->amount_paid ?? null;
-                    $amt_to_pay =  Transfertransaction::where('account_no', $acc_no)->first()->amount_to_pay ?? null;
+                    $paid_amt = Transfertransaction::where('account_no', $acc_no)->first()->amount_paid ?? null;
+                    $amt_to_pay = Transfertransaction::where('account_no', $acc_no)->first()->amount_to_pay ?? null;
 
 
-
-
-                    if($paid_amt == $amt_to_pay){
+                    if ($paid_amt == $amt_to_pay) {
                         $amount = $user_amount;
-                    }else{
+                    } else {
                         $amount = $user_amount - 100;
                     }
-
 
 
                     Transfertransaction::where('account_no', $acc_no)->increment('amount_paid', $amount);
                     $trx = Transfertransaction::where('account_no', $acc_no)->first() ?? null;
 
 
-
-
-
-
                     if ($trx != null) {
-
-
-
 
 
                         $set = Setting::where('id', 1)->first();
@@ -2054,9 +2006,6 @@ if (!function_exists('verifypelpay')) {
                         } else {
                             $p_amount = $amount - $set->psb_charge;
                         }
-
-
-
 
 
                         if ($trx->ststus == 0) {
@@ -2106,7 +2055,7 @@ if (!function_exists('verifypelpay')) {
                             Transfertransaction::where('account_no', $acc_no)->update(['status' => 4, 'resolve' => 1]);
 
 
-                            $type ="epayment";
+                            $type = "epayment";
                             $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type, $session_id);
 
                             return response()->json([
@@ -2116,374 +2065,37 @@ if (!function_exists('verifypelpay')) {
 
 
                             $data['amount'] = $amount;
-                $data['code'] = 4;
-                return $data;
+                            $data['code'] = 4;
+                            return $data;
+                        }
+
+
+                    } else {
+                        $message = "====> Fools trying to do stuffs \n
+            =======>" . json_decode($var);
+                        send_notification($message);
+                        return null;
+                    }
+                } catch (\Exception $th) {
+                    return $th->getMessage();
+                }
+
             }
-
-
-        } else {
-            $message = "====> Fools trying to do stuffs \n
-            =======>".json_decode($var);
-            send_notification($message);
-            return null;
-        }
-    }
-}
-
-
-
-
-if (!function_exists('verify_payment')) {
-
-    function verify_payment($ref)
-    {
-        $token = tokenkey();
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.pelpay.africa/api/Transaction/bypaymentreference/$ref",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
-                "Authorization: Bearer $token"
-            ),
-        ));
-
-        $var2 = curl_exec($curl);
-        curl_close($curl);
-        $var = json_decode($var2);
-        $status = $var->requestSuccessful ?? null;
-
-
-        if ($status == true) {
-            $data['transactionStatus'] = $var->responseData->transactionStatus;
-            $data['amount'] = $var->responseData->amountCollected;
-            $data['merchantReference'] = $var->responseData->merchantReference;
-            $data['message'] = $var->responseData->message ?? null;
-            $data['amountCollected'] = $var->responseData->amount ?? null;
-
-            return $data;
-        }
-
-            $request = $ref;
-            $message = "Wema Resolve error =======>".json_encode($var2);
-            send_notification($message);
-            return 0;
-
-    }
-}
-
-
-if (!function_exists('verify_payment_woven')) {
-
-    function verify_payment_woven($ref)
-    {
-        $token = env('WOVENKEY');
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.woven.finance/v2/api/transactions?unique_reference=$ref",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
-                "api_secret:$token"
-            ),
-        ));
-
-        $var2 = curl_exec($curl);
-        curl_close($curl);
-        $var = json_decode($var2);
-        $status = $var->status ?? null;
-        $pstatus = $var->data->transactions[0]->status ?? null;
-        $acct_no = $var->data->transactions[0]->unique_reference ?? null;
-
-
-        if ($status == "success" && $pstatus == "PALVS" && $ref == $acct_no) {
-            return 5;
-        }elseif($status == "success" && $pstatus == "ACTIVE" && $ref == $acct_no){
-            $data['amount'] = $var->data->transactions[0]->amount;
-            $data['transactionStatus'] = "Successful";
-            return $data;
-        }elseif($status == "success" && $pstatus == "REVERSE_FAILED" && $ref == $acct_no) {
-            return 4;
-        }elseif($status == "success" && $pstatus == "REVERSED" && $ref == $acct_no) {
-            return 6;
-        }else{
-            return 9;
         }
 
 
-        $request = $ref;
-        $message = "Wema Resolve error =======>".json_encode($var2);
-        send_notification($message);
-        return 0;
-
     }
-}
 
 
-if (!function_exists('crypto_token')) {
+    if (!function_exists('verify_payment')) {
 
-    function crypto_token()
-    {
-
-
-        $databody = array(
-
-            "email" => env('CRYPEMAIL'),
-            "password" => env('CRYPPASS'),
-
-        );
-
-
-        $post_data = json_encode($databody);
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.nowpayments.io/v1/auth',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS =>  $post_data,
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json'
-            ),
-        ));
-
-        $var = curl_exec($curl);
-        curl_close($curl);
-        $var = json_decode($var);
-
-        return $var->token;
-    }
-}
-
-
-if (!function_exists('crypto_currency')) {
-
-
-    function crypto_currency()
-    {
-
-        $key = env("CRYPAPI");
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.nowpayments.io/v1/full-currencies',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                "x-api-key: $key"
-            ),
-        ));
-
-        $var = curl_exec($curl);
-        curl_close($curl);
-        $var = json_decode($var);
-
-
-        return $var->currencies;
-    }
-}
-
-
-if (!function_exists('get_min')) {
-
-    function get_min($to_curr)
-    {
-
-        $key = env("CRYPAPI");
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.nowpayments.io/v1/min-amount?currency_from=$to_curr&currency_to=usd&fiat_equivalent=usd&is_fee_paid_by_user=False",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                "x-api-key: $key"
-            ),
-        ));
-
-        $var = curl_exec($curl);
-        curl_close($curl);
-        $var = json_decode($var);
-
-        return $var->fiat_equivalent;
-    }
-}
-
-if (!function_exists('get_rate')) {
-
-    function get_rate()
-    {
-
-        $key = env('BKEY');
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://issuecards.api.bridgecard.co/v1/issuing/cards/fx-rate',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                "token: Bearer $key"
-            ),
-        ));
-
-        $var = curl_exec($curl);
-        curl_close($curl);
-        $var = json_decode($var);
-
-        $status = $var->status ?? null;
-
-        if ($status == 'success') {
-            return $var->data->{'NGN-USD'} / 100;
-        } else {
-            return 0;
-        }
-    }
-}
-
-
-
-if (!function_exists('estimate')) {
-
-    function estimate($amount, $code)
-    {
-
-
-        $key = env("CRYPAPI");
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.nowpayments.io/v1/estimate?amount=$amount&currency_from=usd&currency_to=$code",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                "x-api-key: $key"
-            ),
-        ));
-
-        $var = curl_exec($curl);
-        curl_close($curl);
-        $var = json_decode($var);
-
-
-        return $var->estimated_amount;
-    }
-}
-
-
-
-if (!function_exists('create_payment')) {
-    function create_payment($amount, $code, $order_id, $order_description)
-    {
-
-        $key = env("CRYPAPI");
-        $databody = array(
-
-            "price_amount" => $amount,
-            "price_currency" => "usd",
-            "pay_currency" => $code,
-            "ipn_callback_url" => url('') . "/crypto-process",
-            "order_id" => $order_id,
-            "order_description" => "Apple Macbook Pro 2019 x 1"
-
-        );
-
-
-        $post_data = json_encode($databody);
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.nowpayments.io/v1/payment',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => $post_data,
-            CURLOPT_HTTPHEADER => array(
-                "x-api-key: $key",
-                'Content-Type: application/json'
-            ),
-        ));
-
-
-        $var = curl_exec($curl);
-        curl_close($curl);
-        $var = json_decode($var);
-
-        $data['payment_id'] = $var->payment_id;
-        $data['payment_status'] = $var->payment_status;
-        $data['pay_address'] = $var->pay_address;
-        $data['price_amount'] = $var->price_amount;
-        $data['pay_amount'] = $var->pay_amount;
-        $data['pay_currency'] = $var->pay_currency;
-        $data['order_id'] = $var->order_id;
-        $data['purchase_id'] = $var->purchase_id;
-        $data['valid_until'] = $var->valid_until;
-
-        return $data;
-    }
-}
-
-
-if (!function_exists('credit_user_wallet')) {
-    function credit_user_wallet($url, $user_email, $amount, $order_id, $type, $session_id)
-    {
-
-
-        try {
-
+        function verify_payment($ref)
+        {
+            $token = tokenkey();
             $curl = curl_init();
-            $data = array(
-                'session_id' => $session_id,
-            );
-            $post_data = json_encode($data);
 
             curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://etopagency.com/api/update-session',
+                CURLOPT_URL => "https://api.pelpay.africa/api/Transaction/bypaymentreference/$ref",
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -2491,6 +2103,119 @@ if (!function_exists('credit_user_wallet')) {
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json',
+                    "Authorization: Bearer $token"
+                ),
+            ));
+
+            $var2 = curl_exec($curl);
+            curl_close($curl);
+            $var = json_decode($var2);
+            $status = $var->requestSuccessful ?? null;
+
+
+            if ($status == true) {
+                $data['transactionStatus'] = $var->responseData->transactionStatus;
+                $data['amount'] = $var->responseData->amountCollected;
+                $data['merchantReference'] = $var->responseData->merchantReference;
+                $data['message'] = $var->responseData->message ?? null;
+                $data['amountCollected'] = $var->responseData->amount ?? null;
+
+                return $data;
+            }
+
+            $request = $ref;
+            $message = "Wema Resolve error =======>" . json_encode($var2);
+            send_notification($message);
+            return 0;
+
+        }
+
+    }
+
+
+    if (!function_exists('verify_payment_woven')) {
+
+        function verify_payment_woven($ref)
+        {
+            $token = env('WOVENKEY');
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://api.woven.finance/v2/api/transactions?unique_reference=$ref",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json',
+                    "api_secret:$token"
+                ),
+            ));
+
+            $var2 = curl_exec($curl);
+            curl_close($curl);
+            $var = json_decode($var2);
+            $status = $var->status ?? null;
+            $pstatus = $var->data->transactions[0]->status ?? null;
+            $acct_no = $var->data->transactions[0]->unique_reference ?? null;
+
+
+            if ($status == "success" && $pstatus == "PALVS" && $ref == $acct_no) {
+                return 5;
+            } elseif ($status == "success" && $pstatus == "ACTIVE" && $ref == $acct_no) {
+                $data['amount'] = $var->data->transactions[0]->amount;
+                $data['transactionStatus'] = "Successful";
+                return $data;
+            } elseif ($status == "success" && $pstatus == "REVERSE_FAILED" && $ref == $acct_no) {
+                return 4;
+            } elseif ($status == "success" && $pstatus == "REVERSED" && $ref == $acct_no) {
+                return 6;
+            } else {
+                return 9;
+            }
+
+
+            $request = $ref;
+            $message = "Wema Resolve error =======>" . json_encode($var2);
+            send_notification($message);
+            return 0;
+
+        }
+    }
+
+
+    if (!function_exists('crypto_token')) {
+
+        function crypto_token()
+        {
+
+
+            $databody = array(
+
+                "email" => env('CRYPEMAIL'),
+                "password" => env('CRYPPASS'),
+
+            );
+
+
+            $post_data = json_encode($databody);
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://api.nowpayments.io/v1/auth',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
                 CURLOPT_POSTFIELDS => $post_data,
                 CURLOPT_HTTPHEADER => array(
                     'Content-Type: application/json'
@@ -2501,117 +2226,346 @@ if (!function_exists('credit_user_wallet')) {
             curl_close($curl);
             $var = json_decode($var);
 
-
-        } catch (\Exception $th) {
-            return $th->getMessage();
+            return $var->token;
         }
-
-        $databody = array(
-            "amount" => $amount,
-            "email" => $user_email,
-            "order_id" => $order_id,
-        );
-
-        $post_data = json_encode($databody);
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => $post_data,
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json'
-            ),
-        ));
-
-        $var = curl_exec($curl);
-
-        curl_close($curl);
-        $var = json_decode($var);
-        $status = $var->status ?? null;
+    }
 
 
-        if($status == true){
-            if($type == "wresolve"){
-                $date = date('dmy h:i:s');
-                $message = "Wema Resolve ======> $user_email has been funded NGN$amount \n| 0n $url \n using reslove | on $date";
-                send_notification_resolve($message);
-            }elseif($type == "presolve"){
+    if (!function_exists('crypto_currency')) {
 
-                $date = date('dmy h:i:s');
-                $message = "9psb Resolve ======> $user_email has been funded NGN$amount \n| 0n $url \n using reslove on $date";
-                send_notification_resolve($message);
 
-            }elseif($type == "woresolve"){
+        function crypto_currency()
+        {
 
-                $date = date('dmy h:i:s');
-                $message = "Woven Resolve ======> $user_email has been funded NGN$amount \n| 0n $url \n using reslove on $date";
-                send_notification_resolve($message);
+            $key = env("CRYPAPI");
+            $curl = curl_init();
 
-            }else{
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://api.nowpayments.io/v1/full-currencies',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => array(
+                    "x-api-key: $key"
+                ),
+            ));
 
-                $message = "$url | $user_email | $amount | $order_id successfully funded";
+            $var = curl_exec($curl);
+            curl_close($curl);
+            $var = json_decode($var);
+
+
+            return $var->currencies;
+        }
+    }
+
+
+    if (!function_exists('get_min')) {
+
+        function get_min($to_curr)
+        {
+
+            $key = env("CRYPAPI");
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://api.nowpayments.io/v1/min-amount?currency_from=$to_curr&currency_to=usd&fiat_equivalent=usd&is_fee_paid_by_user=False",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => array(
+                    "x-api-key: $key"
+                ),
+            ));
+
+            $var = curl_exec($curl);
+            curl_close($curl);
+            $var = json_decode($var);
+
+            return $var->fiat_equivalent;
+        }
+    }
+
+    if (!function_exists('get_rate')) {
+
+        function get_rate()
+        {
+
+            $key = env('BKEY');
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://issuecards.api.bridgecard.co/v1/issuing/cards/fx-rate',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => array(
+                    "token: Bearer $key"
+                ),
+            ));
+
+            $var = curl_exec($curl);
+            curl_close($curl);
+            $var = json_decode($var);
+
+            $status = $var->status ?? null;
+
+            if ($status == 'success') {
+                return $var->data->{'NGN-USD'} / 100;
+            } else {
+                return 0;
+            }
+        }
+    }
+
+
+    if (!function_exists('estimate')) {
+
+        function estimate($amount, $code)
+        {
+
+
+            $key = env("CRYPAPI");
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://api.nowpayments.io/v1/estimate?amount=$amount&currency_from=usd&currency_to=$code",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => array(
+                    "x-api-key: $key"
+                ),
+            ));
+
+            $var = curl_exec($curl);
+            curl_close($curl);
+            $var = json_decode($var);
+
+
+            return $var->estimated_amount;
+        }
+    }
+
+
+    if (!function_exists('create_payment')) {
+        function create_payment($amount, $code, $order_id, $order_description)
+        {
+
+            $key = env("CRYPAPI");
+            $databody = array(
+
+                "price_amount" => $amount,
+                "price_currency" => "usd",
+                "pay_currency" => $code,
+                "ipn_callback_url" => url('') . "/crypto-process",
+                "order_id" => $order_id,
+                "order_description" => "Apple Macbook Pro 2019 x 1"
+
+            );
+
+
+            $post_data = json_encode($databody);
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://api.nowpayments.io/v1/payment',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $post_data,
+                CURLOPT_HTTPHEADER => array(
+                    "x-api-key: $key",
+                    'Content-Type: application/json'
+                ),
+            ));
+
+
+            $var = curl_exec($curl);
+            curl_close($curl);
+            $var = json_decode($var);
+
+            $data['payment_id'] = $var->payment_id;
+            $data['payment_status'] = $var->payment_status;
+            $data['pay_address'] = $var->pay_address;
+            $data['price_amount'] = $var->price_amount;
+            $data['pay_amount'] = $var->pay_amount;
+            $data['pay_currency'] = $var->pay_currency;
+            $data['order_id'] = $var->order_id;
+            $data['purchase_id'] = $var->purchase_id;
+            $data['valid_until'] = $var->valid_until;
+
+            return $data;
+        }
+    }
+
+
+    if (!function_exists('credit_user_wallet')) {
+        function credit_user_wallet($url, $user_email, $amount, $order_id, $type, $session_id)
+        {
+
+
+            try {
+
+                $curl = curl_init();
+                $data = array(
+                    'session_id' => $session_id,
+                );
+                $post_data = json_encode($data);
+
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'https://etopagency.com/api/update-session',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
+                    CURLOPT_POSTFIELDS => $post_data,
+                    CURLOPT_HTTPHEADER => array(
+                        'Content-Type: application/json'
+                    ),
+                ));
+
+                $var = curl_exec($curl);
+                curl_close($curl);
+                $var = json_decode($var);
+
+
+            } catch (\Exception $th) {
+                return $th->getMessage();
+            }
+
+            $databody = array(
+                "amount" => $amount,
+                "email" => $user_email,
+                "order_id" => $order_id,
+            );
+
+            $post_data = json_encode($databody);
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => $url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $post_data,
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json'
+                ),
+            ));
+
+            $var = curl_exec($curl);
+
+            curl_close($curl);
+            $var = json_decode($var);
+            $status = $var->status ?? null;
+
+
+            if ($status == true) {
+                if ($type == "wresolve") {
+                    $date = date('dmy h:i:s');
+                    $message = "Wema Resolve ======> $user_email has been funded NGN$amount \n| 0n $url \n using reslove | on $date";
+                    send_notification_resolve($message);
+                } elseif ($type == "presolve") {
+
+                    $date = date('dmy h:i:s');
+                    $message = "9psb Resolve ======> $user_email has been funded NGN$amount \n| 0n $url \n using reslove on $date";
+                    send_notification_resolve($message);
+
+                } elseif ($type == "woresolve") {
+
+                    $date = date('dmy h:i:s');
+                    $message = "Woven Resolve ======> $user_email has been funded NGN$amount \n| 0n $url \n using reslove on $date";
+                    send_notification_resolve($message);
+
+                } else {
+
+                    $message = "$url | $user_email | $amount | $order_id successfully funded";
+                    send_notification($message);
+
+                }
+
+                return 2;
+
+            } else {
+
+                if ($type == "wresolve") {
+                    $message = "Error Reslove Wema ======>  $url | $user_email | $amount | $order_id" .
+                        "\n\n Funding user Error ===>" . json_encode($var);
+                    send_notification_resolve($message);
+                } elseif ($type == "presolve") {
+                    $message = "Error Reslove PSB ======>  $url | $user_email | $amount | $order_id" .
+                        "\n\n Funding user Error ===>" . json_encode($var);
+                    send_notification_resolve($message);
+
+                } else {
+
+                    $message = "Error Reslove WOVEN ======>  $url | $user_email | $amount | $order_id" .
+                        "\n\n Funding user Error ===>" . json_encode($var);
+                    send_notification_resolve($message);
+
+                }
+
+                $message = "request ======>  $url | $user_email | $amount | $order_id" .
+                    "\n\n Funding user Error ===>" . json_encode($var);
                 send_notification($message);
-
+                return 0;
             }
 
-            return 2;
-
-        }else{
-
-            if($type == "wresolve"){
-                $message ="Error Reslove Wema ======>  $url | $user_email | $amount | $order_id".
-                    "\n\n Funding user Error ===>".json_encode($var);
-                send_notification_resolve($message);
-            }elseif($type == "presolve"){
-                $message ="Error Reslove PSB ======>  $url | $user_email | $amount | $order_id".
-                    "\n\n Funding user Error ===>".json_encode($var);
-                send_notification_resolve($message);
-
-            }else{
-
-                $message ="Error Reslove WOVEN ======>  $url | $user_email | $amount | $order_id".
-                    "\n\n Funding user Error ===>".json_encode($var);
-                send_notification_resolve($message);
-
-            }
-
-            $message ="request ======>  $url | $user_email | $amount | $order_id".
-            "\n\n Funding user Error ===>".json_encode($var);
-            send_notification($message);
-            return 0;
         }
 
     }
 
-}
+    function woven_create($amtt, $first_name, $last_name, $tremail, $phone)
+    {
 
-function woven_create($amtt, $first_name, $last_name, $tremail, $phone){
+        $key = env('WOVENKEY');
 
-    $key = env('WOVENKEY');
-
-      $databody = array(
-          "customer_reference" => $first_name."_".$last_name,
-          "name" => $first_name." ".$last_name,
-          "email" => $tremail,
-          "mobile_number" => $phone,
-          "expires_on" => Carbon::now()->addDay()->format('Y-m-d'),
-          "use_frequency" => 4,
-          "min_amount" => 100,
-          "max_amount" => $amtt,
-          "collection_bank" =>"000017",
-          "callback_url" => url('')."/api/woven/callback",
-          "meta_data" =>[
-              ],
+        $databody = array(
+            "customer_reference" => $first_name . "_" . $last_name,
+            "name" => $first_name . " " . $last_name,
+            "email" => $tremail,
+            "mobile_number" => $phone,
+            "expires_on" => Carbon::now()->addDay()->format('Y-m-d'),
+            "use_frequency" => 4,
+            "min_amount" => 100,
+            "max_amount" => $amtt,
+            "collection_bank" => "000017",
+            "callback_url" => url('') . "/api/woven/callback",
+            "meta_data" => [
+            ],
 
 
-      );
+        );
 
         $post_data = json_encode($databody);
         $curl = curl_init();
@@ -2639,13 +2593,14 @@ function woven_create($amtt, $first_name, $last_name, $tremail, $phone){
 
         $status = $var->status ?? null;
 
-        if($status == true){
+        if ($status == true) {
             $data['account_no'] = $var->data->vnuban;
             $data['bank_name'] = $var->data->bank_name;
-            $data['account_name'] = "WOV/TEAMX/".$var->data->account_name;
+            $data['account_name'] = "WOV/TEAMX/" . $var->data->account_name;
             return $data;
         }
 
 
+    }
 }
 

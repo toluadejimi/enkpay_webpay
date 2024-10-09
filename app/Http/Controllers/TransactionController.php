@@ -125,7 +125,7 @@ class TransactionController extends Controller
 
 
                 Transfertransaction::where('account_no', $request->receiver_account_number)->update([
-                    'amount_paid' => $f_amount
+                    'amount_paid' => $trx->amount
                 ]);
 
 

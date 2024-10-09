@@ -124,6 +124,9 @@ class TransactionController extends Controller
                 }
 
 
+                Transfertransaction::where('account_no', $request->receiver_account_number)->update([
+                    'amount_paid' => $f_amount
+                ]);
 
 
                 User::where('id', $trx->user_id)->increment('main_wallet', $f_amount);

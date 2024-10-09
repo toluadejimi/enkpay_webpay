@@ -200,7 +200,6 @@ class TransactionController extends Controller
                 $session_id = $request->sessionid;
                 $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type,$session_id);
 
-
                 Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 1]);
 
 
@@ -1657,10 +1656,10 @@ class TransactionController extends Controller
 
 
         $get_tramn_id = Transfertransaction::where('ref', $request->trans_id)->first()->ref_trans_id ?? null;
-
         if ($get_tramn_id == null) {
             $trans_id = $request->trans_id;
         } else {
+
             $trans_id = $get_tramn_id;
 
         }
@@ -1681,9 +1680,8 @@ class TransactionController extends Controller
             ->first()->status ?? null;
 
 
-        $amount = Transfertransaction::where('ref_trans_id', $trans_id)
+        $amount = Transfertransaction::where('ref_trans_id', $request->trans_id)
             ->first()->amount_paid ?? 0;
-
 
         $wc_order = Webtransfer::where('trans_id', $trans_id)
             ->first()->wc_order ?? null;

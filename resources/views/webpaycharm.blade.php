@@ -628,6 +628,39 @@
                                             </div>
                                         </div>
 </div>
+<hr>
+<div class = "row mt-3">
+                                                        <div class="col">
+                                                            <div class="d-flex justify-content-start p-1">
+                                                                <h5 class="text-start text-muted">
+                                                                    BANK NAME
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col">
+                                                            <div class="d-flex justify-content-end
+                                                                                   p-1">
+                                                                <h5 style="border-right: 4px; font-size: 15px;"
+
+                                                                    id="text_element">WEMA BANK</h5>
+                                                                <input hidden
+                                                                       value="WEMA BANK"
+                                                                       id="charm_account_name">
+
+                                                                <i style="font-size: 1em; margin-left: 4px"
+                                                                   class="fa fa-copy"
+                                                                   onclick="copyToClipboard('text_element')">
+
+                                                                </i>
+
+
+
+
+                                            </div>
+                                        </div>
+</div>
+
 
                                                     <form action="/verifycharm" method="POST">
                                                     @csrf

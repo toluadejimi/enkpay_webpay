@@ -246,10 +246,11 @@ class CharmController extends Controller
 
         $trans_id = $request->ref;
         $ref = $request->ref;
-        $account_no = $request->account_no;
+        $account_no = $request->charm_account_no;
 
 
-        $p_ref = Transfertransaction::where('ref', $ref)->first() ?? null;
+
+        $p_ref = Transfertransaction::where('account_no', $account_no)->first() ?? null;
         if($p_ref == null){
             return response()->json([
                 'status' => false,
@@ -258,7 +259,7 @@ class CharmController extends Controller
         }
 
 
-        $pref = $p_ref->account_no;
+        $pref = $p_ref->ref;
         $amount = $p_ref->amount;
 
         $verify = verifypelpay($pref, $amount);

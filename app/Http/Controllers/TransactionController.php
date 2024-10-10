@@ -580,6 +580,7 @@ class TransactionController extends Controller
     {
 
 
+
         $data['key'] = $request->key;
         $data['amount'] = $request->amount;
         $data['email'] = $request->email ?? "example@gmail.com";;
@@ -934,7 +935,9 @@ class TransactionController extends Controller
 
 
 
+
         if ($set->charm == 1) {
+
             $faker = Factory::create();
             if($request->amount > 15000){
                 $data['pamount'] = $request->amount + 300;

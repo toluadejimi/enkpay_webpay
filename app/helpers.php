@@ -1896,6 +1896,7 @@ if (!function_exists('tokenkey')) {
         ));
 
         $var = curl_exec($curl);
+
         curl_close($curl);
         $var = json_decode($var);
 
@@ -1917,6 +1918,8 @@ if (!function_exists('tokenkey')) {
 
 
 if (!function_exists('verifypelpay')) {
+
+
 
     function verifypelpay($pref, $amount)
     {
@@ -1948,16 +1951,20 @@ if (!function_exists('verifypelpay')) {
 
         if ($var->requestSuccessful == true) {
 
-            if ($var->responseData->message == "Processing") {
+            if ($var->responseData->transactionStatus == "Processing") {
                 return 0;
             }
 
-            if ($var->responseData->transactionStatus == "Successful" && $var->responseData->message == "Successful:Correct amount") {
+            if ($var->responseData->transactionStatus == "Successful" && $var->responseData->message == "Successful") {
 
 
                 try {
 
+
+                    $acc_no = Transfertransaction::where('ref', $pref)->first()->account_no ?? null;
                     $status = Transfertransaction::where('account_no', $acc_no)->first()->status ?? null;
+                    $trx = Transfertransaction::where('account_no', $acc_no)->first() ?? null;
+
                     if ($status == 4) {
                         return response()->json([
                             'status' => false,
@@ -1965,6 +1972,7 @@ if (!function_exists('verifypelpay')) {
                         ]);
 
                     }
+
 
 
                     $trx = Transfertransaction::where('account_no', $acc_no)
@@ -1982,8 +1990,9 @@ if (!function_exists('verifypelpay')) {
 
                     }
 
-                    $paid_amt = Transfertransaction::where('account_no', $acc_no)->first()->amount_paid ?? null;
-                    $amt_to_pay = Transfertransaction::where('account_no', $acc_no)->first()->amount_to_pay ?? null;
+
+
+                    $paid_amt = Transfertransaction::where('account_no', $acc_no)->update(['amount_paid', $var->responseData->amount]) ?? null;
 
 
                     if ($paid_amt == $amt_to_pay) {
@@ -2548,22 +2557,13 @@ if (!function_exists('verifypelpay')) {
     function woven_create($amtt, $first_name, $last_name, $tremail, $phone)
     {
 
+
         $key = env('WOVENKEY');
 
         $databody = array(
-            "customer_reference" => $first_name . "_" . $last_name,
-            "name" => $first_name . " " . $last_name,
-            "email" => $tremail,
-            "mobile_number" => $phone,
-            "expires_on" => Carbon::now()->addDay()->format('Y-m-d'),
-            "use_frequency" => 4,
-            "min_amount" => 100,
-            "max_amount" => $amtt,
+            "amount" => $amtt,
             "collection_bank" => "000017",
             "callback_url" => url('') . "/api/woven/callback",
-            "meta_data" => [
-            ],
-
 
         );
 
@@ -2571,7 +2571,7 @@ if (!function_exists('verifypelpay')) {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.woven.finance/v2/api/vnubans/create_customer',
+            CURLOPT_URL => 'https://api.woven.finance/v2/api/nuban/dynamic',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -2587,16 +2587,16 @@ if (!function_exists('verifypelpay')) {
         ));
 
         $var = curl_exec($curl);
+
         curl_close($curl);
         $var = json_decode($var);
+        $status = $var->message ?? null;
 
 
-        $status = $var->status ?? null;
-
-        if ($status == true) {
+        if ($status == "The process was completed successfully") {
             $data['account_no'] = $var->data->vnuban;
-            $data['bank_name'] = $var->data->bank_name;
-            $data['account_name'] = "WOV/TEAMX/" . $var->data->account_name;
+            $data['bank_name'] = "WEMA";
+            $data['account_name'] = "TEAMX";
             return $data;
         }
 

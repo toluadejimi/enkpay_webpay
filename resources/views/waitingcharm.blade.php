@@ -163,7 +163,7 @@
                 return;
             }
 
-            const url = "{{ url('') }}/verifycharm?account_no={{$account_no}}&amount={{$amount}}&ref={{$ref}}&pref={{$pref}}";
+            const url = "{{ url('') }}/verifycharmnow?account_no={{$account_no}}&amount={{$amount}}&ref={{$ref}}&pref={{$pref}}";
             var audio = new Audio('{{url('')}}/public/assets/sound.wav');
 
             fetch(url)
@@ -179,9 +179,15 @@
 
                     } else if (data.status === 'paid') {
                         audio.play();
-
                         window.location.href = "{{ url('') }}/paid-success?trans_id={{$ref}}";
+                    }else if (data.status === 'partial') {
+                        audio.play();
+                        window.location.href = "{{ url('') }}/ppay?trans_id={{$ref}}";
+                    }else if (data.status === 'partialpaid') {
+                        audio.play();
+                        window.location.href = "{{ url('') }}/ppay?trans_id={{$ref}}";
                     }
+
                 })
                 .catch(error => {
                     console.error(error);

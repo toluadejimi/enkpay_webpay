@@ -1946,7 +1946,6 @@ if (!function_exists('verifypelpay')) {
         curl_close($curl);
         $var = json_decode($var);
 
-        dd($var);
 
 
         if ($var->requestSuccessful == true) {
@@ -1958,20 +1957,32 @@ if (!function_exists('verifypelpay')) {
             if ($var->responseData->transactionStatus == "Successful" && $var->responseData->message == "Successful") {
 
 
+
+
+
                 try {
+
 
 
                     $acc_no = Transfertransaction::where('ref', $pref)->first()->account_no ?? null;
                     $status = Transfertransaction::where('account_no', $acc_no)->first()->status ?? null;
                     $trx = Transfertransaction::where('account_no', $acc_no)->first() ?? null;
+                    $amount = Transfertransaction::where('account_no', $acc_no)->first()->amount ?? null;
+
 
                     if ($status == 4) {
-                        return response()->json([
-                            'status' => false,
-                            'message' => "Transaction has already been funded",
-                        ]);
+
+                        $ref=$trx->ref_trans_id;
+                        $url = url('')."/success?trans_id=$ref&amount=$amount";
+                        $data['url'] = $url;
+                        $data['code'] = 6;
+                        return $data;
 
                     }
+
+
+
+
 
 
 
@@ -1992,44 +2003,39 @@ if (!function_exists('verifypelpay')) {
 
 
 
-                    $paid_amt = Transfertransaction::where('account_no', $acc_no)->update(['amount_paid', $var->responseData->amount]) ?? null;
 
 
-                    if ($paid_amt == $amt_to_pay) {
-                        $amount = $user_amount;
-                    } else {
-                        $amount = $user_amount - 100;
-                    }
-
+                   $paid_amt = Transfertransaction::where('account_no', $acc_no)->update(['amount_paid' => $amount]) ?? null;
 
                     Transfertransaction::where('account_no', $acc_no)->increment('amount_paid', $amount);
                     $trx = Transfertransaction::where('account_no', $acc_no)->first() ?? null;
 
-
+                    $main_amount = $var->responseData->amountCollected;
                     if ($trx != null) {
-
 
                         $set = Setting::where('id', 1)->first();
                         if ($amount > 15000) {
-                            $p_amount = $amount - $set->psb_cap;
+                            $p_amount = $main_amount - $set->psb_cap;
                         } else {
-                            $p_amount = $amount - $set->psb_charge;
+                            $p_amount = $main_amount - $set->psb_charge;
                         }
 
 
-                        if ($trx->ststus == 0) {
-                                Transfertransaction::where('account_no', $acc_no)
-                                    ->where([
-                                        'status' => 0
-                                    ])->update(['status' => 5, 'session_id' => $session_id]) ?? null;
+
+
+
+                        if ($trx->status == 0) {
+
+
 
 
                             //fund Vendor
                             $trx = Transfertransaction::where('account_no', $acc_no)->first();
-
                             User::where('id', $trx->user_id)->increment('main_wallet', $p_amount);
                             $balance = User::where('id', $trx->user_id)->first()->main_wallet;
                             $user = User::where('id', $trx->user_id)->first();
+                            $session_id = Transfertransaction::where('account_no', $acc_no)->first()->session_id ?? null;
+
 
 
                             $url = Webkey::where('key', $trx->key)->first()->url_fund ?? null;
@@ -2045,7 +2051,7 @@ if (!function_exists('verifypelpay')) {
                             $trasnaction->type = "webpay";
                             $trasnaction->transaction_type = "VirtualFundWallet";
                             $trasnaction->title = "Wallet Funding";
-                            $trasnaction->main_type = "WOVEN";
+                            $trasnaction->main_type = "CHARM";
                             $trasnaction->credit = $p_amount;
                             $trasnaction->note = "Transaction Successful | Web Pay | for $user_email";
                             $trasnaction->fee = $fee ?? 0;
@@ -2090,6 +2096,33 @@ if (!function_exists('verifypelpay')) {
                 }
 
             }
+            if ($var->responseData->transactionStatus == "PartPayment" && $var->responseData->message == "Incomplete Amount Received") {
+
+                $camt = $var->responseData->amountCollected;
+                $namt = $var->responseData->amount;
+
+
+                $ck_url = Transfertransaction::where('ref', $pref)->first()->url ?? null;
+
+                if($ck_url != null){
+                    $data['code'] = 7;
+                }
+
+                $acc_no = Transfertransaction::where('ref', $pref)->first()->account_no ?? null;
+
+                $ref = Transfertransaction::where('ref', $pref)->first()->amount ?? null;
+                $expected_amount = Transfertransaction::where('ref', $pref)->first()->amount ?? null;
+
+                $amount_remain = $namt - $camt;
+
+                $url = url('')."/part-payment?expected_amount=$namt&amount_paid=$camt&acct_no=$acc_no&amount_remain=$amount_remain&ref=$pref";
+                Transfertransaction::where('ref', $pref)->update(['url' => $url]);
+                $data['code'] = 5;
+
+                return $data;
+
+            }
+
         }
 
 
@@ -2434,6 +2467,8 @@ if (!function_exists('verifypelpay')) {
     if (!function_exists('credit_user_wallet')) {
         function credit_user_wallet($url, $user_email, $amount, $order_id, $type, $session_id)
         {
+
+
 
 
             try {

@@ -933,9 +933,6 @@ class TransactionController extends Controller
 
 
 
-
-
-
         if ($set->charm == 1) {
 
             $faker = Factory::create();
@@ -3059,6 +3056,24 @@ class TransactionController extends Controller
 
 
     }
+
+
+    public function part_payment(request $request)
+    {
+
+        $data['expected_amount'] = $request->expected_amount;
+        $data['amount_paid'] = $request->amount_paid;
+        $data['acct_no'] = $request->acct_no;
+        $data['amount_remain'] = $request->amount_remain;
+        $data['ref'] = $request->ref;
+
+
+
+
+        return view('part-payment', $data);
+
+    }
+
 
 
     public function payment_search(request $request)

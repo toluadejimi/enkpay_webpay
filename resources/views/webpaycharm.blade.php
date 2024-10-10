@@ -634,11 +634,11 @@
 
 
 
-                                                                <input type="text" id="trx_id" name="trx_id" hidden value="{{ $trans_id}}">
+                                                                <input type="text" id="trx_id" name="trx_id" hidden value="${paym_ref}">
                                                         <input type="text" id="webHook" name="webhook" hidden value="{{ $webhook}}">
                                                         <input type="text" id="Amount" hidden name="amount" value="{{ $amount }}">
-                                                        <input type="text" id="Amount" hidden name="charm_account_no" value="${charmaccountNo}">
-                                                        <input type="text" id="pref" hidden name="pref" value="{{$payment_ref}}">
+                                                        <input type="text" id="Amount" hidden name="account_no" value="${charmaccountNo}">
+                                                        <input type="text" id="pref" hidden name="pref" value="${paym_ref}">
 
 
 

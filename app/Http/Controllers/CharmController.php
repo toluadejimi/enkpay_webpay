@@ -10,6 +10,7 @@ use App\Models\Webkey;
 use App\Models\Webtransfer;
 use Faker\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CharmController extends Controller
 {
@@ -203,7 +204,7 @@ class CharmController extends Controller
             $trasnaction->ref_trans_id = $trx->trans_id;
             $trasnaction->amount = $trx->amount;
             $trasnaction->transaction_type = "WEBTRANSFER";
-            $trasnaction->bank = $request->bankName;
+            $trasnaction->bank = "CHARM";
             $trasnaction->ref = $request->pay_ref;
             $trasnaction->account_no = $request->accountNo;
             $trasnaction->v_account_name = $request->accountName;
@@ -246,7 +247,7 @@ class CharmController extends Controller
 
         $trans_id = $request->ref;
         $ref = $request->ref;
-        $account_no = $request->charm_account_no;
+        $account_no = $request->account_no;
 
 
 
@@ -263,6 +264,7 @@ class CharmController extends Controller
         $amount = $p_ref->amount;
 
         $verify = verifypelpay($pref, $amount);
+
 
         if($verify == 0){
 
@@ -292,6 +294,68 @@ class CharmController extends Controller
             //return view('success', compact('webhook'));
         }
 
+
+        if($verify['code'] == 5){
+            return response()->json([
+                'status' => 'partial'
+            ], 200);
+        }
+
+        if($verify['code'] == 7){
+            return response()->json([
+                'status' => 'partialpaid'
+            ], 200);
+        }
+
+
+        if($verify['code'] == 6){
+
+            return response()->json([
+                'status' => 'paid'
+            ], 200);
+
+        }
+
     }
+
+
+    public function verifycharm(Request $request)
+    {
+
+
+        $ref = Transfertransaction::where('ref', $request->trx_id)->first() ?? null;
+        $tref = Transfertransaction::where('ref', $request->trx_id)->first() ?? null;
+        $usr = User::where('id', $ref->user_id)->first();
+
+        $message = "Charm Payment Initiated |" . $request->trx_id. "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
+        Log::info('Transfer Initiated', ['message' => $message]);
+
+
+        $data['ref'] = $request->trx_id;
+        $data['account_no'] = $request->account_no;
+        $data['amount'] = $ref->amount;
+        $data['pref'] = $tref->pay_ref  ?? null;
+        $data['title'] = "Payment Confirmation";
+
+        return view('waitingcharm', $data);
+
+
+    }
+
+    public function ppay(Request $request)
+    {
+
+        $url = Transfertransaction::where('ref', $request->trans_id)->first()->url ?? null;
+
+
+        $data['url'] = $url;
+        return view('ppayment', $data);
+
+
+    }
+
+
+
+//8267253893
 
 }

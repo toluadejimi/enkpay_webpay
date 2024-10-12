@@ -1838,13 +1838,16 @@ if (!function_exists('tokenkey')) {
     {
 
 
+        $recepit = "Invoice#".random_int(0000, 9999);
+
+
         $token = tokenkey();
         $url = env('PELPAYURL');
         $databody = array(
             "amount" => $amtt ?? 200,
             "currency" => "NGN",
             "merchantRef" => $ref,
-            "narration" => "Card Payment",
+            "narration" => $recepit,
             "callBackUrl" => url('') . "/response",
             "notificationUrl" => url('') . "/api/charm/callback",
             "splitCode" => "",

@@ -1954,7 +1954,8 @@ if (!function_exists('verifypelpay')) {
         if ($var->requestSuccessful == true) {
 
             if ($var->responseData->transactionStatus == "Processing") {
-                return 0;
+                $data['code'] = 0;
+                return $data;
             }
 
             if ($var->responseData->transactionStatus == "Successful" && $var->responseData->message == "Successful") {
@@ -2127,6 +2128,9 @@ if (!function_exists('verifypelpay')) {
             }
 
         }
+
+        $data['code'] = 0;
+        return $data;
 
 
     }

@@ -244,8 +244,12 @@ class CharmController extends Controller
 
         $verify = verifypelpay($pref, $amount);
 
+        //dd($verify['code']);
 
-        if($verify['code'] == 0){
+
+
+
+        if($verify['code'] == "0"){
             return response()->json([
                 'status' => 'pending',
                 'data' => $verify

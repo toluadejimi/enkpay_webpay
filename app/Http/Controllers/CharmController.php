@@ -43,14 +43,10 @@ class CharmController extends Controller
     public function charm_webhook(Request $request){
 
 
-        $message = json_encode($request->all());
-        send_notification($message);
-
-        return response()->json([
-            'status' => true
-        ], 200);
 
 
+
+        $pref = $request->PaymentReference;
 
         $acc_no = $request->nuban;
         $user_amount = $request->amount;
@@ -59,7 +55,7 @@ class CharmController extends Controller
         $fee = $request->fee;
 
 
-        $status = Transfertransaction::where('account_no', $acc_no)->first()->status ?? null;
+        $status = Transfertransaction::where('ref', $pref)->first()->status ?? null;
         if ($status == 4) {
             return response()->json([
                 'status' => false,
@@ -69,7 +65,7 @@ class CharmController extends Controller
         }
 
 
-        $trx = Transfertransaction::where('account_no', $acc_no)
+        $trx = Transfertransaction::where('ref', $pref)
             ->where([
                 'status' => 0
             ])->first() ?? null;
@@ -84,10 +80,8 @@ class CharmController extends Controller
 
         }
 
-        $paid_amt =  Transfertransaction::where('account_no', $acc_no)->first()->amount_paid ?? null;
-        $amt_to_pay =  Transfertransaction::where('account_no', $acc_no)->first()->amount_to_pay ?? null;
-
-
+        $paid_amt =  Transfertransaction::where('ref', $pref)->update('amount_paid', $request->AmountCollected) ?? null;
+        $amt_to_pay =  Transfertransaction::wherewhere('ref', $pref)->update('amount_to_pay', $request->Amount) ?? null;
 
 
         if($paid_amt == $amt_to_pay){
@@ -97,18 +91,11 @@ class CharmController extends Controller
         }
 
 
-
-        Transfertransaction::where('account_no', $acc_no)->increment('amount_paid', $amount);
-        $trx = Transfertransaction::where('account_no', $acc_no)->first() ?? null;
-
-
-
+        $trx = Transfertransaction::where('ref', $pref)->first() ?? null;
 
 
 
         if ($trx != null) {
-
-
 
 
 
@@ -120,18 +107,15 @@ class CharmController extends Controller
             }
 
 
-
-
-
             if ($trx->ststus == 0) {
-                    Transfertransaction::where('account_no', $acc_no)
+                    Transfertransaction::where('ref', $pref)
                         ->where([
                             'status' => 0
-                        ])->update(['status' => 5, 'session_id' => $session_id]) ?? null;
+                        ])->update(['status' => 5]) ?? null;
 
 
                 //fund Vendor
-                $trx = Transfertransaction::where('account_no', $acc_no)->first();
+                $trx = Transfertransaction::where('ref', $pref)->first();
 
                 User::where('id', $trx->user_id)->increment('main_wallet', $p_amount);
                 $balance = User::where('id', $trx->user_id)->first()->main_wallet;
@@ -151,7 +135,7 @@ class CharmController extends Controller
                 $trasnaction->type = "webpay";
                 $trasnaction->transaction_type = "VirtualFundWallet";
                 $trasnaction->title = "Wallet Funding";
-                $trasnaction->main_type = "WOVEN";
+                $trasnaction->main_type = "CHARM";
                 $trasnaction->credit = $p_amount;
                 $trasnaction->note = "Transaction Successful | Web Pay | for $user_email";
                 $trasnaction->fee = $fee ?? 0;
@@ -166,8 +150,7 @@ class CharmController extends Controller
                 $message = "Business funded | $trx->manual_acc_ref | $p_amount | $user->first_name " . " " . $user->last_name;
                 send_notification($message);
 
-                Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 4]);
-                Transfertransaction::where('account_no', $acc_no)->update(['status' => 4, 'resolve' => 1]);
+                Transfertransaction::where('ref', $pref)->update(['status' => 4, 'resolve' => 1]);
 
 
                 $type ="epayment";

@@ -42,6 +42,9 @@ class CharmController extends Controller
 
     public function charm_webhook(Request $request){
 
+
+        return response()->json(['status'=>true]);
+
         $pref = $request->PaymentReference;
 
         $acc_no = $request->nuban;
@@ -49,6 +52,9 @@ class CharmController extends Controller
         $session_id = $request->unique_reference;
         $payable = $request->amount_payable;
         $fee = $request->fee;
+
+
+
 
 
         $status = Transfertransaction::where('ref', $pref)->first()->status ?? null;
@@ -244,12 +250,9 @@ class CharmController extends Controller
 
         $verify = verifypelpay($pref, $amount);
 
-        //dd($verify['code']);
 
 
-
-
-        if($verify['code'] == "0"){
+        if($verify['code'] == 0){
             return response()->json([
                 'status' => 'pending',
                 'data' => $verify

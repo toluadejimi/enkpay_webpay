@@ -77,7 +77,7 @@ class CharmController extends Controller
         }
 
         $paid_amt =  Transfertransaction::where('ref', $pref)->update(['amount_paid' => $request->AmountCollected]) ?? null;
-        $amt_to_pay =  Transfertransaction::wherewhere('ref', $pref)->update(['amount_to_pay' => $request->Amount]) ?? null;
+        $amt_to_pay =  Transfertransaction::where('ref', $pref)->update(['amount_to_pay' => $request->Amount]) ?? null;
 
 
         if($paid_amt == $amt_to_pay){

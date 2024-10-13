@@ -42,10 +42,6 @@ class CharmController extends Controller
 
     public function charm_webhook(Request $request){
 
-
-
-
-
         $pref = $request->PaymentReference;
 
         $acc_no = $request->nuban;

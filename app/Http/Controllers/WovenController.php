@@ -96,6 +96,10 @@ class WovenController extends Controller
 
     public function woven_webhook(Request $request){
 
+
+        $message = json_encode($request->all());
+        send_notification($message);
+
         $acc_no = $request->nuban;
         $user_amount = $request->amount;
         $session_id = $request->unique_reference;

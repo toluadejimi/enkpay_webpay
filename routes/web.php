@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CableController;
 use App\Http\Controllers\CharmController;
+use App\Http\Controllers\ProcessissuesController;
 use App\Http\Controllers\VerifyController;
 use App\Http\Controllers\WovenController;
 use Illuminate\Support\Facades\Route;
@@ -107,6 +108,14 @@ Route::post('custom-pay-now', [TransactionController::class, 'custom_pay_now']);
 
 
 Route::get('payment', [VerifyController::class, 'verify_view']);
+
+Route::get('process-issues', [ProcessissuesController::class, 'process_issues']);
+Route::post('process-now', [ProcessissuesController::class, 'process_now']);
+
+
+
+
+
 Route::get('login', [VerifyController::class, 'login']);
 
 Route::post('login-now', [VerifyController::class, 'login_now']);

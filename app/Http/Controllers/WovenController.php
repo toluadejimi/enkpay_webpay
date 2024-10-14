@@ -153,9 +153,6 @@ class WovenController extends Controller
         if ($trx != null) {
 
 
-
-
-
             $set = Setting::where('id', 1)->first();
             if ($amount > 15000) {
                 $p_amount = $amount - $set->psb_cap;

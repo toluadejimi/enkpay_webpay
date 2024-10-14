@@ -269,6 +269,7 @@
 
             </div>
 
+            <a href="/process-issues" class="btn btn-warning btn-md center-block my-4">Process Transaction</a>
             <a href="/all-issues" class="btn btn-primary btn-md center-block">All Issues</a>
 
         </div>

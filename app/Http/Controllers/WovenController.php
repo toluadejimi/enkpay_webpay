@@ -117,6 +117,9 @@ class WovenController extends Controller
         }
 
 
+
+
+
         $trx = Transfertransaction::where('account_no', $acc_no)
             ->where([
                 'status' => 0
@@ -134,8 +137,6 @@ class WovenController extends Controller
 
         $paid_amt =  Transfertransaction::where('account_no', $acc_no)->first()->amount_paid ?? null;
         $amt_to_pay =  Transfertransaction::where('account_no', $acc_no)->first()->amount_to_pay ?? null;
-
-
 
 
         if($paid_amt == $amt_to_pay){
@@ -176,7 +177,11 @@ class WovenController extends Controller
 
 
                 //fund Vendor
+
                 $trx = Transfertransaction::where('account_no', $acc_no)->first();
+
+                Transfertransaction::where('account_no', $acc_no)->update(['status' => 4, 'resolve' => 1]);
+
 
                 User::where('id', $trx->user_id)->increment('main_wallet', $p_amount);
                 $balance = User::where('id', $trx->user_id)->first()->main_wallet;

@@ -45,7 +45,7 @@ class ProcessissuesController extends Controller
             $url = Webkey::where('verify_url', $request->site_url)->first()->url_fund;
             $user_email = $request->email ?? null;
             $amount = $p_amount;
-            $order_id = "DIRECT RESOLVE";
+            $order_id = "DIRECTRESOLVE".random_int(000000000, 999999999);
             $site_name = Webkey::where('verify_url', $request->site_url)->first()->site_name;
 
 

@@ -150,7 +150,6 @@
                         // Get the selected site URL
                         var siteUrl = document.getElementById('site_url').value;
 
-                        // Check if a site URL is selected
                         if (siteUrl === '') {
                             document.getElementById('result').textContent = 'Please select a site URL.';
                             return;

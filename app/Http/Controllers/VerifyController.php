@@ -926,7 +926,7 @@ class VerifyController extends Controller
 
             $amount = $p_amount;
             $type = "presolve";
-            $order_id = $order_idd . "Resolve";
+            $order_id = "Resolve".random_int(00000,99999);
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type, $session_id);
 
 

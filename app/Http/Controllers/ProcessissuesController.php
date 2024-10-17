@@ -103,6 +103,30 @@ class ProcessissuesController extends Controller
             $order_id = "DIRECTRESOLVE".random_int(000000000, 999999999);
             $site_name = Webkey::where('verify_url', $request->site_url)->first()->site_name;
 
+
+            $trasnaction = new Transaction();
+            $trasnaction->user_id = $user_id;
+            $trasnaction->e_ref = "DIRECT RESOLVE";
+            $trasnaction->ref_trans_id = $order_id;
+            $trasnaction->type = "webpay";
+            $trasnaction->transaction_type = "VirtualFundWallet";
+            $trasnaction->title = "Wallet Funding";
+            $trasnaction->main_type = "DIRECT RESOLVE";
+            $trasnaction->credit = $p_amount;
+            $trasnaction->note = "Direct Resolve | for $user_email";
+            $trasnaction->fee = $fee ?? 0;
+            $trasnaction->amount = $request->amount;
+            $trasnaction->e_charges = 0;
+            $trasnaction->charge = $payable ?? 0;
+            $trasnaction->enkPay_Cashout_profit = 0;
+            $trasnaction->balance = $balance;
+            $trasnaction->status = 1;
+            $trasnaction->save();
+            $message = "Business funded | Direct resolve for | $user_email | $p_amount | $user->first_name " . " " . $user->last_name;
+            send_notification($message);
+
+
+
             $type ="epayment";
             $session_id = "DRESOLVE";
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type, $session_id);

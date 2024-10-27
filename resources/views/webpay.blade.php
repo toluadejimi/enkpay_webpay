@@ -283,10 +283,6 @@
 </div>
 
 
-
-
-@include('ads')
-
 <div class="my-4 d-flex justify-content-center">
     <h4>Choose your preferred payment method
     </h4>
@@ -1046,6 +1042,9 @@
     <a href="decline?trans_id={{ $trans_id }}&key={{ $key }}" class="tf-btn danger large">Cancel
         Transaction</a>
 </div>
+
+
+@include('ads')
 
 
 <script src="{{ url('') }}/public/assets/dist/js/bootstrap.bundle.min.js"></script>

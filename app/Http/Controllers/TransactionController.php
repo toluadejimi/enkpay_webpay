@@ -2967,6 +2967,7 @@ class TransactionController extends Controller
         $data['account_no'] = $request->account_no;
         $data['amount'] = $ref->amount;
         $data['title'] = "Payment Confirmation";
+        $data['ads'] = Advert::inRandomOrder()->first() ?? null;
 
         return view('waiting', $data);
 

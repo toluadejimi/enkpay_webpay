@@ -124,10 +124,15 @@
             </div>
 
 
+
             <hr>
 
 
-            @if ($errors->any())
+            @include('ads')
+
+
+
+        @if ($errors->any())
                 <div class="alert alert-danger my-4">
                     <ul>
                         @foreach ($errors->all() as $error)

@@ -41,6 +41,7 @@
         </div>
     </div>
 
+    @include('ads')
 
     <div class="my-4 d-flex justify-content-center">
         <h4>Choose your preferred payment method

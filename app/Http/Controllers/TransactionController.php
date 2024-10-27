@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advert;
 use App\Models\CardwebTransaction;
 use App\Models\Charge;
 use App\Models\CompletedWebtransfer;
@@ -1021,6 +1022,7 @@ class TransactionController extends Controller
         $data['woven'] = $set->woven;
         $data['support_channel'] = Webkey::where('key', $request->key)->first()->support ?? null;
         $data['support_number'] = Webkey::where('key', $request->key)->first()->support_number ?? null;
+        $data['ads'] = Advert::inRandomOrder()->first() ?? null;
 
 
 
@@ -1092,7 +1094,6 @@ class TransactionController extends Controller
 
 
         }elseif($data['woven'] == 1 && $data['charm'] == 0 && $data['palmpay_transfer'] == 0  &&  $data['opay_transfer'] == 0 && $data['ninepsb'] == 1 ){
-
 
         $views = ['webpay', 'webpaywoven'];
         }else{

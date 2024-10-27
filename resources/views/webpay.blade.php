@@ -208,37 +208,37 @@
 </div>
 
 
-<div class="modal fade" id="warning" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="heading">
-                <h2 class="text-center text-danger my-2">Update !!!!</h2>
-                <h6 class="text-muted text-center mb-3">Please read carefully</h6>
+{{--<div class="modal fade" id="warning" data-backdrop="static" data-keyboard="false">--}}
+{{--    <div class="modal-dialog modal-dialog-centered">--}}
+{{--        <div class="modal-content">--}}
+{{--            <div class="heading">--}}
+{{--                <h2 class="text-center text-danger my-2">Update !!!!</h2>--}}
+{{--                <h6 class="text-muted text-center mb-3">Please read carefully</h6>--}}
 
 
-                <div class="card border-0 my-2 mt-4 shadow-lg p-3 mb-5 bg-body rounded">
-                    <div class="card-body border-0">
-                        <h4 class="text-danger text-center">
-                            New payment has been added<br> Payment does not require refrence...
-                        </h4>
-                    </div>
-                </div>
+{{--                <div class="card border-0 my-2 mt-4 shadow-lg p-3 mb-5 bg-body rounded">--}}
+{{--                    <div class="card-body border-0">--}}
+{{--                        <h4 class="text-danger text-center">--}}
+{{--                            New payment has been added<br> Payment does not require refrence...--}}
+{{--                        </h4>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
 
-                <div class="group-cb mt-3 d-flex justify-content-center">
-                    <div class="cb">
-                        <input type="checkbox" class="tf-checkbox st1" checked>
-                    </div>
-                    <span class="fw_3 mb-4">I agree to the Term of service and conditions</span>
-                </div>
+{{--                <div class="group-cb mt-3 d-flex justify-content-center">--}}
+{{--                    <div class="cb">--}}
+{{--                        <input type="checkbox" class="tf-checkbox st1" checked>--}}
+{{--                    </div>--}}
+{{--                    <span class="fw_3 mb-4">I agree to the Term of service and conditions</span>--}}
+{{--                </div>--}}
 
-            </div>
-            <div class="bottom mt-5">
-                <a href="#" class="tf-btn accent large" data-bs-dismiss="modal">I Accept</a>
-            </div>
-        </div>
-    </div>
-</div>
+{{--            </div>--}}
+{{--            <div class="bottom mt-5">--}}
+{{--                <a href="#" class="tf-btn accent large" data-bs-dismiss="modal">I Accept</a>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
 
 
 <div class="app-header st1">
@@ -283,14 +283,20 @@
 </div>
 
 
+
+
+@include('ads')
+
 <div class="my-4 d-flex justify-content-center">
     <h4>Choose your preferred payment method
     </h4>
 </div>
 
 
-<div class="transfer-card">
 
+
+
+<div class="transfer-card">
 
     <div class="tf-container">
 

@@ -172,73 +172,73 @@
 <!-- /preload -->
 
 
-<div class="modal fade" id="warning7">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="heading">
-                <h2>Privacy</h2>
-                <p class="mt-1 fw_3">
-                    A mobile app privacy policy is a legal statement that must be clear, conspicuous, and consented to
-                    by all users. It must disclose how a mobile app gathers, stores, and uses the personally
-                    identifiable information it collects from its users.
-                    A mobile privacy app is developed and presented to users so that mobile app developers stay
-                    compliant with state, federal, and international laws. As a result, they fulfill the legal
-                    requirement to safeguard user privacy while protecting the company itself from legal challenges.
+{{--<div class="modal fade" id="warning7">--}}
+{{--    <div class="modal-dialog modal-dialog-centered">--}}
+{{--        <div class="modal-content">--}}
+{{--            <div class="heading">--}}
+{{--                <h2>Privacy</h2>--}}
+{{--                <p class="mt-1 fw_3">--}}
+{{--                    A mobile app privacy policy is a legal statement that must be clear, conspicuous, and consented to--}}
+{{--                    by all users. It must disclose how a mobile app gathers, stores, and uses the personally--}}
+{{--                    identifiable information it collects from its users.--}}
+{{--                    A mobile privacy app is developed and presented to users so that mobile app developers stay--}}
+{{--                    compliant with state, federal, and international laws. As a result, they fulfill the legal--}}
+{{--                    requirement to safeguard user privacy while protecting the company itself from legal challenges.--}}
 
-                </p>
-                <h2 class="mt-3">Authorized Users</h2>
-                <p class="fw-3">
-                    A mobile app privacy policy is a legal statement that must be clear, conspicuous, and consented to
-                    by all users. It must disclose how a mobile app gathers, stores, and uses the personally
-                    identifiable information it collects from its users.
-                </p>
-                <div class="group-cb mt-3 align-items-center">
-                    <div class="cb">
-                        <input type="checkbox" class="tf-checkbox st1" checked>
-                    </div>
-                    <span class="fw_3">I agree to the Term of sevice and Privacy policyy</span>
-                </div>
+{{--                </p>--}}
+{{--                <h2 class="mt-3">Authorized Users</h2>--}}
+{{--                <p class="fw-3">--}}
+{{--                    A mobile app privacy policy is a legal statement that must be clear, conspicuous, and consented to--}}
+{{--                    by all users. It must disclose how a mobile app gathers, stores, and uses the personally--}}
+{{--                    identifiable information it collects from its users.--}}
+{{--                </p>--}}
+{{--                <div class="group-cb mt-3 align-items-center">--}}
+{{--                    <div class="cb">--}}
+{{--                        <input type="checkbox" class="tf-checkbox st1" checked>--}}
+{{--                    </div>--}}
+{{--                    <span class="fw_3">I agree to the Term of sevice and Privacy policyy</span>--}}
+{{--                </div>--}}
 
-            </div>
-            <div class="bottom mt-5">
-                <a href="home.html#" class="tf-btn accent large" data-bs-dismiss="modal">I Accept</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="warning" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="heading">
-                <h2 class="text-center text-danger my-2">Update !!!!</h2>
-                <h6 class="text-muted text-center mb-3">Please read carefully</h6>
+{{--            </div>--}}
+{{--            <div class="bottom mt-5">--}}
+{{--                <a href="home.html#" class="tf-btn accent large" data-bs-dismiss="modal">I Accept</a>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
 
 
-                <div class="card border-0 my-2 mt-4 shadow-lg p-3 mb-5 bg-body rounded">
-                    <div class="card-body border-0">
-                        <h4 class="text-danger text-center">
-                            New payment has been added<br> Payment does not require refrence...
-                        </h4>
-                    </div>
-                </div>
+{{--<div class="modal fade" id="warning" data-backdrop="static" data-keyboard="false">--}}
+{{--    <div class="modal-dialog modal-dialog-centered">--}}
+{{--        <div class="modal-content">--}}
+{{--            <div class="heading">--}}
+{{--                <h2 class="text-center text-danger my-2">Update !!!!</h2>--}}
+{{--                <h6 class="text-muted text-center mb-3">Please read carefully</h6>--}}
 
 
-                <div class="group-cb mt-3 d-flex justify-content-center">
-                    <div class="cb">
-                        <input type="checkbox" class="tf-checkbox st1" checked>
-                    </div>
-                    <span class="fw_3 mb-4">I agree to the Term of service and conditions</span>
-                </div>
+{{--                <div class="card border-0 my-2 mt-4 shadow-lg p-3 mb-5 bg-body rounded">--}}
+{{--                    <div class="card-body border-0">--}}
+{{--                        <h4 class="text-danger text-center">--}}
+{{--                            New payment has been added<br> Payment does not require refrence...--}}
+{{--                        </h4>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
-            </div>
-            <div class="bottom mt-5">
-                <a href="#" class="tf-btn accent large" data-bs-dismiss="modal">I Accept</a>
-            </div>
-        </div>
-    </div>
-</div>
+
+{{--                <div class="group-cb mt-3 d-flex justify-content-center">--}}
+{{--                    <div class="cb">--}}
+{{--                        <input type="checkbox" class="tf-checkbox st1" checked>--}}
+{{--                    </div>--}}
+{{--                    <span class="fw_3 mb-4">I agree to the Term of service and conditions</span>--}}
+{{--                </div>--}}
+
+{{--            </div>--}}
+{{--            <div class="bottom mt-5">--}}
+{{--                <a href="#" class="tf-btn accent large" data-bs-dismiss="modal">I Accept</a>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
 
 
 <div class="app-header st1">
@@ -291,6 +291,8 @@
 
     </div>
 </div>
+
+@include('ads')
 
 
 <div class="my-4 d-flex justify-content-center">

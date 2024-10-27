@@ -42,11 +42,9 @@ class CharmController extends Controller
 
     public function charm_webhook(Request $request){
 
-
         return response()->json(['status'=>true]);
 
         $pref = $request->PaymentReference;
-
         $acc_no = $request->nuban;
         $user_amount = $request->amount;
         $session_id = $request->unique_reference;

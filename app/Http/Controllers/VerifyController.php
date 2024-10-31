@@ -6,6 +6,7 @@ use App\Models\ResolveOrder;
 use App\Models\Setting;
 use App\Models\Support;
 use App\Models\Transaction;
+use App\Models\Transactioncheck;
 use App\Models\Transfertransaction;
 use App\Models\User;
 use App\Models\Webkey;
@@ -817,9 +818,19 @@ class VerifyController extends Controller
         }
 
 
+
+
         $url = $request->url;
         $ckstatus = Transfertransaction::where('session_id', $request->session_id)->first()->status ?? null;
         $email = Transfertransaction::where('session_id', $request->session_id)->first()->email ?? null;
+
+
+        $ckkkkkk = Transactioncheck::where('session_id', $request->session_id)->first() ?? null;
+        $ckemail = Transactioncheck::where('session_id', $request->session_id)->first()->email ?? null;
+
+        if($ckkkkkk != null){
+            return back()->with('error', "Transaction has already been funded to $ckemail, Please go back to site to check your wallet");
+        }
 
 
         if ($ckstatus == "4" || $ckstatus == 4) {

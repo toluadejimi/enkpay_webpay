@@ -190,6 +190,7 @@ class TransactionController extends Controller
                 $trck->session_id =  $request->sessionid;
                 $trck->amount =  $request->amount;
                 $trck->status =  2;
+                $trck->email =  $user_email;
                 $trck->save();
 
 

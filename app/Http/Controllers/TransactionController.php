@@ -2832,7 +2832,7 @@ class TransactionController extends Controller
     function ninepsb_transaction(Request $request)
     {
 
-        Transfertransaction::where(['status' => 0, 'account_no', $request->accountNo, 'created_at', '<', Carbon::now()->subMinutes(50)])->delete();
+        Transfertransaction::where(['status' => 0, 'account_no' => $request->accountNo])->where('created_at', '<', Carbon::now()->subMinutes(50))->delete();
         $trx = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
         $cck = Transfertransaction::where('account_no', $request->accountNo)->where('status', 0)->first() ?? null;
 

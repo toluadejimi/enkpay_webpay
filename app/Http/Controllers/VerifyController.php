@@ -826,9 +826,10 @@ class VerifyController extends Controller
 
 
         $ckkkkkk = Transactioncheck::where('session_id', $request->session_id)->first() ?? null;
+        $ckkkkkkstatus = Transactioncheck::where('session_id', $request->session_id)->first()->status ?? null;
         $ckemail = Transactioncheck::where('session_id', $request->session_id)->first()->email ?? null;
 
-        if($ckkkkkk != null){
+        if($ckkkkkk != null || $ckkkkkkstatus == 2){
             return back()->with('error', "Transaction has already been funded to $ckemail, Please go back to site to check your wallet");
         }
 

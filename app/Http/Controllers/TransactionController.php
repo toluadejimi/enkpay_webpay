@@ -240,42 +240,15 @@ class TransactionController extends Controller
                 Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 1]);
 
 
-//                //update Transactions
-//                $trasnaction = new Transaction();
-//                $trasnaction->user_id = $trx->user_id;
-//                $trasnaction->e_ref = $request->sessionid ?? $data['acc_no'];
-//                $trasnaction->ref_trans_id = $request->sessionid ?? $data['acc_no'];
-//                $trasnaction->type = "webpay";
-//                $trasnaction->transaction_type = "VirtualFundWallet";
-//                $trasnaction->title = "Wallet Funding";
-//                $trasnaction->main_type = "Transfer";
-//                $trasnaction->credit = $f_amount;
-//                $trasnaction->note = "Transaction Successful | Web Pay ";
-//                $trasnaction->fee = $charge ?? 0;
-//                $trasnaction->amount = $trx->amount;
-//                $trasnaction->e_charges = 0;
-//                $trasnaction->enkPay_Cashout_profit = 0;
-//                $trasnaction->balance = $balance;
-//                $trasnaction->status = 1;
-//                $trasnaction->save();
-//
-//                $message = "Business Funded | $trx->ref | Pending customer not funded | $f_amount | $user->first_name " . " " . $user->last_name;
-//                Log::info('Business Funded', ['message' => $message]);
-//
-//                // send_notification($message);
-//
-//                return response()->json([
-//                    'status' => true,
-//                    'message' => "Transaction Funded with directly"
-//                ]);
-
             }
+        }else{
+
+            return response()->json([
+                'status' => false,
+                'message' => "No transaction made"
+            ]);
         }
 
-        return response()->json([
-            'status' => false,
-            'message' => "No transaction made"
-        ]);
     }
 
 

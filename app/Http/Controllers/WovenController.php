@@ -150,8 +150,6 @@ class WovenController extends Controller
         Transfertransaction::where('account_no', $acc_no)->increment('amount_paid', $amount);
         $trx = Transfertransaction::where('account_no', $acc_no)->first() ?? null;
 
-
-
         if ($trx != null) {
 
 
@@ -226,12 +224,14 @@ class WovenController extends Controller
                 ]);
 
             }
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => "No transaction made"
+            ]);
         }
 
-        return response()->json([
-            'status' => false,
-            'message' => "No transaction made"
-        ]);
+
     }
 
 

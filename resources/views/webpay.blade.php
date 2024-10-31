@@ -1187,6 +1187,7 @@
                                                     <b class="text-center my-1">Bank charges applies</b>
 
 
+
                                                     <script>
                                                         let fetchTimeout;
 
@@ -1238,7 +1239,8 @@
                                                                             ref: '{{ $transref }}',
                                                                             accountNo: data.result.account_no,
                                                                             name: data.result.account_name,
-                                                                            amount: '{{$payable_amount}}'
+                                                                            amount: '{{$f_amount}}'
+
 
                                                                         }) // Replace with actual data to send
                                                                     })

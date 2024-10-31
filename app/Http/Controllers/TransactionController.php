@@ -11,6 +11,7 @@ use App\Models\PendingcardTransaction;
 use App\Models\Setting;
 use App\Models\Support;
 use App\Models\Transaction;
+use App\Models\Transactioncheck;
 use App\Models\Transfer;
 use App\Models\Transfertransaction;
 use App\Models\Ttmfb;
@@ -21,6 +22,7 @@ use App\Models\Webkey;
 use App\Models\Webtransfer;
 use Faker\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
@@ -30,6 +32,26 @@ use Illuminate\Support\Facades\Log;
 class TransactionController extends Controller
 {
 
+
+
+    public function fund_merchant(Request $request)
+    {
+
+        $merchant = Webkey::where('key', $request->key)->first() ?? null;
+
+        if($merchant == null){
+            return response()->json([
+                'status' => false,
+                'message' => "No merchant found"
+            ]);
+
+
+        }
+
+
+
+
+    }
 
 
 
@@ -162,6 +184,16 @@ class TransactionController extends Controller
 
                 $message = "Business funded | $trx->manual_acc_ref | $f_amount | $user->first_name " . " " . $user->last_name;
                 send_notification($message);
+
+
+                $trck = new Transactioncheck();
+                $trck->session_id =  $request->sessionid;
+                $trck->amount =  $request->amount;
+                $trck->status =  2;
+                $trck->save();
+
+
+
 
                 Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 4]);
                 Transfertransaction::where('account_no', $request->receiver_account_number)->update(['status' => 4, 'resolve' => 1]);
@@ -1020,6 +1052,7 @@ class TransactionController extends Controller
         $data['psb_charge'] = $set->psb_charge;
         $data['charm'] = $set->charm;
         $data['woven'] = $set->woven;
+        $data['sprint'] = $set->sprint;
         $data['support_channel'] = Webkey::where('key', $request->key)->first()->support ?? null;
         $data['support_number'] = Webkey::where('key', $request->key)->first()->support_number ?? null;
         $data['ads'] = Advert::inRandomOrder()->first() ?? null;
@@ -2798,7 +2831,19 @@ class TransactionController extends Controller
     function ninepsb_transaction(Request $request)
     {
 
+        Transfertransaction::where(['status' => 0, 'account_no', $request->accountNo, 'created_at', '<', Carbon::now()->subMinutes(50)])->delete;
         $trx = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
+        $cck = Transfertransaction::where('account_no', $request->accountNo)->where('status', 0)->first() ?? null;
+
+        if($cck != null){
+            return response()->json(['status' => false,
+            ]);
+        }
+
+
+        Transfertransaction::where('account_no', $request->accountNo)->where('status', 4)->delete();
+
+
 
         $usr = User::where('id', $trx->user_id)->first();
         if ($trx != null) {

@@ -2601,7 +2601,6 @@ if (!function_exists('verifypelpay')) {
 
 
         $key = env('WOVENKEY');
-
         $databody = array(
             "amount" => $amtt,
             "collection_bank" => "000017",

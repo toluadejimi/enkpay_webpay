@@ -24,6 +24,11 @@ use App\Http\Controllers\VirtualAccount\VirtualController;
 |
 */
 
+
+
+Route::post('fund-merchant', [TransactionController::class, 'fund_merchant']);
+
+
 Route::post('notify', [TransactionController::class, 'notify_webhook']);
 Route::post('e-payment', [TransactionController::class, 'e_payment']);
 Route::any('payment', [TransactionController::class, 'payment']);

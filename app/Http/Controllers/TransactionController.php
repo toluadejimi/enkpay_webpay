@@ -2816,6 +2816,10 @@ class TransactionController extends Controller
 
 
         Transfertransaction::where('account_no', $request->accountNo)->where('status', 4)->delete();
+        Transfertransaction::where('account_no', $request->accountNo)->where('status', 3)->delete();
+        Transfertransaction::where('account_no', $request->accountNo)->where('status', 5)->delete();
+
+
 
 
 

@@ -111,9 +111,7 @@ class TransactionController extends Controller
 
 
         $trx = Transfertransaction::where('account_no', $request->receiver_account_number)
-            ->where([
-                'status' => 0
-            ])->first() ?? null;
+            ->first() ?? null;
 
 
         if ($trx == null) {
@@ -192,8 +190,6 @@ class TransactionController extends Controller
                 $trck->status =  2;
                 $trck->email =  $user_email;
                 $trck->save();
-
-
 
 
                 Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 4]);

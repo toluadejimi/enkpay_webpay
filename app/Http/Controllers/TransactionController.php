@@ -2841,7 +2841,7 @@ class TransactionController extends Controller
             $trasnaction->status = 0;
             $trasnaction->save();
 
-            $message = "Transfer Payment Initiated | ".$request->account_no." | ".$request->ref . "| ON 9PSB " . "For " . $usr->last_name . " | " . number_format($trx->payable_amount, 2);
+            $message = "Transfer Payment Initiated | ".$request->accountNo." | ".$request->ref . "| ON 9PSB " . "For " . $usr->last_name . " | " . number_format($trx->payable_amount, 2);
             //Log::info('Transfer Initiated', ['message' => $message]);
             send_notification($message);
 

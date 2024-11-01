@@ -180,7 +180,8 @@ class TransactionController extends Controller
                 $trasnaction->status = 1;
                 $trasnaction->save();
 
-                $message = "Business funded | $trx->manual_acc_ref | $f_amount | $user->first_name " . " " . $user->last_name;
+                $acct = $data['acc_no'];
+                $message = "Business funded | $acct | $f_amount | $user->first_name " . " " . $user->last_name;
                 send_notification($message);
 
 

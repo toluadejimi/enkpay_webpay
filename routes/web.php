@@ -248,7 +248,7 @@ Route::get('verifyopay', [TransactionController::class, 'opay_check_status']);
 Route::get('verifypalmpay', [TransactionController::class, 'palmpay_check_status']);
 Route::get('verifykuda', [TransactionController::class, 'kuda_check_status']);
 Route::get('verifyninepsb', [TransactionController::class, 'ninepsb_check_status']);
-Route::get('verifycharmnow', [CharmController::class, 'charm_check_status']);
+Route::post('verifycharmnow', [CharmController::class, 'charm_check_status']);
 
 Route::post('verifycharm', [CharmController::class, 'verifycharm']);
 

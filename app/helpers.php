@@ -1960,10 +1960,6 @@ if (!function_exists('verifypelpay')) {
 
             if ($var->responseData->transactionStatus == "Successful" && $var->responseData->message == "Successful") {
 
-
-
-
-
                 try {
 
 
@@ -1983,10 +1979,6 @@ if (!function_exists('verifypelpay')) {
                         return $data;
 
                     }
-
-
-
-
 
 
 

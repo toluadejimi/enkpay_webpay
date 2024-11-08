@@ -280,12 +280,6 @@
 
 
             </div>
-            <div class="bottom d-flex justify-content-between align-items-center">
-                <p class="text-small text-warning">Payment Expires in</p>
-                <h4>
-                    <div class="" id="timers">15:00</div>
-                </h4>
-            </div>
 
         </div>
 
@@ -380,19 +374,20 @@
                                                     <h5>You are about to pay</h5>
                                                 </div>
 
+                                                <div class="col-12 my-3 d-flex justify-content-center">
+                                                    <h2>₦{{number_format($f_amount,2)}}</h2>
+                                                </div>
+
+                                                <hr>
 
                                                 <div class="col-12 d-flex justify-content-center">
                                                     <h5 class="text-center text-danger">Make sure you send exact amount to avoid delays</h5>
                                                 </div>
 
 
-                                                <div class="col-12 my-3 d-flex justify-content-center">
-                                                    <h2>₦{{number_format($f_amount,2)}}</h2>
-                                                </div>
-
-
 
                                             </div>
+
 
 
                                             @if($charm != null)
@@ -452,6 +447,10 @@
                                                     <!-- Placeholder for fetched information -->
                                                 </div>
 
+                                                <div class="my-4" id="infoContainercharm2">
+                                                    <!-- Placeholder for fetched information -->
+                                                </div>
+
                                                 <button class="p-2" id="fetchcharm" style="color: #03103a"
                                                         onclick="fetchInfocharm()">Get
                                                     Account Details
@@ -460,21 +459,25 @@
 
 
 
-                                                <b class="text-center my-1">Bank charges applies</b>
+                                                <b class="text-center my-4">Do not leave the payment page, it  will automatically redirect once payment is confirmed</b>
+
+                                            <hr>
+
+                                                <div class="bottom d-flex justify-content-between align-items-center">
+                                                    <p class="text-small text-warning">Payment Expires in</p>
+                                                    <h4>
+                                                        <div class="" id="timers">15:00</div>
+                                                    </h4>
+                                                </div>
+
 
 
                                                 <script>
                                                     let fetchTimeoutcharm;
 
                                                     function fetchInfocharm() {
-                                                        // Display the loader
                                                         document.getElementById('loadercharm').style.display = 'block';
-
-                                                        // Reset timeout if retrying
                                                         clearTimeout(fetchTimeoutcharm);
-
-                                                        // Simulating a POST request (replace with actual API call)
-                                                        {{--fetch('{{url('')}}/api/get-account', {--}}
                                                         fetch('{{env('PELPAYURL')}}/Payment/process/banktransfer/{{$payment_ref}}', {
                                                             method: 'POST',
                                                             headers: {
@@ -524,7 +527,7 @@
                                                                     })
                                                                     .then(data => {
                                                                         console.log('POST request successful:', data);
-                                                                        // Handle the data returned by the server
+                                                                        startPaymentVerification(paym_ref);
                                                                     })
                                                                     .catch(error => {
                                                                         console.error('Error during POST request:', error);
@@ -683,9 +686,9 @@
 
                                                         <!-- Button trigger modal -->
 
-                                                        <button class="tf-btn accent large my-3 request-btn"
-                                                                id="requestcharm">I
-                                                            ve sent ₦{{ number_format($f_amount )}}</button>
+                                                        {{--<button class="tf-btn accent large my-3 request-btn"--}}
+                                                        {{--        id="requestcharm">I--}}
+                                                        {{--    ve sent ₦{{ number_format($f_amount )}}</button>--}}
 
 
                                                                 </form>
@@ -734,6 +737,52 @@
                                                     function log() {
                                                         console.log('---')
                                                     }
+
+                                                    var audio = new Audio('{{url('')}}/public/assets/sound.wav');
+                                                    function startPaymentVerification(paym_ref) {
+                                                        const verificationInterval = setInterval(() => {
+                                                            fetch('{{url('')}}/verifycharmnow', {
+                                                                method: 'POST',
+                                                                headers: {
+                                                                    'Content-Type': 'application/json',
+                                                                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include CSRF token here
+                                                                },
+                                                                body: JSON.stringify({
+                                                                    paymentReference: paym_ref
+                                                                })
+                                                            })
+                                                                .then(response => response.json())
+                                                                .then(data => {
+                                                                    console.log('Response from verifycharmnow:', data);
+                                                                    if (data.status === 'success') {
+                                                                        clearInterval(verificationInterval);
+                                                                        window.location.href = '/path-to-success-page';
+                                                                    } else if (data.status === 'pending') {
+                                                                        document.getElementById('infoContainercharm2').innerHTML = '<p class="text-center text-success">Verifying Payment...</p>';
+                                                                    } else if (data.status === 'paid') {
+                                                                        audio.play();
+                                                                        window.location.href = "{{ url('') }}/paid-success?trans_id={{$ref}}&amount={{$payable_amount}}&marchant_url={{ $marchant_url }}&status=success";
+                                                                    }else if (data.status === 'partial') {
+                                                                        audio.play();
+                                                                        window.location.href = "{{ url('') }}/ppay?trans_id={{$ref}}";
+                                                                    }else if (data.status === 'partialpaid') {
+                                                                        audio.play();
+                                                                        window.location.href = "{{ url('') }}/ppay?trans_id={{$ref}}";
+                                                                    }
+
+
+                                                                    else {
+                                                                        console.log('Unhandled status:', data.status);
+                                                                        console.error('Unexpected status:', data.status);
+                                                                    }
+                                                                })
+                                                                .catch(error => {
+                                                                    console.error('Error verifying payment:', error);
+                                                                });
+                                                        }, 10000); // 10 seconds interval
+                                                    }
+
+
                                                 </script>
 
                                             @else
@@ -1007,10 +1056,7 @@
 </div>
 
 
-<div class="tf-container my-5">
-    <a href="decline?trans_id={{ $trans_id }}&key={{ $key }}" class="tf-btn danger large">Cancel
-        Transaction</a>
-</div>
+
 
 
 <script src="{{ url('') }}/public/assets/dist/js/bootstrap.bundle.min.js"></script>

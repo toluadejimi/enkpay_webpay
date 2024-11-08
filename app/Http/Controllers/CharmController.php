@@ -177,6 +177,9 @@ class CharmController extends Controller
 
         $trx = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
 
+        Transfertransaction::where('account_no', $request->accountNo)->where('status', 4)->delete();
+
+
         $usr = User::where('id', $trx->user_id)->first();
         if ($trx != null) {
             $trasnaction = new Transfertransaction();
@@ -233,14 +236,31 @@ class CharmController extends Controller
         $account_no = $request->account_no;
 
 
+      if($account_no == null){
 
-        $p_ref = Transfertransaction::where('account_no', $account_no)->first() ?? null;
-        if($p_ref == null){
-            return response()->json([
-                'status' => false,
-                'message' => "no transaction found"
-            ]);
-        }
+          $p_ref = Transfertransaction::where('ref', $request->paymentReference)->first() ?? null;
+          if($p_ref == null){
+              return response()->json([
+                  'status' => false,
+                  'message' => "no transaction found"
+              ]);
+          }
+
+      }else{
+
+          $p_ref = Transfertransaction::where('account_no', $account_no)->first() ?? null;
+          if($p_ref == null){
+              return response()->json([
+                  'status' => false,
+                  'message' => "no transaction found"
+              ]);
+          }
+
+      }
+
+
+
+
 
 
         $pref = $p_ref->ref;

@@ -1027,6 +1027,7 @@ class TransactionController extends Controller
         $data['support_channel'] = Webkey::where('key', $request->key)->first()->support ?? null;
         $data['support_number'] = Webkey::where('key', $request->key)->first()->support_number ?? null;
         $data['ads'] = Advert::inRandomOrder()->first() ?? null;
+        $data['marchant_url'] = Webkey::where('key', $request->key)->first()->user_url;
 
 
 
@@ -1704,8 +1705,7 @@ class TransactionController extends Controller
             ->first()->status ?? null;
 
 
-        $amount = Transfertransaction::where('ref', $request->trans_id)
-            ->first()->amount_paid ?? 0;
+        $amount = $request->amount;
 
         $wc_order = Webtransfer::where('trans_id', $trans_id)
             ->first()->wc_order ?? null;

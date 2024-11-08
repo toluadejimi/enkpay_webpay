@@ -1954,15 +1954,13 @@ if (!function_exists('verifypelpay')) {
         if ($var->requestSuccessful == true) {
 
             if ($var->responseData->transactionStatus == "Processing") {
-                $data['code'] = 0;
-                return $data;
+                return [ 'code' => 0 ];
+
             }
 
             if ($var->responseData->transactionStatus == "Successful" && $var->responseData->message == "Successful") {
 
                 try {
-
-
 
                     $acc_no = Transfertransaction::where('ref', $pref)->first()->account_no ?? null;
                     $status = Transfertransaction::where('account_no', $acc_no)->first()->status ?? null;
@@ -1974,9 +1972,10 @@ if (!function_exists('verifypelpay')) {
 
                         $ref=$trx->ref_trans_id;
                         $url = url('')."/success?trans_id=$ref&amount=$amount";
-                        $data['url'] = $url;
-                        $data['code'] = 6;
-                        return $data;
+                        return [
+                            'url' => $url,
+                            'code' => 6
+                        ];
 
                     }
 
@@ -1996,8 +1995,6 @@ if (!function_exists('verifypelpay')) {
                         ]);
 
                     }
-
-
 
 
 
@@ -2069,15 +2066,12 @@ if (!function_exists('verifypelpay')) {
                             $type = "epayment";
                             $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type, $session_id);
 
-                            return response()->json([
+                            return [
                                 'status' => true,
-                                'message' => "Transaction Successful"
-                            ]);
-
-
-                            $data['amount'] = $amount;
-                            $data['code'] = 4;
-                            return $data;
+                                'message' => 'Transaction Successful',
+                                'amount' => $amount,
+                                'code' => 4
+                            ];
                         }
 
 
@@ -2101,7 +2095,7 @@ if (!function_exists('verifypelpay')) {
                 $ck_url = Transfertransaction::where('ref', $pref)->first()->url ?? null;
 
                 if($ck_url != null){
-                    $data['code'] = 7;
+                    return [ 'code' => 7 ];
                 }
 
                 $acc_no = Transfertransaction::where('ref', $pref)->first()->account_no ?? null;
@@ -2113,16 +2107,19 @@ if (!function_exists('verifypelpay')) {
 
                 $url = url('')."/part-payment?expected_amount=$namt&amount_paid=$camt&acct_no=$acc_no&amount_remain=$amount_remain&ref=$pref";
                 Transfertransaction::where('ref', $pref)->update(['url' => $url]);
-                $data['code'] = 5;
 
-                return $data;
+
+                return [
+                    'code' => 5,
+                    'url' => $url
+                ];
 
             }
 
         }
 
-        $data['code'] = 0;
-        return $data;
+
+        return [ 'code' => 0 ];
 
 
     }

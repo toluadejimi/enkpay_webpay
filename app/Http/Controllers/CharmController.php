@@ -40,9 +40,10 @@ class CharmController extends Controller
     }
 
 
-    public function charm_webhook(Request $request){
+    public function charm_webhook(Request $request)
+    {
 
-        return response()->json(['status'=>true]);
+        return response()->json(['status' => true]);
 
         $pref = $request->PaymentReference;
         $acc_no = $request->nuban;
@@ -50,9 +51,6 @@ class CharmController extends Controller
         $session_id = $request->unique_reference;
         $payable = $request->amount_payable;
         $fee = $request->fee;
-
-
-
 
 
         $status = Transfertransaction::where('ref', $pref)->first()->status ?? null;
@@ -80,13 +78,13 @@ class CharmController extends Controller
 
         }
 
-        $paid_amt =  Transfertransaction::where('ref', $pref)->update(['amount_paid' => $request->AmountCollected]) ?? null;
-        $amt_to_pay =  Transfertransaction::where('ref', $pref)->update(['amount_to_pay' => $request->Amount]) ?? null;
+        $paid_amt = Transfertransaction::where('ref', $pref)->update(['amount_paid' => $request->AmountCollected]) ?? null;
+        $amt_to_pay = Transfertransaction::where('ref', $pref)->update(['amount_to_pay' => $request->Amount]) ?? null;
 
 
-        if($paid_amt == $amt_to_pay){
+        if ($paid_amt == $amt_to_pay) {
             $amount = $user_amount;
-        }else{
+        } else {
             $amount = $user_amount - 100;
         }
 
@@ -94,9 +92,7 @@ class CharmController extends Controller
         $trx = Transfertransaction::where('ref', $pref)->first() ?? null;
 
 
-
         if ($trx != null) {
-
 
 
             $set = Setting::where('id', 1)->first();
@@ -153,7 +149,7 @@ class CharmController extends Controller
                 Transfertransaction::where('ref', $pref)->update(['status' => 4, 'resolve' => 1]);
 
 
-                $type ="epayment";
+                $type = "epayment";
                 $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type, $session_id);
 
                 return response()->json([
@@ -236,127 +232,95 @@ class CharmController extends Controller
         $account_no = $request->account_no;
 
 
-      if($account_no == null){
+        if ($account_no == null) {
 
-          $p_ref = Transfertransaction::where('ref', $request->paymentReference)->first() ?? null;
-          if($p_ref == null){
-              return response()->json([
-                  'status' => false,
-                  'message' => "no transaction found"
-              ]);
-          }
+            $p_ref = Transfertransaction::where('ref', $request->paymentReference)->first() ?? null;
+            if ($p_ref == null) {
+                return response()->json([
+                    'status' => false,
+                    'message' => "no transaction found"
+                ]);
+            }
 
-      }else{
+        } else {
 
-          $p_ref = Transfertransaction::where('account_no', $account_no)->first() ?? null;
-          if($p_ref == null){
-              return response()->json([
-                  'status' => false,
-                  'message' => "no transaction found"
-              ]);
-          }
+            $p_ref = Transfertransaction::where('account_no', $account_no)->first() ?? null;
+            if ($p_ref == null) {
+                return response()->json([
+                    'status' => false,
+                    'message' => "no transaction found"
+                ]);
+            }
 
-      }
-
-
-
-
+        }
 
 
         $pref = $p_ref->ref;
         $amount = $p_ref->amount;
-
         $verify = verifypelpay($pref, $amount);
 
-
-
-        if($verify['code'] == 0){
+        if ($verify['code'] == 0) {
             return response()->json([
                 'status' => 'pending',
                 'data' => $verify
             ], 200);
-
-        }
-
-
-
-        if ($verify['code'] == 2) {
-
+        } elseif ($verify['code'] == 4) {
             return response()->json([
-                'status' => 'success'
+                'status' => 'paid',
+                'message' => $verify['message'],
+                'data' => $verify
             ], 200);
-
-        }
-
-        if ($verify['code'] == 4) {
+        } elseif ($verify['code'] == 5) {
             return response()->json([
-                'status' => 'paid'
+                'status' => 'partial_payment',
+                'redirect_url' => $verify['url']
             ], 200);
-
-            //return view('success', compact('webhook'));
-        }
-
-
-        if($verify['code'] == 5){
+        } else {
             return response()->json([
-                'status' => 'partial'
-            ], 200);
-        }
-
-        if($verify['code'] == 7){
-            return response()->json([
-                'status' => 'partialpaid'
-            ], 200);
-        }
-
-
-        if($verify['code'] == 6){
-
-            return response()->json([
-                'status' => 'paid'
-            ], 200);
+                'status' => 'error',
+                'message' => 'Verification failed',
+                'data' => $verify
+            ], 400);
 
         }
-
     }
 
-
-    public function verifycharm(Request $request)
-    {
-
-
-        $ref = Transfertransaction::where('ref', $request->trx_id)->first() ?? null;
-        $tref = Transfertransaction::where('ref', $request->trx_id)->first() ?? null;
-        $usr = User::where('id', $ref->user_id)->first();
-
-        $message = "Charm Payment Initiated |" . $request->trx_id. "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
-        Log::info('Transfer Initiated', ['message' => $message]);
+        public
+        function verifycharm(Request $request)
+        {
 
 
-        $data['ref'] = $request->trx_id;
-        $data['account_no'] = $request->account_no;
-        $data['amount'] = $ref->amount;
-        $data['pref'] = $tref->pay_ref  ?? null;
-        $data['title'] = "Payment Confirmation";
+            $ref = Transfertransaction::where('ref', $request->trx_id)->first() ?? null;
+            $tref = Transfertransaction::where('ref', $request->trx_id)->first() ?? null;
+            $usr = User::where('id', $ref->user_id)->first();
 
-        return view('waitingcharm', $data);
+            $message = "Charm Payment Initiated |" . $request->trx_id . "For " . $usr->last_name . " | " . number_format($ref->payable_amount, 2);
+            Log::info('Transfer Initiated', ['message' => $message]);
+
+
+            $data['ref'] = $request->trx_id;
+            $data['account_no'] = $request->account_no;
+            $data['amount'] = $ref->amount;
+            $data['pref'] = $tref->pay_ref ?? null;
+            $data['title'] = "Payment Confirmation";
+
+            return view('waitingcharm', $data);
+
+
+        }
+
+        public
+        function ppay(Request $request)
+        {
+
+            $url = Transfertransaction::where('ref', $request->trans_id)->first()->url ?? null;
+
+
+            $data['url'] = $url;
+            return view('ppayment', $data);
+
+
+        }
 
 
     }
-
-    public function ppay(Request $request)
-    {
-
-        $url = Transfertransaction::where('ref', $request->trans_id)->first()->url ?? null;
-
-
-        $data['url'] = $url;
-        return view('ppayment', $data);
-
-
-    }
-
-
-
-
-}

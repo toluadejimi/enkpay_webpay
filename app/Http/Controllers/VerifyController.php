@@ -1031,11 +1031,14 @@ class VerifyController extends Controller
 
 
         if ($cktrx == $pref) {
+            dd($cktrx , $pref);
+
             return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
         }
 
 
         if ($ckstatus == 4) {
+            dd('hello2');
             return back()->with('error', "Transaction has already been funded to $email2, Please go back to site to check your wallet");
         }
 

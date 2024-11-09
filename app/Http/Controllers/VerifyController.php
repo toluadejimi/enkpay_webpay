@@ -1024,12 +1024,11 @@ class VerifyController extends Controller
         $ckstatus = Transfertransaction::where('ref', $pref)->first()->status ?? null;
 
 
-        $cktrx = Transactioncheck::where('session_id', $pref)->first() ?? null;
+        $cktrx = Transactioncheck::where('session_id', $pref)->first()->session_id ?? null;
         $email = Transactioncheck::where('session_id', $pref)->first()->email ?? null;
 
-        dd($cktrx, $pref, $ckstatus, $request->account_no);
 
-        if ($cktrx != null) {
+        if ($cktrx == $pref) {
             return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
         }
 

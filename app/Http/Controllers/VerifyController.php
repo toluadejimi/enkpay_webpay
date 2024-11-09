@@ -818,8 +818,6 @@ class VerifyController extends Controller
         }
 
 
-
-
         $url = $request->url;
         $ckstatus = Transfertransaction::where('session_id', $request->session_id)->first()->status ?? null;
         $email = Transfertransaction::where('session_id', $request->session_id)->first()->email ?? null;
@@ -829,7 +827,7 @@ class VerifyController extends Controller
         $ckkkkkkstatus = Transactioncheck::where('session_id', $request->session_id)->first()->status ?? null;
         $ckemail = Transactioncheck::where('session_id', $request->session_id)->first()->email ?? null;
 
-        if($ckkkkkk != null || $ckkkkkkstatus == 2){
+        if ($ckkkkkk != null || $ckkkkkkstatus == 2) {
             return back()->with('error', "Transaction has already been funded to $ckemail, Please go back to site to check your wallet");
         }
 
@@ -837,7 +835,6 @@ class VerifyController extends Controller
         if ($ckstatus == "4" || $ckstatus == 4) {
             return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
         }
-
 
 
         if ($ckstatus == "2" || $ckstatus == "3" || $ckstatus == null) {
@@ -929,18 +926,15 @@ class VerifyController extends Controller
             $charge = Setting::where('id', 1)->first()->webpay_transfer_charge;
             if ($amt <= 100) {
                 $f_amount = $amt;
-            } elseif($amt > 15000) {
+            } elseif ($amt > 15000) {
                 $f_amount = $amt - 300;
             }
 
 
-
-
             $amount = $p_amount;
             $type = "presolve";
-            $order_id = "Resolve".random_int(00000,99999);
+            $order_id = "Resolve" . random_int(00000, 99999);
             $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type, $session_id);
-
 
 
             if ($fund == 2) {
@@ -1023,10 +1017,19 @@ class VerifyController extends Controller
             return back()->with('error', 'Email is invalid, please try again');
         }
 
+        $pref = Transfertransaction::where('account_no', $request->account_no)->first()->ref ?? null;
+
 
         $url = $request->url;
-        $ckstatus = Transfertransaction::where('session_id', $request->session_id)->first()->status ?? null;
-        $email = Transfertransaction::where('session_id', $request->session_id)->first()->email ?? null;
+        $ckstatus = Transfertransaction::where('ref', $pref)->first()->status ?? null;
+
+
+        $cktrx = Transactioncheck::where('session_id', $pref)->first() ?? null;
+        $email = Transactioncheck::where('session_id', $pref)->first()->email ?? null;
+
+        if ($cktrx != null) {
+            return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
+        }
 
 
         if ($ckstatus == 4) {
@@ -1036,21 +1039,126 @@ class VerifyController extends Controller
 
         if ($ckstatus == null || $ckstatus == 0 || $ckstatus == 3 || $ckstatus == 2) {
 
-            $status = Transfertransaction::where('session_id', $request->session_id)->first()->status ?? null;
-            $email = Transfertransaction::where('session_id', $request->session_id)->first()->email ?? null;
+            $amount = Transfertransaction::where('account_no', $request->account_no)->first()->amount ?? null;
 
-            if ($status == 4) {
-                return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
+            $verify = verifypelpayreslove($pref, $amount);
+
+            if ($verify['code'] == 0) {
+                return back()->with('error', 'Something went wrong');
             }
 
 
-            $ref = Transfertransaction::where('session_id', $request->session_id)->first()->account_no ?? null;
-            $account_no = Transfertransaction::where('session_id', $request->session_id)->first()->account_no ?? null;
+            elseif ($verify['code'] == 4) {
+                $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
+                $user = User::where('id', $urlkey)->first();
 
-            $var = verify_payment($ref);
 
-            if ($var == 0) {
-                return back()->with('error', 'Something went wrong');
+                $svtrx = new Transfertransaction();
+                $svtrx->account_no = $request->account_no;
+                $svtrx->status = 4;
+                $svtrx->amount = $amount;
+                $svtrx->note = "WEMARESOLVE";
+                $svtrx->user_id = $user->id;
+                $svtrx->transaction_type = "Resolve";
+                $svtrx->save();
+
+
+                $set = Setting::where('id', 1)->first();
+                if ($amount > 15000) {
+                    $p_amount = $amount - $set->psb_cap;
+                } else {
+                    $p_amount = $amount - $set->psb_charge;
+                }
+
+                $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
+
+                //fund Vendor
+                $charge = Setting::where('id', 1)->first()->webpay_transfer_charge;
+                if ($amount <= 100) {
+                    $f_amount = $amount;
+                } else {
+                    $f_amount = $amount - $charge;
+                }
+
+                $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
+                $balance = User::where('id', $urlkey)->first()->main_wallet;
+                $user = User::where('id', $urlkey)->first();
+                $url = Webkey::where('key', $request->user_id)->first()->url_fund ?? null;
+                $urluser = Webkey::where('key', $request->user_id)->first()->user_url ?? null;
+
+
+                $user_email = $request->email ?? null;
+                $amount = $f_amount ?? null;
+                $order_id = $session_id ?? null;
+                $site_name = Webkey::where('key', $request->user_id)->first()->site_name ?? null;
+
+                $trasnaction = new Transaction();
+                $trasnaction->user_id = $urlkey;
+                $trasnaction->e_ref = $request->account_no;
+                $trasnaction->ref_trans_id = $request->account_no;
+                $trasnaction->type = "webpay";
+                $trasnaction->transaction_type = "VirtualFundWallet";
+                $trasnaction->title = "Wallet Funding";
+                $trasnaction->main_type = "Transfer";
+                $trasnaction->credit = $f_amount;
+                $trasnaction->note = "Transaction Successful | Web Pay | form  $email";
+                $trasnaction->fee = $charge ?? 0;
+                $trasnaction->amount = $amount;
+                $trasnaction->e_charges = 0;
+                $trasnaction->enkPay_Cashout_profit = 0;
+                $trasnaction->balance = $balance;
+                $trasnaction->receiver_account_no = $request->account_no;
+                $trasnaction->status = 1;
+                $trasnaction->save();
+
+                User::where('id', $urlkey)->increment('main_wallet', $f_amount);
+
+
+                $date = date('d M Y H:i:s');
+                $message = $request->account_no . " | NGN  $amount | $email  | $site_name | $date | has been funded";
+                send_notification($message);
+
+
+                $type = "wresolve";
+                //fund user
+                $session_id = $request->session_id;
+                $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type, $session_id);
+
+                $trck = new Transactioncheck();
+                $trck->session_id = $pref;
+                $trck->amount = $amount;
+                $trck->status = 2;
+                $trck->email = $user_email;
+                $trck->save();
+
+
+                if ($fund == 2) {
+
+                    $date = date('dmy h:i:s');
+                    $message = "Wema Resolve ======> $user_email has been funded NGN$amount \n| 0n $url \n using reslove | $request->account_no on $date";
+                    send_notification_resolve($message);
+
+                    $data['trans'] = $request->account_no;
+                    $data['recepit'] = "payment";
+                    $data['url_page'] = $urluser;
+                    $data['amount'] = $amount;
+                    return view('paid-success', $data);
+
+                }
+
+
+            } elseif ($verify['code'] == 5) {
+                return response()->json([
+                    'status' => 'partial_payment',
+                    'redirect_url' => $verify['url']
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Verification failed',
+                    'data' => $verify
+                ], 400);
+
             }
 
 
@@ -1080,103 +1188,16 @@ class VerifyController extends Controller
 
             if ($status == "Successful") {
 
-                $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
-                $user = User::where('id', $urlkey)->first();
 
-
-                $svtrx = new Transfertransaction();
-                $svtrx->account_no = $request->account_no;
-                $svtrx->status = 4;
-                $svtrx->amount = $amt;
-                $svtrx->note = "WEMARESOLVE";
-                $svtrx->user_id = $user->id;
-                $svtrx->transaction_type = "Resolve";
-                $svtrx->save();
-
-
-                $set = Setting::where('id', 1)->first();
-                if ($amt > 15000) {
-                    $p_amount = $amt - $set->psb_cap;
-                } else {
-                    $p_amount = $amt - $set->psb_charge;
-                }
-
-                $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
-
-                //fund Vendor
-                $charge = Setting::where('id', 1)->first()->webpay_transfer_charge;
-                if ($amt <= 100) {
-                    $f_amount = $amt;
-                } else {
-                    $f_amount = $amt - $charge;
-                }
-
-                $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
-                $balance = User::where('id', $urlkey)->first()->main_wallet;
-                $user = User::where('id', $urlkey)->first();
-                $url = Webkey::where('key', $request->user_id)->first()->url_fund ?? null;
-                $urluser = Webkey::where('key', $request->user_id)->first()->user_url ?? null;
-
-
-                $user_email = $request->email ?? null;
-                $amount = $f_amount ?? null;
-                $order_id = $session_id ?? null;
-                $site_name = Webkey::where('key', $request->user_id)->first()->site_name ?? null;
-
-                $trasnaction = new Transaction();
-                $trasnaction->user_id = $urlkey;
-                $trasnaction->e_ref = $request->account_no;
-                $trasnaction->ref_trans_id = $request->account_no;
-                $trasnaction->type = "webpay";
-                $trasnaction->transaction_type = "VirtualFundWallet";
-                $trasnaction->title = "Wallet Funding";
-                $trasnaction->main_type = "Transfer";
-                $trasnaction->credit = $f_amount;
-                $trasnaction->note = "Transaction Successful | Web Pay | form  $request->email";
-                $trasnaction->fee = $charge ?? 0;
-                $trasnaction->amount = $amt;
-                $trasnaction->e_charges = 0;
-                $trasnaction->enkPay_Cashout_profit = 0;
-                $trasnaction->balance = $balance;
-                $trasnaction->receiver_account_no = $account_no;
-                $trasnaction->status = 1;
-                $trasnaction->save();
-
-                User::where('id', $urlkey)->increment('main_wallet', $f_amount);
-
-
-                $date = date('d M Y H:i:s');
-                $message = $acct_no . " | NGN  $amt | $request->email  | $site_name | $date | has been funded";
-                send_notification($message);
-
-
-                $type = "wresolve";
-                //fund user
-                $session_id = $request->session_id;
-                $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type,$session_id);
-                if ($fund == 2) {
-
-                    $date = date('dmy h:i:s');
-                    $message = "Wema Resolve ======> $user_email has been funded NGN$amount \n| 0n $url \n using reslove | $account_no on $date";
-                    send_notification_resolve($message);
-
-                    $data['trans'] = $request->account_no;
-                    $data['recepit'] = "payment";
-                    $data['url_page'] = $urluser;
-                    $data['amount'] = $amt;
-                    return view('paid-success', $data);
-
-                }
-
+            } else {
+                return back()->with('error', 'Session ID is not found, please check and try again');
             }
-        } else {
-            return back()->with('error', 'Session ID is not found, please check and try again');
+
+
+            return back()->with('error', 'Resolve Error, Contact admin');
+
+
         }
-
-
-        return back()->with('error', 'Resolve Error, Contact admin');
-
-
     }
 
 
@@ -1212,9 +1233,6 @@ class VerifyController extends Controller
             }
 
 
-
-
-
 //            $ref = Transfertransaction::where('session_id', $request->session_id)->first()->account_no ?? null;
 
             $ref = $request->session_id;
@@ -1242,8 +1260,6 @@ class VerifyController extends Controller
             }
 
 
-
-
             $session_id = $request->account_no ?? null;
             $acct_no = $var->account_no ?? null;
             $amt = $var['amount'] ?? null;
@@ -1257,7 +1273,7 @@ class VerifyController extends Controller
 
 
                 $ckttr = Transfertransaction::where('session_id', $request->session_id)->first() ?? null;
-                if($ckttr == null){
+                if ($ckttr == null) {
                     $svtrx = new Transfertransaction();
                     $svtrx->account_no = $acct_no;
                     $svtrx->session_id = $request->session_id;
@@ -1267,7 +1283,7 @@ class VerifyController extends Controller
                     $svtrx->user_id = $user->id;
                     $svtrx->transaction_type = "Resolve";
                     $svtrx->save();
-                }else{
+                } else {
 
                     Transfertransaction::where('session_id', $request->session_id)->update([
                         "note" => "WOVENRESOLVE",
@@ -1276,12 +1292,6 @@ class VerifyController extends Controller
                     ]);
 
                 }
-
-
-
-
-
-
 
 
                 $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;

@@ -1030,7 +1030,7 @@ class VerifyController extends Controller
 
 
 
-        if ($cktrx == $pref) {
+        if ($cktrx != null && $pref != null && $cktrx == $pref) {
             dd($cktrx , $pref);
 
             return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");

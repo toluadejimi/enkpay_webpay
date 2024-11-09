@@ -1044,7 +1044,10 @@ class VerifyController extends Controller
 
             $verify = verifypelpayreslove($pref, $amount);
 
-            dd($verify);
+
+            if ($verify['code'] == 9) {
+                return back()->with('error', 'Transaction failed, please contact your bank to file  dispute');
+            }
 
             if ($verify['code'] == 0) {
                 return back()->with('error', 'Something went wrong');

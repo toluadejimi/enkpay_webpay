@@ -1568,55 +1568,36 @@ class TransactionController extends Controller
 
         $trans_id = $request->ref;
         $account_no = $request->account_no;
-
-
         $status = Transfertransaction::where('ref', $trans_id)
             ->where('account_no', $account_no)
             ->first()->status ?? null;
 
 
         if ($status == 0) {
-
             return response()->json([
-
-                'status' => 'pending'
-
-
+                'status' => 'pending',
+                'data' => $status
             ], 200);
+        } elseif ($status == 4) {
+            return response()->json([
+                'status' => 'paid',
+                'message' => $status,
+                'data' => $status
+            ], 200);
+        } elseif ($status == 5) {
+            return response()->json([
+                'status' => 'pending',
+                'redirect_url' => $status
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Verification failed',
+                'data' => $status
+            ], 400);
 
         }
 
-
-        if ($status == 5) {
-
-            return response()->json([
-
-                'status' => 'pending'
-
-
-            ], 200);
-
-        }
-
-
-        if ($status == 2) {
-
-            return response()->json([
-
-                'status' => 'success'
-
-
-            ], 200);
-
-        }
-
-        if ($status == 4) {
-            return response()->json([
-                'status' => 'paid'
-            ], 200);
-
-            //return view('success', compact('webhook'));
-        }
 
     }
 

@@ -1423,7 +1423,58 @@
                                                         function log() {
                                                             console.log('---')
                                                         }
+
+
+
+                                                        var audio = new Audio('{{url('')}}/public/assets/sound.wav');
+                                                        function startPaymentVerification(paym_ref) {
+                                                            const verificationInterval = setInterval(() => {
+                                                                fetch('{{url('')}}/verifyninepsb', {
+                                                                    method: 'POST',
+                                                                    headers: {
+                                                                        'Content-Type': 'application/json',
+                                                                        'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include CSRF token here
+                                                                    },
+                                                                    body: JSON.stringify({
+                                                                        paymentReference: paym_ref
+                                                                    })
+                                                                })
+                                                                    .then(response => response.json())
+                                                                    .then(data => {
+                                                                        console.log('Response from verifycharmnow:', data);
+                                                                        if (data.status === 'success') {
+                                                                            clearInterval(verificationInterval);
+                                                                        } else if (data.status === 'pending') {
+                                                                            document.getElementById('infoContainercharm2').innerHTML = '<p class="text-center text-success">Verifying Payment...</p>';
+                                                                        } else if (data.status === 'paid') {
+                                                                            audio.play();
+                                                                            window.location.href = "{{ url('') }}/paid-success?trans_id={{$ref}}&amount={{$payable_amount}}&marchant_url={{ $marchant_url }}&status=success";
+                                                                        }else if (data.status === 'partial') {
+                                                                            audio.play();
+                                                                            window.location.href = "{{ url('') }}/ppay?trans_id={{$ref}}";
+                                                                        }else if (data.status === 'partialpaid') {
+                                                                            audio.play();
+                                                                            window.location.href = "{{ url('') }}/ppay?trans_id={{$ref}}";
+                                                                        }
+
+
+                                                                        else {
+                                                                            console.log('Unhandled status:', data.status);
+                                                                            console.error('Unexpected status:', data.status);
+                                                                        }
+                                                                    })
+                                                                    .catch(error => {
+                                                                        console.error('Error verifying payment:', error);
+                                                                    });
+                                                            }, 10000); // 10 seconds interval
+                                                        }
+
+
+
                                                     </script>
+
+
+
 
                                                 @else
                                                     <div class="row">

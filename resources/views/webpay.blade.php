@@ -318,7 +318,7 @@
 
                                                 <div class="my-4 hidden" id="infoContainercharm3">
                                                     <p class="text-success text-center">Verifying payment</p>
-                                                    <img src="{{url('')}}/public/assets/ezgif.com-crop.gif" height="70">
+                                                    <img src="{{url('')}}/public/assets/ezgif.com-crop.gif" height="50">
                                                 </div>
 
 

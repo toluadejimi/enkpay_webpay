@@ -1160,7 +1160,7 @@
 
 
 
-{{--@include('ads')--}}
+@include('ads')
 
 
 

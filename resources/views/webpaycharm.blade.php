@@ -370,9 +370,15 @@
                                                 </div>
 
 
-                                                <div class="my-4" id="infoContainercharm2">
-                                                    <!-- Placeholder for fetched information -->
+                                                <div class="my-2 hidden" id="infoContainercharm4">
+                                                    <p class="text-warning text-center">Waiting for payment</p>
                                                 </div>
+
+                                                <div class="my-4 hidden" id="infoContainercharm3">
+                                                    <p class="text-success text-center">Verifying payment</p>
+                                                    <img src="{{url('')}}/public/assets/ezgif.com-crop.gif" height="50">
+                                                </div>
+
 
 
                                                 <div class="col-12 d-flex justify-content-center mb-2">
@@ -530,6 +536,8 @@
                                                                     })
                                                                     .then(data => {
                                                                         console.log('POST request successful:', data);
+                                                                        document.getElementById('infoContainercharm4').classList.remove('hidden');
+
                                                                         startPaymentVerification(paym_ref);
                                                                     })
                                                                     .catch(error => {
@@ -761,7 +769,7 @@
                                                                         clearInterval(verificationInterval);
                                                                         window.location.href = '/path-to-success-page';
                                                                     } else if (data.status === 'pending') {
-                                                                        document.getElementById('infoContainercharm2').innerHTML = '<p class="text-center text-success">Verifying Payment...</p>';
+                                                                        document.getElementById('infoContainercharm3').classList.remove('hidden');
                                                                     } else if (data.status === 'paid') {
                                                                         audio.play();
                                                                         window.location.href = "{{ url('') }}/paid-success?trans_id={{$ref}}&amount={{$payable_amount}}&marchant_url={{ $marchant_url }}&status=success";

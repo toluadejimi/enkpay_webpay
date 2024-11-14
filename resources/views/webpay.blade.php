@@ -499,22 +499,13 @@
                                                                                 })
                                                                                     .then(response => response.json())
                                                                                     .then(data => {
-                                                                                        console.log('Response from 9psb:', data);
-
-
                                                                                         document.getElementById('infoContainercharm4').classList.add('hidden');
-
-
                                                                                         if (data.status === 'success') {
                                                                                             clearInterval(verificationInterval);
                                                                                         } else if (data.status === 'pending') {
                                                                                             document.getElementById('infoContainercharm3').classList.remove('hidden');
                                                                                         } else if (data.status === 'paid') {
                                                                                             audio.play();
-                                                                                            document.getElementById('infoContainercharm3').classList.add('hidden');
-
-                                                                                            document.getElementById('infoContainercharm6').classList.remove('hidden');
-
                                                                                             window.location.href = "{{ url('') }}/paid-success?trans_id={{$ref}}&amount={{$payable_amount}}&marchant_url={{ $marchant_url }}&status=success";
                                                                                         }else if (data.status === 'partial') {
                                                                                             audio.play();

@@ -1106,14 +1106,20 @@
                                                     </div>
 
 
-                                                    <div class="col-12 d-flex justify-content-center">
+                                                    <div class="col-12 d-flex justify-content-center mb-2">
                                                         <h5>You are about to pay</h5>
                                                     </div>
-
 
                                                     <div class="col-12 my-3 d-flex justify-content-center">
                                                         <h2>₦{{number_format($f_amount,2)}}</h2>
                                                     </div>
+
+                                                    <hr>
+
+                                                    <div class="col-12 d-flex justify-content-center">
+                                                        <h5 class="text-center text-danger">Make sure you send exact amount to avoid delays</h5>
+                                                    </div>
+
 
 
                                                 </div>
@@ -1184,7 +1190,6 @@
 
 
 
-                                                    <b class="text-center my-1">Bank charges applies</b>
 
 
 

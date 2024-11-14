@@ -310,9 +310,7 @@
                                                 </div>
 
 
-                                                <div class="my-4 hidden" id="infoContainercharm6">
-                                                    <img src="{{url('')}}/public/assets/success.gif">
-                                                </div>
+
 
                                                 <div class="my-2 hidden" id="infoContainercharm4">
                                                     <p class="text-warning text-center">Waiting for payment</p>
@@ -320,7 +318,7 @@
 
                                                 <div class="my-4 hidden" id="infoContainercharm3">
                                                     <p class="text-success text-center">Verifying payment</p>
-                                                    <img src="{{url('')}}/public/assets/ezgif.com-crop.gif">
+                                                    <img src="{{url('')}}/public/assets/ezgif.com-crop.gif" height="70">
                                                 </div>
 
 

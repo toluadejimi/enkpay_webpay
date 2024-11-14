@@ -1567,8 +1567,8 @@ class TransactionController extends Controller
 
 
         $trans_id = $request->ref;
-        $account_no = $request->account_no;
-        $status = Transfertransaction::where('ref', $trans_id)
+        $account_no = $request->paymentReference;
+        $status = Transfertransaction::where('account_no', $account_no)
             ->where('account_no', $account_no)
             ->first()->status ?? null;
 

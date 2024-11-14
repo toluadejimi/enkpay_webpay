@@ -370,6 +370,11 @@
                                                 </div>
 
 
+                                                <div class="my-4" id="infoContainercharm2">
+                                                    <!-- Placeholder for fetched information -->
+                                                </div>
+
+
                                                 <div class="col-12 d-flex justify-content-center mb-2">
                                                     <h5>You are about to pay</h5>
                                                 </div>
@@ -447,9 +452,7 @@
                                                     <!-- Placeholder for fetched information -->
                                                 </div>
 
-                                                <div class="my-4" id="infoContainercharm2">
-                                                    <!-- Placeholder for fetched information -->
-                                                </div>
+
 
                                                 <button class="p-2" id="fetchcharm" style="color: #03103a"
                                                         onclick="fetchInfocharm()">Get

@@ -21,6 +21,14 @@
           data-pwa-version="set_in_manifest_and_pwa_js">
     <link rel="apple-touch-icon" sizes="192x192" href="{{url('')}}/public/assets/assets/app/icons/icon-192x192.png">
 
+
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+
+
     <style>
         .modal {
             display: none;
@@ -163,82 +171,18 @@
 
 <body class="bg_surface_color">
 
-<!-- preloade -->
-<div class="preload preload-container">
-    <div class="preload-logo">
-        <div class="spinner"></div>
-    </div>
-</div>
-<!-- /preload -->
-
-
-<div class="modal fade" id="warning7">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="heading">
-                <h2>Privacy</h2>
-                <p class="mt-1 fw_3">
-                    A mobile app privacy policy is a legal statement that must be clear, conspicuous, and consented to
-                    by all users. It must disclose how a mobile app gathers, stores, and uses the personally
-                    identifiable information it collects from its users.
-                    A mobile privacy app is developed and presented to users so that mobile app developers stay
-                    compliant with state, federal, and international laws. As a result, they fulfill the legal
-                    requirement to safeguard user privacy while protecting the company itself from legal challenges.
-
-                </p>
-                <h2 class="mt-3">Authorized Users</h2>
-                <p class="fw-3">
-                    A mobile app privacy policy is a legal statement that must be clear, conspicuous, and consented to
-                    by all users. It must disclose how a mobile app gathers, stores, and uses the personally
-                    identifiable information it collects from its users.
-                </p>
-                <div class="group-cb mt-3 align-items-center">
-                    <div class="cb">
-                        <input type="checkbox" class="tf-checkbox st1" checked>
-                    </div>
-                    <span class="fw_3">I agree to the Term of sevice and Privacy policyy</span>
-                </div>
-
-            </div>
-            <div class="bottom mt-5">
-                <a href="home.html#" class="tf-btn accent large" data-bs-dismiss="modal">I Accept</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-{{--<div class="modal fade" id="warning" data-backdrop="static" data-keyboard="false">--}}
-{{--    <div class="modal-dialog modal-dialog-centered">--}}
-{{--        <div class="modal-content">--}}
-{{--            <div class="heading">--}}
-{{--                <h2 class="text-center text-danger my-2">Update !!!!</h2>--}}
-{{--                <h6 class="text-muted text-center mb-3">Please read carefully</h6>--}}
-
-
-{{--                <div class="card border-0 my-2 mt-4 shadow-lg p-3 mb-5 bg-body rounded">--}}
-{{--                    <div class="card-body border-0">--}}
-{{--                        <h4 class="text-danger text-center">--}}
-{{--                            New payment has been added<br> Payment does not require refrence...--}}
-{{--                        </h4>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-
-
-{{--                <div class="group-cb mt-3 d-flex justify-content-center">--}}
-{{--                    <div class="cb">--}}
-{{--                        <input type="checkbox" class="tf-checkbox st1" checked>--}}
-{{--                    </div>--}}
-{{--                    <span class="fw_3 mb-4">I agree to the Term of service and conditions</span>--}}
-{{--                </div>--}}
-
-{{--            </div>--}}
-{{--            <div class="bottom mt-5">--}}
-{{--                <a href="#" class="tf-btn accent large" data-bs-dismiss="modal">I Accept</a>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+{{--<!-- preloade -->--}}
+{{--<div class="preload preload-container">--}}
+{{--    <div class="preload-logo">--}}
+{{--        <div class="spinner"></div>--}}
 {{--    </div>--}}
 {{--</div>--}}
+{{--<!-- /preload -->--}}
+
+
+
+
+
 
 
 <div class="app-header st1">
@@ -270,12 +214,7 @@
 
 
             </div>
-            <div class="bottom d-flex justify-content-between align-items-center">
-                <p class="text-small text-warning">Payment Expires in</p>
-                <h4>
-                    <div class="" id="timers">15:00</div>
-                </h4>
-            </div>
+
 
         </div>
 
@@ -371,14 +310,34 @@
                                                 </div>
 
 
-                                                <div class="col-12 d-flex justify-content-center">
-                                                    <h5>You are about to pay</h5>
+                                                <div class="my-4 hidden" id="infoContainercharm6">
+                                                    <img src="{{url('')}}/public/assets/success.gif">
                                                 </div>
 
+                                                <div class="my-2 hidden" id="infoContainercharm4">
+                                                    <p class="text-warning text-center">Waiting for payment</p>
+                                                </div>
+
+                                                <div class="my-4 hidden" id="infoContainercharm3">
+                                                    <p class="text-success text-center">Verifying payment</p>
+                                                    <img src="{{url('')}}/public/assets/ezgif.com-crop.gif">
+                                                </div>
+
+
+                                                <div class="col-12 d-flex justify-content-center mb-2">
+                                                    <h5>You are about to pay</h5>
+                                                </div>
 
                                                 <div class="col-12 my-3 d-flex justify-content-center">
                                                     <h2>₦{{number_format($f_amount,2)}}</h2>
                                                 </div>
+
+                                                <hr>
+
+                                                <div class="col-12 d-flex justify-content-center my-3">
+                                                    <h5 class="text-center text-danger">Make sure you send exact amount to avoid delays</h5>
+                                                </div>
+
 
 
                                             </div>
@@ -448,8 +407,17 @@
                                                 <div class="loaderpsb" id="loaderpsb"></div>
 
 
+                                                <b class="text-center my-4">Do not leave the payment page, it  will automatically redirect once payment is confirmed</b>
 
-                                                <b class="text-center my-1">Bank charges applies</b>
+                                                <hr>
+
+                                                <div class="bottom d-flex justify-content-between align-items-center">
+                                                    <p class="text-small text-warning">Payment Expires in</p>
+                                                    <h4>
+                                                        <div class="" id="timers">15:00</div>
+                                                    </h4>
+                                                </div>
+
 
 
                                                 <script>
@@ -485,11 +453,9 @@
                                                             })
 
                                                             .then(data => {
-                                                                console.log(data.result.account_name);
-                                                                console.log(data.result.account_no);
+
                                                                 const accountNo = data.result.account_no;
                                                                 const accountName = data.result.account_name;
-
 
                                                                 document.getElementById('fetch').style.display = 'none';
 
@@ -515,7 +481,61 @@
                                                                     })
                                                                     .then(data => {
                                                                         console.log('POST request successful:', data);
-                                                                        // Handle the data returned by the server
+
+                                                                        document.getElementById('infoContainercharm4').classList.remove('hidden');
+                                                                        startPaymentVerification(accountNo);
+                                                                        var audio = new Audio('{{url('')}}/public/assets/sound.wav');
+                                                                        function startPaymentVerification(accountNo) {
+                                                                            const verificationInterval = setInterval(() => {
+                                                                                fetch('{{url('')}}/verifyninepsb', {
+                                                                                    method: 'POST',
+                                                                                    headers: {
+                                                                                        'Content-Type': 'application/json',
+                                                                                        'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include CSRF token here
+                                                                                    },
+                                                                                    body: JSON.stringify({
+                                                                                        paymentReference: accountNo
+                                                                                    })
+                                                                                })
+                                                                                    .then(response => response.json())
+                                                                                    .then(data => {
+                                                                                        console.log('Response from 9psb:', data);
+
+
+                                                                                        document.getElementById('infoContainercharm4').classList.add('hidden');
+
+
+                                                                                        if (data.status === 'success') {
+                                                                                            clearInterval(verificationInterval);
+                                                                                        } else if (data.status === 'pending') {
+                                                                                            document.getElementById('infoContainercharm3').classList.remove('hidden');
+                                                                                        } else if (data.status === 'paid') {
+                                                                                            audio.play();
+                                                                                            document.getElementById('infoContainercharm3').classList.add('hidden');
+
+                                                                                            document.getElementById('infoContainercharm6').classList.remove('hidden');
+
+                                                                                            window.location.href = "{{ url('') }}/paid-success?trans_id={{$ref}}&amount={{$payable_amount}}&marchant_url={{ $marchant_url }}&status=success";
+                                                                                        }else if (data.status === 'partial') {
+                                                                                            audio.play();
+                                                                                            window.location.href = "{{ url('') }}/ppay?trans_id={{$ref}}";
+                                                                                        }else if (data.status === 'partialpaid') {
+                                                                                            audio.play();
+                                                                                            window.location.href = "{{ url('') }}/ppay?trans_id={{$ref}}";
+                                                                                        }
+
+
+                                                                                        else {
+                                                                                            console.log('Unhandled status:', data.status);
+                                                                                            console.error('Unexpected status:', data.status);
+                                                                                        }
+                                                                                    })
+                                                                                    .catch(error => {
+                                                                                        console.error('Error verifying payment:', error);
+                                                                                    });
+                                                                            }, 10000); // 10 seconds interval
+                                                                        }
+
                                                                     })
                                                                     .catch(error => {
                                                                         console.error('Error during POST request:', error);
@@ -578,7 +598,7 @@
                                                                     id="ninepsbelement">${accountNo}</h5>
                                                                 <input hidden
                                                                        value="${accountNo}"
-                                                                       id="ninepsb_account_no">
+                                                                       id="ninepsb_account_no2">
 
                                                                 <i style="font-size: 1em; margin-left: 4px"
                                                                    class="fa fa-copy"
@@ -632,15 +652,12 @@
 
                                                         <input type="text" id="webHook" name="webhook" hidden value="{{ $webhook}}">
 
-                                                        <input type="text" id="Amount" hidden name="amount" value="{{ $amount }}">
+                                                        <input type="text" id="Amount2" hidden name="amount" value="{{ $amount }}">
 
                                                         <input type="text" id="Amount" hidden name="account_no" value="${accountNo}">
 
                                                         <!-- Button trigger modal -->
 
-                                                        <button class="tf-btn accent large my-3 request-btn"
-                                                                id="requestninepsb">I
-                                                            ve sent ₦{{ number_format($f_amount )}}</button>
 
 
                                                                 </form>
@@ -686,6 +703,13 @@
                                                     function log() {
                                                         console.log('---')
                                                     }
+
+
+
+
+
+
+
                                                 </script>
 
                                             @else
@@ -943,86 +967,6 @@
                         </script>
 
 
-                        <script>
-                            let repeatRequestninepsb = true;
-
-                            function makeRequestninepsb() {
-                                if (!repeatRequestninepsb) {
-                                    return;
-                                }
-
-                                const trx_id = '{{$trans_id}}'
-                                const account_no = "document.getElementById('ninepsb_account_no').value"
-                                const url = "{{ url('') }}/verifyninepsb?trans_id={{$trans_id}}";
-
-                                var audio = new Audio('{{url('')}}/public/assets/sound.wav');
-
-
-                                fetch(url)
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        console.log(data);
-
-                                        if (data.status === 'pending') {
-                                            setTimeout(makeRequestninepsb, 3000);
-                                        } else if (data.status === 'success') {
-
-                                            audio.play();
-
-                                            const webhook = document.getElementById('webHook').value;
-                                            const amount = document.getElementById('Amount').value;
-
-                                            window.location.href = "{{ url('') }}/success?trans_id=" + trx_id;
-
-                                            repeatRequestkuda = false; // Adjusted variable name here
-                                        } else if (data.status === 'paid') {
-                                            audio.play();
-                                            window.location.href = "{{ url('') }}/paid-success?trans_id=" + trx_id;
-
-                                            repeatRequestkuda = false; // Adjusted variable name here
-                                        }
-                                    })
-                                    .catch(error => {
-                                        console.error(error);
-                                    });
-                            }
-
-                            function startTimerninepsb(duration, display) {
-                                let timer = duration;
-                                const countdownElement = document.getElementById(display);
-
-                                const intervalId = setInterval(function () {
-                                    const minutes = Math.floor(timer / 60);
-                                    const seconds = timer % 60;
-
-                                    countdownElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-
-                                    if (timer === 0) {
-                                        clearInterval(intervalId);
-                                        countdownElement.textContent = "Have you been debited and payment still not confirmed, Return to merchant website to resolve or report transaction";
-                                    }
-
-                                    timer--;
-                                }, 1000);
-                            }
-
-                            function startMessageninepsb() {
-                                var messageDisplay = document.getElementById('messageninepsb');
-                                messageDisplay.innerHTML = "Confirming 9psb payment...";
-                            }
-
-                            const requestninepsbBtn = document.getElementById('requestninepsb');
-                            requestninepsbBtn.addEventListener("click", function () {
-                                const requestninepsbBtn = document.getElementById('requestninepsb');
-
-                                startTimerninepsb(1200, 'countdown');
-                                makeRequestninepsb();
-                                startMessageninepsb();
-                                $('#myModalninepsbshow').modal('show');
-                                requestkudaBtn.disabled = true;
-                                requestkudaBtn.hidden = true;
-                            });
-                        </script>
 
 
                     </div>
@@ -1106,20 +1050,16 @@
                                                     </div>
 
 
-                                                    <div class="col-12 d-flex justify-content-center mb-2">
+
+
+                                                    <div class="col-12 d-flex justify-content-center">
                                                         <h5>You are about to pay</h5>
                                                     </div>
+
 
                                                     <div class="col-12 my-3 d-flex justify-content-center">
                                                         <h2>₦{{number_format($f_amount,2)}}</h2>
                                                     </div>
-
-                                                    <hr>
-
-                                                    <div class="col-12 d-flex justify-content-center">
-                                                        <h5 class="text-center text-danger">Make sure you send exact amount to avoid delays</h5>
-                                                    </div>
-
 
 
                                                 </div>
@@ -1178,535 +1118,15 @@
                                                         </div>
                                                     </div>
 
-                                                    <div id="info-container">
-                                                        <!-- Placeholder for fetched information -->
-                                                    </div>
-
-                                                    <button class="p-2" id="fetch" style="color: #03103a"
-                                                            onclick="fetchInfo()">Get
-                                                        Account Details
-                                                    </button>
-                                                    <div class="loaderpsb" id="loaderpsb"></div>
-
-
-
-
-
-
-                                                    <script>
-                                                        let fetchTimeout;
-
-                                                        function fetchInfo() {
-                                                            // Display the loader
-                                                            document.getElementById('loaderpsb').style.display = 'block';
-
-                                                            // Reset timeout if retrying
-                                                            clearTimeout(fetchTimeout);
-
-                                                            // Simulating a POST request (replace with actual API call)
-                                                            {{--fetch('{{url('')}}/api/get-account', {--}}
-                                                            fetch('https://etopagency.com/api/create-account-dymamic', {
-                                                                method: 'POST',
-                                                                headers: {
-                                                                    'Content-Type': 'application/json'
-                                                                },
-                                                                body: JSON.stringify({
-                                                                    user_id: 95,
-                                                                    description: "Payment",
-                                                                    name: "{{$account_name}}",
-                                                                    amount: {{$f_amount}}
-
-                                                                }) // Replace with actual data to send
-                                                            })
-                                                                .then(response => {
-                                                                    if (!response.ok) {
-                                                                        throw new Error('Network response was not ok');
-                                                                    }
-                                                                    return response.json();
-                                                                })
-
-                                                                .then(data => {
-                                                                    console.log(data.result.account_name);
-                                                                    console.log(data.result.account_no);
-                                                                    const accountNo = data.result.account_no;
-                                                                    const accountName = data.result.account_name;
-
-
-                                                                    document.getElementById('fetch').style.display = 'none';
-
-
-                                                                    fetch('{{ url('') }}/api/ninepsb-transfer-transaction', {
-                                                                        method: 'POST',
-                                                                        headers: {
-                                                                            'Content-Type': 'application/json'
-                                                                        },
-                                                                        body: JSON.stringify({
-                                                                            ref: '{{ $transref }}',
-                                                                            accountNo: data.result.account_no,
-                                                                            name: data.result.account_name,
-                                                                            amount: '{{$f_amount}}'
-
-
-                                                                        }) // Replace with actual data to send
-                                                                    })
-                                                                        .then(response => {
-                                                                            if (!response.ok) {
-                                                                                throw new Error('Network response was not ok');
-                                                                            }
-                                                                            return response.json(); // Parse the JSON from the response
-                                                                        })
-                                                                        .then(data => {
-                                                                            console.log('POST request successful:', data);
-                                                                            // Handle the data returned by the server
-                                                                        })
-                                                                        .catch(error => {
-                                                                            console.error('Error during POST request:', error);
-                                                                            // Handle errors during the POST request
-                                                                        })
-
-
-                                                                    // Constructing HTML to display fetched information
-                                                                    const infoHTML = `
-
-<hr>
-
-                                                     <div class = "row mt-3">
-                                                        <div class="col">
-                                                            <div class="d-flex justify-content-start p-1">
-                                                                <h5 class="text-start text-muted">
-                                                                    TO PAY
-                                                                </h5>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col">
-                                                            <div class="d-flex justify-content-end
-                                                                                   p-1">
-                                                                <h5 style="border-right: 4px; font-size: 15px;"
-
-                                                                    id="text_element">{{number_format($f_amount,2)}}</h5>
-                                                                <input hidden
-                                                                       value="{{$f_amount}}"
-                                                                       id="ninepsb_account_no">
-
-                                                                <i style="font-size: 1em; margin-left: 4px"
-                                                                   class="fa fa-copy"
-                                                                   onclick="copyToClipboard('text_element')">
-
-                                                                </i>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-
-
-
-<hr>
-
-<div class = "row mt-3">
-                                                        <div class="col">
-                                                            <div class="d-flex justify-content-start p-1">
-                                                                <h5 class="text-start text-muted">
-                                                                    ACCT NO
-                                                                </h5>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col">
-                                                            <div class="d-flex justify-content-end
-                                                                                   p-1">
-                                                                <h5 style="border-right: 4px; font-size: 15px;"
-
-                                                                    id="ninepsbelement">${accountNo}</h5>
-                                                                <input hidden
-                                                                       value="${accountNo}"
-                                                                       id="ninepsb_account_no">
-
-                                                                <i style="font-size: 1em; margin-left: 4px"
-                                                                   class="fa fa-copy"
-                                                                   onclick="copyToClipboardninepsb('ninepsbelement')">
-
-                                                                </i>
-
-
-
-
-                                            </div>
-                                        </div>
-</div>
-<hr>
-<div class = "row mt-3">
-                                                        <div class="col">
-                                                            <div class="d-flex justify-content-start p-1">
-                                                                <h5 class="text-start text-muted">
-                                                                    ACCT NAME
-                                                                </h5>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col">
-                                                            <div class="d-flex justify-content-end
-                                                                                   p-1">
-                                                                <h5 style="border-right: 4px; font-size: 15px;"
-
-                                                                    id="text_element">${accountName}</h5>
-                                                                <input hidden
-                                                                       value="${accountName}"
-                                                                       id="ninepsb_account_name">
-
-                                                                <i style="font-size: 1em; margin-left: 4px"
-                                                                   class="fa fa-copy"
-                                                                   onclick="copyToClipboard('text_element')">
-
-                                                                </i>
-
-
-
-
-                                            </div>
-                                        </div>
-</div>
-
-                                                    <form action="/verifypsb" method="POST">
-                                                    @csrf
-
-                                                                    <input type="text" id="trx_id" name="trx_id" hidden value="{{ $trans_id}}">
-
-                                                        <input type="text" id="webHook" name="webhook" hidden value="{{ $webhook}}">
-
-                                                        <input type="text" id="Amount" hidden name="amount" value="{{ $amount }}">
-
-                                                        <input type="text" id="Amount" hidden name="account_no" value="${accountNo}">
-
-                                                        <!-- Button trigger modal -->
-
-                                                        <button class="tf-btn accent large my-3 request-btn"
-                                                                id="requestninepsb">I
-                                                            ve sent ₦{{ number_format($f_amount )}}</button>
-
-
-                                                                </form>
-
-
-`;
-
-                                                                    // Display fetched information in info-container
-                                                                    const infoContainer = document.getElementById('info-container');
-                                                                    infoContainer.innerHTML = infoHTML;
-
-                                                                    // Hide the loader after displaying information
-                                                                    document.getElementById('loaderpsb').style.display = 'none';
-                                                                })
-                                                                .catch(error => {
-                                                                    console.error('Error fetching data:', error);
-                                                                    const infoContainer = document.getElementById('info-container');
-                                                                    infoContainer.innerHTML = '<p>Error fetching data. Please retry.</p>';
-
-                                                                    // Hide the loader
-                                                                    document.getElementById('loaderpsb').style.display = 'none';
-                                                                });
-
-                                                            // Set timeout for retrying
-                                                            fetchTimeout = setTimeout(() => {
-                                                                const infoContainer = document.getElementById('info-container');
-                                                                infoContainer.innerHTML = '<p>Request timed out. Please retry.</p>';
-                                                                document.getElementById('loaderpsb').style.display = 'none';
-                                                            }, 30000000); // 30 seconds timeout
-                                                        }
-                                                    </script>
-
-                                                    <script>
-                                                        function copyToClipboardninepsb(elementId) {
-                                                            var aux = document.createElement("input");
-                                                            aux.setAttribute("value", document.getElementById(elementId).innerHTML);
-                                                            document.body.appendChild(aux);
-                                                            aux.select();
-                                                            document.execCommand("copy");
-                                                            document.body.removeChild(aux);
-                                                        }
-
-                                                        function log() {
-                                                            console.log('---')
-                                                        }
-
-
-
-                                                        var audio = new Audio('{{url('')}}/public/assets/sound.wav');
-                                                        function startPaymentVerification(paym_ref) {
-                                                            const verificationInterval = setInterval(() => {
-                                                                fetch('{{url('')}}/verifyninepsb', {
-                                                                    method: 'POST',
-                                                                    headers: {
-                                                                        'Content-Type': 'application/json',
-                                                                        'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include CSRF token here
-                                                                    },
-                                                                    body: JSON.stringify({
-                                                                        paymentReference: paym_ref
-                                                                    })
-                                                                })
-                                                                    .then(response => response.json())
-                                                                    .then(data => {
-                                                                        console.log('Response from verifycharmnow:', data);
-                                                                        if (data.status === 'success') {
-                                                                            clearInterval(verificationInterval);
-                                                                        } else if (data.status === 'pending') {
-                                                                            document.getElementById('infoContainercharm2').innerHTML = '<p class="text-center text-success">Verifying Payment...</p>';
-                                                                        } else if (data.status === 'paid') {
-                                                                            audio.play();
-                                                                            window.location.href = "{{ url('') }}/paid-success?trans_id={{$ref}}&amount={{$payable_amount}}&marchant_url={{ $marchant_url }}&status=success";
-                                                                        }else if (data.status === 'partial') {
-                                                                            audio.play();
-                                                                            window.location.href = "{{ url('') }}/ppay?trans_id={{$ref}}";
-                                                                        }else if (data.status === 'partialpaid') {
-                                                                            audio.play();
-                                                                            window.location.href = "{{ url('') }}/ppay?trans_id={{$ref}}";
-                                                                        }
-
-
-                                                                        else {
-                                                                            console.log('Unhandled status:', data.status);
-                                                                            console.error('Unexpected status:', data.status);
-                                                                        }
-                                                                    })
-                                                                    .catch(error => {
-                                                                        console.error('Error verifying payment:', error);
-                                                                    });
-                                                            }, 10000); // 10 seconds interval
-                                                        }
-
-
-
-                                                    </script>
 
 
 
 
                                                 @else
-                                                    <div class="row">
-
-                                                        <div class="col-12">
-                                                            <h4 class="text-muted text-center my-2"></h4>
-                                                            <hr>
-                                                        </div>
 
 
-                                                        <div class="col">
-                                                            <div class="d-flex justify-content-start
-                                                     p-1">
-                                                                <h5 class="text-start text-muted">
-                                                                    ACCT NO
-                                                                </h5>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col">
-                                                            <div class="d-flex justify-content-end
-                                                                                   p-1">
-
-                                                                <h5 style="border-right: 4px; font-size: 15px;"
-                                                                    id="text_element">{{ $ninepsb->account_no ?? "Not Available"}}</h5>
-                                                                <input hidden
-                                                                       value="{{ $ninepsb->account_no ?? "Not Available" }}"
-                                                                       id="ninepsb_account_no">
-
-                                                                <i style="font-size: 1em; margin-left: 4px"
-                                                                   class="fa fa-copy"
-                                                                   onclick="copyToClipboard('text_element')">
-
-                                                                </i>
-
-                                                                <script>
-                                                                    function copyToClipboard(elementId) {
-                                                                        var aux = document.createElement("input");
-                                                                        aux.setAttribute("value", document.getElementById(elementId).innerHTML);
-                                                                        document.body.appendChild(aux);
-                                                                        aux.select();
-                                                                        document.execCommand("copy");
-                                                                        document.body.removeChild(aux);
-                                                                    }
-
-                                                                    function log() {
-                                                                        console.log('---')
-                                                                    }
-                                                                </script>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-
-                                                        <div class="col-12">
-                                                            <h4 class="text-muted text-center my-2"></h4>
-                                                            <hr>
-                                                        </div>
 
 
-                                                        <div class="col">
-                                                            <div class="d-flex justify-content-start
-                                                     p-1">
-                                                                <h5 class="text-start text-muted">
-                                                                    ACCT NAME
-                                                                </h5>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col">
-                                                            <div class="d-flex justify-content-end
-                                                    p-1">
-
-                                                                <h5 style="font-size: 15px;"
-                                                                    id="text_element">{{ $ninepsb->account_name ?? "Not Available"}}</h5>
-                                                                </i>
-
-                                                                <script>
-                                                                    function copyToClipboard(elementId) {
-                                                                        var aux = document.createElement("input");
-                                                                        aux.setAttribute("value", document.getElementById(elementId).innerHTML);
-                                                                        document.body.appendChild(aux);
-                                                                        aux.select();
-                                                                        document.execCommand("copy");
-                                                                        document.body.removeChild(aux);
-                                                                    }
-
-                                                                    function log() {
-                                                                        console.log('---')
-                                                                    }
-                                                                </script>
-
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-                                                    <div class="row">
-
-                                                        <div class="col-12">
-                                                            <h4 class="text-muted text-center my-2"></h4>
-                                                            <hr>
-                                                        </div>
-
-
-                                                        <div class="col">
-                                                            <div class="d-flex justify-content-start
-                                                     p-1">
-                                                                <h5 class="text-start text-muted">
-                                                                    REFERENCE
-                                                                </h5>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col">
-                                                            <div class="d-flex justify-content-end
-                                                    p-1">
-
-                                                                <h3 style="border-right: 4px; font-size: 15px; color: darkred"
-                                                                    id="text_element1">{{ $transref ?? "Not Available" ?? "Not Available"}}</h3>
-                                                                <input hidden value="{{ $trans_id }}" id="trfninepsb">
-
-                                                                <i style="font-size: 1em; margin-left: 4px"
-                                                                   class="fa fa-copy"
-                                                                   onclick="copyToClipboard('text_element1')">
-                                                                </i>
-
-                                                                <script>
-                                                                    function copyToClipboard(elementId) {
-                                                                        var aux = document.createElement("input");
-                                                                        aux.setAttribute("value", document.getElementById(elementId).innerHTML);
-                                                                        document.body.appendChild(aux);
-                                                                        aux.select();
-                                                                        document.execCommand("copy");
-                                                                        document.body.removeChild(aux);
-                                                                    }
-
-                                                                    function log() {
-                                                                        console.log('---')
-                                                                    }
-                                                                </script>
-
-                                                            </div>
-                                                        </div>
-                                                        <hr class="my-1">
-
-                                                    </div>
-                                                    <small style="font-size: 13px" class="text-danger text-center my-2">Please
-                                                        add Reference to your transaction narration to avoide delay in
-                                                        confirmation</small>
-                                                    <form onsubmit="event.preventDefault()">
-
-                                                        <input type="text" id="trx_id" hidden value="{{ $trans_id}}">
-
-                                                        <input type="text" id="webHook" hidden value="{{ $webhook}}">
-
-                                                        <input type="text" id="Amount" hidden value="{{ $amount }}">
-
-                                                        <!-- Button trigger modal -->
-
-
-                                                        <!-- Modal -->
-                                                        <div
-                                                            style="background-image: linear-gradient(to right top, #051937, #001c2d, #001a1c, #02160f, #0e1109);"
-                                                            class="modal fade" id="myModalninepsbshow"
-                                                            data-backdrop="static"
-                                                            data-keyboard="false">
-                                                            <div class="modal-dialog "
-                                                                 style="background-image: linear-gradient(to right top, #051937, #001c2d, #001a1c, #02160f, #0e1109);">
-                                                                <div class="modal-content border-0"
-                                                                     style="background-image: linear-gradient(to right top, #051937, #001c2d, #001a1c, #02160f, #0e1109); background-color: black;">
-
-                                                                    <div class="modal-body p-5 my-4">
-                                                                        <div class="tf-container p-5">
-
-                                                                            <div class="payment-loader mb-4">
-
-                                                                                <div class="text-center">
-                                                                                    <p style="color:rgb(232, 3, 106);"
-                                                                                       id="timer"><span
-                                                                                            id="countdown"></span>
-                                                                                    </p>
-                                                                                </div>
-
-
-                                                                                <div class="pad mt-3">
-                                                                                    <div class="chip"></div>
-                                                                                    <div class="line line1"></div>
-                                                                                    <div class="line line2"></div>
-                                                                                </div>
-
-                                                                                <div class="loader-text">
-                                                                                    <p class="text-center mb-4"
-                                                                                       style="color:rrgb(11, 1, 63)"
-                                                                                       id="messageninepsb"></p>
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </div>
-
-
-                                                                    </div>
-
-                                                                    <div class="tf-container my-5">
-                                                                        <a href="decline?trans_id={{ $trans_id  }}&key={{ $key  }}"
-                                                                           class="tf-btn danger large mt-5">Cancel
-                                                                            Transaction</a>
-                                                                    </div>
-
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <button class="tf-btn accent large my-3 request-btn"
-                                                                id="requestninepsb">I
-                                                            ve sent ₦{{
-                                        number_format($payable_amount )}}
-
-                                                        </button>
-
-
-                                                    </form>
                                                 @endif
 
 
@@ -1736,86 +1156,6 @@
                             </script>
 
 
-                            <script>
-                                let repeatRequestninepsb = true;
-
-                                function makeRequestninepsb() {
-                                    if (!repeatRequestninepsb) {
-                                        return;
-                                    }
-
-                                    const trx_id = '{{$trans_id}}'
-                                    const account_no = "document.getElementById('ninepsb_account_no').value"
-                                    const url = "{{ url('') }}/verifyninepsb?trans_id={{$trans_id}}";
-
-                                    var audio = new Audio('{{url('')}}/public/assets/sound.wav');
-
-
-                                    fetch(url)
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            console.log(data);
-
-                                            if (data.status === 'pending') {
-                                                setTimeout(makeRequestninepsb, 3000);
-                                            } else if (data.status === 'success') {
-
-                                                audio.play();
-
-                                                const webhook = document.getElementById('webHook').value;
-                                                const amount = document.getElementById('Amount').value;
-
-                                                window.location.href = "{{ url('') }}/success?trans_id=" + trx_id;
-
-                                                repeatRequestkuda = false; // Adjusted variable name here
-                                            } else if (data.status === 'paid') {
-                                                audio.play();
-                                                window.location.href = "{{ url('') }}/paid-success?trans_id=" + trx_id;
-
-                                                repeatRequestkuda = false; // Adjusted variable name here
-                                            }
-                                        })
-                                        .catch(error => {
-                                            console.error(error);
-                                        });
-                                }
-
-                                function startTimerninepsb(duration, display) {
-                                    let timer = duration;
-                                    const countdownElement = document.getElementById(display);
-
-                                    const intervalId = setInterval(function () {
-                                        const minutes = Math.floor(timer / 60);
-                                        const seconds = timer % 60;
-
-                                        countdownElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-
-                                        if (timer === 0) {
-                                            clearInterval(intervalId);
-                                            countdownElement.textContent = "Have you been debited and payment still not confirmed, Return to merchant website to resolve or report transaction";
-                                        }
-
-                                        timer--;
-                                    }, 1000);
-                                }
-
-                                function startMessageninepsb() {
-                                    var messageDisplay = document.getElementById('messageninepsb');
-                                    messageDisplay.innerHTML = "Confirming 9psb payment...";
-                                }
-
-                                const requestninepsbBtn = document.getElementById('requestninepsb');
-                                requestninepsbBtn.addEventListener("click", function () {
-                                    const requestninepsbBtn = document.getElementById('requestninepsb');
-
-                                    startTimerninepsb(1200, 'countdown');
-                                    makeRequestninepsb();
-                                    startMessageninepsb();
-                                    $('#myModalninepsbshow').modal('show');
-                                    requestkudaBtn.disabled = true;
-                                    requestkudaBtn.hidden = true;
-                                });
-                            </script>
 
 
                         </div>
@@ -1831,88 +1171,18 @@
 
 
 
-@include('ads')
+{{--@include('ads')--}}
+
+
+
 
 
 <script src="{{ url('') }}/public/assets/dist/js/bootstrap.bundle.min.js"></script>
 
 
-<script>
-    document.getElementById('CardPost').addEventListener('click', function () {
-        const url = '{{ url('') }}/api/card-transaction';
-        const data = {
-            ref: '{{ $ref }}'
-        };
-
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-            .then(response => response.json())
-            .then(data => {
-
-                console.log('Response:', data);
-            })
-            .catch(error => {
-
-                console.error('Error:', error);
-            });
-    });
-</script>
-
-<script>
-    document.getElementById('openModalBtnopay').addEventListener('click', function () {
-        const url = '{{ url('') }}/api/opay-transfer-transaction';
-        const data = {
-            ref: '{{ $transref }}'
-        };
-
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Response:', data);
-            })
-            .catch(error => {
-
-                console.error('Error:', error);
-            });
-    });
-</script>
 
 
-<script>
-    document.getElementById('openModalBtnkuda').addEventListener('click', function () {
-        const url = '{{ url('') }}/api/kuda-transfer-transaction';
-        const data = {
-            ref: '{{ $transref }}'
-        };
 
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Response:', data);
-            })
-            .catch(error => {
-
-                console.error('Error:', error);
-            });
-    });
-</script>
 
 
 <script>
@@ -1942,16 +1212,6 @@
 
         updateTimer();
 
-        const p_account_no = document.getElementById('p_account_no').value;
-        const url = "{{ url('') }}/change-state?account_no=" + p_account_no;
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
     }
 
 

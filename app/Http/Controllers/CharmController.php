@@ -213,6 +213,15 @@ class CharmController extends Controller
         if ($account_no == null) {
 
             $p_ref = Transfertransaction::where('ref', $request->paymentReference)->first() ?? null;
+            $status = Transfertransaction::where('ref', $request->paymentReference)->first()->status ?? null;
+
+            if($status == 4){
+                return response()->json([
+                    'status' => false,
+                    'message' => "Transaction already funded"
+                ]);
+            }
+
             if ($p_ref == null) {
                 return response()->json([
                     'status' => false,

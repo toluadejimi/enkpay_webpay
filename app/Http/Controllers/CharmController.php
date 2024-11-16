@@ -27,6 +27,8 @@ class CharmController extends Controller
         $session_id = $request->unique_reference;
         $payable = $request->amount_payable;
         $fee = $request->fee;
+
+
         $message = "wema Webhook=======>".json_encode($request->all());
         send_notification($message);
 
@@ -138,6 +140,12 @@ class CharmController extends Controller
 //            }
 //        }
 //
+
+
+        return response()->json([
+                    'status' => true,
+                    'message' => "Transaction Successful"
+                ]);
 //        return response()->json([
 //            'status' => false,
 //            'message' => "No transaction made"

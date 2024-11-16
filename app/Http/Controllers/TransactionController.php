@@ -1702,7 +1702,9 @@ class TransactionController extends Controller
         $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
 
 
-        $url_page = Webkey::where('key', $key)->first()->user_url ?? null;
+
+        $get_url = Webkey::where('key', $key)->first()->user_url ?? null;
+        $url_page = $get_url."?ref=$trans_id";
 
 
         $webhook = $marchant_url . "?" . "amount=$amount" . "&trans_id=$trans_id" . "&status=success" . "&wc_order=$wc_order" . "&client_id=$client_id" ?? null;

@@ -1072,6 +1072,10 @@ class VerifyController extends Controller
                 return back()->with('error', 'Transaction failed, please contact your bank to file  dispute');
             }
 
+            if ($verify['code'] == 5) {
+                return back()->with('error', 'You sent incorrect amount, please wait for refund or contact your bank for refund');
+            }
+
             if ($verify['code'] == 0) {
 
                 $date = date('d M Y H:i:s');

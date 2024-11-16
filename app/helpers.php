@@ -2700,26 +2700,26 @@ if (!function_exists('verifypelpayreslove')) {
                 $namt = $var->responseData->amount;
 
 
-                $ck_url = Transfertransaction::where('ref', $pref)->first()->url ?? null;
-
-                if($ck_url != null){
-                    return [ 'code' => 7 ];
-                }
-
-                $acc_no = Transfertransaction::where('ref', $pref)->first()->account_no ?? null;
-
-                $ref = Transfertransaction::where('ref', $pref)->first()->amount ?? null;
-                $expected_amount = Transfertransaction::where('ref', $pref)->first()->amount ?? null;
-
-                $amount_remain = $namt - $camt;
-
-                $url = url('')."/part-payment?expected_amount=$namt&amount_paid=$camt&acct_no=$acc_no&amount_remain=$amount_remain&ref=$pref";
-                Transfertransaction::where('ref', $pref)->update(['url' => $url]);
+//                $ck_url = Transfertransaction::where('ref', $pref)->first()->url ?? null;
+//
+//                if($ck_url != null){
+//                    return [ 'code' => 7 ];
+//                }
+//
+//                $acc_no = Transfertransaction::where('ref', $pref)->first()->account_no ?? null;
+//
+//                $ref = Transfertransaction::where('ref', $pref)->first()->amount ?? null;
+//                $expected_amount = Transfertransaction::where('ref', $pref)->first()->amount ?? null;
+//
+//                $amount_remain = $namt - $camt;
+//
+//                $url = url('')."/part-payment?expected_amount=$namt&amount_paid=$camt&acct_no=$acc_no&amount_remain=$amount_remain&ref=$pref";
+//                Transfertransaction::where('ref', $pref)->update(['url' => $url]);
 
 
                 return [
                     'code' => 5,
-                    'url' => $url
+//                    'url' => $url
                 ];
 
             }

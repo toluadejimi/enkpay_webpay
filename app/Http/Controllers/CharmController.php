@@ -14,45 +14,23 @@ use Illuminate\Support\Facades\Log;
 
 class CharmController extends Controller
 {
-    public function get_account(request $request)
+
+
+    public function charm_webhook(Request $request)
     {
 
-        $set = Setting::where('id', 1)->first();
-        if ($set->woven == 1) {
-            $faker = Factory::create();
-            $data['pamount'] = $request->amount;
-            $first_name = User::inRandomOrder()->first()->first_name;
-            $last_name = User::inRandomOrder()->first()->last_name;
-            $tremail = $faker->email;
-            $phone = User::inRandomOrder()->first()->phone;
-            $amtt = $data['pamount'];
-            $woven_details = woven_create($amtt, $first_name, $last_name, $tremail, $phone);
-            return response()->json([
-                'account_no' => $woven_details['account_no'],
-                'account_name' => $woven_details['account_name'],
-                'bank_name' => $woven_details['bank_name'],
-            ]);
+        return response()->json(['status' => true]);
+
+        $pref = $request->PaymentReference;
+        $acc_no = $request->nuban;
+        $user_amount = $request->amount;
+        $session_id = $request->unique_reference;
+        $payable = $request->amount_payable;
+        $fee = $request->fee;
+        $message = "wema Webhook=======>".json_encode($request->all());
+        send_notification($message);
 
 
-        }
-
-
-    }
-
-
-//    public function charm_webhook(Request $request)
-//    {
-//
-//        return response()->json(['status' => true]);
-//
-//        $pref = $request->PaymentReference;
-//        $acc_no = $request->nuban;
-//        $user_amount = $request->amount;
-//        $session_id = $request->unique_reference;
-//        $payable = $request->amount_payable;
-//        $fee = $request->fee;
-//
-//
 //        $status = Transfertransaction::where('ref', $pref)->first()->status ?? null;
 //        if ($status == 4) {
 //            return response()->json([
@@ -164,7 +142,7 @@ class CharmController extends Controller
 //            'status' => false,
 //            'message' => "No transaction made"
 //        ]);
-//    }
+    }
 
 
     public
@@ -199,7 +177,7 @@ class CharmController extends Controller
             $trasnaction->status = 0;
             $trasnaction->save();
 
-            $message = "Transfer Payment Initiated |" . $request->ref . "| ON CHARM " . "For " . $usr->last_name . " | " . number_format($trx->payable_amount, 2);
+            $message = "Transfer Payment Initiated |" . $request->ref . "| ON CHARM " . "For " . $usr->last_name . " | " ." $request->accountNo ". number_format($trx->payable_amount, 2);
             send_notification($message);
 
             return response()->json([

@@ -2051,7 +2051,7 @@ if (!function_exists('verifypelpay')) {
                             $trasnaction->status = 1;
                             $trasnaction->save();
 
-                            $message = "Business funded | $trx->manual_acc_ref | $p_amount | $user->first_name " . " " . $user->last_name;
+                            $message = "Business funded | $acc_no | $p_amount | $user->first_name " . " " . $user->last_name;
                             send_notification($message);
 
                             Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 4]);
@@ -2067,7 +2067,7 @@ if (!function_exists('verifypelpay')) {
 
 
                             $type = "epayment";
-                            $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type, $session_id);
+                            $fund = credit_user_wallet($url, $acc_no , $user_email, $amount, $order_id, $type, $session_id);
 
                             return [
                                 'status' => true,
@@ -2464,7 +2464,7 @@ if (!function_exists('verifypelpay')) {
 
 
     if (!function_exists('credit_user_wallet')) {
-        function credit_user_wallet($url, $user_email, $amount, $order_id, $type, $session_id)
+        function credit_user_wallet($url, $acc_no , $user_email, $amount, $order_id, $type, $session_id)
         {
 
 
@@ -2551,7 +2551,7 @@ if (!function_exists('verifypelpay')) {
 
                 } else {
 
-                    $message = "$url | $user_email | $amount | $order_id successfully funded";
+                    $message = "$url | $acc_no | $user_email | $amount | $order_id successfully funded";
                     send_notification($message);
 
                 }

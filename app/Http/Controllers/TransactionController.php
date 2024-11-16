@@ -1240,23 +1240,13 @@ class TransactionController extends Controller
         $account_no = $request->account_no;
 
 
-        $user_id = Webtransfer::where('trans_id', $trans_id)
-            ->first()->user_id ?? null;
-
-        $key = Webkey::where('user_id', $user_id)
-            ->first()->key ?? null;
-
-
-        $status = Webtransfer::where('trans_id', $trans_id)
-            ->first()->status ?? null;
+        $user_id = Transfertransaction::where('ref_trans_id', $trans_id)->first()->user_id ?? null;
+        $key = Webkey::where('user_id', $user_id)->first()->key ?? null;
+        $status = Transfertransaction::where('ref_trans_id', $trans_id)->first()->status ?? null;
+        $amount = Transfertransaction::where('ref_trans_id', $trans_id)->first()->amount ?? null;
 
 
-        $amount = Webtransfer::where('trans_id', $trans_id)
-            ->first()->amount ?? null;
-
-
-        $amount_received = Webtransfer::where('trans_id', $trans_id)
-            ->first()->total_received ?? null;
+        $amount_received = Transfertransaction::where('ref_trans_id', $trans_id)->first()->total_received ?? null;
 
         $marchant_url = Webkey::where('key', $key)->first()->url ?? null;
 

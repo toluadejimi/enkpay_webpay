@@ -2669,6 +2669,7 @@ if (!function_exists('verifypelpayreslove')) {
 
 
 
+
         if ($var->responseData->transactionStatus == "Failed") {
 
             return [
@@ -2690,7 +2691,7 @@ if (!function_exists('verifypelpayreslove')) {
                 return [
                     'status' => true,
                     'message' => 'Transaction Successful',
-                    'amount' => $amount,
+                    'amount' => $var->responseData->amountCollected,
                     'code' => 4
                 ];
 

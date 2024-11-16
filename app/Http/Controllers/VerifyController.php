@@ -1020,6 +1020,8 @@ class VerifyController extends Controller
         $pref = Transfertransaction::where('account_no', $request->account_no)->first()->ref ?? null;
 
 
+
+
         $url = $request->url;
         $ckstatus = Transfertransaction::where('ref', $pref)->first()->status ?? null;
 
@@ -1030,7 +1032,7 @@ class VerifyController extends Controller
 
 
 
-        if ($cktrx != null && $pref != null && $cktrx == $pref) {
+        if ($cktrx != null && $pref != null && $cktrx == $pref && $cktrx == 4) {
             return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
         }
 
@@ -1043,8 +1045,9 @@ class VerifyController extends Controller
         if ($ckstatus == null || $ckstatus == 0 || $ckstatus == 3 || $ckstatus == 2) {
 
             $amount = Transfertransaction::where('account_no', $request->account_no)->first()->amount ?? null;
-
             $verify = verifypelpayreslove($pref, $amount);
+
+
 
 
             if ($verify['code'] == 9) {
@@ -1064,18 +1067,21 @@ class VerifyController extends Controller
                 $svtrx = new Transfertransaction();
                 $svtrx->account_no = $request->account_no;
                 $svtrx->status = 4;
-                $svtrx->amount = $amount;
+                $svtrx->amount = $verify['amount'];
+                $svtrx->account_no = $request->account_no;
                 $svtrx->note = "WEMARESOLVE";
                 $svtrx->user_id = $user->id;
                 $svtrx->transaction_type = "Resolve";
                 $svtrx->save();
 
+                Transfertransaction::where('ref', $pref)->update(['status' => 4]) ?? null;
+
 
                 $set = Setting::where('id', 1)->first();
                 if ($amount > 15000) {
-                    $p_amount = $amount - $set->psb_cap;
+                    $p_amount = $verify['amount'] - $set->psb_cap;
                 } else {
-                    $p_amount = $amount - $set->psb_charge;
+                    $p_amount = $verify['amount'] - $set->psb_charge;
                 }
 
                 $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
@@ -1083,10 +1089,15 @@ class VerifyController extends Controller
                 //fund Vendor
                 $charge = Setting::where('id', 1)->first()->webpay_transfer_charge;
                 if ($amount <= 100) {
-                    $f_amount = $amount;
+                    $f_amount = $verify['amount'];
                 } else {
-                    $f_amount = $amount - $charge;
+                    $f_amount = $verify['amount'] - $charge;
                 }
+
+
+
+
+
 
                 $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
                 $balance = User::where('id', $urlkey)->first()->main_wallet;
@@ -1119,7 +1130,7 @@ class VerifyController extends Controller
                 $trasnaction->status = 1;
                 $trasnaction->save();
 
-                User::where('id', $urlkey)->increment('main_wallet', $f_amount);
+                User::where('id', $urlkey)->increment('main_wallet', $p_amount);
 
 
                 $date = date('d M Y H:i:s');
@@ -1134,7 +1145,7 @@ class VerifyController extends Controller
 
                 $trck = new Transactioncheck();
                 $trck->session_id = $pref;
-                $trck->amount = $amount;
+                $trck->amount = $verify['amount'];
                 $trck->status = 2;
                 $trck->email = $user_email;
                 $trck->save();
@@ -1149,7 +1160,7 @@ class VerifyController extends Controller
                     $data['trans'] = $request->account_no;
                     $data['recepit'] = "payment";
                     $data['url_page'] = $urluser;
-                    $data['amount'] = $amount;
+                    $data['amount'] = $f_amount;
                     return view('paid-success', $data);
 
                 }

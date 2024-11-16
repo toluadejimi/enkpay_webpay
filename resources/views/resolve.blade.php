@@ -93,137 +93,137 @@
                 </div>
 
 
-                <label>Reasons</label>
-                <select class="form-control" name="subject" required>
-                    <option value=""> Select Reasons</option>
-                    <option value="1"> I Didn't Add Refrence</option>
-                    <option value="2"> I entered wrong amount</option>
-                    <option value="3"> I added valid Refrence but not processed</option>
-                </select>
+{{--                <label>Reasons</label>--}}
+            {{--                <select class="form-control" name="subject" required>--}}
+            {{--                    <option value=""> Select Reasons</option>--}}
+            {{--                    <option value="1"> I Didn't Add Refrence</option>--}}
+            {{--                    <option value="2"> I entered wrong amount</option>--}}
+            {{--                    <option value="3"> I added valid Refrence but not processed</option>--}}
+            {{--                </select>--}}
 
-                <hr>
-
-
-                <label>Select Bank Paid to</label>
-                <select class="form-control" name="pay_type" required>
-                    <option value=""> Select Bank</option>
-                    <option value="opay"> OPAY</option>
-                    <option value="palmpay">Palmpay</option>
-
-                </select>
+            {{--                <hr>--}}
 
 
-                <hr>
+            {{--                <label>Select Bank Paid to</label>--}}
+            {{--                <select class="form-control" name="pay_type" required>--}}
+            {{--                    <option value=""> Select Bank</option>--}}
+            {{--                    <option value="opay"> OPAY</option>--}}
+            {{--                    <option value="palmpay">Palmpay</option>--}}
 
-                <label>Enter Email used on the site</label>
-                <input type="email" id="email" class="form-control" name="email" required>
-
-                <div class="text-danger my-2" id="result">verifying email</div>
-
-                <input type="text" name="username" id="usernameResult" class="form-control" readonly
-                       style="display: none;">
+            {{--                </select>--}}
 
 
-                <script>
-                    document.getElementById('email').addEventListener('input', function () {
-                        document.getElementById('result').textContent = ''; // Clear previous result
-                        toggleVerifyButton(false); // Disable verify button on input change
-                    });
+            {{--                <hr>--}}
 
-                    document.getElementById('email').addEventListener('blur', function () {
-                        var email = this.value.trim();
-                        if (email !== '') {
-                            verifyEmail(email);
-                        }
-                    });
+            {{--                <label>Enter Email used on the site</label>--}}
+            {{--                <input type="email" id="email" class="form-control" name="email" required>--}}
 
-                    function toggleVerifyButton(enabled) {
-                        document.getElementById('verifyButton').disabled = !enabled;
-                    }
+            {{--                <div class="text-danger my-2" id="result">verifying email</div>--}}
 
-                    function verifyEmail(email) {
-                        fetch('{{$check_url}}', {
-                            method: 'POST',
-                            body: new URLSearchParams({
-                                email: email
-                            })
-                        })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.error) {
-                                    document.getElementById('result').textContent = 'Account not found or not a customer email. Please try again.';
-                                    toggleVerifyButton(false); // Keep button disabled on error
-                                    document.getElementById('usernameResult').style.display = 'none'; // Hide username result field on error
-                                } else {
-                                    console.log(data);
-                                    document.getElementById('result').textContent = 'Your Username is: ' + data.username;
-                                    document.getElementById('usernameResult').value = data.username; // Set username in input field
-                                    document.getElementById('usernameResult').style.display = 'block'; // Show username result field
-                                    toggleVerifyButton(true); // Enable button on successful verification
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Error:', error);
-                                document.getElementById('result').textContent = 'Error verifying email. Please try again later.';
-                                toggleVerifyButton(false); // Keep button disabled on error
-                                document.getElementById('usernameResult').style.display = 'none'; // Hide username result field on error
-                            });
-                    }
-
-                    // Disable submit button initially
-                    toggleVerifyButton(false);
-                </script>
+            {{--                <input type="text" name="username" id="usernameResult" class="form-control" readonly--}}
+            {{--                       style="display: none;">--}}
 
 
-                <hr>
+            {{--                <script>--}}
+            {{--                    document.getElementById('email').addEventListener('input', function () {--}}
+            {{--                        document.getElementById('result').textContent = ''; // Clear previous result--}}
+            {{--                        toggleVerifyButton(false); // Disable verify button on input change--}}
+            {{--                    });--}}
 
-                <label>Enter Refrence from payment page (optional)</label>
-                <input name="ref" type="text" class="form-control" placeholder="24557758BS">
+            {{--                    document.getElementById('email').addEventListener('blur', function () {--}}
+            {{--                        var email = this.value.trim();--}}
+            {{--                        if (email !== '') {--}}
+            {{--                            verifyEmail(email);--}}
+            {{--                        }--}}
+            {{--                    });--}}
 
-                <hr>
+            {{--                    function toggleVerifyButton(enabled) {--}}
+            {{--                        document.getElementById('verifyButton').disabled = !enabled;--}}
+            {{--                    }--}}
 
-                <label>Enter Deposit Amount</label>
-                <input name="d_amount" type="number" class="form-control" placeholder="1000">
+            {{--                    function verifyEmail(email) {--}}
+            {{--                        fetch('{{$check_url}}', {--}}
+            {{--                            method: 'POST',--}}
+            {{--                            body: new URLSearchParams({--}}
+            {{--                                email: email--}}
+            {{--                            })--}}
+            {{--                        })--}}
+            {{--                            .then(response => response.json())--}}
+            {{--                            .then(data => {--}}
+            {{--                                if (data.error) {--}}
+            {{--                                    document.getElementById('result').textContent = 'Account not found or not a customer email. Please try again.';--}}
+            {{--                                    toggleVerifyButton(false); // Keep button disabled on error--}}
+            {{--                                    document.getElementById('usernameResult').style.display = 'none'; // Hide username result field on error--}}
+            {{--                                } else {--}}
+            {{--                                    console.log(data);--}}
+            {{--                                    document.getElementById('result').textContent = 'Your Username is: ' + data.username;--}}
+            {{--                                    document.getElementById('usernameResult').value = data.username; // Set username in input field--}}
+            {{--                                    document.getElementById('usernameResult').style.display = 'block'; // Show username result field--}}
+            {{--                                    toggleVerifyButton(true); // Enable button on successful verification--}}
+            {{--                                }--}}
+            {{--                            })--}}
+            {{--                            .catch(error => {--}}
+            {{--                                console.error('Error:', error);--}}
+            {{--                                document.getElementById('result').textContent = 'Error verifying email. Please try again later.';--}}
+            {{--                                toggleVerifyButton(false); // Keep button disabled on error--}}
+            {{--                                document.getElementById('usernameResult').style.display = 'none'; // Hide username result field on error--}}
+            {{--                            });--}}
+            {{--                    }--}}
 
-                <hr>
-
-                <label>Enter Receipt Amount</label>
-                <input name="r_amount" type="number" class="form-control" placeholder="1000" required>
-                <input name="user_id" value="{{$user_id ?? "no id"}}" hidden>
-
-                <hr>
-                <label>Upload Bank Receipt</label>
-                <input name="receipt" type="file" accept=".png, .jpeg, .jpg, .pdf" class="form-control"
-                       placeholder="add recepit" required>
-
-
-                <hr>
-                <label>Enter receipt session ID</label>
-                <input name="t_session" type="text" class="form-control" placeholder="8858885884747474744">
-
-
-                <hr>
-                <label>Enter Transaction Date/time (If you use VPN to send convert to Nigerian Time)</label>
-                <input name="n_time" type="datetime-local" class="form-control" placeholder="00:00">
-
-
-                <hr>
-                <label>Enter phone number to reach out to you</label>
-                <input name="r_phone" type="number" class="form-control" placeholder="12356788">
-
-
-                <button type="submit" id="verifyButton" class="tf-btn accent large my-3">Resolve now</button>
-
-            </form>
-
-            <hr>
-            <a href="track-request" class="d-flex justify-content-center tf-btn accent large my-3"> Track Previous
-                Request</a>
+            {{--                    // Disable submit button initially--}}
+            {{--                    toggleVerifyButton(false);--}}
+            {{--                </script>--}}
 
 
-        </div>
+            {{--                <hr>--}}
 
-    </div>
+            {{--                <label>Enter Refrence from payment page (optional)</label>--}}
+            {{--                <input name="ref" type="text" class="form-control" placeholder="24557758BS">--}}
+
+            {{--                <hr>--}}
+
+            {{--                <label>Enter Deposit Amount</label>--}}
+            {{--                <input name="d_amount" type="number" class="form-control" placeholder="1000">--}}
+
+            {{--                <hr>--}}
+
+            {{--                <label>Enter Receipt Amount</label>--}}
+            {{--                <input name="r_amount" type="number" class="form-control" placeholder="1000" required>--}}
+            {{--                <input name="user_id" value="{{$user_id ?? "no id"}}" hidden>--}}
+
+            {{--                <hr>--}}
+            {{--                <label>Upload Bank Receipt</label>--}}
+            {{--                <input name="receipt" type="file" accept=".png, .jpeg, .jpg, .pdf" class="form-control"--}}
+            {{--                       placeholder="add recepit" required>--}}
+
+
+            {{--                <hr>--}}
+            {{--                <label>Enter receipt session ID</label>--}}
+            {{--                <input name="t_session" type="text" class="form-control" placeholder="8858885884747474744">--}}
+
+
+            {{--                <hr>--}}
+            {{--                <label>Enter Transaction Date/time (If you use VPN to send convert to Nigerian Time)</label>--}}
+            {{--                <input name="n_time" type="datetime-local" class="form-control" placeholder="00:00">--}}
+
+
+            {{--                <hr>--}}
+            {{--                <label>Enter phone number to reach out to you</label>--}}
+            {{--                <input name="r_phone" type="number" class="form-control" placeholder="12356788">--}}
+
+
+            {{--                <button type="submit" id="verifyButton" class="tf-btn accent large my-3">Resolve now</button>--}}
+
+            {{--            </form>--}}
+
+            {{--            <hr>--}}
+            {{--            <a href="track-request" class="d-flex justify-content-center tf-btn accent large my-3"> Track Previous--}}
+            {{--                Request</a>--}}
+
+
+            {{--        </div>--}}
+
+            {{--    </div>--}}
 
 </div>
 

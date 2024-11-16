@@ -1032,6 +1032,9 @@ class VerifyController extends Controller
         $fund_amount = Transfertransaction::where('ref', $pref)->first()->amount ?? null;
 
 
+        if($cktrx && $pref && $cktrx && $pref && $cktrx){
+            return back()->with('error', "Please check the account number and try again");
+        }
 
 
         if ($cktrx != null && $pref != null && $cktrx == $pref && $cktrx == 4) {

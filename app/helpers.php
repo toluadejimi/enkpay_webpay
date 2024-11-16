@@ -2666,9 +2666,6 @@ if (!function_exists('verifypelpayreslove')) {
         curl_close($curl);
         $var = json_decode($var);
 
-        dd($var);
-
-
 
 
         if ($var->responseData->transactionStatus == "Failed") {

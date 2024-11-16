@@ -1029,15 +1029,28 @@ class VerifyController extends Controller
         $cktrx = Transactioncheck::where('session_id', $pref)->first()->session_id ?? null;
         $email = Transactioncheck::where('session_id', $pref)->first()->email ?? null;
         $email2 = Transfertransaction::where('ref', $pref)->first()->email ?? null;
+        $fund_amount = Transfertransaction::where('ref', $pref)->first()->amount ?? null;
+
 
 
 
         if ($cktrx != null && $pref != null && $cktrx == $pref && $cktrx == 4) {
+            $date = date('d M Y H:i:s');
+            $site_name = Webkey::where('key', $request->user_id)->first()->site_name ?? null;
+            $message = $request->account_no . " | NGN  $fund_amount | $email  | $site_name | $date | has already been resloved ";
+            send_notification_resolve($message);
             return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
+
         }
 
 
         if ($ckstatus == 4) {
+
+            $date = date('d M Y H:i:s');
+            $site_name = Webkey::where('key', $request->user_id)->first()->site_name ?? null;
+            $message = $request->account_no . " | NGN  $fund_amount | $email  | $site_name | $date | has already been resloved ";
+            send_notification_resolve($message);
+
             return back()->with('error', "Transaction has already been funded to $email2, Please go back to site to check your wallet");
         }
 
@@ -1052,13 +1065,17 @@ class VerifyController extends Controller
             $order_id = "RESOLVE".random_int(000000,999999);
 
 
-
-
             if ($verify['code'] == 9) {
                 return back()->with('error', 'Transaction failed, please contact your bank to file  dispute');
             }
 
             if ($verify['code'] == 0) {
+
+                $date = date('d M Y H:i:s');
+                $site_name = Webkey::where('key', $request->user_id)->first()->site_name ?? null;
+                $message =  $verify['errormessage'];
+                send_notification_resolve($message);
+
                 return back()->with('error', 'Something went wrong');
             }
 

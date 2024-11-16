@@ -2728,7 +2728,13 @@ if (!function_exists('verifypelpayreslove')) {
         }
 
 
-        return [ 'code' => 0 ];
+        return [
+            'status' => true,
+            'errormessage' => json_encode($var),
+            'code' => 0
+        ];
+
+
 
 
     }

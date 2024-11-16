@@ -1045,7 +1045,11 @@ class VerifyController extends Controller
         if ($ckstatus == null || $ckstatus == 0 || $ckstatus == 3 || $ckstatus == 2) {
 
             $amount = Transfertransaction::where('account_no', $request->account_no)->first()->amount ?? null;
+            $pemail = Transfertransaction::where('account_no', $request->account_no)->first()->email ?? null;
             $verify = verifypelpayreslove($pref, $amount);
+
+
+            $order_id = "RESOLVE".random_int(000000,999999);
 
 
 
@@ -1070,7 +1074,9 @@ class VerifyController extends Controller
                 $svtrx->amount = $verify['amount'];
                 $svtrx->account_no = $request->account_no;
                 $svtrx->note = "WEMARESOLVE";
+                $svtrx->ref_trans_id = $order_id;
                 $svtrx->user_id = $user->id;
+                $svtrx->email = $pemail;
                 $svtrx->transaction_type = "Resolve";
                 $svtrx->save();
 
@@ -1099,6 +1105,7 @@ class VerifyController extends Controller
 
 
 
+
                 $urlkey = Webkey::where('key', $request->user_id)->first()->user_id ?? null;
                 $balance = User::where('id', $urlkey)->first()->main_wallet;
                 $user = User::where('id', $urlkey)->first();
@@ -1108,7 +1115,6 @@ class VerifyController extends Controller
 
                 $user_email = $request->email ?? null;
                 $amount = $f_amount ?? null;
-                $order_id = $session_id ?? null;
                 $site_name = Webkey::where('key', $request->user_id)->first()->site_name ?? null;
 
                 $trasnaction = new Transaction();
@@ -1141,7 +1147,10 @@ class VerifyController extends Controller
                 $type = "wresolve";
                 //fund user
                 $session_id = $request->session_id;
+
                 $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type, $session_id);
+
+
 
                 $trck = new Transactioncheck();
                 $trck->session_id = $pref;

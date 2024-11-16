@@ -31,6 +31,8 @@ class CharmController extends Controller
 
 
         $status = Transfertransaction::where('ref', $pref)->first()->status ?? null;
+        $acct_no = Transfertransaction::where('ref', $pref)->first()->account_no ?? null;
+
         if ($status == 4) {
             return response()->json([
                 'status' => false,
@@ -120,7 +122,7 @@ class CharmController extends Controller
                 $trasnaction->status = 1;
                 $trasnaction->save();
 
-                $message = "Business funded | $trx->manual_acc_ref | $p_amount | $user->first_name " . " " . $user->last_name;
+                $message = "Business funded | $acct_no | $p_amount | $user->first_name " . " " . $user->last_name;
                 send_notification($message);
 
                 Transfertransaction::where('ref', $pref)->update(['status' => 4, 'resolve' => 1]);

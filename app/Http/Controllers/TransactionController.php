@@ -104,6 +104,9 @@ class TransactionController extends Controller
             $amount = $request->amount;
             $vendor = Webkey::where('key', $request->key)->first();
 
+
+            echo($vendor);
+
             $set = Setting::where('id', 1)->first();
 
             if ($request->amount > 15000) {

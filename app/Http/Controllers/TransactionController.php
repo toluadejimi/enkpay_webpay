@@ -106,6 +106,7 @@ class TransactionController extends Controller
 
 
             echo($vendor);
+            echo ($request->key);
 
             $set = Setting::where('id', 1)->first();
 

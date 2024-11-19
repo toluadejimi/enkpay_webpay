@@ -26,6 +26,8 @@ use App\Http\Controllers\VirtualAccount\VirtualController;
 
 
 Route::get('check-vendor', [TransactionController::class, 'check_vendor']);
+
+
 Route::post('fund-merchant', [TransactionController::class, 'fund_merchant']);
 
 

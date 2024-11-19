@@ -36,7 +36,7 @@ class TransactionController extends Controller
     public function check_vendor(Request $request)
     {
         $merchant = Webkey::where('key', $request->key)->first() ?? null;
-        if($merchant == null){
+        if ($merchant == null) {
             return response()->json([
                 'status' => false,
                 'message' => "No merchant found"
@@ -50,13 +50,12 @@ class TransactionController extends Controller
     }
 
 
-
     public function fund_merchant(Request $request)
     {
 
         $merchant = Webkey::where('key', $request->key)->first() ?? null;
 
-        if($merchant == null){
+        if ($merchant == null) {
             return response()->json([
                 'status' => false,
                 'message' => "No merchant found"
@@ -66,10 +65,7 @@ class TransactionController extends Controller
         }
 
 
-
-
     }
-
 
 
     public function get_account(Request $request)
@@ -101,6 +97,77 @@ class TransactionController extends Controller
 
     public function e_payment(Request $request)
     {
+
+
+        if ($request->receiver_account_number == null) {
+
+            $amount = $request->amount;
+            $vendor = Webkey::where('key', $request->key)->first();
+
+            $set = Setting::where('id', 1)->first();
+
+            if ($request->amount > 15000) {
+                $p_amount = $request->amount - $set->psb_cap;
+            } else {
+                $p_amount = $request->amount - $set->psb_charge;
+            }
+
+
+            //fund Vendor
+            $charge = Setting::where('id', 1)->first()->webpay_transfer_charge;
+            if ($amount <= 100) {
+                $f_amount = $amount;
+            } else {
+                $f_amount = $amount - $charge;
+            }
+
+
+            User::where('id', $vendor->user_id)->increment('main_wallet', $f_amount);
+            $balance = User::where('id', $vendor->user_id)->first()->main_wallet;
+            $user = User::where('id', $vendor->user_id)->first();
+
+
+            $url = Webkey::where('key', $request->key)->first()->url_fund ?? null;
+            $user_email = $request->email ?? null;
+            $amount = $request->amount ?? null;
+            $order_id = "SprintwalletFund" . random_int(000000, 999999) ?? null;
+            $site_name = Webkey::where('key', $trx->key)->first()->site_name ?? null;
+
+            $trasnaction = new Transaction();
+            $trasnaction->user_id = $vendor->user_id;
+            $trasnaction->e_ref = $order_id ?? null;
+            $trasnaction->ref_trans_id = $order_id ?? null;
+            $trasnaction->type = "webpay";
+            $trasnaction->transaction_type = "VirtualFundWallet";
+            $trasnaction->title = "Sprint funding";
+            $trasnaction->main_type = "Transfer";
+            $trasnaction->credit = $f_amount;
+            $trasnaction->note = "Transaction Successful | Web Pay  | from $user_email";
+            $trasnaction->fee = $charge ?? 0;
+            $trasnaction->amount = $request->amount;
+            $trasnaction->e_charges = 0;
+            $trasnaction->enkPay_Cashout_profit = 0;
+            $trasnaction->balance = $balance;
+            $trasnaction->status = 1;
+            $trasnaction->save();
+
+            $acct = $request->email;
+            $message = "Business funded | $acct | $f_amount | $user->first_name " . " " . $user->last_name;
+            send_notification($message);
+
+
+            $type = "epayment";
+            $session_id = $order_id;
+            $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type, $session_id);
+
+            return response()->json([
+                'status' => true,
+                'message' => "Transaction  funded",
+            ]);
+
+
+        }
+
 
 
         $data['acc_no'] = $request->receiver_account_number;

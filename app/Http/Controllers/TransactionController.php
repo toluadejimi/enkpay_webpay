@@ -35,17 +35,13 @@ class TransactionController extends Controller
 
     public function check_vendor(Request $request)
     {
-
         $merchant = Webkey::where('key', $request->key)->first() ?? null;
-
         if($merchant == null){
             return response()->json([
                 'status' => false,
                 'message' => "No merchant found"
             ]);
-
         }
-
         return response()->json([
             'status' => true,
             'data' => $merchant->site_name

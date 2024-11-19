@@ -99,7 +99,7 @@ class TransactionController extends Controller
     {
 
 
-        if ($request->receiver_account_number == null) {
+        if ($request->action == "Sprint") {
 
             $amount = $request->amount;
             $vendor = Webkey::where('key', $request->key)->first();

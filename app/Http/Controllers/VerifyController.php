@@ -1267,6 +1267,13 @@ class VerifyController extends Controller
 
 
 
+        $get_email = Transactioncheck::where('session_id', $request->session_id)->first()->email ?? null;
+        if($get_email != null){
+            return back()->with('error', "Transaction has already been funded to $get_email, Please go back to site to check your wallet");
+        }
+
+
+
         if ($ckstatus == 4) {
             return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
         }
@@ -1283,7 +1290,6 @@ class VerifyController extends Controller
             if ($status == 4) {
                 return back()->with('error', "Transaction has already been funded to $email, Please go back to site to check your wallet");
             }
-
 
             $ref = Transfertransaction::where('session_id', $request->session_id)->first()->account_no ?? null;
 

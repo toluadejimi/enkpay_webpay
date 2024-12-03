@@ -175,7 +175,7 @@
                     } else if (data.status === 'success') {
                         audio.play();
 
-                        window.location.href = "{{ url('') }}/success?trans_id={{$ref}}";
+                        window.location.href = "{{ url('') }}/success?trans_id={{$ref}}&pref={{$pref}}";
 
                     } else if (data.status === 'paid') {
                         audio.play();

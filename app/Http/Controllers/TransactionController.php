@@ -1703,8 +1703,15 @@ class TransactionController extends Controller
             ->first()->status ?? null;
 
 
-        $amount = Webtransfer::where('trans_id', $trans_id)
+        $get_amount = Webtransfer::where('trans_id', $trans_id)
             ->first()->amount ?? 0;
+
+        if($get_amount == 0){
+           $amount =  Transfertransaction::where('ref', $request->pref)->first()->amount;
+        }else{
+
+            $amount = $get_amount;
+        }
 
 
         $wc_order = Webtransfer::where('trans_id', $trans_id)

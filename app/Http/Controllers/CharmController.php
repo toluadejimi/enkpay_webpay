@@ -205,10 +205,10 @@ class CharmController extends Controller
     function charm_check_status(Request $request)
     {
 
+        $p_ref = Transfertransaction::where('ref', $request->ref)->first() ?? null;
+        $status = Transfertransaction::where('ref', $request->ref)->first()->status ?? null;
+        $account_no = Transfertransaction::where('ref', $request->ref)->first()->account_no ?? null;
 
-        $p_ref = Transfertransaction::where('ref', $request->paymentReference)->first() ?? null;
-        $status = Transfertransaction::where('ref', $request->paymentReference)->first()->status ?? null;
-        $account_no = Transfertransaction::where('ref', $request->paymentReference)->first()->account_no ?? null;
 
 
         if ($status == 4) {
@@ -241,6 +241,8 @@ class CharmController extends Controller
         $amount = $p_ref->amount;
         $verify = verifypelpay($pref, $amount);
 
+
+
         if ($verify['code'] == 0) {
             return response()->json([
                 'status' => 'pending',
@@ -271,7 +273,6 @@ class CharmController extends Controller
     public
     function verifycharm(Request $request)
     {
-
 
         $ref = Transfertransaction::where('ref', $request->trx_id)->first() ?? null;
         $tref = Transfertransaction::where('ref', $request->trx_id)->first() ?? null;

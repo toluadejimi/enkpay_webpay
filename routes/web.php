@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CableController;
 use App\Http\Controllers\CharmController;
+use App\Http\Controllers\PaymentNotificationController;
 use App\Http\Controllers\ProcessissuesController;
 use App\Http\Controllers\VerifyController;
 use App\Http\Controllers\WovenController;
@@ -26,6 +27,9 @@ use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::post('/decrypt-notification', [PaymentNotificationController::class, 'decryptPaymentNotification']);
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -248,7 +252,7 @@ Route::get('verifyopay', [TransactionController::class, 'opay_check_status']);
 Route::get('verifypalmpay', [TransactionController::class, 'palmpay_check_status']);
 Route::get('verifykuda', [TransactionController::class, 'kuda_check_status']);
 Route::post('verifyninepsb', [TransactionController::class, 'ninepsb_check_status']);
-Route::post('verifycharmnow', [CharmController::class, 'charm_check_status']);
+Route::get('verifycharmnow', [CharmController::class, 'charm_check_status']);
 
 Route::post('verifycharm', [CharmController::class, 'verifycharm']);
 

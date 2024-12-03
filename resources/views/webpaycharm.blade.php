@@ -544,7 +544,7 @@
                                                                     .then(data => {
                                                                         console.log('POST request successful:', data);
                                                                         document.getElementById('infoContainercharm4').classList.remove('hidden');
-                                                                        startPaymentVerification(paym_ref);
+                                                                        //startPaymentVerification(paym_ref);
                                                                         var audio = new Audio('{{url('')}}/public/assets/sound.wav');
                                                                         function startPaymentVerification(paym_ref) {
                                                                             const verificationInterval = setInterval(() => {
@@ -730,10 +730,12 @@
 </div>
 
 
+
+
+
                                                     <form action="/verifycharm" method="POST">
+
                                                     @csrf
-
-
 
                                                                 <input type="text" id="trx_id" name="trx_id" hidden value="${paym_ref}">
                                                         <input type="text" id="webHook" name="webhook" hidden value="{{ $webhook}}">
@@ -742,14 +744,11 @@
                                                         <input type="text" id="pref" hidden name="pref" value="${paym_ref}">
 
 
-
-
                                                         <!-- Button trigger modal -->
 
-                                                        {{--<button class="tf-btn accent large my-3 request-btn"--}}
-                                                        {{--        id="requestcharm">I--}}
-                                                        {{--    ve sent ₦{{ number_format($f_amount )}}</button>--}}
-
+                                                        <button class="tf-btn accent large my-3 request-btn"
+                                                                id="requestcharm">I
+                                                            ve sent ₦{{ number_format($f_amount )}}</button>
 
                                                                 </form>
 

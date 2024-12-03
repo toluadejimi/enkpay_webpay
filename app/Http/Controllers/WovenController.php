@@ -47,6 +47,7 @@ class WovenController extends Controller
     {
 
         $trx = Webtransfer::where('manual_acc_ref', $request->ref)->first() ?? null;
+        Transfertransaction::where('account_no', $request->accountNo)->delete() ?? null;
 
         $usr = User::where('id', $trx->user_id)->first();
         if ($trx != null) {
@@ -71,7 +72,7 @@ class WovenController extends Controller
             $trasnaction->status = 0;
             $trasnaction->save();
 
-            $message = "Transfer Payment Initiated |" . $request->ref . "| ON WOVEN " . "For " . $usr->last_name . " | " . number_format($trx->payable_amount, 2);
+            $message = "Transfer Payment Initiated | $request->accountNo |" . $request->ref . "| ON WOVEN " . "For " . $usr->last_name . " | " . number_format($trx->payable_amount, 2);
             send_notification($message);
 
             return response()->json([

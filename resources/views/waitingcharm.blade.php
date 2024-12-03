@@ -179,7 +179,7 @@
 
                     } else if (data.status === 'paid') {
                         audio.play();
-                        window.location.href = "{{ url('') }}/paid-success?trans_id={{$ref}}";
+                        window.location.href = "{{ url('') }}/paid-success?trans_id={{$ref}}&account_no={{$account_no}}";
                     }else if (data.status === 'partial') {
                         audio.play();
                         window.location.href = "{{ url('') }}/ppay?trans_id={{$ref}}";

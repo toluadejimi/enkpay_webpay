@@ -1688,6 +1688,7 @@ class TransactionController extends Controller
 
 
         $trans_id = $request->trans_id;
+
         $user_id = Webtransfer::where('trans_id', $trans_id)
             ->first()->user_id ?? null;
 

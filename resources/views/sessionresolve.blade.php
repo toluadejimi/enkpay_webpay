@@ -277,7 +277,7 @@
                     <hr>
 
                     <label>Enter Session ID</label>
-                    <input name="session_id" type="number" class="form-control" placeholder="91433747589">
+                    <input name="session_id" type="number" class="form-control" placeholder="00008877666654344">
 
 
                     <input hidden name="user_id" value="{{$user_id}}">

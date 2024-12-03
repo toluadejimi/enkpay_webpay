@@ -2676,11 +2676,11 @@ if (!function_exists('verifypelpayreslove')) {
         $var = curl_exec($curl);
         curl_close($curl);
         $var = json_decode($var);
+        $status =  $var->responseData->transactionStatus ?? null;
 
 
 
-        if ($var->responseData->transactionStatus == "Failed") {
-
+        if ($status == "Failed") {
             return [
                 'code' => 9
             ];
@@ -2695,7 +2695,7 @@ if (!function_exists('verifypelpayreslove')) {
 
             }
 
-            if ($var->responseData->transactionStatus == "Successful" && $var->responseData->message == "Successful") {
+            if ($status == "Successful" && $var->responseData->message == "Successful") {
 
                 return [
                     'status' => true,
@@ -2705,7 +2705,7 @@ if (!function_exists('verifypelpayreslove')) {
                 ];
 
             }
-            if ($var->responseData->transactionStatus == "PartPayment" && $var->responseData->message == "Incomplete Amount Received") {
+            if ($status == "PartPayment" && $var->responseData->message == "Incomplete Amount Received") {
 
                 $camt = $var->responseData->amountCollected;
                 $namt = $var->responseData->amount;

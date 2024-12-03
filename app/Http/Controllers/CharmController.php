@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transactioncheck;
 use App\Models\Transfertransaction;
 use App\Models\User;
+use App\Models\Webkey;
 use App\Models\Webtransfer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -18,7 +20,7 @@ class CharmController extends Controller
         $pref = $request->PaymentReference;
         $acc_no = $request->nuban;
         $user_amount = $request->amount;
-        $session_id = $request->unique_reference;
+        $session_id = $request->SessionId;
         $payable = $request->amount_payable;
         $fee = $request->fee;
 
@@ -28,78 +30,85 @@ class CharmController extends Controller
 
 
 
+        $status = Transfertransaction::where('ref', $pref)->first()->status ?? null;
+        if ($status == 4) {
+            return response()->json([
+                'status' => false,
+                'message' => "Transaction has already been funded",
+            ]);
 
-//        $status = Transfertransaction::where('ref', $pref)->first()->status ?? null;
-//        if ($status == 4) {
-//            return response()->json([
-//                'status' => false,
-//                'message' => "Transaction has already been funded",
-//            ]);
-//
-//        }
-//
-//
-//        $trx = Transfertransaction::where('ref', $pref)
-//            ->where([
-//                'status' => 0
-//            ])->first() ?? null;
-//
-//
-//        if ($trx == null) {
-//
-//            return response()->json([
-//                'status' => false,
-//                'message' => "Account Not found in our database",
-//            ]);
-//
-//        }
+        }
+
+
+        $trx = Transfertransaction::where('ref', $pref)
+            ->where([
+                'status' => 0
+            ])->first() ?? null;
+
+
+        if ($trx == null) {
+
+            return response()->json([
+                'status' => false,
+                'message' => "Account Not found in our database",
+            ]);
+
+        }
 //
 //        $paid_amt = Transfertransaction::where('ref', $pref)->update(['amount_paid' => $request->AmountCollected]) ?? null;
 //        $amt_to_pay = Transfertransaction::where('ref', $pref)->update(['amount_to_pay' => $request->Amount]) ?? null;
-//
-//
+
+
 //        if ($paid_amt == $amt_to_pay) {
 //            $amount = $user_amount;
 //        } else {
 //            $amount = $user_amount - 100;
 //        }
-//
-//
-//        $trx = Transfertransaction::where('ref', $pref)->first() ?? null;
-//
-//
+
+
+        $trx = Transfertransaction::where('ref', $pref)->first() ?? null;
+
+
 //        if ($trx != null) {
-//
-//
+
+
 //            $set = Setting::where('id', 1)->first();
 //            if ($amount > 15000) {
 //                $p_amount = $amount - $set->psb_cap;
 //            } else {
 //                $p_amount = $amount - $set->psb_charge;
 //            }
-//
-//
+
+
 //            if ($trx->ststus == 0) {
 //                    Transfertransaction::where('ref', $pref)
 //                        ->where([
 //                            'status' => 0
 //                        ])->update(['status' => 5]) ?? null;
-//
-//
-//                //fund Vendor
-//                $trx = Transfertransaction::where('ref', $pref)->first();
-//
-//                User::where('id', $trx->user_id)->increment('main_wallet', $p_amount);
-//                $balance = User::where('id', $trx->user_id)->first()->main_wallet;
-//                $user = User::where('id', $trx->user_id)->first();
-//
-//
-//                $url = Webkey::where('key', $trx->key)->first()->url_fund ?? null;
-//                $user_email = $trx->email ?? null;
-//                //$amount = $trx->amount ?? null;
-//                $order_id = $trx->ref_trans_id ?? null;
-//                $site_name = Webkey::where('key', $trx->key)->first()->site_name ?? null;
-//
+
+
+                //fund Vendor
+                $trx = Transfertransaction::where('ref', $pref)->first();
+
+                //User::where('id', $trx->user_id)->increment('main_wallet', $p_amount);
+               // $balance = User::where('id', $trx->user_id)->first()->main_wallet;
+                //
+                $user = User::where('id', $trx->user_id)->first();
+
+                $url = Webkey::where('key', $trx->key)->first()->url_fund ?? null;
+                $user_email = $trx->email ?? null;
+                //$amount = $trx->amount ?? null;
+                $order_id = $trx->ref_trans_id ?? null;
+                $site_name = Webkey::where('key', $trx->key)->first()->site_name ?? null;
+
+
+                $trxck = new Transactioncheck();
+                $trxck->session_id = $session_id;
+                $trxck->amount = $trx->amount;
+                $trxck->email = $user_email;
+                $trxck->save();
+
+
 //                $trasnaction = new Transaction();
 //                $trasnaction->user_id = $trx->user_id;
 //                $trasnaction->e_ref = $request->sessionid ?? $acc_no;
@@ -118,30 +127,26 @@ class CharmController extends Controller
 //                $trasnaction->balance = $balance;
 //                $trasnaction->status = 1;
 //                $trasnaction->save();
-//
+
 //                $message = "Business funded | $trx->manual_acc_ref | $p_amount | $user->first_name " . " " . $user->last_name;
 //                send_notification($message);
-//
+
 //                Transfertransaction::where('ref', $pref)->update(['status' => 4, 'resolve' => 1]);
 //
 //
 //                $type = "epayment";
 //                $fund = credit_user_wallet($url, $user_email, $amount, $order_id, $type, $session_id);
-//
-//                return response()->json([
-//                    'status' => true,
-//                    'message' => "Transaction Successful"
-//                ]);
-//
+
+                return response()->json([
+                    'status' => "success",
+                    'message' => "Webhook Notification Successful"
+                ]);
+
 //            }
 //        }
-//
 
 
-        return response()->json([
-            'status' => "success",
-            'message' => "Webhook Notification Successful"
-        ]);
+
 
     }
 

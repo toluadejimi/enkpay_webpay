@@ -1688,7 +1688,6 @@ class TransactionController extends Controller
 
 
         $trans_id = $request->trans_id;
-
         $user_id = Webtransfer::where('trans_id', $trans_id)
             ->first()->user_id ?? null;
 
@@ -1704,9 +1703,14 @@ class TransactionController extends Controller
             ->first()->status ?? null;
 
 
+        $get_amount = Webtransfer::where('trans_id', $trans_id)
+            ->first()->amount ?? 0;
 
-
-        $amount =  Transfertransaction::where('ref', $trans_id)->first()->amount;
+        if($get_amount == 0){
+           $amount =  Transfertransaction::where('ref_trans_id',$request->ref_trans_id)->first()->amount;
+        }else{
+            $amount = $get_amount;
+        }
 
 
         $wc_order = Webtransfer::where('trans_id', $trans_id)

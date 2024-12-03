@@ -72,7 +72,7 @@ class WovenController extends Controller
             $trasnaction->status = 0;
             $trasnaction->save();
 
-            $message = "Transfer Payment Initiated | $request->accountNo |" . $request->ref . "| ON WOVEN " . "For " . $usr->last_name . " | " . number_format($trx->payable_amount, 2);
+            $message = "Transfer Payment Initiated | $request->accountNo |" . $request->ref . "| ON WOVEN " . "For " . $usr->last_name . " | " . $trx->payable_amount;
             send_notification($message);
 
             return response()->json([
@@ -210,7 +210,7 @@ class WovenController extends Controller
                 $trasnaction->status = 1;
                 $trasnaction->save();
 
-                $message = "Business funded | $trx->manual_acc_ref | $p_amount | $user->first_name " . " " . $user->last_name;
+                $message = "Business funded | $request->nuban | $p_amount | $user->first_name " . " " . $user->last_name;
                 send_notification($message);
 
                 Webtransfer::where('trans_id', $trx->trans_id)->update(['status' => 4]);

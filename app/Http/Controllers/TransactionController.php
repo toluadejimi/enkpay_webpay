@@ -1707,7 +1707,7 @@ class TransactionController extends Controller
             ->first()->amount ?? 0;
 
         if($get_amount == 0){
-           $amount =  Transfertransaction::where('account_no',$request->account_no)->first()->amount;
+           $amount =  $request->amount;
         }else{
             $amount = $get_amount;
         }

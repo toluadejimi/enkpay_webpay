@@ -276,8 +276,8 @@
 
                     <hr>
 
-                    <label>Enter Wema Account No</label>
-                    <input name="account_no" type="number" class="form-control" placeholder="91433747589">
+                    <label>Enter Session ID</label>
+                    <input name="session_id" type="number" class="form-control" placeholder="91433747589">
 
 
                     <input hidden name="user_id" value="{{$user_id}}">

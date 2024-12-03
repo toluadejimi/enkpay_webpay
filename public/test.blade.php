@@ -163,7 +163,7 @@
                                                         'Content-Type': 'application/json'
                                                     },
                                                     body: JSON.stringify({
-                                                        bankCode: "058"
+                                                        bankCode: "221"
 
 
                                                     }) // Replace with actual data to send

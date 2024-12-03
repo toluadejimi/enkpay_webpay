@@ -131,7 +131,7 @@ class TransactionController extends Controller
             $url = Webkey::where('key', $request->key)->first()->url_fund ?? null;
             $user_email = $request->email ?? null;
             $amount = $request->amount ?? null;
-            $order_id = "SprintwalletFund" . random_int(000000, 999999) ?? null;
+            $order_id = $request->trx;
             $site_name = Webkey::where('key', $vendor->key)->first()->site_name ?? null;
 
             $trasnaction = new Transaction();

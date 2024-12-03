@@ -27,6 +27,8 @@ class CharmController extends Controller
         send_notification($message);
 
 
+
+
 //        $status = Transfertransaction::where('ref', $pref)->first()->status ?? null;
 //        if ($status == 4) {
 //            return response()->json([
@@ -137,13 +139,10 @@ class CharmController extends Controller
 
 
         return response()->json([
-            'status' => true,
-            'message' => "Transaction Successful"
+            'status' => "success",
+            'message' => "Webhook Notification Successful"
         ]);
-//        return response()->json([
-//            'status' => false,
-//            'message' => "No transaction made"
-//        ]);
+
     }
 
 

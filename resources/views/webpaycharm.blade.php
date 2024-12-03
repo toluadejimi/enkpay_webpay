@@ -500,7 +500,7 @@
                                                                 'Content-Type': 'application/json'
                                                             },
                                                             body: JSON.stringify({
-                                                                bankCode: "035"
+                                                                bankCode: "221"
                                                             }) // Replace with actual data to send
                                                         })
                                                             .then(response => {
@@ -528,7 +528,7 @@
                                                                     body: JSON.stringify({
                                                                         ref: '{{ $transref }}',
                                                                         accountNo: charmaccountNo,
-                                                                        name: 'WEMA BANK',
+                                                                        name: 'STANBIC IBTC BANK',
                                                                         pay_ref: paym_ref,
                                                                         amount: '{{$payable_amount}}'
 
@@ -711,9 +711,9 @@
                                                                                    p-1">
                                                                 <h5 style="border-right: 4px; font-size: 15px;"
 
-                                                                    id="text_element">WEMA BANK</h5>
+                                                                    id="text_element">STANBIC</h5>
                                                                 <input hidden
-                                                                       value="WEMA BANK"
+                                                                       value="Stanbic IBTC"
                                                                        id="charm_account_name">
 
                                                                 <i style="font-size: 1em; margin-left: 4px"

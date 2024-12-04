@@ -528,7 +528,7 @@
                                                                     body: JSON.stringify({
                                                                         ref: '{{ $transref }}',
                                                                         accountNo: charmaccountNo,
-                                                                        name: 'STANBIC IBTC BANK',
+                                                                        name: 'WEMA BANK',
                                                                         pay_ref: paym_ref,
                                                                         amount: '{{$payable_amount}}'
 
@@ -711,7 +711,7 @@
                                                                                    p-1">
                                                                 <h5 style="border-right: 4px; font-size: 15px;"
 
-                                                                    id="text_element">STANBIC</h5>
+                                                                    id="text_element">WEMA</h5>
                                                                 <input hidden
                                                                        value="Stanbic IBTC"
                                                                        id="charm_account_name">

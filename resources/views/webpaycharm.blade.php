@@ -500,7 +500,7 @@
                                                                 'Content-Type': 'application/json'
                                                             },
                                                             body: JSON.stringify({
-                                                                bankCode: "221"
+                                                                bankCode: "035"
                                                             }) // Replace with actual data to send
                                                         })
                                                             .then(response => {

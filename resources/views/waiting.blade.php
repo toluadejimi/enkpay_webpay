@@ -80,6 +80,8 @@
 
                 @include('ads')
 
+                <hr>
+
 
                 <div class="col-12 d-flex justify-content-center my-3">
                     <div class="countdown text-danger" id="countdown">10:00</div>

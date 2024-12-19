@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="eb481102-bdbd-4de2-9fe6-19ebbd8459cb" name="Changes" comment="adjustedssdd">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TransactionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TransactionController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/ads.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/ads.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/webpaycharm.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/webpaycharm.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -341,222 +342,10 @@
       <workItem from="1730269320183" duration="64032000" />
       <workItem from="1732180614991" duration="41000" />
       <workItem from="1732630312624" duration="1838000" />
-    </task>
-    <task id="LOCAL-00394" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731096560547</created>
-      <option name="number" value="00394" />
-      <option name="presentableId" value="LOCAL-00394" />
-      <option name="project" value="LOCAL" />
-      <updated>1731096560547</updated>
-    </task>
-    <task id="LOCAL-00395" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731099434146</created>
-      <option name="number" value="00395" />
-      <option name="presentableId" value="LOCAL-00395" />
-      <option name="project" value="LOCAL" />
-      <updated>1731099434146</updated>
-    </task>
-    <task id="LOCAL-00396" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731189360240</created>
-      <option name="number" value="00396" />
-      <option name="presentableId" value="LOCAL-00396" />
-      <option name="project" value="LOCAL" />
-      <updated>1731189360240</updated>
-    </task>
-    <task id="LOCAL-00397" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731189452048</created>
-      <option name="number" value="00397" />
-      <option name="presentableId" value="LOCAL-00397" />
-      <option name="project" value="LOCAL" />
-      <updated>1731189452048</updated>
-    </task>
-    <task id="LOCAL-00398" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731189708115</created>
-      <option name="number" value="00398" />
-      <option name="presentableId" value="LOCAL-00398" />
-      <option name="project" value="LOCAL" />
-      <updated>1731189708115</updated>
-    </task>
-    <task id="LOCAL-00399" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731189960062</created>
-      <option name="number" value="00399" />
-      <option name="presentableId" value="LOCAL-00399" />
-      <option name="project" value="LOCAL" />
-      <updated>1731189960062</updated>
-    </task>
-    <task id="LOCAL-00400" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731190022090</created>
-      <option name="number" value="00400" />
-      <option name="presentableId" value="LOCAL-00400" />
-      <option name="project" value="LOCAL" />
-      <updated>1731190022090</updated>
-    </task>
-    <task id="LOCAL-00401" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731190105765</created>
-      <option name="number" value="00401" />
-      <option name="presentableId" value="LOCAL-00401" />
-      <option name="project" value="LOCAL" />
-      <updated>1731190105765</updated>
-    </task>
-    <task id="LOCAL-00402" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731190548637</created>
-      <option name="number" value="00402" />
-      <option name="presentableId" value="LOCAL-00402" />
-      <option name="project" value="LOCAL" />
-      <updated>1731190548637</updated>
-    </task>
-    <task id="LOCAL-00403" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731190592984</created>
-      <option name="number" value="00403" />
-      <option name="presentableId" value="LOCAL-00403" />
-      <option name="project" value="LOCAL" />
-      <updated>1731190592984</updated>
-    </task>
-    <task id="LOCAL-00404" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731190644290</created>
-      <option name="number" value="00404" />
-      <option name="presentableId" value="LOCAL-00404" />
-      <option name="project" value="LOCAL" />
-      <updated>1731190644290</updated>
-    </task>
-    <task id="LOCAL-00405" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731190812398</created>
-      <option name="number" value="00405" />
-      <option name="presentableId" value="LOCAL-00405" />
-      <option name="project" value="LOCAL" />
-      <updated>1731190812398</updated>
-    </task>
-    <task id="LOCAL-00406" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731190921785</created>
-      <option name="number" value="00406" />
-      <option name="presentableId" value="LOCAL-00406" />
-      <option name="project" value="LOCAL" />
-      <updated>1731190921785</updated>
-    </task>
-    <task id="LOCAL-00407" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731191080179</created>
-      <option name="number" value="00407" />
-      <option name="presentableId" value="LOCAL-00407" />
-      <option name="project" value="LOCAL" />
-      <updated>1731191080179</updated>
-    </task>
-    <task id="LOCAL-00408" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731191281827</created>
-      <option name="number" value="00408" />
-      <option name="presentableId" value="LOCAL-00408" />
-      <option name="project" value="LOCAL" />
-      <updated>1731191281827</updated>
-    </task>
-    <task id="LOCAL-00409" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731191330519</created>
-      <option name="number" value="00409" />
-      <option name="presentableId" value="LOCAL-00409" />
-      <option name="project" value="LOCAL" />
-      <updated>1731191330519</updated>
-    </task>
-    <task id="LOCAL-00410" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731547180202</created>
-      <option name="number" value="00410" />
-      <option name="presentableId" value="LOCAL-00410" />
-      <option name="project" value="LOCAL" />
-      <updated>1731547180202</updated>
-    </task>
-    <task id="LOCAL-00411" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731547510440</created>
-      <option name="number" value="00411" />
-      <option name="presentableId" value="LOCAL-00411" />
-      <option name="project" value="LOCAL" />
-      <updated>1731547510440</updated>
-    </task>
-    <task id="LOCAL-00412" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731579140821</created>
-      <option name="number" value="00412" />
-      <option name="presentableId" value="LOCAL-00412" />
-      <option name="project" value="LOCAL" />
-      <updated>1731579140821</updated>
-    </task>
-    <task id="LOCAL-00413" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731579635804</created>
-      <option name="number" value="00413" />
-      <option name="presentableId" value="LOCAL-00413" />
-      <option name="project" value="LOCAL" />
-      <updated>1731579635804</updated>
-    </task>
-    <task id="LOCAL-00414" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731579727547</created>
-      <option name="number" value="00414" />
-      <option name="presentableId" value="LOCAL-00414" />
-      <option name="project" value="LOCAL" />
-      <updated>1731579727547</updated>
-    </task>
-    <task id="LOCAL-00415" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731579737734</created>
-      <option name="number" value="00415" />
-      <option name="presentableId" value="LOCAL-00415" />
-      <option name="project" value="LOCAL" />
-      <updated>1731579737734</updated>
-    </task>
-    <task id="LOCAL-00416" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731579910436</created>
-      <option name="number" value="00416" />
-      <option name="presentableId" value="LOCAL-00416" />
-      <option name="project" value="LOCAL" />
-      <updated>1731579910436</updated>
-    </task>
-    <task id="LOCAL-00417" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731580452946</created>
-      <option name="number" value="00417" />
-      <option name="presentableId" value="LOCAL-00417" />
-      <option name="project" value="LOCAL" />
-      <updated>1731580452946</updated>
-    </task>
-    <task id="LOCAL-00418" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731746167698</created>
-      <option name="number" value="00418" />
-      <option name="presentableId" value="LOCAL-00418" />
-      <option name="project" value="LOCAL" />
-      <updated>1731746167698</updated>
-    </task>
-    <task id="LOCAL-00419" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731747138212</created>
-      <option name="number" value="00419" />
-      <option name="presentableId" value="LOCAL-00419" />
-      <option name="project" value="LOCAL" />
-      <updated>1731747138212</updated>
-    </task>
-    <task id="LOCAL-00420" summary="adjustedssdd">
-      <option name="closed" value="true" />
-      <created>1731747783430</created>
-      <option name="number" value="00420" />
-      <option name="presentableId" value="LOCAL-00420" />
-      <option name="project" value="LOCAL" />
-      <updated>1731747783430</updated>
+      <workItem from="1733031560722" duration="12816000" />
+      <workItem from="1733581719631" duration="1229000" />
+      <workItem from="1733651237425" duration="1138000" />
+      <workItem from="1734580799256" duration="36000" />
     </task>
     <task id="LOCAL-00421" summary="adjustedssdd">
       <option name="closed" value="true" />
@@ -734,7 +523,223 @@
       <option name="project" value="LOCAL" />
       <updated>1731982159734</updated>
     </task>
-    <option name="localTasksCounter" value="443" />
+    <task id="LOCAL-00443" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733254874915</created>
+      <option name="number" value="00443" />
+      <option name="presentableId" value="LOCAL-00443" />
+      <option name="project" value="LOCAL" />
+      <updated>1733254874915</updated>
+    </task>
+    <task id="LOCAL-00444" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733256916315</created>
+      <option name="number" value="00444" />
+      <option name="presentableId" value="LOCAL-00444" />
+      <option name="project" value="LOCAL" />
+      <updated>1733256916315</updated>
+    </task>
+    <task id="LOCAL-00445" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733257227116</created>
+      <option name="number" value="00445" />
+      <option name="presentableId" value="LOCAL-00445" />
+      <option name="project" value="LOCAL" />
+      <updated>1733257227116</updated>
+    </task>
+    <task id="LOCAL-00446" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733257275153</created>
+      <option name="number" value="00446" />
+      <option name="presentableId" value="LOCAL-00446" />
+      <option name="project" value="LOCAL" />
+      <updated>1733257275153</updated>
+    </task>
+    <task id="LOCAL-00447" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733257334229</created>
+      <option name="number" value="00447" />
+      <option name="presentableId" value="LOCAL-00447" />
+      <option name="project" value="LOCAL" />
+      <updated>1733257334229</updated>
+    </task>
+    <task id="LOCAL-00448" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733258219440</created>
+      <option name="number" value="00448" />
+      <option name="presentableId" value="LOCAL-00448" />
+      <option name="project" value="LOCAL" />
+      <updated>1733258219440</updated>
+    </task>
+    <task id="LOCAL-00449" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733259065709</created>
+      <option name="number" value="00449" />
+      <option name="presentableId" value="LOCAL-00449" />
+      <option name="project" value="LOCAL" />
+      <updated>1733259065709</updated>
+    </task>
+    <task id="LOCAL-00450" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733259121778</created>
+      <option name="number" value="00450" />
+      <option name="presentableId" value="LOCAL-00450" />
+      <option name="project" value="LOCAL" />
+      <updated>1733259121778</updated>
+    </task>
+    <task id="LOCAL-00451" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733259455494</created>
+      <option name="number" value="00451" />
+      <option name="presentableId" value="LOCAL-00451" />
+      <option name="project" value="LOCAL" />
+      <updated>1733259455494</updated>
+    </task>
+    <task id="LOCAL-00452" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733259779309</created>
+      <option name="number" value="00452" />
+      <option name="presentableId" value="LOCAL-00452" />
+      <option name="project" value="LOCAL" />
+      <updated>1733259779309</updated>
+    </task>
+    <task id="LOCAL-00453" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733259976901</created>
+      <option name="number" value="00453" />
+      <option name="presentableId" value="LOCAL-00453" />
+      <option name="project" value="LOCAL" />
+      <updated>1733259976901</updated>
+    </task>
+    <task id="LOCAL-00454" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733260105508</created>
+      <option name="number" value="00454" />
+      <option name="presentableId" value="LOCAL-00454" />
+      <option name="project" value="LOCAL" />
+      <updated>1733260105508</updated>
+    </task>
+    <task id="LOCAL-00455" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733261601673</created>
+      <option name="number" value="00455" />
+      <option name="presentableId" value="LOCAL-00455" />
+      <option name="project" value="LOCAL" />
+      <updated>1733261601673</updated>
+    </task>
+    <task id="LOCAL-00456" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733266584818</created>
+      <option name="number" value="00456" />
+      <option name="presentableId" value="LOCAL-00456" />
+      <option name="project" value="LOCAL" />
+      <updated>1733266584818</updated>
+    </task>
+    <task id="LOCAL-00457" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733267638503</created>
+      <option name="number" value="00457" />
+      <option name="presentableId" value="LOCAL-00457" />
+      <option name="project" value="LOCAL" />
+      <updated>1733267638503</updated>
+    </task>
+    <task id="LOCAL-00458" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733267957296</created>
+      <option name="number" value="00458" />
+      <option name="presentableId" value="LOCAL-00458" />
+      <option name="project" value="LOCAL" />
+      <updated>1733267957297</updated>
+    </task>
+    <task id="LOCAL-00459" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733268043305</created>
+      <option name="number" value="00459" />
+      <option name="presentableId" value="LOCAL-00459" />
+      <option name="project" value="LOCAL" />
+      <updated>1733268043305</updated>
+    </task>
+    <task id="LOCAL-00460" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733268388658</created>
+      <option name="number" value="00460" />
+      <option name="presentableId" value="LOCAL-00460" />
+      <option name="project" value="LOCAL" />
+      <updated>1733268388659</updated>
+    </task>
+    <task id="LOCAL-00461" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733268526546</created>
+      <option name="number" value="00461" />
+      <option name="presentableId" value="LOCAL-00461" />
+      <option name="project" value="LOCAL" />
+      <updated>1733268526546</updated>
+    </task>
+    <task id="LOCAL-00462" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733269109131</created>
+      <option name="number" value="00462" />
+      <option name="presentableId" value="LOCAL-00462" />
+      <option name="project" value="LOCAL" />
+      <updated>1733269109131</updated>
+    </task>
+    <task id="LOCAL-00463" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733269305154</created>
+      <option name="number" value="00463" />
+      <option name="presentableId" value="LOCAL-00463" />
+      <option name="project" value="LOCAL" />
+      <updated>1733269305154</updated>
+    </task>
+    <task id="LOCAL-00464" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733269406532</created>
+      <option name="number" value="00464" />
+      <option name="presentableId" value="LOCAL-00464" />
+      <option name="project" value="LOCAL" />
+      <updated>1733269406532</updated>
+    </task>
+    <task id="LOCAL-00465" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733338887748</created>
+      <option name="number" value="00465" />
+      <option name="presentableId" value="LOCAL-00465" />
+      <option name="project" value="LOCAL" />
+      <updated>1733338887748</updated>
+    </task>
+    <task id="LOCAL-00466" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733339029019</created>
+      <option name="number" value="00466" />
+      <option name="presentableId" value="LOCAL-00466" />
+      <option name="project" value="LOCAL" />
+      <updated>1733339029019</updated>
+    </task>
+    <task id="LOCAL-00467" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733582129786</created>
+      <option name="number" value="00467" />
+      <option name="presentableId" value="LOCAL-00467" />
+      <option name="project" value="LOCAL" />
+      <updated>1733582129786</updated>
+    </task>
+    <task id="LOCAL-00468" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733582309353</created>
+      <option name="number" value="00468" />
+      <option name="presentableId" value="LOCAL-00468" />
+      <option name="project" value="LOCAL" />
+      <updated>1733582309353</updated>
+    </task>
+    <task id="LOCAL-00469" summary="adjustedssdd">
+      <option name="closed" value="true" />
+      <created>1733582779805</created>
+      <option name="number" value="00469" />
+      <option name="presentableId" value="LOCAL-00469" />
+      <option name="project" value="LOCAL" />
+      <updated>1733582779805</updated>
+    </task>
+    <option name="localTasksCounter" value="470" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -775,7 +780,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/TransactionController.php</url>
-          <line>1761</line>
+          <line>1767</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
@@ -810,7 +815,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/resources/views/webpaycharm.blade.php</url>
-          <line>806</line>
+          <line>804</line>
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
@@ -830,12 +835,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/CharmController.php</url>
-          <line>244</line>
+          <line>250</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php-line-method">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/TransactionController.php</url>
-          <line>2445</line>
+          <line>2451</line>
           <properties>
             <option name="className" value="\App\Http\Controllers\TransactionController" />
             <option name="methodName" value="opay_transfer_transaction" />
@@ -844,7 +849,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php-line-method">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/TransactionController.php</url>
-          <line>2520</line>
+          <line>2526</line>
           <properties>
             <option name="className" value="\App\Http\Controllers\TransactionController" />
             <option name="methodName" value="kuda_transfer_transaction" />
@@ -907,7 +912,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php-line-method">
           <url>file://$PROJECT_DIR$/app/helpers.php</url>
-          <line>2600</line>
+          <line>2601</line>
           <properties>
             <option name="className" value="" />
             <option name="methodName" value="\woven_create" />

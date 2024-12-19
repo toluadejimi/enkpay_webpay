@@ -294,6 +294,7 @@
 </div>
 
 
+
 @include('ads')
 
 
@@ -306,8 +307,6 @@
 
 
 <div class="transfer-card">
-
-
     <div class="tf-container">
 
 
@@ -1069,7 +1068,6 @@
 
 
     </div>
-
 </div>
 
 

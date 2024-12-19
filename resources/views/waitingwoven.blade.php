@@ -77,11 +77,11 @@
 
                 @include('ads')
 
-                <hr>
+                <hr class="my-3">
 
 
                 <div class="col-12 d-flex justify-content-center">
-                    <p class="text-danger">Please wait your payment is confirming... page will redirect when confirmed</p>
+                    <p class="text-danger text-center">Please wait your payment is confirming... page will redirect when confirmed</p>
                 </div>
 
                 <div class="col-12 d-flex justify-content-center my-3">

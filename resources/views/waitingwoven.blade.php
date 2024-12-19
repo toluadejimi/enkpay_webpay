@@ -77,6 +77,8 @@
 
                 @include('ads')
 
+                <hr>
+
 
                 <div class="col-12 d-flex justify-content-center">
                     <p class="text-danger">Please wait your payment is confirming... page will redirect when confirmed</p>

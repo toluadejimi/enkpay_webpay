@@ -4,6 +4,7 @@ use App\Http\Controllers\CableController;
 use App\Http\Controllers\CharmController;
 use App\Http\Controllers\PaymentNotificationController;
 use App\Http\Controllers\ProcessissuesController;
+use App\Http\Controllers\TelegramController;
 use App\Http\Controllers\VerifyController;
 use App\Http\Controllers\WovenController;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +31,7 @@ use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
 Route::post('/decrypt-notification', [PaymentNotificationController::class, 'decryptPaymentNotification']);
 
-Route::any('/telegram-webhook', 'TelegramController@webhook');
+Route::any('/telegram-webhook', [TelegramController::class, 'webhook']);
 
 
 

@@ -36,10 +36,14 @@ class TelegramController extends Controller
 
     protected function autoReply($chatId, $message)
     {
-        // Your custom auto-reply logic
-        $replyText = "You said: " . $message; // Customize as per your requirement
+        if (stripos($message, 'hello') !== false) {
+            $replyText = "Hello! How can I help you?";
+        } elseif (stripos($message, 'help') !== false) {
+            $replyText = "You can ask me anything!";
+        } else {
+            $replyText = "I'm not sure how to respond to that.";
+        }
 
-        // Send the auto-reply
         $this->telegram->sendMessage($chatId, $replyText);
     }
 }

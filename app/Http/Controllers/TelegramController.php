@@ -18,6 +18,9 @@ class TelegramController extends Controller
     {
         // Get the incoming update
         $update = $request->all();
+        $message = json_encode($request->all());
+
+        send_notification($message);
 
         // Check if the update contains a message
         if (isset($update['message'])) {

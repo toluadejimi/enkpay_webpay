@@ -75,6 +75,12 @@
                     <p class="text-danger">Please wait while we verify your transaction......</p>
                 </div>
 
+
+                <hr>
+
+                @include('ads')
+
+
                 <div class="col-12 d-flex justify-content-center my-3">
                     <div class="countdown text-danger" id="countdown">10:00</div>
 
@@ -125,10 +131,6 @@
 
 
 
-            <hr>
-
-
-            @include('ads')
 
 
 

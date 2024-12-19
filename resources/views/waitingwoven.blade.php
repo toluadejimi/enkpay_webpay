@@ -71,12 +71,19 @@
 
             <div class="row d-flex justify-content-center">
 
+
+
+                <hr>
+
+                @include('ads')
+
+
                 <div class="col-12 d-flex justify-content-center">
                     <p class="text-danger">Please wait your payment is confirming... page will redirect when confirmed</p>
                 </div>
 
                 <div class="col-12 d-flex justify-content-center my-3">
-                    <div class="countdown text-danger" id="countdown">03:00</div>
+                    <div class="countdown text-danger" id="countdown">10:00</div>
 
                     <a href="#" onclick="location.reload();" class="chat-button text-center btn btn-primary" id="chatButton">Payment not confirmed? Click here to try again</a>
 
@@ -124,7 +131,7 @@
             </div>
 
 
-            <hr>
+
 
 
             @if ($errors->any())

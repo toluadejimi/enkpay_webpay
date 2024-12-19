@@ -72,7 +72,7 @@ class WovenController extends Controller
             $trasnaction->status = 0;
             $trasnaction->save();
 
-            $message = "Transfer Payment Initiated | $request->accountNo |" . $request->ref . "| ON WOVEN " . "For " . $usr->last_name . " | " . $trx->payable_amount." | ".$trx->email;
+            $message = "Transfer Payment Initiated | $request->accountNo |" . "| ON WOVEN " . "For " . $usr->last_name . " | " . $trx->payable_amount." | ".$trx->email;
             send_notification($message);
 
             return response()->json([

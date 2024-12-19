@@ -30,6 +30,9 @@ use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
 Route::post('/decrypt-notification', [PaymentNotificationController::class, 'decryptPaymentNotification']);
 
+Route::post('/telegram-webhook', 'TelegramController@webhook');
+
+
 
 Route::get('/', function () {
     return view('welcome');

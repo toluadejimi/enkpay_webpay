@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '3273fdfcd875354c822bbeca4cb550cc934844da',
+        'reference' => '7388b7e1c4142ddff7daba8d7fabf135b63c032a',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -427,6 +427,15 @@
                 0 => 'v10.39.0',
             ),
         ),
+        'irazasyed/telegram-bot-sdk' => array(
+            'pretty_version' => 'v3.14.0',
+            'version' => '3.14.0.0',
+            'reference' => 'c72ef585556578105c4d5cc56324575ef3677fd2',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../irazasyed/telegram-bot-sdk',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'kodova/hamcrest-php' => array(
             'dev_requirement' => true,
             'replaced' => array(
@@ -445,7 +454,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '3273fdfcd875354c822bbeca4cb550cc934844da',
+            'reference' => '7388b7e1c4142ddff7daba8d7fabf135b63c032a',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

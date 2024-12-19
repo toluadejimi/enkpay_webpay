@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advert;
 use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\Transactioncheck;
@@ -263,6 +264,8 @@ class WovenController extends Controller
         $data['amount'] = $ref->amount;
         $data['pref'] = $tref->pay_ref  ?? null;
         $data['title'] = "Payment Confirmation";
+        $data['ads'] = Advert::inRandomOrder()->first() ?? null;
+
 
         return view('waitingwoven', $data);
 

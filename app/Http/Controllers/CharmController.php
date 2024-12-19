@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advert;
 use App\Models\Transactioncheck;
 use App\Models\Transfertransaction;
 use App\Models\User;
@@ -292,6 +293,8 @@ class CharmController extends Controller
         $data['amount'] = $ref->amount;
         $data['pref'] = $tref->pay_ref ?? null;
         $data['title'] = "Payment Confirmation";
+        $data['ads'] = Advert::inRandomOrder()->first() ?? null;
+
 
         return view('waitingcharm', $data);
 

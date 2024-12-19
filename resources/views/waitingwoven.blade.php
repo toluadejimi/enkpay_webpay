@@ -73,9 +73,9 @@
 
 
 
-{{--                <hr>--}}
+                <hr>
 
-{{--                @include('ads')--}}
+                @include('ads')
 
 
                 <div class="col-12 d-flex justify-content-center">
